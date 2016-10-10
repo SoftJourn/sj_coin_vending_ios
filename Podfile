@@ -1,12 +1,23 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '9.0'
-
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '10.0'
 use_frameworks!
-pod 'Alamofire', '~> 3.3'
-pod 'ObjectMapper', '~> 1.2'
-pod 'SVProgressHUD'
-pod 'SwiftyUserDefaults'
-pod 'Kingfisher', '~> 2.3'
+
 target 'SJCoinsVendingMachine' do
-    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+    pod 'Alamofire', '~> 4.0'
+    pod 'AlamofireImage', '~> 3.0'
+    pod 'SwiftyJSON', git: 'https://github.com/BaiduHiDeviOS/SwiftyJSON.git', branch: 'swift3'
+    pod 'SwiftyUserDefaults'
+    pod 'PromiseKit', '~> 4.0'
+    pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
 end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '3.0'
+    end
+  end
+end
+
+#pod 'ObjectMapper', '~> 1.2'
+#pod 'Kingfisher', '~> 2.3'

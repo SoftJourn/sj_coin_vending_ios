@@ -8,19 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		07854FBA1D4B8C5300F31AB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07854FB91D4B8C5300F31AB3 /* AppDelegate.swift */; };
-		07854FBF1D4B8C5300F31AB3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07854FBD1D4B8C5300F31AB3 /* Main.storyboard */; };
 		07854FC11D4B8C5300F31AB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07854FC01D4B8C5300F31AB3 /* Assets.xcassets */; };
-		07854FC41D4B8C5300F31AB3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07854FC21D4B8C5300F31AB3 /* LaunchScreen.storyboard */; };
 		0D0CAE063999C3F436309E21 /* Pods_SJCoinsVendingMachine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A8354A24EE6A6C35DDA347 /* Pods_SJCoinsVendingMachine.framework */; };
+		35617D721DA814A6000582F6 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35617D701DA814A6000582F6 /* Launch Screen.storyboard */; };
+		35617D751DA814E3000582F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35617D731DA814E3000582F6 /* Main.storyboard */; };
+		35617D771DA8167D000582F6 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D761DA8167D000582F6 /* BaseViewController.swift */; };
+		35617D791DA818A1000582F6 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D781DA818A1000582F6 /* Const.swift */; };
+		35617D7B1DA81BA1000582F6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D7A1DA81BA1000582F6 /* LoginViewController.swift */; };
+		35617D7D1DA822E8000582F6 /* ValidationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D7C1DA822E8000582F6 /* ValidationManager.swift */; };
+		35617D7F1DA82484000582F6 /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D7E1DA82484000582F6 /* AuthorizationManager.swift */; };
+		35617D811DA82728000582F6 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D801DA82728000582F6 /* NavigationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		07854FB61D4B8C5300F31AB3 /* SJCoinsVendingMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SJCoinsVendingMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07854FB91D4B8C5300F31AB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		07854FBE1D4B8C5300F31AB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		07854FC01D4B8C5300F31AB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		07854FC31D4B8C5300F31AB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		07854FC51D4B8C5300F31AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		35617D711DA814A6000582F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
+		35617D741DA814E3000582F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		35617D761DA8167D000582F6 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		35617D781DA818A1000582F6 /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		35617D7A1DA81BA1000582F6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		35617D7C1DA822E8000582F6 /* ValidationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationManager.swift; sourceTree = "<group>"; };
+		35617D7E1DA82484000582F6 /* AuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
+		35617D801DA82728000582F6 /* NavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		6F5FAFC8CD94B442E353D50F /* Pods-SJCoinsVendingMachine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.release.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.release.xcconfig"; sourceTree = "<group>"; };
 		CFFCE6A93FAD050282DD61EF /* Pods-SJCoinsVendingMachine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.debug.xcconfig"; sourceTree = "<group>"; };
 		E4A8354A24EE6A6C35DDA347 /* Pods_SJCoinsVendingMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SJCoinsVendingMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				07854FB91D4B8C5300F31AB3 /* AppDelegate.swift */,
+				35617D781DA818A1000582F6 /* Const.swift */,
 				07854FCB1D4B8C8A00F31AB3 /* Models */,
 				07854FCC1D4B8DD300F31AB3 /* Managers */,
 				07854FD21D4B922800F31AB3 /* Views */,
@@ -80,6 +93,9 @@
 		07854FCC1D4B8DD300F31AB3 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				35617D7E1DA82484000582F6 /* AuthorizationManager.swift */,
+				35617D801DA82728000582F6 /* NavigationManager.swift */,
+				35617D7C1DA822E8000582F6 /* ValidationManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -87,8 +103,8 @@
 		07854FCE1D4B8DF900F31AB3 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				07854FBD1D4B8C5300F31AB3 /* Main.storyboard */,
-				07854FC21D4B8C5300F31AB3 /* LaunchScreen.storyboard */,
+				35617D731DA814E3000582F6 /* Main.storyboard */,
+				35617D701DA814A6000582F6 /* Launch Screen.storyboard */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -105,6 +121,8 @@
 		07854FD11D4B900300F31AB3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				35617D7A1DA81BA1000582F6 /* LoginViewController.swift */,
+				35617D761DA8167D000582F6 /* BaseViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -140,12 +158,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 07854FC81D4B8C5300F31AB3 /* Build configuration list for PBXNativeTarget "SJCoinsVendingMachine" */;
 			buildPhases = (
-				204AFED9ED247D422F3A5269 /* 📦 Check Pods Manifest.lock */,
+				204AFED9ED247D422F3A5269 /* [CP] Check Pods Manifest.lock */,
 				07854FB21D4B8C5300F31AB3 /* Sources */,
 				07854FB31D4B8C5300F31AB3 /* Frameworks */,
 				07854FB41D4B8C5300F31AB3 /* Resources */,
-				619C420BEF5974DB118CFAD0 /* 📦 Embed Pods Frameworks */,
-				C802FFD9B539C1ED150FB2B9 /* 📦 Copy Pods Resources */,
+				619C420BEF5974DB118CFAD0 /* [CP] Embed Pods Frameworks */,
+				C802FFD9B539C1ED150FB2B9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -168,6 +186,7 @@
 				TargetAttributes = {
 					07854FB51D4B8C5300F31AB3 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -194,38 +213,38 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07854FC41D4B8C5300F31AB3 /* LaunchScreen.storyboard in Resources */,
+				35617D751DA814E3000582F6 /* Main.storyboard in Resources */,
+				35617D721DA814A6000582F6 /* Launch Screen.storyboard in Resources */,
 				07854FC11D4B8C5300F31AB3 /* Assets.xcassets in Resources */,
-				07854FBF1D4B8C5300F31AB3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		204AFED9ED247D422F3A5269 /* 📦 Check Pods Manifest.lock */ = {
+		204AFED9ED247D422F3A5269 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		619C420BEF5974DB118CFAD0 /* 📦 Embed Pods Frameworks */ = {
+		619C420BEF5974DB118CFAD0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,14 +252,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C802FFD9B539C1ED150FB2B9 /* 📦 Copy Pods Resources */ = {
+		C802FFD9B539C1ED150FB2B9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,27 +274,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35617D7D1DA822E8000582F6 /* ValidationManager.swift in Sources */,
+				35617D7B1DA81BA1000582F6 /* LoginViewController.swift in Sources */,
+				35617D811DA82728000582F6 /* NavigationManager.swift in Sources */,
 				07854FBA1D4B8C5300F31AB3 /* AppDelegate.swift in Sources */,
+				35617D771DA8167D000582F6 /* BaseViewController.swift in Sources */,
+				35617D791DA818A1000582F6 /* Const.swift in Sources */,
+				35617D7F1DA82484000582F6 /* AuthorizationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		07854FBD1D4B8C5300F31AB3 /* Main.storyboard */ = {
+		35617D701DA814A6000582F6 /* Launch Screen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				07854FBE1D4B8C5300F31AB3 /* Base */,
+				35617D711DA814A6000582F6 /* Base */,
 			);
-			name = Main.storyboard;
+			name = "Launch Screen.storyboard";
 			sourceTree = "<group>";
 		};
-		07854FC21D4B8C5300F31AB3 /* LaunchScreen.storyboard */ = {
+		35617D731DA814E3000582F6 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				07854FC31D4B8C5300F31AB3 /* Base */,
+				35617D741DA814E3000582F6 /* Base */,
 			);
-			name = LaunchScreen.storyboard;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -375,6 +400,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.softjourn.SJCoinsVendingMachine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -387,6 +413,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.softjourn.SJCoinsVendingMachine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
