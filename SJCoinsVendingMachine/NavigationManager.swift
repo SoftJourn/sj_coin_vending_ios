@@ -8,10 +8,9 @@
 
 import UIKit
 
-class Navigation: NSObject {
+class NavigationManager: NSObject {
     
-    static let shared = Navigation()
-    static let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    static let shared = NavigationManager()
     //var tabBarController: UITabBarController?
     var visibleViewController: UIViewController?
 
@@ -22,11 +21,18 @@ class Navigation: NSObject {
     }
     
     func presentExistingTabBarController() {
+        
         presentControllerAsRoot(tabBarController!)
     }
     
     func presentLoginViewController() {
+        
         presentControllerAsRoot(createViewController(with: LoginViewController.identifier))
+    }
+    
+    func mainStoryboard() -> UIStoryboard {
+        
+        return UIStoryboard(name: "Main", bundle: nil)
     }
     
 //    class func presentAllProductsViewController(with items: [Products]?, mode: Filter) {

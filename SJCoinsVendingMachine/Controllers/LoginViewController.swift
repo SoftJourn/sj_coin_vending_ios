@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class LoginViewController: UIViewController {
+class LoginViewController: BaseViewController {
     
     // MARK: Constants
     static let identifier = "\(LoginViewController.self)"
@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        Navigation.shared.visibleViewController = self
+        NavigationManager.shared.visibleViewController = self
         SVProgressHUD.dismiss()
     }
     
@@ -55,20 +55,15 @@ class LoginViewController: UIViewController {
         SVProgressHUD.show(withStatus: logInMessage)
         AuthorizationManager.authRequest(login: login, password: password) { [unowned self] error in
             SVProgressHUD.dismiss()
-            error != nil ? self.present(errorType.authorization(error!)) : Navigation.shared.presentTabBarController()
+            error != nil ? self.present(errorType.authorization(error!)) : NavigationManager.shared.presentTabBarController()
         }
     }
-    // перенести в бесй контроллер
-    enum errorType {
-        case validation
-        case authorization(Error)
-    }
     
-    fileprivate func present(_ error: errorType) {
+    override func present(_ error: BaseViewController.errorType) {
         
-        switch error {
-        case validation:
-            SVProgressHUD.dismiss()
+        SVProgressHUD.dismiss()
+        switch errorType {
+        case .validation: break
             //FIXME: Create alertManager
             //let alertController = UIAlertController.presentAlert(with: errorTitle.validation, message: errorMessage.validation)
         //present(alertController, animated: true) { }
