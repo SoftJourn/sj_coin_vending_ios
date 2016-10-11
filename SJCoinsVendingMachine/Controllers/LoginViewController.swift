@@ -59,21 +59,20 @@ class LoginViewController: BaseViewController {
         }
     }
     
-    override func present(_ error: BaseViewController.errorType) {
-        
-        SVProgressHUD.dismiss()
-        switch errorType {
-        case .validation: break
-            //FIXME: Create alertManager
-            //let alertController = UIAlertController.presentAlert(with: errorTitle.validation, message: errorMessage.validation)
-        //present(alertController, animated: true) { }
-        case .authorization(let error): break
-            //FIXME: Create alertManager
-            //If error present display it.
-            //let alertController = UIAlertController.presentAlert(with: errorTitle.auth, message: error.localizedDescription)
-            //self.present(alertController, animated: true) { }
-        }
-    }
+//    override func present(_ error: BaseViewController.errorType) {
+//        
+//        SVProgressHUD.dismiss()
+//        switch error {
+//        case .validation: break
+//            //let alertController = UIAlertController.presentAlert(with: errorTitle.validation, message: errorMessage.validation)
+//        //present(alertController, animated: true) { }
+//        case .authorization(let error): break
+//            //FIXME: Create alertManager
+//            //If error present display it.
+//            //let alertController = UIAlertController.presentAlert(with: errorTitle.auth, message: error.localizedDescription)
+//            //self.present(alertController, animated: true) { }
+//        }
+//    }
     
     // MARK: ScrollView contentOffset
     fileprivate func registerForKeyboardNotifications() {

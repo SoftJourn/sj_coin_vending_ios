@@ -12,7 +12,7 @@ class SortingManager {
 
     fileprivate lazy var nameSegmentCounter = Int()
     fileprivate lazy var priceSegmentCounter = Int()
-    fileprivate lazy var sortedData = [Product]()
+    fileprivate lazy var sortedData = [Products]()
     
     func sortBy(name array: [Products]?) -> [Products]? {
         
@@ -20,10 +20,10 @@ class SortingManager {
         nameSegmentCounter += 1
         
         if nameSegmentCounter % 2 == 0 {
-            sortedData = array.sorted { $1.name()!.localizedCaseInsensitiveCompare($0.name()!) == ComparisonResult.orderedAscending }
+            sortedData = array.sorted { $1.name!.localizedCaseInsensitiveCompare($0.name!) == ComparisonResult.orderedAscending }
             return sortedData
         } else {
-            sortedData = array.sorted { $0.name()!.localizedCaseInsensitiveCompare($1.name()!) == ComparisonResult.orderedAscending }
+            sortedData = array.sorted { $0.name!.localizedCaseInsensitiveCompare($1.name!) == ComparisonResult.orderedAscending }
             return sortedData
         }
     }
@@ -34,10 +34,10 @@ class SortingManager {
         priceSegmentCounter += 1
         
         if priceSegmentCounter % 2 == 0 {
-            sortedData = array.sorted { $0.price()! > $1.price()! }
+            sortedData = array.sorted { $0.price! > $1.price! }
             return sortedData
         } else {
-            sortedData = array.sorted { $0.price()! < $1.price()! }
+            sortedData = array.sorted { $0.price! < $1.price! }
             return sortedData
         }
     }

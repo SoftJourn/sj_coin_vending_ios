@@ -21,10 +21,10 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var balanceLabel: UILabel!
     
     //fileprivate var refreshControl = UIRefreshControl()
-//    fileprivate var categories: [Category]? {
-//        get { return DataManager.shared.createCategories() }
-//        set { }
-//    }
+    fileprivate var categories: [Categories]? {
+        get { return DataManager.shared.category() }
+        //set { }
+    }
     
     // MARK: Life cycle
     override func viewDidLoad() {
@@ -73,8 +73,8 @@ class HomeViewController: BaseViewController {
     
     override func updateAccount() {
         
-        let balance = DataManager.shared.balance()
-        self.updateBalance(with: balance)
+        guard let balance = DataManager.shared.balance() else { return /* show */ }
+        updateBalance(with: balance)
     }
     
     fileprivate func updateCollectionView() {
@@ -84,9 +84,8 @@ class HomeViewController: BaseViewController {
         }
     }
     
-    fileprivate func updateBalance(with amount: Int?) {
+    fileprivate func updateBalance(with amount: Int) {
         
-        guard let amount = amount else { return }
         DispatchQueue.main.async { [unowned self] in
             self.balanceLabel.text = "Your balance is \(amount) coins"
         }

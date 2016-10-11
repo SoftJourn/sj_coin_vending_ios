@@ -69,11 +69,19 @@ class DataManager {
 //    }
     
     func accountModel() -> AccountModel? {
+        
         return account
     }
     
     func favorite() -> [Products]? {
+        
         return favorites
+    }
+    
+    func category() -> [Categories]? {
+        
+        guard let categories = features?.categories else { return nil }
+        return categories
     }
     
 //    fileprivate func verifyFavorites() {
@@ -89,20 +97,20 @@ class DataManager {
 //        }
 //    }
     
-    func allItemsArray() -> [Products]? {
-        
-        guard let featureModel = features,
-            let drink = featureModel.drink,
-            let snack = featureModel.snack else { return nil}
-        var products = [Product]()
-        for object in snack {
-            products.append(object as Product)
-        }
-        for object in drink {
-            products.append(object as Product)
-        }
-        return products
-    }
+//    func allItemsArray() -> [Products]? {
+//        
+//        guard let featureModel = features,
+//            let drink = featureModel.drink,
+//            let snack = featureModel.snack else { return nil}
+//        var products = [Product]()
+//        for object in snack {
+//            products.append(object as Product)
+//        }
+//        for object in drink {
+//            products.append(object as Product)
+//        }
+//        return products
+//    }
     
 //    func myLastPurchase() -> [MyLastPurchases]? {
 //        return features?.myLastPurchases
@@ -113,6 +121,7 @@ class DataManager {
 //    }
     
     func balance() -> Int? {
+        
         return account?.amount
     }
     

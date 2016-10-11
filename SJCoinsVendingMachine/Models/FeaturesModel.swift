@@ -38,8 +38,12 @@ class FeaturesModel {
      - returns: An initalized instance of the class.
      */
     public init(json: JSON) {
-        if let tempValue = json[kFeaturesModelBestSellersKey].array {
-            bestSellers = tempValue
+        if let items = json[kFeaturesModelBestSellersKey].array {
+            for item in items {
+                if let tempValue = item.int {
+                    bestSellers?.append(tempValue)
+                }
+            }
         } else {
             bestSellers = nil
         }
@@ -69,18 +73,18 @@ class FeaturesModel {
      Generates description of the object in the form of a NSDictionary.
      - returns: A Key value pair containing all valid values in the object.
      */
-    func dictionaryRepresentation() -> [String : AnyObject ] {
+    func dictionaryRepresentation() -> [String : AnyObject] {
         
         var dictionary: [String : AnyObject ] = [ : ]
-        if categories?.count > 0 {
+        if (categories?.count)! > 0 {
             var temp: [AnyObject] = []
             for item in categories! {
-                temp.append(item.dictionaryRepresentation())
+                temp.append(item.dictionaryRepresentation() as AnyObject)
             }
-            dictionary.updateValue(temp, forKey: kBaseClassCategoriesKey)
+            dictionary.updateValue(temp as AnyObject, forKey: kFeaturesModelCategoriesKey)
         }
-        if lastAdded?.count > 0 {
-            dictionary.updateValue(lastAdded!, forKey: kBaseClassLastAddedKey)
+        if (lastAdded?.count)! > 0 {
+            dictionary.updateValue(lastAdded! as AnyObject, forKey: kFeaturesModelLastAddedKey)
         }
         
         return dictionary

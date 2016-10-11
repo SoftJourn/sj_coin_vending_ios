@@ -13,7 +13,7 @@ class AllItemsTableViewCell: UITableViewCell {
     
     // MARK: Constants
     static let identifier = "\(AllItemsTableViewCell.self)"
-
+    
     // MARK: Properties
     fileprivate let checkedImage = UIImage(named: "FavouritesChecked")! as UIImage
     fileprivate let uncheckedImage = UIImage(named: "FavouritesUnchecked")! as UIImage
@@ -42,9 +42,10 @@ class AllItemsTableViewCell: UITableViewCell {
     @IBAction fileprivate func buyButtonPressed(_ sender: UIButton) {
         
         //Present confirmation message.
-        let navigation = NavigationMager.tabBarController?.selectedViewController as! UINavigationController
-        let allProductController = navigation.visibleViewController as! AllProductsViewController
-        allProductController.presentConfirmation(with: productID, name: productName, price: productPrice)
+        print("buyButtonPressed")
+        //        let navigation = NavigationManager.tabBarController?.selectedViewController as! UINavigationController
+        //        let allProductController = navigation.visibleViewController as! AllProductsViewController
+        //        allProductController.presentConfirmation(with: productID, name: productName, price: productPrice)
     }
     
     @IBAction fileprivate func favouritesButtonPressed(_ sender: UIButton) {
@@ -66,12 +67,12 @@ class AllItemsTableViewCell: UITableViewCell {
         resetImage()
     }
     
-    func configure(with item: Products) -> UITableViewCell {
+    func configure(with item: Products) -> AllItemsTableViewCell {
         
-        productID = item.identifier()
-        productName = item.name()
-        productPrice = item.price()
-        loadImage(with: item.imageEndpoint())
+        productID = item.internalIdentifier
+        productName = item.name
+        productPrice = item.price
+        loadImage(with: item.imageUrl)
         return self
     }
     
@@ -84,12 +85,12 @@ class AllItemsTableViewCell: UITableViewCell {
         
         favoriteButton.setImage(uncheckedImage, for: UIControlState())
     }
- 
+    
     fileprivate func loadImage(with endpoint: String?) {
         
         guard let endpoint = endpoint else { return logoImage.image = UIImage(named: "Placeholder") }
         guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
-            DownloadManager.fetchImage(with: endpoint) { image in
+            APIManager.fetch(image: endpoint) { image in
                 self.logoImage.image = image
             }
             return

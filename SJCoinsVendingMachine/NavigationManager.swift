@@ -16,18 +16,20 @@ class NavigationManager: NSObject {
 
     func presentTabBarController() {
         
-        tabBarController = createViewController(with: Storyboard.tabBarControllerIdentifier) as? UITabBarController
-        presentControllerAsRoot(tabBarController!)
+        let tabBarController = create(viewController: storyboard.tabBarControllerIdentifier) as? UITabBarController
+        guard let controller = tabBarController else { return }
+        present(viewControllerAsRoot: controller)
     }
     
-    func presentExistingTabBarController() {
-        
-        presentControllerAsRoot(tabBarController!)
-    }
+//    func presentExistingTabBarController() {
+//        
+//        presentControllerAsRoot(tabBarController!)
+//    }
     
     func presentLoginViewController() {
         
-        presentControllerAsRoot(createViewController(with: LoginViewController.identifier))
+        let loginViewController = create(viewController: LoginViewController.identifier)
+        present(viewControllerAsRoot: loginViewController)
     }
     
     func mainStoryboard() -> UIStoryboard {
@@ -45,11 +47,13 @@ class NavigationManager: NSObject {
 //        tabBarController!.selectedIndex = 2
 //    }
     
-    fileprivate class func createViewController(with identifier: String) -> UIViewController {
-        return mainStoryboard.instantiateViewController(withIdentifier: identifier)
+    fileprivate func create(viewController identifier: String) -> UIViewController {
+        
+        return mainStoryboard().instantiateViewController(withIdentifier: identifier)
     }
     
-    fileprivate class func presentControllerAsRoot(_ viewController: UIViewController) {
+    fileprivate func present(viewControllerAsRoot viewController: UIViewController) {
+        
         UIApplication.shared.keyWindow?.rootViewController? = viewController
     }
 }

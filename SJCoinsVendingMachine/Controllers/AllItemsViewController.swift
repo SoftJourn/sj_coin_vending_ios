@@ -23,10 +23,10 @@ protocol FavoriteCellDelegate: class {
     func remove(favorite identifier: Int, name: String)
 }
 
-class AllProductsViewController: BaseViewController {
+class AllItemsViewController: BaseViewController {
     
     // MARK: Constants
-    static let identifier = "\(AllProductsViewController.self)"
+    static let identifier = "\(AllItemsViewController.self)"
     
     // MARK: Properties
     @IBOutlet fileprivate weak var tableView: UITableView!
@@ -45,9 +45,9 @@ class AllProductsViewController: BaseViewController {
         return searchController
     }()
     
-    fileprivate var allItems: [Products]? {
-        return DataManager.shared.allItemsArray()
-    }
+//    fileprivate var allItems: [Products]? {
+//        return DataManager.shared.allItemsArray()
+//    }
     //fileprivate var allProducts: ItemModel? {
         //return DataManager.shared.featuresModel()
     //}
@@ -64,7 +64,7 @@ class AllProductsViewController: BaseViewController {
         super.viewDidLoad()
         //NavigationMager.tabBarController?.delegate = self
         tableView.delegate = self
-        defaultItemsList()
+        //defaultItemsList()
         //pullToRefresh()
     }
     
@@ -102,12 +102,12 @@ class AllProductsViewController: BaseViewController {
     }
     
     // MARK: Configuration.
-    fileprivate func defaultItemsList() {
-        
-        if usedSeeAll == false {
-            filterItems = sortingManager.sortBy(name: allItems)
-        }
-    }
+//    fileprivate func defaultItemsList() {
+//        
+//        if usedSeeAll == false {
+//            filterItems = sortingManager.sortBy(name: allItems)
+//        }
+//    }
     
     //    fileprivate func pullToRefresh() {
     //
@@ -191,7 +191,7 @@ class AllProductsViewController: BaseViewController {
     }
     
     //MARK: Others
-    fileprivate func setAndReload(data array: [Product]?) {
+    fileprivate func setAndReload(data array: [Products]?) {
         
         filterItems = array
         reloadTableView()
@@ -205,7 +205,7 @@ class AllProductsViewController: BaseViewController {
     }
 }
 
-extension AllProductsViewController: UITableViewDataSource, UITableViewDelegate {
+extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
     
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -230,7 +230,7 @@ extension AllProductsViewController: UITableViewDataSource, UITableViewDelegate 
     fileprivate func prepare(_ cell: AllItemsTableViewCell, indexPath: IndexPath) -> UITableViewCell {
         
         guard let filterItems = filterItems,
-            let itemName = filterItems[indexPath.item].name() else { return cell }
+            let itemName = filterItems[indexPath.item].name else { return cell }
         if !filterItems.isEmpty {
             //let favoriteItems = DataManager.shared.favorite(nil)
             //print(favoriteItems)
@@ -251,7 +251,7 @@ extension AllProductsViewController: UITableViewDataSource, UITableViewDelegate 
     }
 }
 
-extension AllProductsViewController: UISearchResultsUpdating {
+extension AllItemsViewController: UISearchResultsUpdating {
     
     // MARK: UISearchResultsUpdating
     func updateSearchResults(for searchController: UISearchController) {
@@ -263,7 +263,7 @@ extension AllProductsViewController: UISearchResultsUpdating {
         let filterText = searchController.searchBar.text!
         if filterText.characters.count > 0 {
             let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", filterText)
-            searchData = filterItems.filter { searchPredicate.evaluate(with: $0.name()) }
+            searchData = filterItems.filter { searchPredicate.evaluate(with: $0.name) }
         } else {
             searchData = filterItems
         }
@@ -271,7 +271,7 @@ extension AllProductsViewController: UISearchResultsUpdating {
     }
 }
 
-extension AllProductsViewController: UITabBarControllerDelegate {
+extension AllItemsViewController: UITabBarControllerDelegate {
     
     // MARK: UITabBarControllerDelegate
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
@@ -279,7 +279,7 @@ extension AllProductsViewController: UITabBarControllerDelegate {
     }
 }
 
-extension AllProductsViewController: FavoriteCellDelegate {
+extension AllItemsViewController: FavoriteCellDelegate {
     
     // MARK: FavoriteCellDelegate
     func add(favorite identifier: Int, name: String) {

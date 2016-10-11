@@ -44,6 +44,7 @@
 		35E29C071DABE280002B7045 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C061DABE280002B7045 /* Category.swift */; };
 		35E29C091DABE2E0002B7045 /* Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C081DABE2E0002B7045 /* Products.swift */; };
 		35E29C0B1DABE2E8002B7045 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C0A1DABE2E8002B7045 /* BaseClass.swift */; };
+		35E29C0D1DACD8D9002B7045 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C0C1DACD8D9002B7045 /* AlertManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,7 @@
 		35E29C061DABE280002B7045 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = Models/Category.swift; sourceTree = "<group>"; };
 		35E29C081DABE2E0002B7045 /* Products.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Products.swift; path = Models/Products.swift; sourceTree = "<group>"; };
 		35E29C0A1DABE2E8002B7045 /* BaseClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseClass.swift; path = Models/BaseClass.swift; sourceTree = "<group>"; };
+		35E29C0C1DACD8D9002B7045 /* AlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		6F5FAFC8CD94B442E353D50F /* Pods-SJCoinsVendingMachine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.release.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.release.xcconfig"; sourceTree = "<group>"; };
 		CFFCE6A93FAD050282DD61EF /* Pods-SJCoinsVendingMachine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.debug.xcconfig"; sourceTree = "<group>"; };
 		E4A8354A24EE6A6C35DDA347 /* Pods_SJCoinsVendingMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SJCoinsVendingMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +161,7 @@
 				35089F6E1DABAB4A00DC3BAF /* DataManager.swift */,
 				35089F7E1DABB7DF00DC3BAF /* SortingManager.swift */,
 				35089F841DABCCE800DC3BAF /* DateManager.swift */,
+				35E29C0C1DACD8D9002B7045 /* AlertManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				TargetAttributes = {
 					07854FB51D4B8C5300F31AB3 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = A2PX8YZMXY;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -386,6 +390,7 @@
 				07854FBA1D4B8C5300F31AB3 /* AppDelegate.swift in Sources */,
 				35089F791DABB45F00DC3BAF /* FavoritesTableViewCell.swift in Sources */,
 				35089F811DABB91900DC3BAF /* AuthModel.swift in Sources */,
+				35E29C0D1DACD8D9002B7045 /* AlertManager.swift in Sources */,
 				35089F771DABB45F00DC3BAF /* AllItemsTableViewCell.swift in Sources */,
 				35E29C051DABE23D002B7045 /* Categories.swift in Sources */,
 				35089F6C1DAB9E4900DC3BAF /* HomeViewController.swift in Sources */,
@@ -516,6 +521,7 @@
 			baseConfigurationReference = CFFCE6A93FAD050282DD61EF /* Pods-SJCoinsVendingMachine.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A2PX8YZMXY;
 				INFOPLIST_FILE = SJCoinsVendingMachine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.softjourn.SJCoinsVendingMachine;
@@ -529,6 +535,7 @@
 			baseConfigurationReference = 6F5FAFC8CD94B442E353D50F /* Pods-SJCoinsVendingMachine.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A2PX8YZMXY;
 				INFOPLIST_FILE = SJCoinsVendingMachine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.softjourn.SJCoinsVendingMachine;

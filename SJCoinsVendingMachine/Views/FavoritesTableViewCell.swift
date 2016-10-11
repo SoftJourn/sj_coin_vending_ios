@@ -27,11 +27,11 @@ class FavoritesTableViewCell: UITableViewCell {
         didSet { favouritesPriceLabel.text = "\(productPrice!) Coins" }
     }
 
-    func configure(with item: Product) -> UITableViewCell {
+    func configure(with item: Products) -> FavoritesTableViewCell {
         
-        producName = item.name()
-        productPrice = item.price()
-        loadImage(with: item.imageEndpoint())
+        producName = item.name
+        productPrice = item.price
+        loadImage(with: item.imageUrl)
         return self
     }
     

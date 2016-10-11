@@ -35,23 +35,24 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     @IBAction fileprivate func seeAllButtonPressed(_ sender: UIButton) {
         
-        Reachability.ifConnectedToNetwork { [unowned self] in
-            guard let categoryNames = self.categoryNames else { return }
-            switch categoryNames {
-            case category.lastAdded:
-                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .lastAdded)
-            case category.bestSellers:
-                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .bestSellers)
-            case category.snacks:
-                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .snaks)
-            case category.drinks:
-                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .drinks)
-            default: break
-            }
-        }
+        print("seeAllButtonPressed")
+//        Reachability.ifConnectedToNetwork { [unowned self] in
+//            guard let categoryNames = self.categoryNames else { return }
+//            switch categoryNames {
+//            case category.lastAdded:
+//                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .lastAdded)
+//            case category.bestSellers:
+//                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .bestSellers)
+//            case category.snacks:
+//                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .snaks)
+//            case category.drinks:
+//                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .drinks)
+//            default: break
+//            }
+//        }
     }
     
-    func configure(with item: Categories) -> UICollectionViewCell {
+    func configure(with item: Categories) -> HomeCollectionViewCell {
         
         categoryNames = item.name
         categoryItems = item.products

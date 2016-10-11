@@ -23,7 +23,7 @@ class APIManager: RequestManager {
         
         firstly {
             sendDefault(request: .get, urlString: url)
-        }.then { data in
+        }.then { data -> Void in
             let featureModel = FeaturesModel.init(json: JSON(data))
             complition(featureModel, nil)
         }.catch { error in
@@ -37,7 +37,7 @@ class APIManager: RequestManager {
         
         firstly {
             sendDefault(request: .get, urlString: url)
-        }.then { data in
+        }.then { data -> Void in
             let data = JSON(data)
             var favorites = [Products]()
             for (_, subJson):(String, JSON) in data {
@@ -58,7 +58,7 @@ class APIManager: RequestManager {
         
         firstly {
             sendDefault(request: .get, urlString: url)
-        }.then { data in
+        }.then { data -> Void in
             let account = AccountModel.init(json: JSON(data))
             complition(account, nil)
         }.catch { error in
@@ -89,7 +89,7 @@ class APIManager: RequestManager {
         
         firstly {
             sendDefault(request: .post, urlString: url)
-        }.then { data in
+        }.then { data -> Void in
             let json = JSON(data)
             let amount = json["amount"].intValue
             complition(amount as AnyObject?, nil)

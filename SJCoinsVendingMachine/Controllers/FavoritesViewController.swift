@@ -15,9 +15,9 @@ class FavoritesViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     
     //fileprivate var refreshControl = UIRefreshControl()
-//    fileprivate var favoritesProducts: [FavoritesModel]? {
-//        return DataManager.shared.favoriteModels()
-//    }
+    fileprivate var favoritesProducts: [Products]? {
+        return DataManager.shared.favorite()
+    }
     
     // MARK: Life cycle
     override func viewDidLoad() {
@@ -71,8 +71,9 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as!FavouritesTableViewCell
-        return favoritesProducts == nil ? cell : cell.configure(with: favoritesProducts![indexPath.item])
+        let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as! FavoritesTableViewCell
+        return cell
+        //return favoritesProducts == nil ? cell : cell.configure(with: favoritesProducts![indexPath.item])
     }
     
     // MARK: UITableViewDelegate

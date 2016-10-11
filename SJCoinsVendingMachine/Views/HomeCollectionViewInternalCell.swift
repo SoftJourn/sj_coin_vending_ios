@@ -45,11 +45,11 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
         resetImage()
     }
     
-    func configure(with item: Product) -> UICollectionViewCell {
+    func configure(with item: Products) -> HomeCollectionViewInternalCell {
         
-        name = item.name()
-        price = item.price()
-        loadImage(with: item.imageEndpoint())
+        name = item.name
+        price = item.price
+        loadImage(with: item.imageUrl)
         return self
     }
 

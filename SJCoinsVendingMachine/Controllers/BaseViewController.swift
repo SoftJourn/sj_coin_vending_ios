@@ -61,11 +61,14 @@ class BaseViewController: UIViewController {
     func present(_ error: errorType) {
         
         SVProgressHUD.dismiss()
-        switch errorType {
+        switch error {
+        case .validation:
+            AlertManager().present(alert: errorTitle.validation, message: errorMessage.validation)
+        case .authorization(let error):
+            AlertManager().present(alert: errorTitle.auth, message: error.localizedDescription)
         case .downloading(let error):
             guard let error = error else { return }
-            let alertController = UIAlertController.presentAlert(with: errorTitle.download, message: error.localizedDescription)
-            present(alertController, animated: true) { }
+            AlertManager().present(alert: errorTitle.download, message: error.localizedDescription)
         }
     }
     
