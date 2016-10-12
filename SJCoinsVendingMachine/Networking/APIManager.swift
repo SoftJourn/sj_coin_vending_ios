@@ -17,53 +17,87 @@ class APIManager: RequestManager {
     typealias dataHandler = (_ object: AnyObject?, _ error: Error?) -> ()
 
     // MARK: Fetching
-    class func fetchProducts( machineID: Int = 3, complition: @escaping dataHandler) {
+    class func fetchMachines() -> Promise<AnyObject> {
         
-        let url = "\(networking.baseURL)vending/v1/machines/\(machineID)/features"
+        let promise = Promise<AnyObject> { fulfill, reject in
         
-        firstly {
-            sendDefault(request: .get, urlString: url)
-        }.then { data -> Void in
-            let featureModel = FeaturesModel.init(json: JSON(data))
-            complition(featureModel, nil)
-        }.catch { error in
-            complition(nil, error)
-        }
-    }
-    
-    class func fetchFavorites(complition: @escaping dataHandler) {
-        
-        let url = "\(networking.baseURL)vending/v1/favorites/" //???
-        
-        firstly {
-            sendDefault(request: .get, urlString: url)
-        }.then { data -> Void in
-            let data = JSON(data)
-            var favorites = [Products]()
-            for (_, subJson):(String, JSON) in data {
-                //Create model object.
-                let object = Products.init(json: subJson)
-                //Add it to array.
-                favorites.append(object)
+            let url = "\(networking.baseVendingURL)vending/v1/machines"
+
+            firstly {
+                sendDefault(request: .get, urlString: url)
+            }.then { data -> Void in
+                let data = JSON(data)
+                var machines = [MachinesModel]()
+                for (_, subJson):(String, JSON) in data {
+                    machines.append(MachinesModel(json: subJson))
+                }
+                fulfill(machines as AnyObject)
+            }.catch { error in
+                reject(error)
             }
-            complition(favorites as AnyObject? , nil)
-        }.catch { error in
-            complition(nil, error)
         }
+        return promise
     }
     
-    class func fetchAccount(complition: @escaping dataHandler) {
+    class func fetchProducts(machineID: Int = 13)  -> Promise<AnyObject> {
         
-        let url = "\(networking.baseURL)coins/api/v1/account"
+        let promise = Promise<AnyObject> { fulfill, reject in
+
+            let url = "\(networking.baseVendingURL)vending/v1/machines/\(machineID)/features"
         
-        firstly {
-            sendDefault(request: .get, urlString: url)
-        }.then { data -> Void in
-            let account = AccountModel.init(json: JSON(data))
-            complition(account, nil)
-        }.catch { error in
-            complition(nil, error)
+            firstly {
+                sendDefault(request: .get, urlString: url)
+            }.then { data -> Void in
+                let featureModel = FeaturesModel.init(json: JSON(data))
+                fulfill(featureModel)
+            }.catch { error in
+                reject(error)
+            }
         }
+        return promise
+    }
+    
+    class func fetchFavorites() -> Promise<AnyObject> {
+        
+        let promise = Promise<AnyObject> { fulfill, reject in
+
+            let url = "\(networking.baseVendingURL)vending/v1/favorites/" //???
+        
+            firstly {
+                sendDefault(request: .get, urlString: url)
+            }.then { data -> Void in
+                let data = JSON(data)
+                var favorites = [Products]()
+                for (_, subJson):(String, JSON) in data {
+                    //Create model object.
+                    let object = Products.init(json: subJson)
+                    //Add it to array.
+                    favorites.append(object)
+                }
+                fulfill(favorites as AnyObject)
+            }.catch { error in
+                reject(error)
+            }
+        }
+        return promise
+    }
+    
+    class func fetchAccount() -> Promise<AnyObject> {
+        
+        let promise = Promise<AnyObject> { fulfill, reject in
+
+            let url = "\(networking.baseURL)coins/api/v1/account"
+        
+            firstly {
+                sendDefault(request: .get, urlString: url)
+            }.then { data -> Void in
+                let account = AccountModel.init(json: JSON(data))
+                fulfill(account)
+            }.catch { error in
+                reject(error)
+            }
+        }
+        return promise
     }
     
     typealias withImage = (_ image: UIImage) -> ()

@@ -20,7 +20,6 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var balanceLabel: UILabel!
     
-    //fileprivate var refreshControl = UIRefreshControl()
     fileprivate var categories: [Categories]? {
         get { return DataManager.shared.category() }
         //set { }
@@ -31,13 +30,16 @@ class HomeViewController: BaseViewController {
         
         super.viewDidLoad()
         collectionView.dataSource = self
-        //pullToRefresh()
+        collectionView.addSubview(refreshControl)
+        fetchProducts()
+        fetchFavorites()
+        fetchAccount()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
-        SVProgressHUD.dismiss()
+        //SVProgressHUD.dismiss()
     }
     
     //----------------------------------------------
@@ -47,23 +49,15 @@ class HomeViewController: BaseViewController {
             print(error)
         }
     }
-    
-//    //----------------------------------------------
-//    // MARK: Configuration.
-//    fileprivate func pullToRefresh() {
-//        
-//        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing")
-//        refreshControl.addTarget(self, action: #selector(fetchContent), for: UIControlEvents.valueChanged)
-//        collectionView.addSubview(refreshControl)
-//    }
-    
+    //----------------------------------------------
+
     // MARK: Downloading, Handling and Refreshing data.
-    func fetchContent() {
+    override func fetchContent() {
         
         fetchProducts()
         fetchFavorites()
         fetchAccount()
-        //refreshControl.endRefreshing()
+        refreshControl.endRefreshing()
     }
     
     override func updateProducts() {
@@ -103,7 +97,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
-        return categories == nil ? cell : cell.configure(with: categories![indexPath.item])
+        guard let categories = categories, let products = categories[indexPath.item].products else { return cell }
+        if !products.isEmpty {
+           return cell.configure(with: categories[indexPath.item])
+        }
+        return cell
     }
     
     // MARK: UICollectionViewDelegate

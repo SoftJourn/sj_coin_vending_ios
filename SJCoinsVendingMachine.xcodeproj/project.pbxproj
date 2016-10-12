@@ -33,18 +33,21 @@
 		35089F811DABB91900DC3BAF /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F801DABB91900DC3BAF /* AuthModel.swift */; };
 		35089F831DABBA4900DC3BAF /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F821DABBA4900DC3BAF /* AccountModel.swift */; };
 		35089F851DABCCE800DC3BAF /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F841DABCCE800DC3BAF /* DateManager.swift */; };
-		35089F911DABDA1000DC3BAF /* FeaturesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F901DABDA1000DC3BAF /* FeaturesModel.swift */; };
 		35617D721DA814A6000582F6 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35617D701DA814A6000582F6 /* Launch Screen.storyboard */; };
 		35617D751DA814E3000582F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35617D731DA814E3000582F6 /* Main.storyboard */; };
 		35617D791DA818A1000582F6 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D781DA818A1000582F6 /* Const.swift */; };
 		35617D7D1DA822E8000582F6 /* ValidationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D7C1DA822E8000582F6 /* ValidationManager.swift */; };
 		35617D7F1DA82484000582F6 /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D7E1DA82484000582F6 /* AuthorizationManager.swift */; };
 		35617D811DA82728000582F6 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D801DA82728000582F6 /* NavigationManager.swift */; };
-		35E29C051DABE23D002B7045 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C041DABE23D002B7045 /* Categories.swift */; };
-		35E29C071DABE280002B7045 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C061DABE280002B7045 /* Category.swift */; };
-		35E29C091DABE2E0002B7045 /* Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C081DABE2E0002B7045 /* Products.swift */; };
-		35E29C0B1DABE2E8002B7045 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C0A1DABE2E8002B7045 /* BaseClass.swift */; };
 		35E29C0D1DACD8D9002B7045 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C0C1DACD8D9002B7045 /* AlertManager.swift */; };
+		35E29C0F1DACDCDD002B7045 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C0E1DACDCDD002B7045 /* InitialViewController.swift */; };
+		35E504E91DAD360C00131567 /* FeaturesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504E51DAD360C00131567 /* FeaturesModel.swift */; };
+		35E504EA1DAD360C00131567 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504E61DAD360C00131567 /* Categories.swift */; };
+		35E504EB1DAD360C00131567 /* Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504E71DAD360C00131567 /* Products.swift */; };
+		35E504EC1DAD360C00131567 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504E81DAD360C00131567 /* Category.swift */; };
+		35E504EE1DAE48B400131567 /* MachinesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504ED1DAE48B400131567 /* MachinesViewController.swift */; };
+		35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504F31DAE569B00131567 /* MachinesModel.swift */; };
+		35E504F61DAE569B00131567 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504F41DAE569B00131567 /* Size.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,18 +78,21 @@
 		35089F801DABB91900DC3BAF /* AuthModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthModel.swift; path = Models/AuthModel.swift; sourceTree = "<group>"; };
 		35089F821DABBA4900DC3BAF /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountModel.swift; path = Models/AccountModel.swift; sourceTree = "<group>"; };
 		35089F841DABCCE800DC3BAF /* DateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
-		35089F901DABDA1000DC3BAF /* FeaturesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeaturesModel.swift; path = Models/FeaturesModel.swift; sourceTree = "<group>"; };
 		35617D711DA814A6000582F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		35617D741DA814E3000582F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		35617D781DA818A1000582F6 /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		35617D7C1DA822E8000582F6 /* ValidationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationManager.swift; sourceTree = "<group>"; };
 		35617D7E1DA82484000582F6 /* AuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
 		35617D801DA82728000582F6 /* NavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
-		35E29C041DABE23D002B7045 /* Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Categories.swift; path = Models/Categories.swift; sourceTree = "<group>"; };
-		35E29C061DABE280002B7045 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = Models/Category.swift; sourceTree = "<group>"; };
-		35E29C081DABE2E0002B7045 /* Products.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Products.swift; path = Models/Products.swift; sourceTree = "<group>"; };
-		35E29C0A1DABE2E8002B7045 /* BaseClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseClass.swift; path = Models/BaseClass.swift; sourceTree = "<group>"; };
 		35E29C0C1DACD8D9002B7045 /* AlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		35E29C0E1DACDCDD002B7045 /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitialViewController.swift; path = Controllers/InitialViewController.swift; sourceTree = "<group>"; };
+		35E504E51DAD360C00131567 /* FeaturesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturesModel.swift; sourceTree = "<group>"; };
+		35E504E61DAD360C00131567 /* Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
+		35E504E71DAD360C00131567 /* Products.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Products.swift; sourceTree = "<group>"; };
+		35E504E81DAD360C00131567 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		35E504ED1DAE48B400131567 /* MachinesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MachinesViewController.swift; path = Controllers/MachinesViewController.swift; sourceTree = "<group>"; };
+		35E504F31DAE569B00131567 /* MachinesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachinesModel.swift; sourceTree = "<group>"; };
+		35E504F41DAE569B00131567 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		6F5FAFC8CD94B442E353D50F /* Pods-SJCoinsVendingMachine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.release.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.release.xcconfig"; sourceTree = "<group>"; };
 		CFFCE6A93FAD050282DD61EF /* Pods-SJCoinsVendingMachine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.debug.xcconfig"; sourceTree = "<group>"; };
 		E4A8354A24EE6A6C35DDA347 /* Pods_SJCoinsVendingMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SJCoinsVendingMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,13 +147,10 @@
 		07854FCB1D4B8C8A00F31AB3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				35089F801DABB91900DC3BAF /* AuthModel.swift */,
-				35089F821DABBA4900DC3BAF /* AccountModel.swift */,
-				35E29C0A1DABE2E8002B7045 /* BaseClass.swift */,
-				35089F901DABDA1000DC3BAF /* FeaturesModel.swift */,
-				35E29C041DABE23D002B7045 /* Categories.swift */,
-				35E29C081DABE2E0002B7045 /* Products.swift */,
-				35E29C061DABE280002B7045 /* Category.swift */,
+				35E504EF1DAE566B00131567 /* Auth */,
+				35E504F21DAE568900131567 /* Machines */,
+				35E504F01DAE567300131567 /* Account */,
+				35E504F11DAE567C00131567 /* Products */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -188,6 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				35089F641DAB9E4900DC3BAF /* BaseViewController.swift */,
+				35E29C0E1DACDCDD002B7045 /* InitialViewController.swift */,
+				35E504ED1DAE48B400131567 /* MachinesViewController.swift */,
 				35089F671DAB9E4900DC3BAF /* LoginViewController.swift */,
 				35089F661DAB9E4900DC3BAF /* HomeViewController.swift */,
 				35089F651DAB9E4900DC3BAF /* FavoritesViewController.swift */,
@@ -234,10 +239,46 @@
 		35089F611DAB902B00DC3BAF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				35089F5D1DAB901900DC3BAF /* StringDecorator.swift */,
 				35089F5F1DAB902500DC3BAF /* AlertControllerDecorator.swift */,
+				35089F5D1DAB901900DC3BAF /* StringDecorator.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		35E504EF1DAE566B00131567 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				35089F801DABB91900DC3BAF /* AuthModel.swift */,
+			);
+			name = Auth;
+			sourceTree = "<group>";
+		};
+		35E504F01DAE567300131567 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				35089F821DABBA4900DC3BAF /* AccountModel.swift */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
+		35E504F11DAE567C00131567 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				35E504E51DAD360C00131567 /* FeaturesModel.swift */,
+				35E504E61DAD360C00131567 /* Categories.swift */,
+				35E504E71DAD360C00131567 /* Products.swift */,
+				35E504E81DAD360C00131567 /* Category.swift */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		35E504F21DAE568900131567 /* Machines */ = {
+			isa = PBXGroup;
+			children = (
+				35E504F31DAE569B00131567 /* MachinesModel.swift */,
+				35E504F41DAE569B00131567 /* Size.swift */,
+			);
+			name = Machines;
 			sourceTree = "<group>";
 		};
 		9205D78390ABBC527EAB62AB /* Frameworks */ = {
@@ -278,7 +319,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Softjourn;
 				TargetAttributes = {
 					07854FB51D4B8C5300F31AB3 = {
@@ -377,25 +418,30 @@
 				35089F681DAB9E4900DC3BAF /* AccountViewController.swift in Sources */,
 				35089F781DABB45F00DC3BAF /* CustomSegmentControl.swift in Sources */,
 				35089F5E1DAB901900DC3BAF /* StringDecorator.swift in Sources */,
+				35E504EE1DAE48B400131567 /* MachinesViewController.swift in Sources */,
 				35089F6A1DAB9E4900DC3BAF /* BaseViewController.swift in Sources */,
+				35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */,
 				35089F601DAB902500DC3BAF /* AlertControllerDecorator.swift in Sources */,
-				35E29C071DABE280002B7045 /* Category.swift in Sources */,
+				35E504E91DAD360C00131567 /* FeaturesModel.swift in Sources */,
 				35089F6F1DABAB4A00DC3BAF /* DataManager.swift in Sources */,
 				35089F7D1DABB45F00DC3BAF /* PurchaseHistoryTableViewCell.swift in Sources */,
 				35089F5A1DAB813D00DC3BAF /* APIManager.swift in Sources */,
+				35E504EC1DAD360C00131567 /* Category.swift in Sources */,
 				35617D7D1DA822E8000582F6 /* ValidationManager.swift in Sources */,
+				35E504EB1DAD360C00131567 /* Products.swift in Sources */,
 				35617D811DA82728000582F6 /* NavigationManager.swift in Sources */,
 				35089F7C1DABB45F00DC3BAF /* LoginPageDecorator.swift in Sources */,
 				35089F7F1DABB7DF00DC3BAF /* SortingManager.swift in Sources */,
+				35E29C0F1DACDCDD002B7045 /* InitialViewController.swift in Sources */,
 				07854FBA1D4B8C5300F31AB3 /* AppDelegate.swift in Sources */,
+				35E504F61DAE569B00131567 /* Size.swift in Sources */,
+				35E504EA1DAD360C00131567 /* Categories.swift in Sources */,
 				35089F791DABB45F00DC3BAF /* FavoritesTableViewCell.swift in Sources */,
 				35089F811DABB91900DC3BAF /* AuthModel.swift in Sources */,
 				35E29C0D1DACD8D9002B7045 /* AlertManager.swift in Sources */,
 				35089F771DABB45F00DC3BAF /* AllItemsTableViewCell.swift in Sources */,
-				35E29C051DABE23D002B7045 /* Categories.swift in Sources */,
 				35089F6C1DAB9E4900DC3BAF /* HomeViewController.swift in Sources */,
 				35089F551DAB7D9000DC3BAF /* BaseManager.swift in Sources */,
-				35E29C0B1DABE2E8002B7045 /* BaseClass.swift in Sources */,
 				35089F7B1DABB45F00DC3BAF /* HomeCollectionViewInternalCell.swift in Sources */,
 				35089F851DABCCE800DC3BAF /* DateManager.swift in Sources */,
 				35089F7A1DABB45F00DC3BAF /* HomeCollectionViewCell.swift in Sources */,
@@ -403,8 +449,6 @@
 				35089F6D1DAB9E4900DC3BAF /* LoginViewController.swift in Sources */,
 				35617D791DA818A1000582F6 /* Const.swift in Sources */,
 				35089F6B1DAB9E4900DC3BAF /* FavoritesViewController.swift in Sources */,
-				35E29C091DABE2E0002B7045 /* Products.swift in Sources */,
-				35089F911DABDA1000DC3BAF /* FeaturesModel.swift in Sources */,
 				35617D7F1DA82484000582F6 /* AuthorizationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,8 +489,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -491,8 +537,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -511,6 +559,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -520,6 +569,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CFFCE6A93FAD050282DD61EF /* Pods-SJCoinsVendingMachine.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = A2PX8YZMXY;
 				INFOPLIST_FILE = SJCoinsVendingMachine/Info.plist;
@@ -534,6 +584,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6F5FAFC8CD94B442E353D50F /* Pods-SJCoinsVendingMachine.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = A2PX8YZMXY;
 				INFOPLIST_FILE = SJCoinsVendingMachine/Info.plist;

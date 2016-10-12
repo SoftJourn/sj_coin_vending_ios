@@ -11,6 +11,6 @@ import Foundation
 class ValidationManager {
     
     class func validate(login: String, password: String) -> Bool {
-        return !login.isEmpty || !password.isEmpty
+        return login.isEmpty || password.isEmpty
     }
 }

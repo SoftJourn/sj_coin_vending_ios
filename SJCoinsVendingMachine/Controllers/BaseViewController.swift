@@ -8,16 +8,33 @@
 
 import UIKit
 import SVProgressHUD
+import PromiseKit
 
 class BaseViewController: UIViewController {
+    
+    // MARK: Constants
+    lazy var refreshControl: UIRefreshControl = {
+        
+        let refresh = UIRefreshControl()
+        refresh.attributedTitle = NSAttributedString(string: "Refreshing")
+        refresh.addTarget(self, action: #selector(fetchContent), for: UIControlEvents.valueChanged)
+        return refresh
+    }()
+    
+    func fetchContent() {
+        
+    }
     
     // MARK: Downloading, Handling and Refreshing data.
     func fetchProducts() {
         
-        APIManager.fetchProducts { [unowned self] object, error in
-            guard let object = object else { return self.present(.downloading(error)) }
+        firstly {
+            APIManager.fetchProducts()
+        }.then { object -> Void in
             DataManager.shared.save(object)
             self.updateProducts()
+        }.catch { error in
+            self.present(.downloading(error))
         }
     }
     
@@ -27,10 +44,14 @@ class BaseViewController: UIViewController {
     
     func fetchFavorites() {
         
-        APIManager.fetchFavorites { [unowned self] object, error in
-            guard let object = object else { return self.present(.downloading(error)) }
+        firstly {
+            APIManager.fetchFavorites()
+        }.then { object -> Void in
             DataManager.shared.save(object)
+            //dump(object)
             self.updateFavorites()
+        }.catch { error in
+            self.present(.downloading(error))
         }
     }
     
@@ -40,13 +61,17 @@ class BaseViewController: UIViewController {
     
     func fetchAccount() {
         
-        APIManager.fetchAccount { [unowned self] object, error in
-            guard let object = object else { return self.present(.downloading(error)) }
+        firstly {
+            APIManager.fetchAccount()
+        }.then { object -> Void in
             DataManager.shared.save(object)
+            //dump(object)
             self.updateAccount()
+        }.catch { error in
+            self.present(.downloading(error))
         }
     }
-    
+
     func updateAccount() {
         //Override in child.
     }
@@ -126,4 +151,5 @@ class BaseViewController: UIViewController {
     //        let alertController = UIAlertController.presentAlert(with: title, message: message)
     //        self.present(alertController, animated: true) { }
     //    }
+    
 }

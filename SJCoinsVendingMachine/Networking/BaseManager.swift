@@ -16,11 +16,12 @@ class BaseManager {
     static let customManager: Alamofire.SessionManager = {
         
         //Privacy configuration the Alamofire manager
-        let serverTrustPolicies: [String: ServerTrustPolicy] = [ "sjcoins.testing.softjourn.if.ua": .disableEvaluation ]
+        let serverTrustPolicies: [String: ServerTrustPolicy] = [ "sjcoins.testing.softjourn.if.ua": .disableEvaluation,
+                                                                 "vending.softjourn.if.ua": .disableEvaluation ]
         
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 10 //seconds
-        configuration.timeoutIntervalForResource = 15 //seconds
+        configuration.timeoutIntervalForRequest = 20 //seconds
+        configuration.timeoutIntervalForResource = 20 //seconds
         configuration.httpAdditionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
         
         return Alamofire.SessionManager(
@@ -46,9 +47,9 @@ class BaseManager {
                     case .success(let json):
                         fulfill(json as AnyObject)
                     case .failure(let error):
-//                        guard let data = response.data else { return }
-//                        let errorData = NSString(data: data, encoding:String.Encoding.utf8.rawValue)
-//                        print(errorData)
+                        guard let data = response.data else { return }
+                        let errorData = NSString(data: data, encoding:String.Encoding.utf8.rawValue)
+                        print(errorData)
                         reject(error)
                     }
             }

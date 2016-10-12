@@ -13,14 +13,12 @@ import SVProgressHUD
 class AccountViewController: BaseViewController {
     
     // MARK: Constants
-    fileprivate let logOutMessage = "Signing out ..."
     
     // MARK: Properties
     @IBOutlet fileprivate var nameLabel: UILabel!
     @IBOutlet fileprivate var amountLabel: UILabel!
     @IBOutlet fileprivate var tableView: UITableView!
     
-    fileprivate var refreshControl = UIRefreshControl()
     fileprivate var accountInformation: AccountModel? {
         return DataManager.shared.accountModel()
     }
@@ -33,45 +31,31 @@ class AccountViewController: BaseViewController {
         
         super.viewDidLoad()
         tableView.dataSource = self
-        //PullToRefresh()
+        tableView.addSubview(refreshControl)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
-        SVProgressHUD.dismiss()
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        fetchContent()
-        SVProgressHUD.dismiss()
+        //SVProgressHUD.dismiss()
+        fetchAccount()
     }
     
     // MARK: Actions
     @IBAction fileprivate func logOutButton(_ sender: UIBarButtonItem) {
         
         //ExecuteLogOut
-        SVProgressHUD.show(withStatus: logOutMessage)
+        SVProgressHUD.show(withStatus: sign.outMessage)
         AuthorizationManager.removeAccessToken()
         NavigationManager.shared.presentLoginViewController()
     }
     
-    // MARK: Configuration.
-    //    fileprivate func PullToRefresh() {
-    //
-    //        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing")
-    //        refreshControl.addTarget(self, action: #selector(fetchContent), for: UIControlEvents.valueChanged)
-    //        tableView.addSubview(refreshControl)
-    //    }
-    
     // MARK: Downloading, Handling and Refreshing data.
-    func fetchContent() {
+    override func fetchContent() {
         
         fetchProducts()
         fetchAccount()
-        //refreshControl.endRefreshing()
+        refreshControl.endRefreshing()
     }
     
     override func updateProducts() {
@@ -92,8 +76,10 @@ class AccountViewController: BaseViewController {
     
     fileprivate func updateViewWithAccountContent() {
         
-        amountLabel.text = "\(String(accountInformation!.amount!)) Coins"
-        nameLabel.text = "\(accountInformation!.name!) \(accountInformation!.surname!)"
+        guard let amount = accountInformation?.amount else { return }
+        amountLabel.text = "\(String(amount)) Coins"
+        guard let name = accountInformation?.name, let surname = accountInformation?.surname else { return }
+        nameLabel.text = "\(name) \(surname)"
     }
 }
 

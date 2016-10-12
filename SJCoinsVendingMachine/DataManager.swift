@@ -16,6 +16,7 @@ class DataManager {
     
     // MARK: Properties
     
+    fileprivate var machines: [MachinesModel]?
     fileprivate var features: FeaturesModel?
     fileprivate var account: AccountModel?
     fileprivate var favorites: [Products]?
@@ -31,6 +32,8 @@ class DataManager {
     func save(_ object: AnyObject) {
         
         switch object {
+        case let object as [MachinesModel]:
+            machines = object
         case let object as FeaturesModel:
             features = object
         case let object as [Products]:
@@ -68,6 +71,11 @@ class DataManager {
 //        return categories
 //    }
     
+    func machinesModel() -> [MachinesModel]? {
+        
+        return machines
+    }
+
     func accountModel() -> AccountModel? {
         
         return account
@@ -97,20 +105,19 @@ class DataManager {
 //        }
 //    }
     
-//    func allItemsArray() -> [Products]? {
-//        
-//        guard let featureModel = features,
-//            let drink = featureModel.drink,
-//            let snack = featureModel.snack else { return nil}
-//        var products = [Product]()
-//        for object in snack {
-//            products.append(object as Product)
-//        }
-//        for object in drink {
-//            products.append(object as Product)
-//        }
-//        return products
-//    }
+    func allItems() -> [Products]? {
+        
+        guard let items = features?.categories else { return nil}
+        var allItemsArray = [Products]()
+        
+        for item in items {
+            guard let products = item.products else { return nil }
+            for product in products {
+                allItemsArray.append(product)
+            }
+        }
+        return allItemsArray
+    }
     
 //    func myLastPurchase() -> [MyLastPurchases]? {
 //        return features?.myLastPurchases
@@ -126,6 +133,7 @@ class DataManager {
     }
     
     func saveAccount(balance amount: Int) {
+        
         account?.amount = amount
     }
     

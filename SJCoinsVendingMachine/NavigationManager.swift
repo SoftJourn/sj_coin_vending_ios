@@ -11,20 +11,24 @@ import UIKit
 class NavigationManager: NSObject {
     
     static let shared = NavigationManager()
+    var mainStoryboard: UIStoryboard {
+        
+        return UIStoryboard(name: "Main", bundle: nil)
+    }
     //var tabBarController: UITabBarController?
     var visibleViewController: UIViewController?
-
+    
     func presentTabBarController() {
         
-        let tabBarController = create(viewController: storyboard.tabBarControllerIdentifier) as? UITabBarController
-        guard let controller = tabBarController else { return }
-        present(viewControllerAsRoot: controller)
+        let tabBarController = create(viewController: storyboard.tabBarControllerIdentifier) as! UITabBarController
+        present(viewControllerAsRoot: tabBarController)
     }
     
-//    func presentExistingTabBarController() {
-//        
-//        presentControllerAsRoot(tabBarController!)
-//    }
+    func presentMachinesViewController() {
+        
+        let machinesViewController = create(viewController: MachinesViewController.identifier)
+        present(viewControllerAsRoot: machinesViewController)
+    }
     
     func presentLoginViewController() {
         
@@ -32,28 +36,13 @@ class NavigationManager: NSObject {
         present(viewControllerAsRoot: loginViewController)
     }
     
-    func mainStoryboard() -> UIStoryboard {
-        
-        return UIStoryboard(name: "Main", bundle: nil)
-    }
-    
-//    class func presentAllProductsViewController(with items: [Products]?, mode: Filter) {
-//        
-//        guard let navController = tabBarController!.viewControllers![2] as? UINavigationController,
-//            let viewController = navController.viewControllers[0] as? AllProductsViewController else { return }
-//        viewController.filterItems = SortingManager().sortBy(name: items)
-//        viewController.filterMode = mode
-//        viewController.usedSeeAll = true
-//        tabBarController!.selectedIndex = 2
-//    }
-    
     fileprivate func create(viewController identifier: String) -> UIViewController {
         
-        return mainStoryboard().instantiateViewController(withIdentifier: identifier)
+        return mainStoryboard.instantiateViewController(withIdentifier: identifier)
     }
     
-    fileprivate func present(viewControllerAsRoot viewController: UIViewController) {
+    fileprivate func present(viewControllerAsRoot: UIViewController) {
         
-        UIApplication.shared.keyWindow?.rootViewController? = viewController
+        UIApplication.shared.keyWindow?.rootViewController? = viewControllerAsRoot
     }
 }

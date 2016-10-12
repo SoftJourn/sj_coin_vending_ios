@@ -16,6 +16,7 @@ extension DefaultsKeys {
     
     static let kAccessToken = DefaultsKey<String>("access_token")
     static let kRefreshToken = DefaultsKey<String>("refresh_token")
+    static let kMachineId = DefaultsKey<Int>("machineId")
 }
 
 class AuthorizationManager: RequestManager {
@@ -48,7 +49,7 @@ class AuthorizationManager: RequestManager {
         
         let urlString = "\(networking.baseURL)auth/oauth/token"
         let headers = [ "Authorization": "Basic \(networking.basicKey)",
-            "Content-Type": networking.authContentType ]
+                        "Content-Type": networking.authContentType ]
         let refreshData = "refresh_token=\(Defaults[.kRefreshToken])&grant_type=refresh_token"
         
         customManager.request(urlString, method: .post, parameters: [:], encoding: refreshData, headers: headers)
@@ -56,7 +57,7 @@ class AuthorizationManager: RequestManager {
                 
                 switch response.result {
                 case .success(let data):
-                    print(data)
+                    //print(data)
                     let model = AuthModel.init(json: JSON(data))
                     save(authInfo: model)
                     complition(nil)
@@ -68,12 +69,18 @@ class AuthorizationManager: RequestManager {
 
     class func save(authInfo object: AuthModel) {
         
-        Defaults[.kAccessToken] = object.accessToken!
-        Defaults[.kRefreshToken] = object.refreshToken!
+        guard let token = object.accessToken, let refresh = object.refreshToken else { return }
+        Defaults[.kAccessToken] = token
+        Defaults[.kRefreshToken] = refresh
         print("Token saved")
         //print(object.expiresIn)
         //print("REFRESH: \(Defaults[.kRefreshToken])")
         //print("ACCESS: \(Defaults[.kAccessToken])")
+    }
+    
+    class func save(machineId: Int) {
+        
+        Defaults[.kMachineId] = machineId
     }
     
     class func removeAccessToken() {

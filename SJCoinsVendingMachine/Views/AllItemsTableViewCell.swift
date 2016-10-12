@@ -18,7 +18,7 @@ class AllItemsTableViewCell: UITableViewCell {
     fileprivate let checkedImage = UIImage(named: "FavouritesChecked")! as UIImage
     fileprivate let uncheckedImage = UIImage(named: "FavouritesUnchecked")! as UIImage
     
-    @IBOutlet fileprivate weak var logoImage: UIImageView!
+    @IBOutlet weak var logo: UIImageView!
     @IBOutlet fileprivate weak var nameLabel: UILabel!
     @IBOutlet fileprivate weak var priceLabel: UILabel!
     @IBOutlet fileprivate weak var buyButton: UIButton!
@@ -34,7 +34,7 @@ class AllItemsTableViewCell: UITableViewCell {
         didSet { priceLabel.text = "\(productPrice!) Coins" }
     }
     var favorite: Bool = false {
-        didSet{
+        didSet {
             favorite == true ? checked() : unchecked()
         }
     }
@@ -72,7 +72,6 @@ class AllItemsTableViewCell: UITableViewCell {
         productID = item.internalIdentifier
         productName = item.name
         productPrice = item.price
-        loadImage(with: item.imageUrl)
         return self
     }
     
@@ -86,20 +85,8 @@ class AllItemsTableViewCell: UITableViewCell {
         favoriteButton.setImage(uncheckedImage, for: UIControlState())
     }
     
-    fileprivate func loadImage(with endpoint: String?) {
-        
-        guard let endpoint = endpoint else { return logoImage.image = UIImage(named: "Placeholder") }
-        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
-            APIManager.fetch(image: endpoint) { image in
-                self.logoImage.image = image
-            }
-            return
-        }
-        self.logoImage.image = cashedImage
-    }
-    
     fileprivate func resetImage() {
         request?.cancel()
-        logoImage.image = UIImage(named: "Placeholder")
+        logo.image = UIImage(named: "Placeholder")
     }
 }

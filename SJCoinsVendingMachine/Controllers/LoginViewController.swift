@@ -8,12 +8,12 @@
 
 import UIKit
 import SVProgressHUD
+import PromiseKit
 
 class LoginViewController: BaseViewController {
     
     // MARK: Constants
     static let identifier = "\(LoginViewController.self)"
-    let logInMessage = "Signing in ..."
     
     // MARK: Properties
     @IBOutlet weak var loginTextField: UITextField!
@@ -43,36 +43,45 @@ class LoginViewController: BaseViewController {
         SVProgressHUD.dismiss()
     }
     
+    deinit {
+        print("LoginViewController deinited")
+    }
+    
     // MARK: Actions
     @IBAction fileprivate func signInButtonPressed(_ sender: UIButton) {
         
         let validation = ValidationManager.validate(login: login, password: password)
-        !validation ? present(errorType.validation) : authorization()
+        validation ? present(errorType.validation) : authorization()
     }
     
     fileprivate func authorization() {
         
-        SVProgressHUD.show(withStatus: logInMessage)
+        SVProgressHUD.show(withStatus: sign.inMessage)
         AuthorizationManager.authRequest(login: login, password: password) { [unowned self] error in
-            SVProgressHUD.dismiss()
-            error != nil ? self.present(errorType.authorization(error!)) : NavigationManager.shared.presentTabBarController()
+            error != nil ? self.authFailed(error!) : self.authSuccess()
         }
     }
     
-//    override func present(_ error: BaseViewController.errorType) {
-//        
-//        SVProgressHUD.dismiss()
-//        switch error {
-//        case .validation: break
-//            //let alertController = UIAlertController.presentAlert(with: errorTitle.validation, message: errorMessage.validation)
-//        //present(alertController, animated: true) { }
-//        case .authorization(let error): break
-//            //FIXME: Create alertManager
-//            //If error present display it.
-//            //let alertController = UIAlertController.presentAlert(with: errorTitle.auth, message: error.localizedDescription)
-//            //self.present(alertController, animated: true) { }
-//        }
-//    }
+    fileprivate func authSuccess() {
+        
+        //Fetch machines list
+        firstly {
+            APIManager.fetchMachines()
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+            NavigationManager.shared.presentMachinesViewController()
+        }.catch { error in
+             print(error)
+             //SVProgressHUD.dismiss()
+             //AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, action: self.predefinedAction())
+        }
+        
+    }
+    
+    fileprivate func authFailed(_ error: Error) {
+        
+        self.present(errorType.authorization(error))
+    }
     
     // MARK: ScrollView contentOffset
     fileprivate func registerForKeyboardNotifications() {

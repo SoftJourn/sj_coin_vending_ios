@@ -35,7 +35,6 @@ class AllItemsViewController: BaseViewController {
     
     fileprivate lazy var searchData = [Products]()
     fileprivate lazy var sortingManager = SortingManager()
-    fileprivate var refreshControl = UIRefreshControl()
     fileprivate lazy var resultSearchController: UISearchController = {
         
         let searchController = UISearchController(searchResultsController: nil)
@@ -45,13 +44,12 @@ class AllItemsViewController: BaseViewController {
         return searchController
     }()
     
-//    fileprivate var allItems: [Products]? {
-//        return DataManager.shared.allItemsArray()
-//    }
+    fileprivate var allItems: [Products]? {
+        return DataManager.shared.allItems()
+    }
     //fileprivate var allProducts: ItemModel? {
         //return DataManager.shared.featuresModel()
     //}
-    //fileprivate lazy var favoriteItems = [String]()
     
     var filterMode: Filter = .allItems
     var filterItems: [Products]?
@@ -64,14 +62,14 @@ class AllItemsViewController: BaseViewController {
         super.viewDidLoad()
         //NavigationMager.tabBarController?.delegate = self
         tableView.delegate = self
-        //defaultItemsList()
-        //pullToRefresh()
+        tableView.addSubview(refreshControl)
+        filterItems = allItems
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
-        SVProgressHUD.dismiss()
+        //SVProgressHUD.dismiss()
         //changeFilter(to: filterMode, items: filterItems)
     }
     
@@ -97,34 +95,20 @@ class AllItemsViewController: BaseViewController {
     @IBAction func titleButtonPressed(_ sender: UIButton) {
         
         //Present ActionSheet.
-        //let actionSheet = UIAlertController.presentFilterSheet(with: nil, message: nil, actions: predefinedUIAlertActions())
-        //present(actionSheet, animated: true) { }
+        AlertManager().present(actionSheet: predefinedActions())
     }
     
-    // MARK: Configuration.
-//    fileprivate func defaultItemsList() {
-//        
-//        if usedSeeAll == false {
-//            filterItems = sortingManager.sortBy(name: allItems)
-//        }
-//    }
-    
-    //    fileprivate func pullToRefresh() {
-    //
-    //        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing")
-    //        refreshControl.addTarget(self, action: #selector(fetchContent), for: UIControlEvents.valueChanged)
-    //        tableView.addSubview(refreshControl)
-    //    }
-    
     // MARK: Downloading, Handling and Refreshing data.
-    func fetchContent() {
+    override func fetchContent() {
         
         fetchProducts()
-        //refreshControl.endRefreshing()
+        refreshControl.endRefreshing()
     }
     
     override func updateProducts() {
         
+        dump(allItems)
+        filterItems = allItems
         if filterItems != nil {
             self.configureAndReloadData(nil, array: self.filterItems)
         }
@@ -137,27 +121,28 @@ class AllItemsViewController: BaseViewController {
     }
     
     // MARK: Filtering.
-//    fileprivate func predefinedUIAlertActions() -> [UIAlertAction] {
-//        
-//        //Creating actions for ActionSheet and handle closures.
-//        let allItemsAction = UIAlertAction(title: category.allItems, style: .default) { [unowned self] action in
-//            self.saveAndChange(filterMode: .allItems, items: DataManager.shared.allItemsArray())
-//        }
-//        let lastAddedAction = UIAlertAction(title: category.lastAdded, style: .default) { [unowned self] action in
-//            self.saveAndChange(filterMode: .lastAdded, items: self.allProducts?.newProducts)
-//        }
-//        let bestSellersAction = UIAlertAction(title: category.bestSellers, style: .default) { [unowned self] action in
-//            self.saveAndChange(filterMode: .bestSellers, items: self.allProducts?.bestSellers)
-//        }
-//        let snacksAction = UIAlertAction(title: category.snacks, style: .default) { [unowned self] action in
-//            self.saveAndChange(filterMode: .snaks, items: self.allProducts?.snack)
-//        }
-//        let drinksAction = UIAlertAction(title: category.drinks, style: .default) { [unowned self] action in
-//            self.saveAndChange(filterMode: .drinks, items: self.allProducts?.drink)
-//        }
-//        //Добавити кнопку Cancel
-//        return [allItemsAction, lastAddedAction, bestSellersAction, snacksAction, drinksAction]
-//    }
+    fileprivate func predefinedActions() -> [UIAlertAction] {
+        
+        //Creating actions for ActionSheet and handle closures.
+        let allItems = UIAlertAction(title: category.allItems, style: .default) { [unowned self] action in
+            self.saveAndChange(filterMode: .allItems, items: self.allItems)
+        }
+        let lastAdded = UIAlertAction(title: category.lastAdded, style: .default) { [unowned self] action in
+            //self.saveAndChange(filterMode: .lastAdded, items: self.allProducts?.newProducts)
+        }
+        let bestSellers = UIAlertAction(title: category.bestSellers, style: .default) { [unowned self] action in
+            //self.saveAndChange(filterMode: .bestSellers, items: self.allProducts?.bestSellers)
+        }
+        let snacks = UIAlertAction(title: category.snacks, style: .default) { [unowned self] action in
+            //self.saveAndChange(filterMode: .snaks, items: self.allProducts?.snack)
+        }
+        let drinks = UIAlertAction(title: category.drinks, style: .default) { [unowned self] action in
+            //self.saveAndChange(filterMode: .drinks, items: self.allProducts?.drink)
+        }
+        let cancel = UIAlertAction(title: category.cancel, style: .cancel) { action in }
+
+        return [allItems, lastAdded, bestSellers, snacks, drinks, cancel]
+    }
     
     fileprivate func saveAndChange(filterMode mode: Filter, items: [Products]?) {
         
@@ -223,25 +208,23 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         if self.resultSearchController.isActive {
             return searchData.isEmpty ? cell : cell.configure(with: searchData[indexPath.item])
         } else {
-            return prepare(cell, indexPath: indexPath)
+            guard let items = filterItems else  { return cell }
+            cell.delegate = self
+            load(image: items[indexPath.item].imageUrl, forCell: cell)
+            return cell.configure(with: items[indexPath.item])
         }
     }
     
-    fileprivate func prepare(_ cell: AllItemsTableViewCell, indexPath: IndexPath) -> UITableViewCell {
+    fileprivate func load(image endpoint: String?, forCell cell: AllItemsTableViewCell) {
         
-        guard let filterItems = filterItems,
-            let itemName = filterItems[indexPath.item].name else { return cell }
-        if !filterItems.isEmpty {
-            //let favoriteItems = DataManager.shared.favorite(nil)
-            //print(favoriteItems)
-//            if favoriteItems.contains(itemName) {
-//                cell.favorite = true
-//            }
-            cell.delegate = self
-            return cell.configure(with: filterItems[indexPath.item])
-        } else {
-            return cell
+        guard let endpoint = endpoint else { return }
+        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
+            APIManager.fetch(image: endpoint) { image in
+                cell.logo.image = image
+            }
+            return
         }
+        cell.logo.image = cashedImage
     }
     
     // MARK: UITableViewDelegate
@@ -275,6 +258,7 @@ extension AllItemsViewController: UITabBarControllerDelegate {
     
     // MARK: UITabBarControllerDelegate
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        
         resultSearchController.dismiss(animated: true) { }
     }
 }

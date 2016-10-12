@@ -14,8 +14,7 @@ class FavoritesViewController: BaseViewController {
     // MARK: Properties
     @IBOutlet weak var tableView: UITableView!
     
-    //fileprivate var refreshControl = UIRefreshControl()
-    fileprivate var favoritesProducts: [Products]? {
+    fileprivate var favorites: [Products]? {
         return DataManager.shared.favorite()
     }
     
@@ -24,28 +23,20 @@ class FavoritesViewController: BaseViewController {
         
         super.viewDidLoad()
         tableView.dataSource = self
-        //pullToRefresh()
+        tableView.addSubview(refreshControl)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
-        SVProgressHUD.dismiss()
+        //SVProgressHUD.dismiss()
     }
     
-    // MARK: Configuration.
-//    fileprivate func pullToRefresh() {
-//        
-//        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing")
-//        refreshControl.addTarget(self, action: #selector(fetchContent), for: UIControlEvents.valueChanged)
-//        tableView.addSubview(refreshControl)
-//    }
-    
     // MARK: Downloading, Handling and Refreshing data.
-    func fetchContent() {
+    override func fetchContent() {
         
         fetchFavorites()
-        //refreshControl.endRefreshing()
+        refreshControl.endRefreshing()
     }
     
     override func updateFavorites() {
@@ -66,14 +57,14 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return favoritesProducts == nil ? 0 : favoritesProducts!.count
+        return favorites == nil ? 0 : favorites!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as! FavoritesTableViewCell
         return cell
-        //return favoritesProducts == nil ? cell : cell.configure(with: favoritesProducts![indexPath.item])
+        //return favorites == nil ? cell : cell.configure(with: favorites![indexPath.item])
     }
     
     // MARK: UITableViewDelegate

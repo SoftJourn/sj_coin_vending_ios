@@ -15,4 +15,18 @@ class AlertManager {
         let alertController = UIAlertController.presentAlert(with: title, message: message)
         NavigationManager.shared.visibleViewController?.present(alertController, animated: true) { }
     }
+    
+    func present(retryAlert title: String, message: String, action: UIAlertAction) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(action)
+        NavigationManager.shared.visibleViewController?.present(alertController, animated: true) { }
+    }
+    
+    
+    func present(actionSheet actions: [UIAlertAction]) {
+        
+        let actionSheet = UIAlertController.presentFilterSheet(with: nil, message: nil, actions: actions)
+        NavigationManager.shared.visibleViewController?.present(actionSheet, animated: true) { }
+    }
 }

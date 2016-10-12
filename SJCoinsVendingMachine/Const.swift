@@ -17,8 +17,8 @@ struct storyboard {
 
 struct networking {
     
-    //static let baseURL = "https://sjcoins.testing.softjourn.if.ua/"
-    static let baseURL = "https://vending.softjourn.if.ua/"
+    static let baseURL = "https://sjcoins.testing.softjourn.if.ua/"
+    static let baseVendingURL = "https://vending.softjourn.if.ua/"
     //Auth
     static let pathAuth = "auth/oauth/token"
     static let authContentType = "application/x-www-form-urlencoded"
@@ -33,14 +33,17 @@ struct networking {
 }
 
 struct category {
+    
+    static let allItems = "All Items"
     static let lastAdded = "Last Added"
     static let bestSellers = "Best Sellers"
     static let snacks = "Snacks"
     static let drinks = "Drinks"
-    static let allItems = "All Items"
+    static let cancel = "Cancel"
 }
 
 struct errorTitle {
+    
     static let auth = "Authorization Error"
     static let download = "Downloading Error"
     static let buy = "Buying Error"
@@ -49,17 +52,26 @@ struct errorTitle {
 }
 
 struct errorMessage {
+    
     static let validation = "Login and password should not be empty."
     static let reachability = "Please verify your Internet connection."
+    static let retryDownload = "Error held while fetching list of machines. Please try again."
 }
 
 struct buttonTitle {
+    
     static let confirm = "Confirm"
     static let cancel = "Cancel"
 }
 
 struct buying {
+    
     static let successTitle = "Success"
     static let failedTitle = "Failed"
     static let successMessage = "Please take your order from Vending Machine."
+}
+
+struct sign {
+   static let inMessage = "Signing in ..."
+   static let outMessage = "Signing out ..."
 }
