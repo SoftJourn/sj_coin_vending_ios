@@ -15,25 +15,25 @@ class NavigationManager: NSObject {
         
         return UIStoryboard(name: "Main", bundle: nil)
     }
-    //var tabBarController: UITabBarController?
     var visibleViewController: UIViewController?
     
     func presentTabBarController() {
         
-        let tabBarController = create(viewController: storyboard.tabBarControllerIdentifier) as! UITabBarController
+        let tabBarController = create(viewController: storyboards.tabBarControllerIdentifier) as! UITabBarController
         present(viewControllerAsRoot: tabBarController)
     }
     
     func presentMachinesViewController() {
         
-        let machinesViewController = create(viewController: MachinesViewController.identifier)
-        present(viewControllerAsRoot: machinesViewController)
+        let navigationController = create(viewController: storyboards.navigationController) as! UINavigationController
+        //navigationController.popToViewController(navigationController.viewControllers[1], animated: true)
+        visibleViewController?.present(navigationController, animated: true) { }
     }
     
     func presentLoginViewController() {
         
-        let loginViewController = create(viewController: LoginViewController.identifier)
-        present(viewControllerAsRoot: loginViewController)
+        let navigationController = create(viewController: storyboards.navigationController) as! UINavigationController
+        present(viewControllerAsRoot: navigationController)
     }
     
     fileprivate func create(viewController identifier: String) -> UIViewController {
@@ -43,6 +43,6 @@ class NavigationManager: NSObject {
     
     fileprivate func present(viewControllerAsRoot: UIViewController) {
         
-        UIApplication.shared.keyWindow?.rootViewController? = viewControllerAsRoot
+        UIApplication.shared.keyWindow?.rootViewController?.present(viewControllerAsRoot, animated: true) { }
     }
 }

@@ -34,16 +34,18 @@ class LoginViewController: BaseViewController {
         
         super.viewDidLoad()
         registerForKeyboardNotifications()
-        //LoginPage.decorateLoginViewController(self)
+        LoginPage.decorateLoginViewController(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
+        navigationController?.isNavigationBarHidden = true
         NavigationManager.shared.visibleViewController = self
         SVProgressHUD.dismiss()
     }
     
     deinit {
+        
         print("LoginViewController deinited")
     }
     
@@ -58,29 +60,18 @@ class LoginViewController: BaseViewController {
         
         SVProgressHUD.show(withStatus: sign.inMessage)
         AuthorizationManager.authRequest(login: login, password: password) { [unowned self] error in
-            error != nil ? self.authFailed(error!) : self.authSuccess()
+            error != nil ? self.authFailed() : self.authSuccess()
         }
     }
     
     fileprivate func authSuccess() {
         
-        //Fetch machines list
-        firstly {
-            APIManager.fetchMachines()
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-            NavigationManager.shared.presentMachinesViewController()
-        }.catch { error in
-             print(error)
-             //SVProgressHUD.dismiss()
-             //AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, action: self.predefinedAction())
-        }
-        
+        self.performSegue(withIdentifier: storyboards.loginIdentifier, sender: self)
     }
     
-    fileprivate func authFailed(_ error: Error) {
+    fileprivate func authFailed() {
         
-        self.present(errorType.authorization(error))
+        present(errorType.authorization)
     }
     
     // MARK: ScrollView contentOffset
@@ -96,7 +87,7 @@ class LoginViewController: BaseViewController {
         let keyboardFrame: CGRect = (info.object(forKey: UIKeyboardFrameEndUserInfoKey)! as AnyObject).cgRectValue
         let loginButtonFrame: CGRect = self.view.convert(self.loginButton.frame, from: nil)
         let coveredFrame: CGRect = loginButtonFrame.intersection(keyboardFrame)
-        scrollView.setContentOffset(CGPoint(x: 0, y: coveredFrame.height + 180), animated: true)
+        scrollView.setContentOffset(CGPoint(x: 0, y: coveredFrame.height + 130), animated: true)
     }
     
     @objc fileprivate func keyboardWillBeHidden(_ notification: Notification) {

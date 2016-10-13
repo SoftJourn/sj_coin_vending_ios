@@ -42,11 +42,22 @@ class HomeViewController: BaseViewController {
         //SVProgressHUD.dismiss()
     }
     
+    deinit {
+        
+        print("HomeViewController deinited")
+    }
+    
+    // MARK: Actions
+    @IBAction func machinesButtonPressed(_ sender: UIBarButtonItem) {
+    
+        NavigationManager.shared.presentMachinesViewController()
+    }
+    
     //----------------------------------------------
     @IBAction func refreshTokenTest(_ sender: UIBarButtonItem) {
     
         AuthorizationManager.refreshRequest { error in
-            print(error)
+            //print(error)
         }
     }
     //----------------------------------------------

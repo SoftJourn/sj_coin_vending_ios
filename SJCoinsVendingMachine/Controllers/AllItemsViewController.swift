@@ -73,6 +73,11 @@ class AllItemsViewController: BaseViewController {
         //changeFilter(to: filterMode, items: filterItems)
     }
     
+    deinit {
+        
+        print("FavoritesViewController deinited")
+    }
+    
     // MARK: Actions
     @IBAction func selectSegment(_ sender: UISegmentedControl) {
         

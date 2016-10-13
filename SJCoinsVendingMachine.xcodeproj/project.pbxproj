@@ -192,8 +192,8 @@
 			children = (
 				35089F641DAB9E4900DC3BAF /* BaseViewController.swift */,
 				35E29C0E1DACDCDD002B7045 /* InitialViewController.swift */,
-				35E504ED1DAE48B400131567 /* MachinesViewController.swift */,
 				35089F671DAB9E4900DC3BAF /* LoginViewController.swift */,
+				35E504ED1DAE48B400131567 /* MachinesViewController.swift */,
 				35089F661DAB9E4900DC3BAF /* HomeViewController.swift */,
 				35089F651DAB9E4900DC3BAF /* FavoritesViewController.swift */,
 				35089F631DAB9E4900DC3BAF /* AllItemsViewController.swift */,

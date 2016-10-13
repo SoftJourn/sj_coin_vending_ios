@@ -41,6 +41,11 @@ class AccountViewController: BaseViewController {
         fetchAccount()
     }
     
+    deinit {
+        
+        print("FavoritesViewController deinited")
+    }
+    
     // MARK: Actions
     @IBAction fileprivate func logOutButton(_ sender: UIBarButtonItem) {
         

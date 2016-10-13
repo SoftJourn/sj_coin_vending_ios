@@ -10,50 +10,49 @@ import UIKit
 import SVProgressHUD
 import PromiseKit
 
-class InitialViewController: BaseViewController {
+class InitialViewController: UITabBarController {
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         SVProgressHUD.show()
-        //fetchMachines()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
-        NavigationManager.shared.visibleViewController = self
-        NavigationManager.shared.presentLoginViewController()
-        //self.launch()
+        launch()
     }
     
     deinit {
+        
         print("InitialViewController deinited")
     }
     
-    fileprivate func fetchMachines() {
-        
-        firstly {
-            APIManager.fetchMachines()
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-            //self.launch()
-        }.catch { error in
-            print(error)
-            //SVProgressHUD.dismiss()
-            //AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, action: self.predefinedAction())
-        }
-        //self.launch()
-    }
-    
-//    fileprivate func launch() {
+//    fileprivate func fetchMachines() {
 //        
-//        if AuthorizationManager.accessTokenExist() {
-//            NavigationManager.shared.presentMachinesViewController()
-//        } else {
-//            NavigationManager.shared.presentLoginViewController()
+//        firstly {
+//            APIManager.fetchMachines()
+//        }.then { object -> Void in
+//            DataManager.shared.save(object)
+//            //self.launch()
+//        }.catch { error in
+//            print(error)
+//            //SVProgressHUD.dismiss()
+//            //AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, action: self.predefinedAction())
 //        }
+//        //self.launch()
 //    }
-//    
+    
+    fileprivate func launch() {
+        
+        if AuthorizationManager.accessTokenExist() {
+            NavigationManager.shared.presentMachinesViewController()
+        } else {
+            NavigationManager.shared.presentLoginViewController()
+        }
+    }
+//
 //    fileprivate func predefinedAction() -> UIAlertAction {
 //        
 //        //Creating actions for ActionSheet and handle closures.

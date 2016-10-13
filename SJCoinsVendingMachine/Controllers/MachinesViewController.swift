@@ -8,14 +8,16 @@
 
 import UIKit
 import SVProgressHUD
+import PromiseKit
 
-class MachinesViewController: UITableViewController {
+class MachinesViewController: BaseViewController {
     
     // MARK: Constants
     static let identifier = "\(MachinesViewController.self)"
     let cellIdentifier = "MachinesTableViewCell"
 
     // MARK: Property
+    @IBOutlet weak var tableView: UITableView!
     fileprivate var machines: [MachinesModel]? {
         return DataManager.shared.machinesModel()
     }
@@ -24,35 +26,64 @@ class MachinesViewController: UITableViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        tableView.addSubview(refreshControl)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         
+        navigationController?.isNavigationBarHidden = false
         NavigationManager.shared.visibleViewController = self
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        print("sdf")
-        //SVProgressHUD.dismiss()
+        SVProgressHUD.dismiss()
     }
     
     deinit {
+        
         print("MachinesViewController deinited")
     }
     
-    // MARK: Actions
-    @IBAction func backButtonPressed(_ sender: UIBarButtonItem) {
+    override func fetchContent() {
         
-        NavigationManager.shared.presentLoginViewController()
+        firstly {
+            APIManager.fetchMachines()
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+            self.reloadTableView()
+        }.catch { error in
+            SVProgressHUD.dismiss()
+            AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, actions: self.predefinedAction())
+        }
+        refreshControl.endRefreshing()
     }
-    
-    // MARK: UITableViewDataSource
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    fileprivate func predefinedAction() -> [UIAlertAction] {
         
+        //Creating actions for ActionSheet and handle closures.
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { action in }
+        let retry = UIAlertAction(title: "Retry", style: .destructive) { [unowned self] action in
+            SVProgressHUD.show()
+            self.fetchContent()
+        }
+        return [cancel, retry]
+    }
+
+    func reloadTableView() {
+        
+        DispatchQueue.main.async { [unowned self] in
+            self.tableView.reloadData()
+        }
+    }
+}
+
+extension MachinesViewController: UITableViewDataSource, UITableViewDelegate {
+
+    // MARK: UITableViewDataSource
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        //dump(machines)
         return machines == nil ? 0 : machines!.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         guard let machines = machines else { return cell }
@@ -63,12 +94,12 @@ class MachinesViewController: UITableViewController {
     }
     
     // MARK: UITableViewDelegate
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let id = machines?[indexPath.item].internalIdentifier else { return }
         AuthorizationManager.save(machineId: id)
-        NavigationManager.shared.presentTabBarController()
+        dismiss(animated: true) { }
+        //reload data in controllers.
     }
-    
 }

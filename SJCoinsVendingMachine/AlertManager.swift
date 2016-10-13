@@ -16,10 +16,12 @@ class AlertManager {
         NavigationManager.shared.visibleViewController?.present(alertController, animated: true) { }
     }
     
-    func present(retryAlert title: String, message: String, action: UIAlertAction) {
+    func present(retryAlert title: String, message: String, actions: [UIAlertAction]) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(action)
+        for action in actions {
+            alertController.addAction(action)
+        }
         NavigationManager.shared.visibleViewController?.present(alertController, animated: true) { }
     }
     

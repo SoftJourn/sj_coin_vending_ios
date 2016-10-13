@@ -21,7 +21,7 @@ class APIManager: RequestManager {
         
         let promise = Promise<AnyObject> { fulfill, reject in
         
-            let url = "\(networking.baseVendingURL)vending/v1/machines"
+            let url = "\(networking.baseURL)vending/v1/machines"
 
             firstly {
                 sendDefault(request: .get, urlString: url)
@@ -39,11 +39,11 @@ class APIManager: RequestManager {
         return promise
     }
     
-    class func fetchProducts(machineID: Int = 13)  -> Promise<AnyObject> {
+    class func fetchProducts(machineID: Int)  -> Promise<AnyObject> {
         
         let promise = Promise<AnyObject> { fulfill, reject in
 
-            let url = "\(networking.baseVendingURL)vending/v1/machines/\(machineID)/features"
+            let url = "\(networking.baseURL)vending/v1/machines/\(machineID)/features"
         
             firstly {
                 sendDefault(request: .get, urlString: url)
@@ -61,7 +61,7 @@ class APIManager: RequestManager {
         
         let promise = Promise<AnyObject> { fulfill, reject in
 
-            let url = "\(networking.baseVendingURL)vending/v1/favorites/" //???
+            let url = "\(networking.baseVendingURL)vending/v1/favorites"
         
             firstly {
                 sendDefault(request: .get, urlString: url)

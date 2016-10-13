@@ -83,6 +83,12 @@ class AuthorizationManager: RequestManager {
         Defaults[.kMachineId] = machineId
     }
     
+    class func getMachineId() -> Int {
+        
+        return Defaults[.kMachineId]
+    }
+
+    
     class func removeAccessToken() {
         
         Defaults.remove(.kAccessToken)

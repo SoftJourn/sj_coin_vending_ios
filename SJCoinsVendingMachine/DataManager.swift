@@ -44,35 +44,8 @@ class DataManager {
         }
     }
     
-//    func createCategories() -> [Category]? {
-//        
-//        categories = [Category]()
-//        
-//        if let newProducts = features?.newProducts {
-//            if newProducts.count > 0 {
-//                categories?.append(Category.init(name: category.lastAdded, items: newProducts))
-//            }
-//        }
-//        if let bestSellers = features?.bestSellers {
-//            if bestSellers.count > 0 {
-//                categories?.append(Category.init(name: category.bestSellers, items: bestSellers))
-//            }
-//        }
-//        if let snacks = features?.snack {
-//            if snacks.count > 0 {
-//                categories?.append(Category.init(name: category.snacks, items: snacks))
-//            }
-//        }
-//        if let drinks = features?.drink {
-//            if drinks.count > 0 {
-//                categories?.append(Category.init(name: category.drinks, items: drinks))
-//            }
-//        }
-//        return categories
-//    }
-    
     func machinesModel() -> [MachinesModel]? {
-        
+
         return machines
     }
 

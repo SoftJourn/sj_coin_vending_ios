@@ -29,7 +29,7 @@ class BaseViewController: UIViewController {
     func fetchProducts() {
         
         firstly {
-            APIManager.fetchProducts()
+            APIManager.fetchProducts(machineID: AuthorizationManager.getMachineId())
         }.then { object -> Void in
             DataManager.shared.save(object)
             self.updateProducts()
@@ -79,7 +79,7 @@ class BaseViewController: UIViewController {
     enum errorType {
         
         case validation
-        case authorization(Error)
+        case authorization
         case downloading(Error?)
     }
     
@@ -89,8 +89,8 @@ class BaseViewController: UIViewController {
         switch error {
         case .validation:
             AlertManager().present(alert: errorTitle.validation, message: errorMessage.validation)
-        case .authorization(let error):
-            AlertManager().present(alert: errorTitle.auth, message: error.localizedDescription)
+        case .authorization:
+            AlertManager().present(alert: errorTitle.auth, message: errorMessage.auth)
         case .downloading(let error):
             guard let error = error else { return }
             AlertManager().present(alert: errorTitle.download, message: error.localizedDescription)

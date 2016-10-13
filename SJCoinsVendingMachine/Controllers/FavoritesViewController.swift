@@ -32,6 +32,11 @@ class FavoritesViewController: BaseViewController {
         //SVProgressHUD.dismiss()
     }
     
+    deinit {
+        
+        print("FavoritesViewController deinited")
+    }
+    
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         

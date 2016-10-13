@@ -20,8 +20,8 @@ class BaseManager {
                                                                  "vending.softjourn.if.ua": .disableEvaluation ]
         
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 20 //seconds
-        configuration.timeoutIntervalForResource = 20 //seconds
+        configuration.timeoutIntervalForRequest = 30 //seconds
+        configuration.timeoutIntervalForResource = 30 //seconds
         configuration.httpAdditionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
         
         return Alamofire.SessionManager(
