@@ -75,7 +75,7 @@ class AllItemsViewController: BaseViewController {
     
     deinit {
         
-        print("FavoritesViewController deinited")
+        print("AllItemsViewController deinited")
     }
     
     // MARK: Actions

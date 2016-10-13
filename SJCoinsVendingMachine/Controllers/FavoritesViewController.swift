@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import PromiseKit
 
 class FavoritesViewController: BaseViewController {
     

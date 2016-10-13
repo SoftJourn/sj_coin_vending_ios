@@ -11,15 +11,14 @@ import SwiftyUserDefaults
 
 struct storyboards {
 
-    static let loginIdentifier = "loginIdentifier"
     static let tabBarControllerIdentifier = "TabBarController"
-    static let navigationController = "NavigationViewController"
+    static let settingsNavigationController = "settingsNavigationController"
+    static let settingsControllerIdentifier = "settingsControllerIdentifier"
 }
 
 struct networking {
     
     static let baseURL = "https://sjcoins.testing.softjourn.if.ua/"
-    static let baseVendingURL = "https://vending.softjourn.if.ua/"
     //Auth
     static let pathAuth = "auth/oauth/token"
     static let authContentType = "application/x-www-form-urlencoded"

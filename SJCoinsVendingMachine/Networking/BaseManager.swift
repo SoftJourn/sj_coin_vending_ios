@@ -16,8 +16,7 @@ class BaseManager {
     static let customManager: Alamofire.SessionManager = {
         
         //Privacy configuration the Alamofire manager
-        let serverTrustPolicies: [String: ServerTrustPolicy] = [ "sjcoins.testing.softjourn.if.ua": .disableEvaluation,
-                                                                 "vending.softjourn.if.ua": .disableEvaluation ]
+        let serverTrustPolicies: [String: ServerTrustPolicy] = [ "sjcoins.testing.softjourn.if.ua": .disableEvaluation ]
         
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 30 //seconds

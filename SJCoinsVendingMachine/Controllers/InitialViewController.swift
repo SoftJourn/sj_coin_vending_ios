@@ -8,15 +8,13 @@
 
 import UIKit
 import SVProgressHUD
-import PromiseKit
 
-class InitialViewController: UITabBarController {
+class InitialViewController: UIViewController {
     
-    override func viewDidLoad() {
+    override func viewWillAppear(_ animated: Bool) {
         
-        super.viewDidLoad()
+        NavigationManager.shared.visibleViewController = self
         SVProgressHUD.show()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -29,37 +27,12 @@ class InitialViewController: UITabBarController {
         print("InitialViewController deinited")
     }
     
-//    fileprivate func fetchMachines() {
-//        
-//        firstly {
-//            APIManager.fetchMachines()
-//        }.then { object -> Void in
-//            DataManager.shared.save(object)
-//            //self.launch()
-//        }.catch { error in
-//            print(error)
-//            //SVProgressHUD.dismiss()
-//            //AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, action: self.predefinedAction())
-//        }
-//        //self.launch()
-//    }
-    
     fileprivate func launch() {
         
         if AuthorizationManager.accessTokenExist() {
-            NavigationManager.shared.presentMachinesViewController()
+            NavigationManager.shared.presentTabBarController()
         } else {
             NavigationManager.shared.presentLoginViewController()
         }
     }
-//
-//    fileprivate func predefinedAction() -> UIAlertAction {
-//        
-//        //Creating actions for ActionSheet and handle closures.
-//        let action = UIAlertAction(title: "Retry", style: .destructive) { [unowned self] action in
-//            SVProgressHUD.show()
-//            self.fetchMachines()
-//        }
-//        return action
-//    }
 }

@@ -8,8 +8,7 @@
 
 import UIKit
 import SVProgressHUD
-import SwiftyUserDefaults
-import SwiftyJSON
+import PromiseKit
 
 class HomeViewController: BaseViewController {
     
@@ -21,8 +20,7 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var balanceLabel: UILabel!
     
     fileprivate var categories: [Categories]? {
-        get { return DataManager.shared.category() }
-        //set { }
+        return DataManager.shared.category()
     }
     
     // MARK: Life cycle
@@ -31,15 +29,13 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.addSubview(refreshControl)
-        fetchProducts()
-        fetchFavorites()
-        fetchAccount()
+        fetchContent()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
-        //SVProgressHUD.dismiss()
+        SVProgressHUD.dismiss()
     }
     
     deinit {
@@ -48,26 +44,32 @@ class HomeViewController: BaseViewController {
     }
     
     // MARK: Actions
-    @IBAction func machinesButtonPressed(_ sender: UIBarButtonItem) {
-    
-        NavigationManager.shared.presentMachinesViewController()
+    @IBAction func settingsButtonPressed(_ sender: UIBarButtonItem) {
+        
+        firstly {
+            APIManager.fetchMachines()
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+            NavigationManager.shared.presentSettingsViewController()
+        }.catch { error in
+            SVProgressHUD.dismiss()
+            //Handle Error
+        }
     }
     
-    //----------------------------------------------
     @IBAction func refreshTokenTest(_ sender: UIBarButtonItem) {
-    
+        
         AuthorizationManager.refreshRequest { error in
             //print(error)
         }
     }
-    //----------------------------------------------
-
+    
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
         fetchProducts()
-        fetchFavorites()
         fetchAccount()
+        fetchFavorites()
         refreshControl.endRefreshing()
     }
     
@@ -110,7 +112,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
         guard let categories = categories, let products = categories[indexPath.item].products else { return cell }
         if !products.isEmpty {
-           return cell.configure(with: categories[indexPath.item])
+            return cell.configure(with: categories[indexPath.item])
         }
         return cell
     }

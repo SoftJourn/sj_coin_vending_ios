@@ -48,7 +48,6 @@ class BaseViewController: UIViewController {
             APIManager.fetchFavorites()
         }.then { object -> Void in
             DataManager.shared.save(object)
-            //dump(object)
             self.updateFavorites()
         }.catch { error in
             self.present(.downloading(error))
@@ -65,7 +64,6 @@ class BaseViewController: UIViewController {
             APIManager.fetchAccount()
         }.then { object -> Void in
             DataManager.shared.save(object)
-            //dump(object)
             self.updateAccount()
         }.catch { error in
             self.present(.downloading(error))

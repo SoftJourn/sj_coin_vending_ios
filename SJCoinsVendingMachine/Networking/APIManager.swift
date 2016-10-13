@@ -61,7 +61,7 @@ class APIManager: RequestManager {
         
         let promise = Promise<AnyObject> { fulfill, reject in
 
-            let url = "\(networking.baseVendingURL)vending/v1/favorites"
+            let url = "\(networking.baseURL)vending/v1/favorites"
         
             firstly {
                 sendDefault(request: .get, urlString: url)

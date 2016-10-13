@@ -44,6 +44,11 @@ class DataManager {
         }
     }
     
+    deinit {
+        
+        print("DataManager deinited")
+    }
+    
     func machinesModel() -> [MachinesModel]? {
 
         return machines

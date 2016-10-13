@@ -66,7 +66,7 @@ class LoginViewController: BaseViewController {
     
     fileprivate func authSuccess() {
         
-        self.performSegue(withIdentifier: storyboards.loginIdentifier, sender: self)
+        NavigationManager.shared.presentTabBarController()
     }
     
     fileprivate func authFailed() {

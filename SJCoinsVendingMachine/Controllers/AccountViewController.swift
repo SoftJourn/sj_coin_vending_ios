@@ -43,14 +43,14 @@ class AccountViewController: BaseViewController {
     
     deinit {
         
-        print("FavoritesViewController deinited")
+        print("AccountViewController deinited")
     }
     
     // MARK: Actions
     @IBAction fileprivate func logOutButton(_ sender: UIBarButtonItem) {
         
         //ExecuteLogOut
-        SVProgressHUD.show(withStatus: sign.outMessage)
+        //SVProgressHUD.show(withStatus: sign.outMessage)
         AuthorizationManager.removeAccessToken()
         NavigationManager.shared.presentLoginViewController()
     }
