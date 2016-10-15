@@ -102,16 +102,16 @@ class APIManager: RequestManager {
     
     typealias withImage = (_ image: UIImage) -> ()
     
-    class func fetch(image urlString : String?, complition: @escaping withImage) {
+    class func fetch(image urlString : String, complition: @escaping withImage) {
         
-        guard let urlString =  urlString else { return complition(UIImage(named: "Placeholder")!) }
         customManager.request("\(networking.baseURL)vending/\(urlString)")
             .responseImage { response in
                 switch response.result {
                 case .success(let image):
                     DataManager.imageCache.add(image, withIdentifier: urlString)
                     complition(image)
-                case .failure:
+                case .failure(let error):
+                    print(error)
                     complition(UIImage(named: "Placeholder")!)
                 }
         }

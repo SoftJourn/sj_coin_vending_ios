@@ -53,6 +53,11 @@ class DataManager {
 
         return machines
     }
+    
+    func chose(machine: Bool, indexPath: IndexPath) {
+        
+        machines?[indexPath.item].chosen = machine
+    }
 
     func accountModel() -> AccountModel? {
         

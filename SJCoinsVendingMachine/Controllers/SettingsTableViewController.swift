@@ -16,23 +16,21 @@ class SettingsTableViewController: UITableViewController {
     
     // MARK: Property
     fileprivate var machines: [MachinesModel]? {
-         return DataManager.shared.machinesModel()
+        return DataManager.shared.machinesModel()
     }
-        
+    
     // MARK: Life cycle
     override func viewDidLoad() {
-       
+        
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
         SVProgressHUD.dismiss()
     }
-
+    
     deinit {
         
         print("SettingsTableViewController deinited")
@@ -40,7 +38,7 @@ class SettingsTableViewController: UITableViewController {
     
     // MARK: Actions
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
-    
+        
         dismiss(animated: true) { }
     }
     
@@ -49,27 +47,57 @@ class SettingsTableViewController: UITableViewController {
         
         return 1
     }
-
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        switch section {
+        case 0:
+            return "Vending machines"
+        default:
+            return "Other settings"
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        dump(machines)
-        return machines == nil ? 0 : machines!.count
+        switch section {
+        case 0:
+            return machines == nil ? 0 : machines!.count
+        default:
+            return 1
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: settingsCellIdentifier, for: indexPath)
-        guard let machines = machines else { return cell }
-        if !machines.isEmpty {
-            cell.textLabel?.text = machines[indexPath.item].name
+        
+        switch indexPath.section {
+        case 0:
+            guard let machine = machines?[indexPath.item] else { return cell }
+            let machineId = AuthorizationManager.getMachineId()
+            cell.textLabel?.text = machine.name
+            if machine.internalIdentifier == machineId {
+                cell.accessoryType = .checkmark
+            } else {
+                cell.accessoryType = .none
+            }
+            return cell
+        default:
+            return cell
         }
-        return cell
     }
     
     // MARK: UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let id = machines?[indexPath.item].internalIdentifier else { return }
-        AuthorizationManager.save(machineId: id)
+        print(indexPath)
+        //fatal error: Index out of range after machine changed twice
+                guard let machine = machines?[indexPath.item] else { return }
+        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        AuthorizationManager.save(machineId: machine.internalIdentifier!)
+        
+        NotificationCenter.default.post(name: .machineChanged, object: nil)
+        tableView.reloadData()
     }
 }

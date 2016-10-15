@@ -73,6 +73,7 @@ struct buying {
 }
 
 struct sign {
+    
    static let inMessage = "Signing in ..."
    static let outMessage = "Signing out ..."
 }

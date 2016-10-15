@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import AlamofireImage
 
 enum Filter {
     case lastAdded
@@ -213,16 +214,17 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         if self.resultSearchController.isActive {
             return searchData.isEmpty ? cell : cell.configure(with: searchData[indexPath.item])
         } else {
-            guard let items = filterItems else  { return cell }
+            guard let item = filterItems?[indexPath.item] else  { return cell }
             cell.delegate = self
-            load(image: items[indexPath.item].imageUrl, forCell: cell)
-            return cell.configure(with: items[indexPath.item])
+            print(item.imageUrl)
+            load(image: item.imageUrl, to: cell)
+            return cell.configure(with: item)
         }
     }
     
-    fileprivate func load(image endpoint: String?, forCell cell: AllItemsTableViewCell) {
+    fileprivate func load(image endpoint: String?, to cell: AllItemsTableViewCell) {
         
-        guard let endpoint = endpoint else { return }
+        guard let endpoint = endpoint else { return cell.logo.image = placeholder }
         guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
             APIManager.fetch(image: endpoint) { image in
                 cell.logo.image = image
@@ -233,10 +235,7 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     // MARK: UITableViewDelegate
-    internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
+
 }
 
 extension AllItemsViewController: UISearchResultsUpdating {

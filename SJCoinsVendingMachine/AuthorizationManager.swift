@@ -88,6 +88,10 @@ class AuthorizationManager: RequestManager {
         return Defaults[.kMachineId]
     }
 
+    class func machineIdExist() -> Bool {
+        
+        return Defaults.hasKey(.kMachineId)
+    }
     
     class func removeAccessToken() {
         

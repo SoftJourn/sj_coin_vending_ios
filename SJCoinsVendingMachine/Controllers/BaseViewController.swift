@@ -12,6 +12,14 @@ import PromiseKit
 
 class BaseViewController: UIViewController {
     
+    let placeholder = UIImage(named: "Placeholder")!
+    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchContent), name: .machineChanged, object: nil)
+    }
+    
     // MARK: Constants
     lazy var refreshControl: UIRefreshControl = {
         
