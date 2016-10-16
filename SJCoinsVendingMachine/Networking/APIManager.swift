@@ -104,8 +104,11 @@ class APIManager: RequestManager {
     
     class func fetch(image urlString : String, complition: @escaping withImage) {
         
+        DataRequest.addAcceptableImageContentTypes(["application/json"])
+
         customManager.request("\(networking.baseURL)vending/\(urlString)")
             .responseImage { response in
+                debugPrint(response)
                 switch response.result {
                 case .success(let image):
                     DataManager.imageCache.add(image, withIdentifier: urlString)
@@ -117,7 +120,7 @@ class APIManager: RequestManager {
         }
     }
     
-    class func buy(product identifier: Int, machineID: Int = 3, complition: @escaping dataHandler) {
+    class func buy(product identifier: Int, machineID: Int, complition: @escaping dataHandler) {
         
         let url = "\(networking.baseURL)vending/v1/machines/\(machineID)/products/\(identifier)"
         

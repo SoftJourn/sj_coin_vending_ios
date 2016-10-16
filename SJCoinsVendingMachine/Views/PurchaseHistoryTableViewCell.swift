@@ -17,4 +17,21 @@ class PurchaseHistoryTableViewCell: UITableViewCell {
     @IBOutlet weak var transactionDate: UILabel!
     @IBOutlet weak var transactionItem: UILabel!
     @IBOutlet weak var transactionPrice: UILabel!
+
+    override func prepareForReuse() {
+        
+        super.prepareForReuse()
+        transactionDate.text = ""
+        transactionItem.text = ""
+        transactionPrice.text = ""
+        //resetImage()
+    }
+    
+//    func configure(with item: Products) -> AllItemsTableViewCell {
+//        
+//        transactionDate = item.internalIdentifier
+//        transactionItem = item.name
+//        transactionPrice = item.price
+//        return self
+//    }
 }

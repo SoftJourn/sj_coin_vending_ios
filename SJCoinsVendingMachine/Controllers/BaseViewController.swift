@@ -103,59 +103,49 @@ class BaseViewController: UIViewController {
         }
     }
     
+    // MARK: Confirmation and Buying.
+    func confirmation(_ identifier: Int?, name: String?, price: Int?, actions: [UIAlertAction]) {
+        
+        guard let identifier = identifier, let name = name, let price = price else { return }
+        AlertManager().present(confirmation: name, price: price, actions: buyingActions(with: identifier))
+    }
     
+    fileprivate func buyingActions(with identifier: Int?) -> [UIAlertAction] {
+        
+        let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .default) { action in
+            Reachability.ifConnectedToNetwork {
+                self.execute(buying: identifier) { }
+            }
+        }
+        let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
+        return [confirmButton, cancelButton]
+    }
     
-    //    // MARK: Confirmation and Buying.
-    //    internal func presentConfirmation(with identifier: Int?, name: String?, price: Int?) {
-    //        //FIXME: unwraping!
-    //        let alertController =
-    //            UIAlertController.presentConfirmation(with: "Buy \(name!) for the \(price!) coins?",
-    //                actions: predefinedActions(with: identifier))
-    //        present(alertController, animated: true) { }
-    //    }
-    //
-    //    fileprivate func predefinedActions(with identifier: Int?) -> [UIAlertAction] {
-    //
-    //        let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .default) { action in
-    //
-    //            Reachability.ifConnectedToNetwork {
-    //                self.executeBuying(by: identifier) { }
-    //            }
-    //        }
-    //
-    //        let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
-    //        return [confirmButton, cancelButton]
-    //    }
-    //
-    //    fileprivate func executeBuying(by identifier: Int?, update: @escaping ()->()) {
-    //
-    //        guard let identifier = identifier else { return }
-    //        SVProgressHUD.show()
-    //        UploadManager.buyProduct(by: identifier) { [unowned self] object, error in
-    //
-    //            SVProgressHUD.dismiss()
-    //            if error == nil {
-    //                //Present success alert.
-    //                self.presentBuyingResult(with: buying.successTitle, message: buying.successMessage)
-    //                guard let object = object else { return }
-    //                let amount = object as! Int
-    //                //Save new balance in DataManager
-    //                DataManager.singleton.saveAccount(balance: amount)
-    //                //Use Closure for updating balance on interface (as example).
-    //                update()
-    //                /*
-    //                 self.updateBalance(with: amount)
-    //                 */
-    //            } else {
-    //                self.presentBuyingResult(with: buying.failedTitle, message: error!.localizedDescription)
-    //            }
-    //        }
-    //    }
-    //
-    //    fileprivate func presentBuyingResult(with title: String, message: String) {
-    //
-    //        let alertController = UIAlertController.presentAlert(with: title, message: message)
-    //        self.present(alertController, animated: true) { }
-    //    }
+    func execute(buying identifier: Int?, update: @escaping ()->()) {
+        
+        guard let identifier = identifier else { return }
+        SVProgressHUD.show()
+        APIManager.buy(product: identifier, machineID: AuthorizationManager.getMachineId()) { [unowned self] object, error in
+            
+            SVProgressHUD.dismiss()
+            if error == nil {
+                //Present success alert.
+                self.presentBuyingResult(with: buying.successTitle, message: buying.successMessage)
+                guard let object = object else { return }
+                let amount = object as! Int
+                //Save new balance in DataManager
+                DataManager.shared.saveAccount(balance: amount)
+                //Use Closure for updating balance on interface (as example).
+                update()
+            } else {
+                self.presentBuyingResult(with: buying.failedTitle, message: error!.localizedDescription)
+            }
+        }
+    }
     
+    func presentBuyingResult(with title: String, message: String) {
+        
+        let alertController = UIAlertController.presentAlert(with: title, message: message)
+        self.present(alertController, animated: true) { }
+    }
 }

@@ -10,7 +10,6 @@ import UIKit
 import SVProgressHUD
 import PromiseKit
 
-
 class HomeViewController: BaseViewController {
     
     // MARK: Constants
@@ -111,9 +110,9 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
-        guard let categories = categories, let products = categories[indexPath.item].products else { return cell }
+        guard let categories = categories?[indexPath.item], let products = categories.products else { return cell }
         if !products.isEmpty {
-            return cell.configure(with: categories[indexPath.item])
+            return cell.configure(with: categories)
         }
         return cell
     }

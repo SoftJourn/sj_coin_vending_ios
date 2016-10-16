@@ -120,12 +120,6 @@ class AllItemsViewController: BaseViewController {
         }
     }
     
-    fileprivate func presentBuyingResult(with title: String, message: String) {
-        
-        let alertController = UIAlertController.presentAlert(with: title, message: message)
-        present(alertController, animated: true) { }
-    }
-    
     // MARK: Filtering.
     fileprivate func predefinedActions() -> [UIAlertAction] {
         
@@ -214,15 +208,14 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         if self.resultSearchController.isActive {
             return searchData.isEmpty ? cell : cell.configure(with: searchData[indexPath.item])
         } else {
-            guard let item = filterItems?[indexPath.item] else  { return cell }
+            guard let item = filterItems?[indexPath.item] else { return cell }
             cell.delegate = self
-            print(item.imageUrl)
-            load(image: item.imageUrl, to: cell)
+            load(image: item.imageUrl, cell: cell)
             return cell.configure(with: item)
         }
     }
     
-    fileprivate func load(image endpoint: String?, to cell: AllItemsTableViewCell) {
+    func load(image endpoint: String?, cell: AllItemsTableViewCell) {
         
         guard let endpoint = endpoint else { return cell.logo.image = placeholder }
         guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
@@ -231,7 +224,7 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
             }
             return
         }
-        cell.logo.image = cashedImage
+        return cell.logo.image = cashedImage
     }
     
     // MARK: UITableViewDelegate

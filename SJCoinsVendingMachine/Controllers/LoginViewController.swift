@@ -77,8 +77,8 @@ class LoginViewController: BaseViewController {
     // MARK: ScrollView contentOffset
     fileprivate func registerForKeyboardNotifications() {
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(_:)), name: .keyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(_:)), name: .keyboardWillHide, object: nil)
     }
     
     @objc fileprivate func keyboardWasShown(_ notification: Notification) {

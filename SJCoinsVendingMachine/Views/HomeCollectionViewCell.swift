@@ -79,15 +79,32 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewInternalCell.identifier, for: indexPath) as! HomeCollectionViewInternalCell
-        return categoryItems == nil ? cell : cell.configure(with: categoryItems![indexPath.item])
+        
+        guard let item = categoryItems?[indexPath.item] else { return cell }
+        load(image: item.imageUrl, cell: cell)
+        return cell.configure(with: item)
+    }
+    
+    func load(image endpoint: String?, cell: HomeCollectionViewInternalCell) {
+        
+        guard let endpoint = endpoint else { return cell.logo.image = UIImage(named: "Placeholder")! }
+        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
+            APIManager.fetch(image: endpoint) { image in
+                cell.logo.image = image
+            }
+            return
+        }
+        return cell.logo.image = cashedImage
     }
     
     //UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let id = categoryItems?[indexPath.item].internalIdentifier
-        let name = categoryItems?[indexPath.item].name
-        let price = categoryItems?[indexPath.item].price
+        guard let item = categoryItems?[indexPath.item] else { return }
+
+        let id = item.internalIdentifier
+        let name = item.name
+        let price = item.price
         
 //        //Present confirmation message.
 //        let navigation = NavigationMager.tabBarController?.selectedViewController as! UINavigationController //FIXME: fatal error: unexpectedly found nil while unwrapping an Optional value

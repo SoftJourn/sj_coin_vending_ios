@@ -86,6 +86,7 @@ class AllItemsTableViewCell: UITableViewCell {
     }
     
     fileprivate func resetImage() {
+        
         request?.cancel()
         logo.image = UIImage(named: "Placeholder")
     }

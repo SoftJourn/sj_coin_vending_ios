@@ -11,7 +11,7 @@ import UIKit
 class AlertManager {
     
     func present(alert title: String, message: String) {
-        
+        //FIXME:
         let alertController = UIAlertController.presentAlert(with: title, message: message)
         NavigationManager.shared.visibleViewController?.present(alertController, animated: true) { }
     }
@@ -25,10 +25,18 @@ class AlertManager {
         NavigationManager.shared.visibleViewController?.present(alertController, animated: true) { }
     }
     
-    
     func present(actionSheet actions: [UIAlertAction]) {
-        
+        //FIXME:
         let actionSheet = UIAlertController.presentFilterSheet(with: nil, message: nil, actions: actions)
         NavigationManager.shared.visibleViewController?.present(actionSheet, animated: true) { }
+    }
+    
+    func present(confirmation name: String, price: Int, actions: [UIAlertAction]) {
+        
+        let controller = UIAlertController(title: "Confirmation", message: "Buy \(name) for the \(price) coins?", preferredStyle: .alert)
+        for action in actions {
+            controller.addAction(action)
+        }
+        NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
 }

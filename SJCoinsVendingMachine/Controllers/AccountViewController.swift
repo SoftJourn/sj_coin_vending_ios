@@ -101,7 +101,11 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: PurchaseHistoryTableViewCell.identifier, for: indexPath) as! PurchaseHistoryTableViewCell
         
-        guard purchases != nil else { return cell }
+        //guard let item = purchases?[indexPath.item] else  { return cell }
+        //return cell.configure(with: item)
+
+        
+        //guard purchases != nil else { return cell }
 //        let date = items[indexPath.row].productDate()
 //        cell.transactionDate.text = DateManager().convertData(from: date)
 //        cell.transactionItem.text = items[(indexPath as NSIndexPath).row].productName()

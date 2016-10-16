@@ -15,7 +15,7 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
     static let identifier = "\(HomeCollectionViewInternalCell.self)"
 
     // MARK: Properties
-    @IBOutlet fileprivate weak var logo: UIImageView!
+    @IBOutlet weak var logo: UIImageView!
     @IBOutlet fileprivate weak var nameLabel: UILabel!
     @IBOutlet fileprivate weak var priceLabel: UILabel!
     
@@ -49,22 +49,9 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
         
         name = item.name
         price = item.price
-        loadImage(with: item.imageUrl)
         return self
     }
 
-    fileprivate func loadImage(with endpoint: String?) {
-        
-        guard let endpoint = endpoint else { return logo.image = UIImage(named: "Placeholder") }
-        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
-            APIManager.fetch(image: endpoint) { image in
-                self.logo.image = image
-            }
-            return
-        }
-        self.logo.image = cashedImage
-    }
-    
     fileprivate func resetImage() {
         request?.cancel()
         logo.image = UIImage(named: "Placeholder")

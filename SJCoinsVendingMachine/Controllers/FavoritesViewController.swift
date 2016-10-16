@@ -69,8 +69,21 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as! FavoritesTableViewCell
-        return cell
-        //return favorites == nil ? cell : cell.configure(with: favorites![indexPath.item])
+        guard let item = favorites?[indexPath.item] else  { return cell }
+        load(image: item.imageUrl, cell: cell)
+        return cell.configure(with: item)
+    }
+    
+    func load(image endpoint: String?, cell: FavoritesTableViewCell) {
+        
+        guard let endpoint = endpoint else { return cell.favouritesLogo.image = UIImage(named: "Placeholder")! }
+        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
+            APIManager.fetch(image: endpoint) { image in
+                cell.favouritesLogo.image = image
+            }
+            return
+        }
+        return cell.favouritesLogo.image = cashedImage
     }
     
     // MARK: UITableViewDelegate

@@ -18,15 +18,6 @@ extension UIAlertController {
         return controller
     }
     
-    class func presentConfirmation(with message: String, actions: [UIAlertAction]) -> UIAlertController {
-        
-        let controller = UIAlertController(title: "Confirmation", message: message, preferredStyle: .alert)
-        for action in actions {
-            controller.addAction(action)
-        }
-        return controller
-    }
-    
     class func presentFilterSheet(with title: String?, message: String?, actions: [UIAlertAction]) -> UIAlertController {
         
         let controller = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)

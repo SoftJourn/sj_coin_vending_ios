@@ -11,4 +11,6 @@ import Foundation
 extension Notification.Name {
     
     static let machineChanged = Notification.Name("machineChanged")
+    static let keyboardDidShow = NSNotification.Name.UIKeyboardDidShow
+    static let keyboardWillHide = NSNotification.Name.UIKeyboardWillHide
 }

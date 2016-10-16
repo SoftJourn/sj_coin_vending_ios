@@ -20,7 +20,6 @@ class MachinesModel {
 	var internalIdentifier: Int?
 	var size: Size?
 	var name: String?
-    var chosen: Bool?
 
     // MARK: SwiftyJSON Initalizers
     convenience init(object: AnyObject) {
