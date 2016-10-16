@@ -41,6 +41,7 @@
 		35617D7F1DA82484000582F6 /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D7E1DA82484000582F6 /* AuthorizationManager.swift */; };
 		35617D811DA82728000582F6 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D801DA82728000582F6 /* NavigationManager.swift */; };
 		359441731DAFC3B600B8B693 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359441721DAFC3B600B8B693 /* SettingsTableViewController.swift */; };
+		35B5A6371DB43316005E25C9 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B5A6361DB43316005E25C9 /* Reachability.swift */; };
 		35E29C0D1DACD8D9002B7045 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C0C1DACD8D9002B7045 /* AlertManager.swift */; };
 		35E29C0F1DACDCDD002B7045 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C0E1DACDCDD002B7045 /* InitialViewController.swift */; };
 		35E504E91DAD360C00131567 /* FeaturesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504E51DAD360C00131567 /* FeaturesModel.swift */; };
@@ -87,6 +88,7 @@
 		35617D7E1DA82484000582F6 /* AuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
 		35617D801DA82728000582F6 /* NavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		359441721DAFC3B600B8B693 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = Controllers/SettingsTableViewController.swift; sourceTree = "<group>"; };
+		35B5A6361DB43316005E25C9 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		35E29C0C1DACD8D9002B7045 /* AlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		35E29C0E1DACDCDD002B7045 /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitialViewController.swift; path = Controllers/InitialViewController.swift; sourceTree = "<group>"; };
 		35E504E51DAD360C00131567 /* FeaturesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturesModel.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				07854FB91D4B8C5300F31AB3 /* AppDelegate.swift */,
+				35B5A6361DB43316005E25C9 /* Reachability.swift */,
 				35617D781DA818A1000582F6 /* Const.swift */,
 				07854FCB1D4B8C8A00F31AB3 /* Models */,
 				07854FCC1D4B8DD300F31AB3 /* Managers */,
@@ -454,6 +457,7 @@
 				35617D791DA818A1000582F6 /* Const.swift in Sources */,
 				35089F6B1DAB9E4900DC3BAF /* FavoritesViewController.swift in Sources */,
 				35617D7F1DA82484000582F6 /* AuthorizationManager.swift in Sources */,
+				35B5A6371DB43316005E25C9 /* Reachability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -61,7 +61,7 @@ class AllItemsViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        //NavigationMager.tabBarController?.delegate = self
+        NavigationManager.tabBarController?.delegate = self
         tableView.delegate = self
         tableView.addSubview(refreshControl)
         filterItems = allItems

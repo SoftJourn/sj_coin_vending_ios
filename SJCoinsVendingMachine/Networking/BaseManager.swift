@@ -11,7 +11,7 @@ import Alamofire
 import PromiseKit
 
 class BaseManager {
-        
+    
     // MARK: Properties
     static let customManager: Alamofire.SessionManager = {
         
@@ -30,27 +30,31 @@ class BaseManager {
     }()
     
     class func sendRequest(_ urlString: URLConvertible,
-                                       method: Alamofire.HTTPMethod,
-                                       parameters: [String: AnyObject]?,
-                                       encoding: ParameterEncoding,
-                                       headers: Dictionary<String, String>) -> Promise<AnyObject> {
+                           method: Alamofire.HTTPMethod,
+                           parameters: [String: AnyObject]?,
+                           encoding: ParameterEncoding,
+                           headers: Dictionary<String, String>) -> Promise<AnyObject> {
         
         //let oauthHandler = OAuth2Handler.init(baseURLString: Networking.baseURL, accessToken: AuthorizationManager.getToken(), refreshToken: AuthorizationManager.getRefreshToken())
         //customManager.retrier = oauthHandler
-        
         let promise = Promise<AnyObject> { fulfill, reject in
-            customManager.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
-                .validate(statusCode: 200..<300)
-                .responseJSON { response in
-                    switch response.result {
-                    case .success(let json):
-                        fulfill(json as AnyObject)
-                    case .failure(let error):
-                        guard let data = response.data else { return }
-                        let errorData = NSString(data: data, encoding:String.Encoding.utf8.rawValue)
-                        print(errorData)
-                        reject(error)
-                    }
+            
+            if Reachability.connectedToNetwork() {
+                customManager.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
+                    .validate(statusCode: 200..<300)
+                    .responseJSON { response in
+                        switch response.result {
+                        case .success(let json):
+                            fulfill(json as AnyObject)
+                        case .failure(let error):
+                            guard let data = response.data else { return }
+                            let errorData = NSString(data: data, encoding:String.Encoding.utf8.rawValue)
+                            print(errorData)
+                            reject(error)
+                        }
+                }
+            } else {
+                AlertManager().presentInternetConnectionError()
             }
         }
         return promise

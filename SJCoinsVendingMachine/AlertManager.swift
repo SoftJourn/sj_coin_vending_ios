@@ -39,4 +39,12 @@ class AlertManager {
         }
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
+    
+    func presentInternetConnectionError() {
+        
+        let controller = UIAlertController(title: errorTitle.reachability, message: errorMessage.reachability, preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
+    }
+
 }

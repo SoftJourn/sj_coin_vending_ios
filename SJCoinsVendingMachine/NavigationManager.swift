@@ -11,6 +11,7 @@ import UIKit
 class NavigationManager: NSObject {
     
     static let shared = NavigationManager()
+    var tabBarController: UITabBarController?
     var mainStoryboard: UIStoryboard {
         
         return UIStoryboard(name: "Main", bundle: nil)
@@ -19,8 +20,8 @@ class NavigationManager: NSObject {
     
     func presentTabBarController() {
         
-        let tabBarController = create(viewController: storyboards.tabBarControllerIdentifier) as! UITabBarController
-        present(viewControllerAsRoot: tabBarController)
+        tabBarController = create(viewController: storyboards.tabBarControllerIdentifier) as? UITabBarController
+        present(viewControllerAsRoot: tabBarController!)
     }
     
     func presentSettingsViewController() {

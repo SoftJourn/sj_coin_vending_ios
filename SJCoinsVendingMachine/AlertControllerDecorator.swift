@@ -25,12 +25,5 @@ extension UIAlertController {
             controller.addAction(action)
         }
         return controller
-    }
-    
-    class func presentInternetConnectionError() -> UIAlertController {
-        
-        let controller = UIAlertController(title: errorTitle.reachability, message: errorMessage.reachability, preferredStyle: .alert)
-        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        return controller
-    }
+    }    
 }

@@ -74,10 +74,10 @@ class SettingsTableViewController: UITableViewController {
         
         switch indexPath.section {
         case 0:
-            guard let machine = machines?[indexPath.item] else { return cell }
+            guard let machine = machines else { return cell }
             let machineId = AuthorizationManager.getMachineId()
-            cell.textLabel?.text = machine.name
-            if machine.internalIdentifier == machineId {
+            cell.textLabel?.text = machine[indexPath.item].name
+            if machine[indexPath.item].internalIdentifier == machineId {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
@@ -93,9 +93,9 @@ class SettingsTableViewController: UITableViewController {
         
         print(indexPath)
         //fatal error: Index out of range after machine changed twice
-                guard let machine = machines?[indexPath.item] else { return }
+        guard let machine = machines else { return }
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        AuthorizationManager.save(machineId: machine.internalIdentifier!)
+        AuthorizationManager.save(machineId: machine[indexPath.item].internalIdentifier!)
         
         NotificationCenter.default.post(name: .machineChanged, object: nil)
         tableView.reloadData()
