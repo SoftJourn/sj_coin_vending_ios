@@ -27,7 +27,6 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        collectionView.dataSource = self
         collectionView.addSubview(refreshControl)
         fetchContent()
     }

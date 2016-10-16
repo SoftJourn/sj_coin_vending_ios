@@ -23,7 +23,6 @@ class FavoritesViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        tableView.dataSource = self
         tableView.addSubview(refreshControl)
     }
     

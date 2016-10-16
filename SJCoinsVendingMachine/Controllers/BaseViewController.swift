@@ -38,11 +38,11 @@ class BaseViewController: UIViewController {
         
         firstly {
             APIManager.fetchProducts(machineID: AuthorizationManager.getMachineId())
-            }.then { object -> Void in
-                DataManager.shared.save(object)
-                self.updateProducts()
-            }.catch { error in
-                self.present(.downloading(error))
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+            self.updateProducts()
+        }.catch { error in
+            self.present(.downloading(error))
         }
     }
     
@@ -54,11 +54,11 @@ class BaseViewController: UIViewController {
         
         firstly {
             APIManager.fetchFavorites()
-            }.then { object -> Void in
-                DataManager.shared.save(object)
-                self.updateFavorites()
-            }.catch { error in
-                self.present(.downloading(error))
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+            self.updateFavorites()
+        }.catch { error in
+            self.present(.downloading(error))
         }
     }
     
@@ -70,11 +70,11 @@ class BaseViewController: UIViewController {
         
         firstly {
             APIManager.fetchAccount()
-            }.then { object -> Void in
-                DataManager.shared.save(object)
-                self.updateAccount()
-            }.catch { error in
-                self.present(.downloading(error))
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+            self.updateAccount()
+        }.catch { error in
+            self.present(.downloading(error))
         }
     }
     

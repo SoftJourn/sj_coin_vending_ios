@@ -30,7 +30,6 @@ class AccountViewController: BaseViewController {
     override internal func viewDidLoad() {
         
         super.viewDidLoad()
-        tableView.dataSource = self
         tableView.addSubview(refreshControl)
     }
     
@@ -114,8 +113,4 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     // MARK: UITableViewDelegate
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
 }
