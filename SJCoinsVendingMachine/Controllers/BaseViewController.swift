@@ -10,10 +10,15 @@ import UIKit
 import SVProgressHUD
 import PromiseKit
 
+@objc protocol CellDelegate: class {
+    
+    @objc optional func add(favorite identifier: Int, name: String)
+    @objc optional func remove(favorite identifier: Int, name: String)
+    @objc optional func buy(product identifier: Int, name: String, price: Int)
+}
+
 class BaseViewController: UIViewController {
-    
-    let placeholder = UIImage(named: "Placeholder")!
-    
+        
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -104,7 +109,7 @@ class BaseViewController: UIViewController {
     }
     
     // MARK: Confirmation and Buying.
-    func confirmation(_ identifier: Int?, name: String?, price: Int?, actions: [UIAlertAction]) {
+    func confirmation(_ identifier: Int?, name: String?, price: Int?) {
         
         guard let identifier = identifier, let name = name, let price = price else { return }
         AlertManager().present(confirmation: name, price: price, actions: buyingActions(with: identifier))
@@ -112,14 +117,14 @@ class BaseViewController: UIViewController {
     
     fileprivate func buyingActions(with identifier: Int?) -> [UIAlertAction] {
         
-        let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .default) { action in
-            self.execute(buying: identifier) { }
+        let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .default) { [unowned self] action in
+            self.execute(buying: identifier)
         }
         let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
         return [confirmButton, cancelButton]
     }
     
-    func execute(buying identifier: Int?, update: @escaping ()->()) {
+    func execute(buying identifier: Int?) {
         
         guard let identifier = identifier else { return }
         SVProgressHUD.show()
@@ -128,22 +133,20 @@ class BaseViewController: UIViewController {
             SVProgressHUD.dismiss()
             if error == nil {
                 //Present success alert.
-                self.presentBuyingResult(with: buying.successTitle, message: buying.successMessage)
+                AlertManager().buying(result: buying.successTitle, message: buying.successMessage)
                 guard let object = object else { return }
                 let amount = object as! Int
                 //Save new balance in DataManager
                 DataManager.shared.saveAccount(balance: amount)
                 //Use Closure for updating balance on interface (as example).
-                update()
+                self.updateUIafterBuying()
             } else {
-                self.presentBuyingResult(with: buying.failedTitle, message: error!.localizedDescription)
+                AlertManager().buying(result: buying.failedTitle, message: error!.localizedDescription)
             }
         }
     }
     
-    func presentBuyingResult(with title: String, message: String) {
-        
-        let alertController = UIAlertController.presentAlert(with: title, message: message)
-        self.present(alertController, animated: true) { }
+    func updateUIafterBuying() {
+        //Override in child.
     }
 }

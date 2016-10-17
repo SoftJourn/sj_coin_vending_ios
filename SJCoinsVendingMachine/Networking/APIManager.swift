@@ -106,7 +106,7 @@ class APIManager: RequestManager {
         
         DataRequest.addAcceptableImageContentTypes(["application/json"])
 
-        customManager.request("\(networking.baseURL)vending/\(urlString)")
+        customManager.request("\(networking.baseURL)vending/v1/\(urlString)")
             .responseImage { response in
                 debugPrint(response)
                 switch response.result {

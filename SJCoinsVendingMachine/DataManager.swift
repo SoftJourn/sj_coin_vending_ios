@@ -20,7 +20,6 @@ class DataManager {
     fileprivate var features: FeaturesModel?
     fileprivate var account: AccountModel?
     fileprivate var favorites: [Products]?
-    fileprivate var categories: [Categories]?
     
     static let imageCache = AutoPurgingImageCache(
         memoryCapacity: 100 * 1024 * 1024,
@@ -28,7 +27,7 @@ class DataManager {
     )
     
     static let shared = DataManager()
-
+    
     func save(_ object: AnyObject) {
         
         switch object {
@@ -50,10 +49,10 @@ class DataManager {
     }
     
     func machinesModel() -> [MachinesModel]? {
-
+        
         return machines
     }
-
+    
     func accountModel() -> AccountModel? {
         
         return account
@@ -70,22 +69,9 @@ class DataManager {
         return categories
     }
     
-//    fileprivate func verifyFavorites() {
-//        
-//        favoriteItems.removeAll()
-//        
-//        if let favorites = favorites {
-//            for item in favorites {
-//                if let name = item.name {
-//                    favoriteItems.append(name)
-//                }
-//            }
-//        }
-//    }
-    
     func allItems() -> [Products]? {
         
-        guard let items = features?.categories else { return nil}
+        guard let items = features?.categories else { return nil }
         var allItemsArray = [Products]()
         
         for item in items {
@@ -97,13 +83,45 @@ class DataManager {
         return allItemsArray
     }
     
-//    func myLastPurchase() -> [MyLastPurchases]? {
-//        return features?.myLastPurchases
-//    }
-//    
-//    func featuresModel() -> FeaturesModel? {
-//        return features
-//    }
+    func lastAdded() -> [Products]? {
+        
+        guard let items = features?.lastAdded else { return nil }
+        var lastAdded = [Products]()
+        guard let categories = category() else { return nil }
+        for category in categories {
+            guard let products = category.products else { return nil }
+            for product in products {
+                guard let id = product.internalIdentifier else { return nil }
+                if items.contains(id) {
+                    lastAdded.append(product)
+                }
+            }
+        }
+        return lastAdded
+    }
+    
+    func bestSellers() -> [Products]? {
+        
+        guard let items = features?.bestSellers else { return nil }
+        var bestSellers = [Products]()
+        guard let categories = category() else { return nil }
+        for category in categories {
+            guard let products = category.products else { return nil }
+            for product in products {
+                guard let id = product.internalIdentifier else { return nil }
+                if items.contains(id) {
+                    bestSellers.append(product)
+                }
+            }
+        }
+        dump(bestSellers)
+        return bestSellers
+    }
+    
+    //    func myLastPurchase() -> [MyLastPurchases]? {
+    //        return features?.myLastPurchases
+    //    }
+    //
     
     func balance() -> Int? {
         
@@ -114,21 +132,4 @@ class DataManager {
         
         account?.amount = amount
     }
-    
-//    func favorite(_ name: String?) -> [String] {
-//        
-//        if name != nil {
-//            if !favoriteItems.contains(name!) {
-//                favoriteItems.append(name!)
-//            }
-//        }
-//        return favoriteItems
-//    }
-//    
-//    func unfavorite(_ name: String) {
-//        
-//        if let item = favoriteItems.index(of: name) {
-//            favoriteItems.remove(at: item)
-//        }
-//    }
 }

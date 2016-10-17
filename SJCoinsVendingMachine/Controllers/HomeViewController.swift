@@ -79,8 +79,7 @@ class HomeViewController: BaseViewController {
     
     override func updateAccount() {
         
-        guard let balance = DataManager.shared.balance() else { return /* show */ }
-        updateBalance(with: balance)
+        updateBalance()
     }
     
     fileprivate func updateCollectionView() {
@@ -90,11 +89,18 @@ class HomeViewController: BaseViewController {
         }
     }
     
-    fileprivate func updateBalance(with amount: Int) {
+    fileprivate func updateBalance() {
+        
+        guard let balance = DataManager.shared.balance() else { return /* show */ }
         
         DispatchQueue.main.async { [unowned self] in
-            self.balanceLabel.text = "Your balance is \(amount) coins"
+            self.balanceLabel.text = "Your balance is \(balance) coins"
         }
+    }
+    
+    override func updateUIafterBuying() {
+        
+        updateBalance()
     }
 }
 
@@ -111,6 +117,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
         guard let categories = categories?[indexPath.item], let products = categories.products else { return cell }
         if !products.isEmpty {
+            cell.delegate = self
             return cell.configure(with: categories)
         }
         return cell
@@ -125,5 +132,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: cellHeight)
+    }
+}
+
+extension HomeViewController: CellDelegate {
+    
+    // MARK: CellDelegate
+    func buy(product identifier: Int, name: String, price: Int) {
+        
+        confirmation(identifier, name: name, price: price)
     }
 }

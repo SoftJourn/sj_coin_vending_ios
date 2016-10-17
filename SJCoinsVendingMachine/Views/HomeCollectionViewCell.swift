@@ -24,6 +24,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    weak var delegate: CellDelegate?
     fileprivate var categoryItems: [Products]?
     
     override func prepareForReuse() {
@@ -100,15 +101,11 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
     //UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let item = categoryItems?[indexPath.item] else { return }
-
-        let id = item.internalIdentifier
-        let name = item.name
-        let price = item.price
-        
-//        //Present confirmation message.
-//        let navigation = NavigationMager.tabBarController?.selectedViewController as! UINavigationController //FIXME: fatal error: unexpectedly found nil while unwrapping an Optional value
-//        let homeController = navigation.visibleViewController as! HomeViewController
-//        homeController.presentConfirmation(with: id, name: name, price: price)
+        guard let item = categoryItems?[indexPath.item], let identifier = item.internalIdentifier, let name = item.name, let price = item.price else {
+            
+            //Present buying error Alert.
+            return
+        }
+        delegate?.buy!(product: identifier, name: name, price: price)
     }
 }

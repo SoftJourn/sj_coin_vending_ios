@@ -12,8 +12,8 @@ class AlertManager {
     
     func present(alert title: String, message: String) {
         //FIXME:
-        let alertController = UIAlertController.presentAlert(with: title, message: message)
-        NavigationManager.shared.visibleViewController?.present(alertController, animated: true) { }
+        let controller = information(alert: title, message: message)
+        NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
     
     func present(retryAlert title: String, message: String, actions: [UIAlertAction]) {
@@ -26,11 +26,21 @@ class AlertManager {
     }
     
     func present(actionSheet actions: [UIAlertAction]) {
-        //FIXME:
-        let actionSheet = UIAlertController.presentFilterSheet(with: nil, message: nil, actions: actions)
-        NavigationManager.shared.visibleViewController?.present(actionSheet, animated: true) { }
+        
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        for action in actions {
+            controller.addAction(action)
+        }
+        NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
     
+    func presentInternetConnectionError() {
+        
+        let controller = information(alert: errorTitle.reachability, message: errorMessage.reachability)
+        NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
+    }
+    
+    //Confirmation message
     func present(confirmation name: String, price: Int, actions: [UIAlertAction]) {
         
         let controller = UIAlertController(title: "Confirmation", message: "Buy \(name) for the \(price) coins?", preferredStyle: .alert)
@@ -40,11 +50,18 @@ class AlertManager {
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
     
-    func presentInternetConnectionError() {
+    //Buying result message
+    func buying(result title: String, message: String) {
         
-        let controller = UIAlertController(title: errorTitle.reachability, message: errorMessage.reachability, preferredStyle: .alert)
-        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        let controller = information(alert: title, message: message)
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
-
+    
+    //Default alertController
+    fileprivate func information(alert title: String, message: String) -> UIAlertController {
+        
+        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        return controller
+    }
 }

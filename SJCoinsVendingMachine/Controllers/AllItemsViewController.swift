@@ -14,14 +14,6 @@ enum Filter {
     case lastAdded
     case bestSellers
     case allItems
-    case snaks
-    case drinks
-}
-
-protocol FavoriteCellDelegate: class {
-    
-    func add(favorite identifier: Int, name: String)
-    func remove(favorite identifier: Int, name: String)
 }
 
 class AllItemsViewController: BaseViewController {
@@ -33,9 +25,9 @@ class AllItemsViewController: BaseViewController {
     @IBOutlet fileprivate weak var tableView: UITableView!
     @IBOutlet fileprivate weak var segmentControl: UISegmentedControl!
     @IBOutlet fileprivate weak var titleButton: UIButton!
-    
+
+    fileprivate var sortingManager = SortingManager()
     fileprivate lazy var searchData = [Products]()
-    fileprivate lazy var sortingManager = SortingManager()
     fileprivate lazy var resultSearchController: UISearchController = {
         
         let searchController = UISearchController(searchResultsController: nil)
@@ -48,9 +40,15 @@ class AllItemsViewController: BaseViewController {
     fileprivate var allItems: [Products]? {
         return DataManager.shared.allItems()
     }
-    //fileprivate var allProducts: ItemModel? {
-        //return DataManager.shared.featuresModel()
-    //}
+    fileprivate var lastAdded: [Products]? {
+        return DataManager.shared.lastAdded()
+    }
+    fileprivate var bestSellers: [Products]? {
+        return DataManager.shared.bestSellers()
+    }
+    fileprivate var categories: [Categories]? {
+        return DataManager.shared.category()
+    }
     
     var filterMode: Filter = .allItems
     var filterItems: [Products]?
@@ -61,16 +59,16 @@ class AllItemsViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        NavigationManager.shared.tabBarController?.delegate = self
         tableView.addSubview(refreshControl)
         filterItems = allItems
+        self.definesPresentationContext = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
         //SVProgressHUD.dismiss()
-        //changeFilter(to: filterMode, items: filterItems)
+        filterItems = sortingManager.sortBy(name: filterItems)
     }
     
     deinit {
@@ -112,66 +110,60 @@ class AllItemsViewController: BaseViewController {
     
     override func updateProducts() {
         
-        dump(allItems)
         filterItems = allItems
         if filterItems != nil {
-            self.configureAndReloadData(nil, array: self.filterItems)
+            self.change(filter: nil, items: self.filterItems)
         }
     }
     
     // MARK: Filtering.
     fileprivate func predefinedActions() -> [UIAlertAction] {
         
+        var actions = [UIAlertAction]()
         //Creating actions for ActionSheet and handle closures.
         let allItems = UIAlertAction(title: category.allItems, style: .default) { [unowned self] action in
-            self.saveAndChange(filterMode: .allItems, items: self.allItems)
+            self.change(filter: self.prepared(name: category.allItems), items: self.allItems)
         }
+        actions.append(allItems)
+        
         let lastAdded = UIAlertAction(title: category.lastAdded, style: .default) { [unowned self] action in
-            //self.saveAndChange(filterMode: .lastAdded, items: self.allProducts?.newProducts)
+            self.change(filter: self.prepared(name: category.lastAdded), items: self.lastAdded)
         }
-        let bestSellers = UIAlertAction(title: category.bestSellers, style: .default) { [unowned self] action in
-            //self.saveAndChange(filterMode: .bestSellers, items: self.allProducts?.bestSellers)
-        }
-        let snacks = UIAlertAction(title: category.snacks, style: .default) { [unowned self] action in
-            //self.saveAndChange(filterMode: .snaks, items: self.allProducts?.snack)
-        }
-        let drinks = UIAlertAction(title: category.drinks, style: .default) { [unowned self] action in
-            //self.saveAndChange(filterMode: .drinks, items: self.allProducts?.drink)
-        }
-        let cancel = UIAlertAction(title: category.cancel, style: .cancel) { action in }
+        actions.append(lastAdded)
 
-        return [allItems, lastAdded, bestSellers, snacks, drinks, cancel]
+        let bestSellers = UIAlertAction(title: category.bestSellers, style: .default) { [unowned self] action in
+            self.change(filter: self.prepared(name: category.bestSellers), items: self.bestSellers)
+        }
+        actions.append(bestSellers)
+
+        let cancel = UIAlertAction(title: category.cancel, style: .cancel) { action in }
+        actions.append(cancel)
+        
+        guard let categories = categories else { return actions }
+        for category in categories {
+            guard let name = category.name, let items = category.products else { return actions }
+            let action = UIAlertAction(title: name , style: .default) { [unowned self] action in
+                self.change(filter: self.prepared(name: name), items: items)
+            }
+            actions.append(action)
+        }
+        return actions
     }
     
-    fileprivate func saveAndChange(filterMode mode: Filter, items: [Products]?) {
+    fileprivate func change(filter name: String?, items: [Products]?) {
+        
         
         let sortedItems = SortingManager().sortBy(name: items)
         filterItems = sortedItems
-        filterMode = mode
-        changeFilter(to: mode, items: sortedItems)
-    }
-    
-    fileprivate func changeFilter(to mode: Filter, items: [Products]?) {
-        
-        switch mode {
-        case .allItems:
-            configureAndReloadData("\(category.allItems) ▾", array: items)
-        case .lastAdded:
-            configureAndReloadData("\(category.lastAdded) ▾", array: items)
-        case .bestSellers:
-            configureAndReloadData("\(category.bestSellers) ▾", array: items)
-        case .snaks:
-            configureAndReloadData("\(category.snacks) ▾", array: items)
-        case .drinks:
-            configureAndReloadData("\(category.drinks) ▾", array: items)
+        if name != nil {
+            titleButton.setTitle(name, for: UIControlState())
         }
+        reloadTableView()
     }
     
-    fileprivate func configureAndReloadData(_ buttonTitle: String?, array: [Products]?) {
+    fileprivate func prepared(name: String) -> String {
         
-        setAndReload(data: array)
-        guard let buttonTitle = buttonTitle else { return }
-        titleButton.setTitle(buttonTitle, for: UIControlState())
+        return "\(name) ▾"
     }
     
     //MARK: Others
@@ -209,21 +201,8 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             guard let item = filterItems?[indexPath.item] else { return cell }
             cell.delegate = self
-            load(image: item.imageUrl, cell: cell)
             return cell.configure(with: item)
         }
-    }
-    
-    func load(image endpoint: String?, cell: AllItemsTableViewCell) {
-        
-        guard let endpoint = endpoint else { return cell.logo.image = placeholder }
-        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
-            APIManager.fetch(image: endpoint) { image in
-                cell.logo.image = image
-            }
-            return
-        }
-        return cell.logo.image = cashedImage
     }
     
     // MARK: UITableViewDelegate
@@ -250,18 +229,9 @@ extension AllItemsViewController: UISearchResultsUpdating {
     }
 }
 
-extension AllItemsViewController: UITabBarControllerDelegate {
+extension AllItemsViewController: CellDelegate {
     
-    // MARK: UITabBarControllerDelegate
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        
-        resultSearchController.dismiss(animated: true) { }
-    }
-}
-
-extension AllItemsViewController: FavoriteCellDelegate {
-    
-    // MARK: FavoriteCellDelegate
+    // MARK: CellDelegate
     func add(favorite identifier: Int, name: String) {
         
         APIManager.favorite(.post, identifier: identifier) { [unowned self] object, error in
@@ -280,5 +250,10 @@ extension AllItemsViewController: FavoriteCellDelegate {
                 self.reloadTableView()
             }
         }
+    }
+    
+    func buy(product identifier: Int, name: String, price: Int) {
+        
+        confirmation(identifier, name: name, price: price)
     }
 }

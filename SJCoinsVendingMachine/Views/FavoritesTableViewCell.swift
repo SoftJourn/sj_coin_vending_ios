@@ -39,6 +39,7 @@ class FavoritesTableViewCell: UITableViewCell {
         
         producName = item.name
         productPrice = item.price
+        load(image: item.imageUrl)
         return self
     }
     
@@ -47,4 +48,16 @@ class FavoritesTableViewCell: UITableViewCell {
         request?.cancel()
         favouritesLogo.image = UIImage(named: "Placeholder")
     }
+    
+    func load(image endpoint: String?) {
+        
+        guard let endpoint = endpoint else { return favouritesLogo.image = UIImage(named: "Placeholder") }
+        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
+            return APIManager.fetch(image: endpoint) { [unowned self] image in
+                self.favouritesLogo.image = image
+            }
+        }
+        favouritesLogo.image = cashedImage
+    }
+
 }

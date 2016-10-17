@@ -37,8 +37,6 @@ struct category {
     static let allItems = "All Items"
     static let lastAdded = "Last Added"
     static let bestSellers = "Best Sellers"
-    static let snacks = "Snacks"
-    static let drinks = "Drinks"
     static let cancel = "Cancel"
 }
 

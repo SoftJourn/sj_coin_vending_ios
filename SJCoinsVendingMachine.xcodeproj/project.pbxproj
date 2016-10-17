@@ -14,7 +14,6 @@
 		35089F581DAB7EC200DC3BAF /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F571DAB7EC200DC3BAF /* RequestManager.swift */; };
 		35089F5A1DAB813D00DC3BAF /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F591DAB813D00DC3BAF /* APIManager.swift */; };
 		35089F5E1DAB901900DC3BAF /* StringDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F5D1DAB901900DC3BAF /* StringDecorator.swift */; };
-		35089F601DAB902500DC3BAF /* AlertControllerDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F5F1DAB902500DC3BAF /* AlertControllerDecorator.swift */; };
 		35089F681DAB9E4900DC3BAF /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F621DAB9E4900DC3BAF /* AccountViewController.swift */; };
 		35089F691DAB9E4900DC3BAF /* AllItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F631DAB9E4900DC3BAF /* AllItemsViewController.swift */; };
 		35089F6A1DAB9E4900DC3BAF /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F641DAB9E4900DC3BAF /* BaseViewController.swift */; };
@@ -61,7 +60,6 @@
 		35089F571DAB7EC200DC3BAF /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestManager.swift; path = Networking/RequestManager.swift; sourceTree = "<group>"; };
 		35089F591DAB813D00DC3BAF /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIManager.swift; path = Networking/APIManager.swift; sourceTree = "<group>"; };
 		35089F5D1DAB901900DC3BAF /* StringDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringDecorator.swift; sourceTree = "<group>"; };
-		35089F5F1DAB902500DC3BAF /* AlertControllerDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertControllerDecorator.swift; sourceTree = "<group>"; };
 		35089F621DAB9E4900DC3BAF /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = Controllers/AccountViewController.swift; sourceTree = "<group>"; };
 		35089F631DAB9E4900DC3BAF /* AllItemsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AllItemsViewController.swift; path = Controllers/AllItemsViewController.swift; sourceTree = "<group>"; };
 		35089F641DAB9E4900DC3BAF /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseViewController.swift; path = Controllers/BaseViewController.swift; sourceTree = "<group>"; };
@@ -244,7 +242,6 @@
 		35089F611DAB902B00DC3BAF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				35089F5F1DAB902500DC3BAF /* AlertControllerDecorator.swift */,
 				3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */,
 				35089F5D1DAB901900DC3BAF /* StringDecorator.swift */,
 			);
@@ -427,7 +424,6 @@
 				35089F5E1DAB901900DC3BAF /* StringDecorator.swift in Sources */,
 				35089F6A1DAB9E4900DC3BAF /* BaseViewController.swift in Sources */,
 				35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */,
-				35089F601DAB902500DC3BAF /* AlertControllerDecorator.swift in Sources */,
 				35E504E91DAD360C00131567 /* FeaturesModel.swift in Sources */,
 				359441731DAFC3B600B8B693 /* SettingsTableViewController.swift in Sources */,
 				35089F6F1DABAB4A00DC3BAF /* DataManager.swift in Sources */,

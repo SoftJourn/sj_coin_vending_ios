@@ -75,7 +75,7 @@ class AuthorizationManager: RequestManager {
         print("Token saved")
         //print(object.expiresIn)
         //print("REFRESH: \(Defaults[.kRefreshToken])")
-        //print("ACCESS: \(Defaults[.kAccessToken])")
+        print("ACCESS: \(Defaults[.kAccessToken])")
     }
     
     class func save(machineId: Int) {

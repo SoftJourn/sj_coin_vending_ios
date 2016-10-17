@@ -24,7 +24,7 @@ class AllItemsTableViewCell: UITableViewCell {
     @IBOutlet fileprivate weak var buyButton: UIButton!
     @IBOutlet fileprivate weak var favoriteButton: UIButton!
     
-    weak var delegate: FavoriteCellDelegate?
+    weak var delegate: CellDelegate?
     fileprivate var request: Request?
     fileprivate var productID: Int?
     fileprivate var productName: String? {
@@ -35,27 +35,29 @@ class AllItemsTableViewCell: UITableViewCell {
     }
     var favorite: Bool = false {
         didSet {
-            favorite == true ? checked() : unchecked()
+            favorite ? checked() : unchecked()
         }
     }
     
     @IBAction fileprivate func buyButtonPressed(_ sender: UIButton) {
         
-        //Present confirmation message.
         print("buyButtonPressed")
-        //        let navigation = NavigationManager.tabBarController?.selectedViewController as! UINavigationController
-        //        let allProductController = navigation.visibleViewController as! AllProductsViewController
-        //        allProductController.presentConfirmation(with: productID, name: productName, price: productPrice)
+        
+        guard let identifier = productID, let name = productName, let price = productPrice else {
+            //Present error Alert.
+            return
+        }
+        delegate?.buy!(product: identifier, name: name, price: price)
     }
     
     @IBAction fileprivate func favouritesButtonPressed(_ sender: UIButton) {
         
         favorite = !favorite
         guard let productID = productID, let productName = productName else { return }
-        if favorite == true {
-            delegate?.add(favorite: productID, name: productName)
+        if favorite {
+            delegate?.add!(favorite: productID, name: productName)
         } else {
-            delegate?.remove(favorite: productID, name: productName)
+            delegate?.remove!(favorite: productID, name: productName)
         }
     }
     
@@ -69,9 +71,11 @@ class AllItemsTableViewCell: UITableViewCell {
     
     func configure(with item: Products) -> AllItemsTableViewCell {
         
+        print(item.internalIdentifier)
         productID = item.internalIdentifier
         productName = item.name
         productPrice = item.price
+        load(image: item.imageUrl)
         return self
     }
     
@@ -89,5 +93,16 @@ class AllItemsTableViewCell: UITableViewCell {
         
         request?.cancel()
         logo.image = UIImage(named: "Placeholder")
+    }
+    
+    func load(image endpoint: String?) {
+        
+        guard let endpoint = endpoint else { return logo.image = UIImage(named: "Placeholder") }
+        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
+            return APIManager.fetch(image: endpoint) { [unowned self] image in
+                self.logo.image = image
+            }
+        }
+        logo.image = cashedImage
     }
 }

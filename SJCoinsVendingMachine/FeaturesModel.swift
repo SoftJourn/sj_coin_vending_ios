@@ -30,6 +30,7 @@ class FeaturesModel {
     
     init(json: JSON) {
         
+        bestSellers = []
         if let items = json[kFeaturesModelBestSellersKey].array {
             for item in items {
                 if let tempValue = item.int {
