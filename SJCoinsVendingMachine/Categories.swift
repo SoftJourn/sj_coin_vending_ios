@@ -21,6 +21,12 @@ class Categories {
 
 
     // MARK: SwiftyJSON Initalizers
+    init(name: String, items: [Products]) {
+        
+        self.name = name
+        self.products = items
+    }
+    
     convenience init(object: AnyObject) {
         
         self.init(json: JSON(object))

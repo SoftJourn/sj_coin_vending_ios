@@ -24,6 +24,7 @@ class AuthorizationManager: RequestManager {
     // MARK: Constants
     fileprivate static let grantType = "password"
     typealias complited = (_ error: Error?) -> ()
+    typealias refreshComplited = (_ authModel: AuthModel?, _ error: Error?) -> ()
     
     // MARK: Authorization
     class func authRequest(login: String, password: String, complition: @escaping complited) {
@@ -45,7 +46,7 @@ class AuthorizationManager: RequestManager {
         }
     }
     
-    class func refreshRequest(complition: @escaping complited) {
+    class func refreshRequest(complition: @escaping refreshComplited) {
         
         let urlString = "\(networking.baseURL)auth/oauth/token"
         let headers = [ "Authorization": "Basic \(networking.basicKey)",
@@ -54,15 +55,12 @@ class AuthorizationManager: RequestManager {
         
         customManager.request(urlString, method: .post, parameters: [:], encoding: refreshData, headers: headers)
             .responseJSON { response in
-                
                 switch response.result {
                 case .success(let data):
-                    //print(data)
                     let model = AuthModel.init(json: JSON(data))
-                    save(authInfo: model)
-                    complition(nil)
+                    complition(model, nil)
                 case .failure(let error):
-                    complition(error)
+                    complition(nil, error)
                 }
         }
     }
@@ -75,7 +73,7 @@ class AuthorizationManager: RequestManager {
         print("Token saved")
         //print(object.expiresIn)
         //print("REFRESH: \(Defaults[.kRefreshToken])")
-        print("ACCESS: \(Defaults[.kAccessToken])")
+        //print("ACCESS: \(Defaults[.kAccessToken])")
     }
     
     class func save(machineId: Int) {
@@ -103,6 +101,7 @@ class AuthorizationManager: RequestManager {
         
         Defaults[.kAccessToken] = token
         Defaults[.kRefreshToken] = refresh
+        print("Tokens updated")
     }
     
     class func accessTokenExist() -> Bool {

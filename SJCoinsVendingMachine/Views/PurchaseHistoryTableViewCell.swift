@@ -24,14 +24,6 @@ class PurchaseHistoryTableViewCell: UITableViewCell {
         transactionDate.text = ""
         transactionItem.text = ""
         transactionPrice.text = ""
-        //resetImage()
     }
     
-//    func configure(with item: Products) -> AllItemsTableViewCell {
-//        
-//        transactionDate = item.internalIdentifier
-//        transactionItem = item.name
-//        transactionPrice = item.price
-//        return self
-//    }
 }

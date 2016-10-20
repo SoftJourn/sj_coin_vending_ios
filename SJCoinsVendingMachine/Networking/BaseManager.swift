@@ -13,6 +13,8 @@ import PromiseKit
 class BaseManager {
     
     // MARK: Properties
+    static let oauthHandler = OAuth2Handler()
+    
     static let customManager: Alamofire.SessionManager = {
         
         //Privacy configuration the Alamofire manager
@@ -23,10 +25,12 @@ class BaseManager {
         configuration.timeoutIntervalForResource = 30 //seconds
         configuration.httpAdditionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
         
-        return Alamofire.SessionManager(
+        let manager = Alamofire.SessionManager(
             configuration: configuration,
             serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies)
         )
+        manager.retrier = oauthHandler
+        return manager
     }()
     
     class func sendRequest(_ urlString: URLConvertible,
@@ -34,19 +38,16 @@ class BaseManager {
                            parameters: [String: AnyObject]?,
                            encoding: ParameterEncoding,
                            headers: Dictionary<String, String>) -> Promise<AnyObject> {
+    
         
-        //let oauthHandler = OAuth2Handler.init(baseURLString: Networking.baseURL, accessToken: AuthorizationManager.getToken(), refreshToken: AuthorizationManager.getRefreshToken())
-        //customManager.retrier = oauthHandler
         let promise = Promise<AnyObject> { fulfill, reject in
             
             if Reachability.connectedToNetwork() {
                 customManager.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
                     .validate(statusCode: 200..<300)
                     .responseJSON { response in
-                    
                         switch response.result {
                         case .success(let json):
-                            print(json)
                             fulfill(json as AnyObject)
                         case .failure(let error):
                             guard let data = response.data else { return }

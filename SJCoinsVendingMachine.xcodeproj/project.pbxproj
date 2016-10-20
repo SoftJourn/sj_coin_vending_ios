@@ -33,6 +33,8 @@
 		35089F831DABBA4900DC3BAF /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F821DABBA4900DC3BAF /* AccountModel.swift */; };
 		35089F851DABCCE800DC3BAF /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F841DABCCE800DC3BAF /* DateManager.swift */; };
 		3512EA9B1DB2BE70008B47FA /* NotificationDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */; };
+		354314261DB55749001A69FF /* OAuth2Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354314251DB55749001A69FF /* OAuth2Handler.swift */; };
+		3560E1A01DB8C49E00DF42C7 /* PurchaseHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3560E19F1DB8C49E00DF42C7 /* PurchaseHistoryModel.swift */; };
 		35617D721DA814A6000582F6 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35617D701DA814A6000582F6 /* Launch Screen.storyboard */; };
 		35617D751DA814E3000582F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35617D731DA814E3000582F6 /* Main.storyboard */; };
 		35617D791DA818A1000582F6 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D781DA818A1000582F6 /* Const.swift */; };
@@ -79,6 +81,8 @@
 		35089F821DABBA4900DC3BAF /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountModel.swift; path = Models/AccountModel.swift; sourceTree = "<group>"; };
 		35089F841DABCCE800DC3BAF /* DateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDecorator.swift; sourceTree = "<group>"; };
+		354314251DB55749001A69FF /* OAuth2Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2Handler.swift; sourceTree = "<group>"; };
+		3560E19F1DB8C49E00DF42C7 /* PurchaseHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryModel.swift; sourceTree = "<group>"; };
 		35617D711DA814A6000582F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		35617D741DA814E3000582F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		35617D781DA818A1000582F6 /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
@@ -234,6 +238,7 @@
 				35089F541DAB7D9000DC3BAF /* BaseManager.swift */,
 				35089F571DAB7EC200DC3BAF /* RequestManager.swift */,
 				35089F591DAB813D00DC3BAF /* APIManager.swift */,
+				354314251DB55749001A69FF /* OAuth2Handler.swift */,
 				35617D7E1DA82484000582F6 /* AuthorizationManager.swift */,
 			);
 			name = Networking;
@@ -260,6 +265,7 @@
 			isa = PBXGroup;
 			children = (
 				35089F821DABBA4900DC3BAF /* AccountModel.swift */,
+				3560E19F1DB8C49E00DF42C7 /* PurchaseHistoryModel.swift */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -419,6 +425,7 @@
 				3512EA9B1DB2BE70008B47FA /* NotificationDecorator.swift in Sources */,
 				35089F691DAB9E4900DC3BAF /* AllItemsViewController.swift in Sources */,
 				35089F581DAB7EC200DC3BAF /* RequestManager.swift in Sources */,
+				354314261DB55749001A69FF /* OAuth2Handler.swift in Sources */,
 				35089F681DAB9E4900DC3BAF /* AccountViewController.swift in Sources */,
 				35089F781DABB45F00DC3BAF /* CustomSegmentControl.swift in Sources */,
 				35089F5E1DAB901900DC3BAF /* StringDecorator.swift in Sources */,
@@ -434,6 +441,7 @@
 				35E504EB1DAD360C00131567 /* Products.swift in Sources */,
 				35617D811DA82728000582F6 /* NavigationManager.swift in Sources */,
 				35089F7C1DABB45F00DC3BAF /* LoginPageDecorator.swift in Sources */,
+				3560E1A01DB8C49E00DF42C7 /* PurchaseHistoryModel.swift in Sources */,
 				35089F7F1DABB7DF00DC3BAF /* SortingManager.swift in Sources */,
 				35E29C0F1DACDCDD002B7045 /* InitialViewController.swift in Sources */,
 				07854FBA1D4B8C5300F31AB3 /* AppDelegate.swift in Sources */,

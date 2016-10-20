@@ -47,7 +47,8 @@ class BaseViewController: UIViewController {
             DataManager.shared.save(object)
             self.updateProducts()
         }.catch { error in
-            self.present(.downloading(error))
+            print("\(error)")
+            //self.present(.downloading(error))
         }
     }
     
@@ -87,6 +88,22 @@ class BaseViewController: UIViewController {
         //Override in child.
     }
     
+    func fetchPurchaseHistory() {
+        
+        firstly {
+            APIManager.fetchPurchaseHistory()
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+            self.updatePurchaseHistory()
+        }.catch { error in
+            self.present(.downloading(error))
+        }
+    }
+    
+    func updatePurchaseHistory() {
+        //Override in child.
+    }
+
     enum errorType {
         
         case validation

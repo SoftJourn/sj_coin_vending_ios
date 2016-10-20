@@ -20,6 +20,8 @@ class DataManager {
     fileprivate var features: FeaturesModel?
     fileprivate var account: AccountModel?
     fileprivate var favorites: [Products]?
+    fileprivate var categories: [Categories]?
+    fileprivate var purchases: [PurchaseHistoryModel]?
     
     static let imageCache = AutoPurgingImageCache(
         memoryCapacity: 100 * 1024 * 1024,
@@ -35,10 +37,13 @@ class DataManager {
             machines = object
         case let object as FeaturesModel:
             features = object
+            createCategories()
         case let object as [Products]:
             favorites = object
         case let object as AccountModel:
             account = object
+        case let object as [PurchaseHistoryModel]:
+            purchases = object
         default: break
         }
     }
@@ -61,6 +66,36 @@ class DataManager {
     func favorite() -> [Products]? {
         
         return favorites
+    }
+    
+    func createCategories() {
+        
+        guard let features = features else { return }
+        var categories = [Categories]()
+        
+        if let lastAdded = lastAdded() {
+            if lastAdded.count > 0 {
+                let category = Categories(name: features.kFeaturesModelLastAddedKey, items: lastAdded)
+                categories.append(category)
+            }
+        }
+        if let bestSellers = bestSellers() {
+            if bestSellers.count > 0 {
+                let category = Categories(name: features.kFeaturesModelBestSellersKey, items: bestSellers)
+                categories.append(category)
+            }
+        }
+        guard let items = features.categories else { return }
+        for item in items {
+            guard let name = item.name, let products = item.products else { return }
+            let category = Categories(name: name, items: products)
+            categories.append(category)
+        }
+    }
+
+    func preparedCategories() -> [Categories]? {
+    
+        return categories
     }
     
     func category() -> [Categories]? {
@@ -118,10 +153,10 @@ class DataManager {
         return bestSellers
     }
     
-    //    func myLastPurchase() -> [MyLastPurchases]? {
-    //        return features?.myLastPurchases
-    //    }
-    //
+    func myPurchases() -> [PurchaseHistoryModel]? {
+        
+        return purchases
+    }
     
     func balance() -> Int? {
         

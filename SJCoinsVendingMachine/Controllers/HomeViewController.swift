@@ -58,7 +58,8 @@ class HomeViewController: BaseViewController {
     
     @IBAction func refreshTokenTest(_ sender: UIBarButtonItem) {
         
-        AuthorizationManager.refreshRequest { error in
+        AuthorizationManager.refreshRequest { model, error in
+            
             //print(error)
         }
     }
@@ -67,8 +68,8 @@ class HomeViewController: BaseViewController {
     override func fetchContent() {
         
         fetchProducts()
-        fetchAccount()
-        fetchFavorites()
+        //fetchAccount()
+        //fetchFavorites()
         refreshControl.endRefreshing()
     }
     

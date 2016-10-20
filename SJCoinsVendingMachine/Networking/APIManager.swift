@@ -100,6 +100,31 @@ class APIManager: RequestManager {
         return promise
     }
     
+    class func fetchPurchaseHistory() -> Promise<AnyObject> {
+        
+        let promise = Promise<AnyObject> { fulfill, reject in
+            
+            let url = "\(networking.baseURL)vending/v1/machines/last"
+            
+            firstly {
+                sendDefault(request: .get, urlString: url)
+            }.then { data -> Void in
+                let data = JSON(data)
+                var purchases = [PurchaseHistoryModel]()
+                for (_, subJson):(String, JSON) in data {
+                    //Create model object.
+                    let object = PurchaseHistoryModel.init(json: subJson)
+                    //Add it to array.
+                    purchases.append(object)
+                }
+                fulfill(purchases as AnyObject)
+            }.catch { error in
+                reject(error)
+            }
+        }
+        return promise
+    }
+    
     typealias withImage = (_ image: UIImage) -> ()
     
     class func fetch(image urlString : String, complition: @escaping withImage) {

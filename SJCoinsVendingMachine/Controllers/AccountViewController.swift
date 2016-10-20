@@ -20,10 +20,12 @@ class AccountViewController: BaseViewController {
     @IBOutlet fileprivate var tableView: UITableView!
     
     fileprivate var accountInformation: AccountModel? {
+        
         return DataManager.shared.accountModel()
     }
-    fileprivate var purchases: [Products]? {
-        return nil
+    fileprivate var purchases: [PurchaseHistoryModel]? {
+        
+        return DataManager.shared.myPurchases()
     }
     
     // MARK: Life cycle
@@ -36,7 +38,7 @@ class AccountViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
-        //SVProgressHUD.dismiss()
+        SVProgressHUD.dismiss()
         fetchAccount()
     }
     
@@ -49,7 +51,7 @@ class AccountViewController: BaseViewController {
     @IBAction fileprivate func logOutButton(_ sender: UIBarButtonItem) {
         
         //ExecuteLogOut
-        //SVProgressHUD.show(withStatus: sign.outMessage)
+        SVProgressHUD.show(withStatus: sign.outMessage)
         AuthorizationManager.removeAccessToken()
         NavigationManager.shared.presentLoginViewController()
     }
@@ -57,20 +59,21 @@ class AccountViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
-        fetchProducts()
+        fetchPurchaseHistory()
         fetchAccount()
         refreshControl.endRefreshing()
     }
     
-    override func updateProducts() {
+    override func updatePurchaseHistory() {
         
         updateTableView()
     }
     
-    override func fetchAccount() {
+    override func updateAccount() {
         
         updateViewWithAccountContent()
     }
+    
     fileprivate func updateTableView() {
         
         DispatchQueue.main.async { [unowned self] in
@@ -100,16 +103,11 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: PurchaseHistoryTableViewCell.identifier, for: indexPath) as! PurchaseHistoryTableViewCell
         
-        //guard let item = purchases?[indexPath.item] else  { return cell }
-        //return cell.configure(with: item)
-
-        
-        //guard purchases != nil else { return cell }
-//        let date = items[indexPath.row].productDate()
-//        cell.transactionDate.text = DateManager().convertData(from: date)
-//        cell.transactionItem.text = items[(indexPath as NSIndexPath).row].productName()
-//        cell.transactionPrice.text = "\(items[(indexPath as NSIndexPath).row].productPrice()!) Coins"
-        return cell
+        guard let item = purchases?[indexPath.item] else  { return cell }
+        cell.transactionDate.text = DateManager().convertData(from: item.time!)
+        cell.transactionItem.text = item.name
+        cell.transactionPrice.text = "\(item.price) Coins"
+        return cell        
     }
     
     // MARK: UITableViewDelegate

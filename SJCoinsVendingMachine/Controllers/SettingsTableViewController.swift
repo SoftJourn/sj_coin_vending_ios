@@ -39,6 +39,7 @@ class SettingsTableViewController: UITableViewController {
     // MARK: Actions
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
         
+        NotificationCenter.default.post(name: .machineChanged, object: nil)
         dismiss(animated: true) { }
     }
     
@@ -91,13 +92,9 @@ class SettingsTableViewController: UITableViewController {
     // MARK: UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print(indexPath)
-        //fatal error: Index out of range after machine changed twice
         guard let machine = machines else { return }
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         AuthorizationManager.save(machineId: machine[indexPath.item].internalIdentifier!)
-        
-        NotificationCenter.default.post(name: .machineChanged, object: nil)
         tableView.reloadData()
     }
 }

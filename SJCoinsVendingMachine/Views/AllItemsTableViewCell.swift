@@ -71,7 +71,7 @@ class AllItemsTableViewCell: UITableViewCell {
     
     func configure(with item: Products) -> AllItemsTableViewCell {
         
-        print(item.internalIdentifier)
+        print("Product id \(item.internalIdentifier!)")
         productID = item.internalIdentifier
         productName = item.name
         productPrice = item.price
