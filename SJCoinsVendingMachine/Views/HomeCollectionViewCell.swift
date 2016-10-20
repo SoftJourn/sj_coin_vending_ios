@@ -36,18 +36,9 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     @IBAction fileprivate func seeAllButtonPressed(_ sender: UIButton) {
         
-        guard let categoryNames = self.categoryNames else { return }
-//            switch categoryNames {
-//            case category.lastAdded:
-//                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .lastAdded)
-//            case category.bestSellers:
-//                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .bestSellers)
-//            case category.snacks:
-//                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .snaks)
-//            case category.drinks:
-//                NavigationMager.presentAllProductsViewController(with: self.categoryItems, mode: .drinks)
-//            default: break
-//            }
+        print(categoryNames)
+        guard let items = categoryItems else { return }
+        NavigationManager.shared.presentAllItemsViewController(name: categoryNames, items: items)
     }
     
     func configure(with item: Categories) -> HomeCollectionViewCell {

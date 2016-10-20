@@ -129,11 +129,8 @@ class APIManager: RequestManager {
     
     class func fetch(image urlString : String, complition: @escaping withImage) {
         
-        DataRequest.addAcceptableImageContentTypes(["application/json"])
-
         customManager.request("\(networking.baseURL)vending/v1/\(urlString)")
             .responseImage { response in
-                debugPrint(response)
                 switch response.result {
                 case .success(let image):
                     DataManager.imageCache.add(image, withIdentifier: urlString)

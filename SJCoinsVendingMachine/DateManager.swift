@@ -14,11 +14,12 @@ class DateManager {
         
         guard let string = string else { return nil }
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let date = dateFormatter.date(from: string)
         
         dateFormatter.dateFormat = "dd.MM.yyyy"
-        let dateString = dateFormatter.string(from: date!)
+        guard let newDate = date else { return nil }
+        let dateString = dateFormatter.string(from: newDate)
         
         return dateString
     }

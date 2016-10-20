@@ -20,7 +20,7 @@ class DataManager {
     fileprivate var features: FeaturesModel?
     fileprivate var account: AccountModel?
     fileprivate var favorites: [Products]?
-    fileprivate var categories: [Categories]?
+    fileprivate var categories: [Categories]!
     fileprivate var purchases: [PurchaseHistoryModel]?
     
     static let imageCache = AutoPurgingImageCache(
@@ -71,26 +71,27 @@ class DataManager {
     func createCategories() {
         
         guard let features = features else { return }
-        var categories = [Categories]()
+        categories = [Categories]()
         
         if let lastAdded = lastAdded() {
             if lastAdded.count > 0 {
                 let category = Categories(name: features.kFeaturesModelLastAddedKey, items: lastAdded)
-                categories.append(category)
+                self.categories.append(category)
             }
         }
         if let bestSellers = bestSellers() {
             if bestSellers.count > 0 {
                 let category = Categories(name: features.kFeaturesModelBestSellersKey, items: bestSellers)
-                categories.append(category)
+                self.categories.append(category)
             }
         }
         guard let items = features.categories else { return }
         for item in items {
             guard let name = item.name, let products = item.products else { return }
             let category = Categories(name: name, items: products)
-            categories.append(category)
+            self.categories.append(category)
         }
+        
     }
 
     func preparedCategories() -> [Categories]? {

@@ -14,6 +14,7 @@ struct storyboards {
     static let tabBarControllerIdentifier = "TabBarController"
     static let settingsNavigationController = "settingsNavigationController"
     static let settingsControllerIdentifier = "settingsControllerIdentifier"
+    static let allItemsViewController = "AllItemsViewController"
 }
 
 struct networking {
@@ -59,6 +60,7 @@ struct errorMessage {
 
 struct buttonTitle {
     
+    static let retry = "Retry"
     static let confirm = "Confirm"
     static let cancel = "Cancel"
 }
@@ -70,8 +72,9 @@ struct buying {
     static let successMessage = "Please take your order from Vending Machine."
 }
 
-struct sign {
-    
-   static let inMessage = "Signing in ..."
-   static let outMessage = "Signing out ..."
+struct spinerMessage {
+   
+    static let downloading = "Downloading"
+    static let inMessage = "Signing in ..."
+    static let outMessage = "Signing out ..."
 }

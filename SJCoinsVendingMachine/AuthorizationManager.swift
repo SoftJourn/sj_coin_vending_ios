@@ -17,6 +17,7 @@ extension DefaultsKeys {
     static let kAccessToken = DefaultsKey<String>("access_token")
     static let kRefreshToken = DefaultsKey<String>("refresh_token")
     static let kMachineId = DefaultsKey<Int>("machineId")
+    static let fistLaunch = DefaultsKey<Bool>("fistLaunch")
 }
 
 class AuthorizationManager: RequestManager {
@@ -24,7 +25,7 @@ class AuthorizationManager: RequestManager {
     // MARK: Constants
     fileprivate static let grantType = "password"
     typealias complited = (_ error: Error?) -> ()
-    typealias refreshComplited = (_ authModel: AuthModel?, _ error: Error?) -> ()
+    typealias refreshComplited = (_ model: AuthModel?, _ error: Error?) -> ()
     
     // MARK: Authorization
     class func authRequest(login: String, password: String, complition: @escaping complited) {
@@ -54,6 +55,7 @@ class AuthorizationManager: RequestManager {
         let refreshData = "refresh_token=\(Defaults[.kRefreshToken])&grant_type=refresh_token"
         
         customManager.request(urlString, method: .post, parameters: [:], encoding: refreshData, headers: headers)
+            .validate(statusCode: 200..<300)
             .responseJSON { response in
                 switch response.result {
                 case .success(let data):
@@ -71,7 +73,6 @@ class AuthorizationManager: RequestManager {
         Defaults[.kAccessToken] = token
         Defaults[.kRefreshToken] = refresh
         print("Token saved")
-        //print(object.expiresIn)
         //print("REFRESH: \(Defaults[.kRefreshToken])")
         //print("ACCESS: \(Defaults[.kAccessToken])")
     }
@@ -95,13 +96,6 @@ class AuthorizationManager: RequestManager {
         
         Defaults.remove(.kAccessToken)
         print("Token removed")
-    }
-    
-    class func update(authInfo token: String, refresh: String) {
-        
-        Defaults[.kAccessToken] = token
-        Defaults[.kRefreshToken] = refresh
-        print("Tokens updated")
     }
     
     class func accessTokenExist() -> Bool {

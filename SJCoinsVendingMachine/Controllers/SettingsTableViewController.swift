@@ -23,11 +23,17 @@ class SettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        //SVProgressHUD.show(withStatus: spinerMessage.downloading)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
         SVProgressHUD.dismiss()
     }
     

@@ -59,8 +59,19 @@ class AllItemsViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        tableView.addSubview(refreshControl)
+        
+        usedSeeAll ? viewDidLoadUsingSeeAll() : viewDidLoadNotUsingSeeAll()
+        }
+    
+    func viewDidLoadUsingSeeAll() {
+        
+        titleButton.removeTarget(self, action: #selector(self.titleButtonPressed(_:)), for: .touchUpInside)
+    }
+    
+    func viewDidLoadNotUsingSeeAll() {
+        
         filterItems = allItems
+        tableView.addSubview(refreshControl)
         self.definesPresentationContext = true
     }
     
@@ -155,10 +166,14 @@ class AllItemsViewController: BaseViewController {
         
         let sortedItems = SortingManager().sortBy(name: items)
         filterItems = sortedItems
+        titleButton(name)
+        reloadTableView()
+    }
+    
+    func titleButton(_ name: String?) {
         if name != nil {
             titleButton.setTitle(name, for: UIControlState())
         }
-        reloadTableView()
     }
     
     fileprivate func prepared(name: String) -> String {

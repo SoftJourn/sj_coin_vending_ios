@@ -39,7 +39,7 @@ class AccountViewController: BaseViewController {
         
         NavigationManager.shared.visibleViewController = self
         SVProgressHUD.dismiss()
-        fetchAccount()
+        fetchContent()
     }
     
     deinit {
@@ -51,7 +51,7 @@ class AccountViewController: BaseViewController {
     @IBAction fileprivate func logOutButton(_ sender: UIBarButtonItem) {
         
         //ExecuteLogOut
-        SVProgressHUD.show(withStatus: sign.outMessage)
+        SVProgressHUD.show(withStatus: spinerMessage.outMessage)
         AuthorizationManager.removeAccessToken()
         NavigationManager.shared.presentLoginViewController()
     }
@@ -103,10 +103,11 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: PurchaseHistoryTableViewCell.identifier, for: indexPath) as! PurchaseHistoryTableViewCell
         
-        guard let item = purchases?[indexPath.item] else  { return cell }
-        cell.transactionDate.text = DateManager().convertData(from: item.time!)
-        cell.transactionItem.text = item.name
-        cell.transactionPrice.text = "\(item.price) Coins"
+        guard let item = purchases?[indexPath.item], let price = item.price, let name = item.name else  { return cell }
+        let date = DateManager().convertData(from: item.time!)
+        cell.transactionDate.text = date
+        cell.transactionItem.text = name
+        cell.transactionPrice.text = "\(price) Coins"
         return cell        
     }
     

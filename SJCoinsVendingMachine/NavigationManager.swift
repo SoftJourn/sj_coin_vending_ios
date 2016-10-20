@@ -36,6 +36,15 @@ class NavigationManager: NSObject {
         present(viewControllerAsRoot: loginController)
     }
     
+    func presentAllItemsViewController(name: String?, items: [Products]?) {
+        
+        let allItemsViewController = create(viewController: storyboards.allItemsViewController) as! AllItemsViewController
+        allItemsViewController.usedSeeAll = true
+        allItemsViewController.titleButton(name)
+        allItemsViewController.filterItems = items
+        visibleViewController?.navigationController?.pushViewController(allItemsViewController, animated: true)
+    }
+    
     fileprivate func create(viewController identifier: String) -> UIViewController {
         
         return mainStoryboard.instantiateViewController(withIdentifier: identifier)

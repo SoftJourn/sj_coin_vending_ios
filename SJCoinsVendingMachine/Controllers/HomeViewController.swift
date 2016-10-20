@@ -9,6 +9,7 @@
 import UIKit
 import SVProgressHUD
 import PromiseKit
+import SwiftyUserDefaults
 
 class HomeViewController: BaseViewController {
     
@@ -20,13 +21,15 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var balanceLabel: UILabel!
     
     fileprivate var categories: [Categories]? {
-        return DataManager.shared.category()
+        
+        return DataManager.shared.preparedCategories()
     }
     
     // MARK: Life cycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        fetchMachinesFirstTime()
         collectionView.addSubview(refreshControl)
         fetchContent()
     }
@@ -34,7 +37,6 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
-        SVProgressHUD.dismiss()
     }
     
     deinit {
@@ -45,36 +47,71 @@ class HomeViewController: BaseViewController {
     // MARK: Actions
     @IBAction func settingsButtonPressed(_ sender: UIBarButtonItem) {
         
-        firstly {
-            APIManager.fetchMachines()
-        }.then { object -> Void in
-            DataManager.shared.save(object)
+        SVProgressHUD.show(withStatus: spinerMessage.downloading)
+        fetchMachines { _ in
             NavigationManager.shared.presentSettingsViewController()
-        }.catch { error in
-            SVProgressHUD.dismiss()
-            //Handle Error
         }
     }
     
     @IBAction func refreshTokenTest(_ sender: UIBarButtonItem) {
         
         AuthorizationManager.refreshRequest { model, error in
-            
-            //print(error)
+            guard model != nil else { return print(error?.localizedDescription) }
+            AuthorizationManager.save(authInfo: model!)
         }
     }
+    
+    // MARK: Set default vending machnine when app launched first time.
+    fileprivate func fetchMachinesFirstTime() {
+        
+        if Defaults[.fistLaunch] {
+
+            fetchMachines { [unowned self] object in
+                
+                let machines = object as! [MachinesModel]
+                guard let id = machines[0].internalIdentifier else { return }
+                AuthorizationManager.save(machineId: id)
+                Defaults[.fistLaunch] = false
+                self.fetchContent()
+            }
+        }
+    }
+    
+    fileprivate func fetchMachines(complition: @escaping (_ object: AnyObject)->()) {
+        
+        firstly {
+            APIManager.fetchMachines()
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+            complition(object)
+        }.catch { error in
+            SVProgressHUD.dismiss()
+            AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, actions: self.retryActions())
+        }
+    }
+    
+    fileprivate func retryActions() -> [UIAlertAction] {
+        
+        let confirmButton = UIAlertAction(title: buttonTitle.retry , style: .destructive) { [unowned self] action in
+            self.fetchMachines { _ in }
+        }
+        let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
+        return [confirmButton, cancelButton]
+    }
+
     
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
         fetchProducts()
-        //fetchAccount()
-        //fetchFavorites()
+        fetchAccount()
+        fetchFavorites()
         refreshControl.endRefreshing()
     }
     
     override func updateProducts() {
         
+        SVProgressHUD.dismiss()
         updateCollectionView()
     }
     

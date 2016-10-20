@@ -34,12 +34,12 @@ class LoginViewController: BaseViewController {
         
         super.viewDidLoad()
         registerForKeyboardNotifications()
+        hideKeyboardWhenTappedAround()
         LoginPage.decorateLoginViewController(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-        navigationController?.isNavigationBarHidden = true
         NavigationManager.shared.visibleViewController = self
         SVProgressHUD.dismiss()
     }
@@ -58,7 +58,7 @@ class LoginViewController: BaseViewController {
     
     fileprivate func authorization() {
         
-        SVProgressHUD.show(withStatus: sign.inMessage)
+        SVProgressHUD.show(withStatus: spinerMessage.downloading)
         AuthorizationManager.authRequest(login: login, password: password) { [unowned self] error in
             error != nil ? self.authFailed() : self.authSuccess()
         }
@@ -92,5 +92,19 @@ class LoginViewController: BaseViewController {
     
     @objc fileprivate func keyboardWillBeHidden(_ notification: Notification) {
         scrollView.contentOffset = CGPoint.zero
+    }
+}
+
+extension LoginViewController {
+    
+    func hideKeyboardWhenTappedAround() {
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

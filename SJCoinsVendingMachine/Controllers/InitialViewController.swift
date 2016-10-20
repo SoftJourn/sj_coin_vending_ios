@@ -8,17 +8,20 @@
 
 import UIKit
 import SVProgressHUD
+import SwiftyUserDefaults
 
 class InitialViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        super.viewWillAppear(animated)
         NavigationManager.shared.visibleViewController = self
         SVProgressHUD.show()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
+        super.viewDidAppear(animated)
         launch()
     }
     
@@ -28,6 +31,8 @@ class InitialViewController: UIViewController {
     }
     
     fileprivate func launch() {
+        
+        Defaults[.fistLaunch] = true
         
         if AuthorizationManager.accessTokenExist() {
             NavigationManager.shared.presentTabBarController()

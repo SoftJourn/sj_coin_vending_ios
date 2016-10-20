@@ -34,7 +34,7 @@ class FeaturesModel {
         if let items = json[kFeaturesModelBestSellersKey].array {
             for item in items {
                 if let tempValue = item.int {
-                    lastAdded?.append(tempValue)
+                    bestSellers?.append(tempValue)
                 }
             }
         } else {

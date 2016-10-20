@@ -48,7 +48,7 @@ class BaseViewController: UIViewController {
             self.updateProducts()
         }.catch { error in
             print("\(error)")
-            //self.present(.downloading(error))
+            self.present(.downloading(error))
         }
     }
     
