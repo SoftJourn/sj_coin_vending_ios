@@ -94,6 +94,6 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
             //Present buying error Alert.
             return
         }
-        delegate?.buy!(product: identifier, name: name, price: price)
+        delegate?.buy(product: identifier, name: name, price: price)
     }
 }

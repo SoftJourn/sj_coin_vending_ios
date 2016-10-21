@@ -37,9 +37,17 @@ class AccountViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        NavigationManager.shared.visibleViewController = self
-        SVProgressHUD.dismiss()
         fetchContent()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        NavigationManager.shared.visibleViewController = self
+        if !Reachability.connectedToNetwork() {
+            AlertManager().presentInternetConnectionError { }
+        } else {
+            //SVProgressHUD.show(withStatus: spinerMessage.loading)
+        }
     }
     
     deinit {
@@ -51,7 +59,7 @@ class AccountViewController: BaseViewController {
     @IBAction fileprivate func logOutButton(_ sender: UIBarButtonItem) {
         
         //ExecuteLogOut
-        SVProgressHUD.show(withStatus: spinerMessage.outMessage)
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
         AuthorizationManager.removeAccessToken()
         NavigationManager.shared.presentLoginViewController()
     }
@@ -61,7 +69,7 @@ class AccountViewController: BaseViewController {
         
         fetchPurchaseHistory()
         fetchAccount()
-        refreshControl.endRefreshing()
+        SVProgressHUD.dismiss()
     }
     
     override func updatePurchaseHistory() {

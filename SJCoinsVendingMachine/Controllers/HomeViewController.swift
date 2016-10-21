@@ -34,9 +34,12 @@ class HomeViewController: BaseViewController {
         fetchContent()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
+        if !Reachability.connectedToNetwork() {
+            AlertManager().presentInternetConnectionError { }
+        }
     }
     
     deinit {
@@ -47,9 +50,12 @@ class HomeViewController: BaseViewController {
     // MARK: Actions
     @IBAction func settingsButtonPressed(_ sender: UIBarButtonItem) {
         
-        SVProgressHUD.show(withStatus: spinerMessage.downloading)
-        fetchMachines { _ in
-            NavigationManager.shared.presentSettingsViewController()
+        if Reachability.connectedToNetwork() {
+            fetchMachines { _ in
+                NavigationManager.shared.presentSettingsViewController()
+            }
+        } else {
+            AlertManager().presentInternetConnectionError { }
         }
     }
     
@@ -65,7 +71,7 @@ class HomeViewController: BaseViewController {
     fileprivate func fetchMachinesFirstTime() {
         
         if Defaults[.fistLaunch] {
-
+            
             fetchMachines { [unowned self] object in
                 
                 let machines = object as! [MachinesModel]
@@ -79,34 +85,35 @@ class HomeViewController: BaseViewController {
     
     fileprivate func fetchMachines(complition: @escaping (_ object: AnyObject)->()) {
         
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
         firstly {
             APIManager.fetchMachines()
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-            complition(object)
-        }.catch { error in
-            SVProgressHUD.dismiss()
-            AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, actions: self.retryActions())
+            }.then { object -> Void in
+                DataManager.shared.save(object)
+                complition(object)
+            }.catch { error in
+                SVProgressHUD.dismiss()
+                //AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, actions: self.retryActions())
         }
     }
     
     fileprivate func retryActions() -> [UIAlertAction] {
         
         let confirmButton = UIAlertAction(title: buttonTitle.retry , style: .destructive) { [unowned self] action in
-            self.fetchMachines { _ in }
+            self.fetchMachines { _ in
+                SVProgressHUD.dismiss()
+            }
         }
         let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
-        return [confirmButton, cancelButton]
+        return [cancelButton, confirmButton]
     }
-
     
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
         fetchProducts()
         fetchAccount()
-        fetchFavorites()
-        refreshControl.endRefreshing()
+        fetchFavorites { }
     }
     
     override func updateProducts() {
@@ -124,6 +131,7 @@ class HomeViewController: BaseViewController {
         
         DispatchQueue.main.async { [unowned self] in
             self.collectionView.reloadData()
+            SVProgressHUD.dismiss()
         }
     }
     
@@ -176,6 +184,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController: CellDelegate {
     
     // MARK: CellDelegate
+    func add(favorite item: Products, index: IndexPath) {
+        
+    }
+    
+    func remove(favorite item: Products) {
+        
+    }
+    
     func buy(product identifier: Int, name: String, price: Int) {
         
         confirmation(identifier, name: name, price: price)

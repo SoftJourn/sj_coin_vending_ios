@@ -15,9 +15,11 @@ class FavoritesViewController: BaseViewController {
     // MARK: Properties
     @IBOutlet weak var tableView: UITableView!
     
-    fileprivate var favorites: [Products]? {
+    fileprivate var unsortedFavorites: [Products]? {
+        
         return DataManager.shared.favorite()
     }
+    fileprivate var favorites: [Products]?
     
     // MARK: Life cycle
     override func viewDidLoad() {
@@ -28,8 +30,18 @@ class FavoritesViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        favorites = SortingManager().sortBy(name: unsortedFavorites)
+        fetchContent()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
         NavigationManager.shared.visibleViewController = self
-        //SVProgressHUD.dismiss()
+        if !Reachability.connectedToNetwork() {
+            AlertManager().presentInternetConnectionError { }
+        } else {
+            SVProgressHUD.show(withStatus: spinerMessage.loading)
+        }
     }
     
     deinit {
@@ -40,8 +52,9 @@ class FavoritesViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
-        fetchFavorites()
-        refreshControl.endRefreshing()
+        fetchFavorites {
+            SVProgressHUD.dismiss()
+        }
     }
     
     override func updateFavorites() {
@@ -53,12 +66,13 @@ class FavoritesViewController: BaseViewController {
         
         DispatchQueue.main.async { [unowned self] in
             self.tableView.reloadData()
+            SVProgressHUD.dismiss()
         }
     }
 }
 
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
-
+    
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -69,12 +83,42 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as! FavoritesTableViewCell
         guard let item = favorites?[indexPath.item] else  { return cell }
-        return cell.configure(with: item)
+        cell.delegate = self
+        return cell.configure(with: item, index: indexPath)
     }
     
     // MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension FavoritesViewController: CellDelegate {
+    
+    func add(favorite item: Products, index: IndexPath) {
+        guard let identifier = item.internalIdentifier else { return }
+        APIManager.favorite(.post, identifier: identifier) { [unowned self] object, error in
+            if error == nil {
+                
+                //reload cell
+                self.reloadTableView()
+            }
+        }
+        
+    }
+    
+    func remove(favorite item: Products) {
+        
+//        APIManager.favorite(.delete, identifier: identifier) { [unowned self] object, error in
+//            self.fetchFavorites {
+//                //self.reloadTableView()
+//            }
+//        }
+    }
+    
+    func buy(product identifier: Int, name: String, price: Int) {
+        
+        confirmation(identifier, name: name, price: price)
     }
 }

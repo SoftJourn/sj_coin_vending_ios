@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import  SVProgressHUD
 
 class FavoritesTableViewCell: UITableViewCell {
     
@@ -18,14 +19,24 @@ class FavoritesTableViewCell: UITableViewCell {
     @IBOutlet weak var favouritesLogo: UIImageView!
     @IBOutlet fileprivate weak var favouritesNameLabel: UILabel!
     @IBOutlet fileprivate weak var favouritesPriceLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
     
+    weak var delegate: CellDelegate?
     fileprivate var request: Request?
+    fileprivate var productID: Int?
     fileprivate var producName: String? {
         didSet { favouritesNameLabel.text = producName }
     }
     fileprivate var productPrice: Int? {
         didSet { favouritesPriceLabel.text = "\(productPrice!) Coins" }
     }
+    var favorite: Bool = true {
+        didSet {
+            favorite ? checked() : unchecked()
+        }
+    }
+    var savedItem: Products?
+    var indexPath: IndexPath?
     
     override func prepareForReuse() {
         
@@ -34,9 +45,25 @@ class FavoritesTableViewCell: UITableViewCell {
         favouritesPriceLabel.text = ""
         resetImage()
     }
+    
+    @IBAction func favoriteButtonPressed(_ sender: UIButton) {
+    
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
+        favorite = !favorite
+        guard let item = savedItem, let index = indexPath else { return }
+        if favorite {
+            delegate?.add(favorite: item, index: index)
+        } else {
+            delegate?.remove(favorite: item)
+        }
+    }
 
-    func configure(with item: Products) -> FavoritesTableViewCell {
-        
+    func configure(with item: Products, index: IndexPath) -> FavoritesTableViewCell {
+       
+        indexPath = index
+        savedItem = item
+        favorite = true
+        productID = item.internalIdentifier
         producName = item.name
         productPrice = item.price
         load(image: item.imageUrl)
@@ -59,5 +86,14 @@ class FavoritesTableViewCell: UITableViewCell {
         }
         favouritesLogo.image = cashedImage
     }
-
+    
+    fileprivate func checked() {
+        
+        favoriteButton.setImage(favoriteImage.checked, for: UIControlState())
+    }
+    
+    fileprivate func unchecked() {
+        
+        favoriteButton.setImage(favoriteImage.unchecked, for: UIControlState())
+    }
 }

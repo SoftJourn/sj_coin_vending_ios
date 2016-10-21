@@ -42,23 +42,22 @@ class BaseManager {
         
         let promise = Promise<AnyObject> { fulfill, reject in
             
-            if Reachability.connectedToNetwork() {
                 customManager.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
                     .validate(statusCode: 200..<300)
                     .responseJSON { response in
+                        print("\(response.response!)") // HTTP URL response
                         switch response.result {
                         case .success(let json):
+                            print(json)
                             fulfill(json as AnyObject)
                         case .failure(let error):
                             guard let data = response.data else { return }
                             let errorData = NSString(data: data, encoding:String.Encoding.utf8.rawValue)
                             print(errorData)
+                            print(error.localizedDescription)
                             reject(error)
                         }
                 }
-            } else {
-                AlertManager().presentInternetConnectionError()
-            }
         }
         return promise
     }

@@ -68,6 +68,11 @@ class DataManager {
         return favorites
     }
     
+    func add(favorite item: Products) {
+        
+        
+    }
+    
     func createCategories() {
         
         guard let features = features else { return }
@@ -150,7 +155,6 @@ class DataManager {
                 }
             }
         }
-        dump(bestSellers)
         return bestSellers
     }
     

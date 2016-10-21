@@ -15,9 +15,7 @@ class AllItemsTableViewCell: UITableViewCell {
     static let identifier = "\(AllItemsTableViewCell.self)"
     
     // MARK: Properties
-    fileprivate let checkedImage = UIImage(named: "FavouritesChecked")! as UIImage
-    fileprivate let uncheckedImage = UIImage(named: "FavouritesUnchecked")! as UIImage
-    
+        
     @IBOutlet weak var logo: UIImageView!
     @IBOutlet fileprivate weak var nameLabel: UILabel!
     @IBOutlet fileprivate weak var priceLabel: UILabel!
@@ -38,7 +36,8 @@ class AllItemsTableViewCell: UITableViewCell {
             favorite ? checked() : unchecked()
         }
     }
-    
+    var savedItem: Products?
+
     @IBAction fileprivate func buyButtonPressed(_ sender: UIButton) {
         
         print("buyButtonPressed")
@@ -47,17 +46,18 @@ class AllItemsTableViewCell: UITableViewCell {
             //Present error Alert.
             return
         }
-        delegate?.buy!(product: identifier, name: name, price: price)
+        delegate?.buy(product: identifier, name: name, price: price)
     }
     
     @IBAction fileprivate func favouritesButtonPressed(_ sender: UIButton) {
         
         favorite = !favorite
-        guard let productID = productID, let productName = productName else { return }
+        guard let item = savedItem else { return }
         if favorite {
-            delegate?.add!(favorite: productID, name: productName)
+            
+            //delegate?.add(favorite: item, index: ind)
         } else {
-            delegate?.remove!(favorite: productID, name: productName)
+            delegate?.remove(favorite: item)
         }
     }
     
@@ -71,6 +71,7 @@ class AllItemsTableViewCell: UITableViewCell {
     
     func configure(with item: Products) -> AllItemsTableViewCell {
         
+        savedItem = item
         print("Product id \(item.internalIdentifier!)")
         productID = item.internalIdentifier
         productName = item.name
@@ -81,12 +82,12 @@ class AllItemsTableViewCell: UITableViewCell {
     
     fileprivate func checked() {
         
-        favoriteButton.setImage(checkedImage, for: UIControlState())
+        favoriteButton.setImage(favoriteImage.checked, for: UIControlState())
     }
     
     fileprivate func unchecked() {
         
-        favoriteButton.setImage(uncheckedImage, for: UIControlState())
+        favoriteButton.setImage(favoriteImage.unchecked, for: UIControlState())
     }
     
     fileprivate func resetImage() {

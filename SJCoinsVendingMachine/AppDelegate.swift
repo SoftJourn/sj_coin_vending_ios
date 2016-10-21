@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     fileprivate func customSVProgressHUD() {
+        
         SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.gradient)
     }
     

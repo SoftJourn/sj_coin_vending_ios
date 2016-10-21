@@ -34,10 +34,12 @@ class AlertManager {
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
     
-    func presentInternetConnectionError() {
+    func presentInternetConnectionError(complition: @escaping ()->()) {
         
         let controller = information(alert: errorTitle.reachability, message: errorMessage.reachability)
-        NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
+        NavigationManager.shared.visibleViewController?.present(controller, animated: true) {
+        complition()
+        }
     }
     
     //Confirmation message

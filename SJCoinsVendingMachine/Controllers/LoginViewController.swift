@@ -57,10 +57,14 @@ class LoginViewController: BaseViewController {
     }
     
     fileprivate func authorization() {
-        
-        SVProgressHUD.show(withStatus: spinerMessage.downloading)
-        AuthorizationManager.authRequest(login: login, password: password) { [unowned self] error in
-            error != nil ? self.authFailed() : self.authSuccess()
+       
+        if Reachability.connectedToNetwork() {
+            SVProgressHUD.show(withStatus: spinerMessage.loading)
+            AuthorizationManager.authRequest(login: login, password: password) { [unowned self] error in
+                error != nil ? self.authFailed() : self.authSuccess()
+            }
+        } else {
+            AlertManager().presentInternetConnectionError { }
         }
     }
     

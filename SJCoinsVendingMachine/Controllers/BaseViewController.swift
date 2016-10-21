@@ -10,19 +10,19 @@ import UIKit
 import SVProgressHUD
 import PromiseKit
 
-@objc protocol CellDelegate: class {
+protocol CellDelegate: class {
     
-    @objc optional func add(favorite identifier: Int, name: String)
-    @objc optional func remove(favorite identifier: Int, name: String)
-    @objc optional func buy(product identifier: Int, name: String, price: Int)
+    func add(favorite item: Products, index: IndexPath)
+    func remove(favorite item: Products)
+    func buy(product identifier: Int, name: String, price: Int)
 }
 
 class BaseViewController: UIViewController {
-        
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(fetchContent), name: .machineChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .machineChanged, object: nil)
     }
     
     // MARK: Constants
@@ -30,12 +30,25 @@ class BaseViewController: UIViewController {
         
         let refresh = UIRefreshControl()
         refresh.attributedTitle = NSAttributedString(string: "Refreshing")
-        refresh.addTarget(self, action: #selector(fetchContent), for: UIControlEvents.valueChanged)
+        refresh.addTarget(self, action: #selector(fetchData), for: UIControlEvents.valueChanged)
         return refresh
     }()
     
-    func fetchContent() {
+    func fetchData() {
         
+        if Reachability.connectedToNetwork() {
+            fetchContent()
+            self.refreshControl.endRefreshing()
+        } else {
+            SVProgressHUD.dismiss()
+            AlertManager().presentInternetConnectionError {
+                self.refreshControl.endRefreshing()
+            }
+        }
+    }
+    
+    func fetchContent() {
+        //Override in child.
     }
     
     // MARK: Downloading, Handling and Refreshing data.
@@ -56,15 +69,17 @@ class BaseViewController: UIViewController {
         //Override in child.
     }
     
-    func fetchFavorites() {
+    func fetchFavorites(complition: @escaping ()->()) {
         
         firstly {
             APIManager.fetchFavorites()
         }.then { object -> Void in
             DataManager.shared.save(object)
             self.updateFavorites()
+            complition()
         }.catch { error in
             self.present(.downloading(error))
+            complition()
         }
     }
     
@@ -92,18 +107,18 @@ class BaseViewController: UIViewController {
         
         firstly {
             APIManager.fetchPurchaseHistory()
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-            self.updatePurchaseHistory()
-        }.catch { error in
-            self.present(.downloading(error))
+            }.then { object -> Void in
+                DataManager.shared.save(object)
+                self.updatePurchaseHistory()
+            }.catch { error in
+                self.present(.downloading(error))
         }
     }
     
     func updatePurchaseHistory() {
         //Override in child.
     }
-
+    
     enum errorType {
         
         case validation
@@ -135,7 +150,12 @@ class BaseViewController: UIViewController {
     fileprivate func buyingActions(with identifier: Int?) -> [UIAlertAction] {
         
         let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .default) { [unowned self] action in
-            self.execute(buying: identifier)
+            
+            if Reachability.connectedToNetwork() {
+                self.execute(buying: identifier)
+            } else {
+                AlertManager().presentInternetConnectionError { }
+            }
         }
         let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
         return [confirmButton, cancelButton]
@@ -144,7 +164,7 @@ class BaseViewController: UIViewController {
     func execute(buying identifier: Int?) {
         
         guard let identifier = identifier else { return }
-        SVProgressHUD.show()
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
         APIManager.buy(product: identifier, machineID: AuthorizationManager.getMachineId()) { [unowned self] object, error in
             
             SVProgressHUD.dismiss()

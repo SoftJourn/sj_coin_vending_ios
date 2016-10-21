@@ -74,7 +74,11 @@ struct buying {
 
 struct spinerMessage {
    
-    static let downloading = "Downloading"
-    static let inMessage = "Signing in ..."
-    static let outMessage = "Signing out ..."
+    static let loading = "Loading"
+}
+
+struct favoriteImage {
+    
+    static let checked = UIImage(named: "FavouritesChecked")!
+    static let unchecked = UIImage(named: "FavouritesUnchecked")!
 }

@@ -25,7 +25,7 @@ class AllItemsViewController: BaseViewController {
     @IBOutlet fileprivate weak var tableView: UITableView!
     @IBOutlet fileprivate weak var segmentControl: UISegmentedControl!
     @IBOutlet fileprivate weak var titleButton: UIButton!
-
+    
     fileprivate var sortingManager = SortingManager()
     fileprivate lazy var searchData = [Products]()
     fileprivate lazy var resultSearchController: UISearchController = {
@@ -38,16 +38,24 @@ class AllItemsViewController: BaseViewController {
     }()
     
     fileprivate var allItems: [Products]? {
+        
         return DataManager.shared.allItems()
     }
     fileprivate var lastAdded: [Products]? {
+        
         return DataManager.shared.lastAdded()
     }
     fileprivate var bestSellers: [Products]? {
+        
         return DataManager.shared.bestSellers()
     }
     fileprivate var categories: [Categories]? {
+        
         return DataManager.shared.category()
+    }
+    fileprivate var favorite: [Products]? {
+        
+        return DataManager.shared.favorite()
     }
     
     var filterMode: Filter = .allItems
@@ -59,9 +67,8 @@ class AllItemsViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
         usedSeeAll ? viewDidLoadUsingSeeAll() : viewDidLoadNotUsingSeeAll()
-        }
+    }
     
     func viewDidLoadUsingSeeAll() {
         
@@ -71,15 +78,17 @@ class AllItemsViewController: BaseViewController {
     func viewDidLoadNotUsingSeeAll() {
         
         filterItems = allItems
-        tableView.addSubview(refreshControl)
         self.definesPresentationContext = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-        NavigationManager.shared.visibleViewController = self
-        //SVProgressHUD.dismiss()
         filterItems = sortingManager.sortBy(name: filterItems)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        NavigationManager.shared.visibleViewController = self
     }
     
     deinit {
@@ -116,7 +125,6 @@ class AllItemsViewController: BaseViewController {
     override func fetchContent() {
         
         fetchProducts()
-        refreshControl.endRefreshing()
     }
     
     override func updateProducts() {
@@ -141,12 +149,12 @@ class AllItemsViewController: BaseViewController {
             self.change(filter: self.prepared(name: category.lastAdded), items: self.lastAdded)
         }
         actions.append(lastAdded)
-
+        
         let bestSellers = UIAlertAction(title: category.bestSellers, style: .default) { [unowned self] action in
             self.change(filter: self.prepared(name: category.bestSellers), items: self.bestSellers)
         }
         actions.append(bestSellers)
-
+        
         let cancel = UIAlertAction(title: category.cancel, style: .cancel) { action in }
         actions.append(cancel)
         
@@ -214,14 +222,21 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         if self.resultSearchController.isActive {
             return searchData.isEmpty ? cell : cell.configure(with: searchData[indexPath.item])
         } else {
-            guard let item = filterItems?[indexPath.item] else { return cell }
+            guard let item = filterItems?[indexPath.item], let favorites = favorite else { return cell }
             cell.delegate = self
+            
+            for object in favorites {
+                if object == item {
+                    cell.favorite = true
+                }
+            }
+            
             return cell.configure(with: item)
         }
     }
     
     // MARK: UITableViewDelegate
-
+    
 }
 
 extension AllItemsViewController: UISearchResultsUpdating {
@@ -247,24 +262,27 @@ extension AllItemsViewController: UISearchResultsUpdating {
 extension AllItemsViewController: CellDelegate {
     
     // MARK: CellDelegate
-    func add(favorite identifier: Int, name: String) {
+    func add(favorite item: Products, index: IndexPath) {
         
+        guard let identifier = item.internalIdentifier else { return }
         APIManager.favorite(.post, identifier: identifier) { [unowned self] object, error in
-            if object != nil {
-                //DataManager.shared.favorite(name)
-                self.reloadTableView()
+            if error == nil {
+                DataManager.shared.add(favorite: item)
+                self.tableView.reloadRows(at: [index], with: .middle)
+                SVProgressHUD.dismiss()
             }
         }
     }
     
-    func remove(favorite identifier: Int, name: String) {
+    func remove(favorite item: Products) {
         
-        APIManager.favorite(.delete, identifier: identifier) { [unowned self] object, error in
-            if object != nil {
-                //DataManager.shared.unfavorite(name)
-                self.reloadTableView()
-            }
-        }
+        //APIManager.favorite(.delete, identifier: identifier) { [unowned self] object, error in
+            //            if error == nil {
+            //                self.reloadTableView()
+            //                SVProgressHUD.dismiss()
+            //            }
+            //        }
+
     }
     
     func buy(product identifier: Int, name: String, price: Int) {
