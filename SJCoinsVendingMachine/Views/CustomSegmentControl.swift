@@ -23,7 +23,7 @@ class CustomSegmentControl: UISegmentedControl {
         
         super.touchesEnded(touches, with: event)
         if self.oldValue == self.selectedSegmentIndex {
-            sendActions( for: .valueChanged)
+            sendActions(for: .touchUpInside)
         }
     }
 }

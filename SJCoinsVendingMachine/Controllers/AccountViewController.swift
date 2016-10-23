@@ -37,6 +37,7 @@ class AccountViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
         fetchContent()
     }
     
@@ -45,8 +46,6 @@ class AccountViewController: BaseViewController {
         NavigationManager.shared.visibleViewController = self
         if !Reachability.connectedToNetwork() {
             present(alert: .connection)
-        } else {
-            SVProgressHUD.show(withStatus: spinerMessage.loading)
         }
     }
     
@@ -59,7 +58,6 @@ class AccountViewController: BaseViewController {
     @IBAction fileprivate func logOutButton(_ sender: UIBarButtonItem) {
         
         //ExecuteLogOut
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
         AuthorizationManager.removeAccessToken()
         NavigationManager.shared.presentLoginViewController()
     }
@@ -69,7 +67,6 @@ class AccountViewController: BaseViewController {
         
         fetchPurchaseHistory()
         fetchAccount()
-        SVProgressHUD.dismiss()
     }
     
     override func updatePurchaseHistory() {
@@ -84,7 +81,7 @@ class AccountViewController: BaseViewController {
     
     fileprivate func updateTableView() {
         
-        SVProgressHUD.dismiss()
+        SVProgressHUD.dismiss(withDelay: 1)
         DispatchQueue.main.async { [unowned self] in
             self.tableView.reloadData()
         }

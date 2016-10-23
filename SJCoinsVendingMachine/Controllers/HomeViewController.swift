@@ -73,7 +73,6 @@ class HomeViewController: BaseViewController {
         if Defaults[.fistLaunch] {
             
             fetchMachines { [unowned self] object in
-                
                 let machines = object as! [MachinesModel]
                 guard let id = machines[0].internalIdentifier else { return }
                 AuthorizationManager.save(machineId: id)
@@ -83,25 +82,25 @@ class HomeViewController: BaseViewController {
         }
     }
     
-    fileprivate func fetchMachines(complition: @escaping (_ object: AnyObject)->()) {
+    private func fetchMachines(complition: @escaping (_ object: AnyObject)->()) {
         
         SVProgressHUD.show(withStatus: spinerMessage.loading)
         firstly {
             APIManager.fetchMachines()
-            }.then { object -> Void in
-                DataManager.shared.save(object)
-                complition(object)
-            }.catch { error in
-                SVProgressHUD.dismiss()
-                //AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, actions: self.retryActions())
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+            complition(object)
+        }.catch { error in
+            SVProgressHUD.dismiss(withDelay: 0.5)
+            //AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, actions: self.retryActions())
         }
     }
     
-    fileprivate func retryActions() -> [UIAlertAction] {
+    private func retryActions() -> [UIAlertAction] {
         
         let confirmButton = UIAlertAction(title: buttonTitle.retry , style: .destructive) { [unowned self] action in
             self.fetchMachines { _ in
-                SVProgressHUD.dismiss()
+                SVProgressHUD.dismiss(withDelay: 0.5)
             }
         }
         let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
@@ -130,7 +129,7 @@ class HomeViewController: BaseViewController {
         
         DispatchQueue.main.async { [unowned self] in
             self.collectionView.reloadData()
-            SVProgressHUD.dismiss()
+            SVProgressHUD.dismiss(withDelay: 0.5)
         }
     }
     
@@ -176,6 +175,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     
     // MARK: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         return CGSize(width: collectionView.bounds.width, height: cellHeight)
     }
 }

@@ -17,6 +17,7 @@ class SortingManager {
     func sortBy(name array: [Products]?) -> [Products]? {
         
         guard let array = array else { return nil }
+        priceSegmentCounter -= 1
         nameSegmentCounter += 1
         
         if nameSegmentCounter % 2 == 0 {
@@ -31,6 +32,7 @@ class SortingManager {
     func sortBy(price array: [Products]?) -> [Products]? {
         
         guard let array = array else { return nil }
+        nameSegmentCounter -= 1
         priceSegmentCounter += 1
         
         if priceSegmentCounter % 2 == 0 {

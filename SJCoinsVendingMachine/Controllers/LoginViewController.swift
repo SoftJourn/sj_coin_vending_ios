@@ -18,9 +18,9 @@ class LoginViewController: BaseViewController {
     // MARK: Properties
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTexField: UITextField!
-    @IBOutlet weak var imageLogo: UIImageView!
+    @IBOutlet weak private var imageLogo: UIImageView!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak private var scrollView: UIScrollView!
     
     fileprivate var login: String {
         return self.loginTextField.text!
@@ -30,7 +30,7 @@ class LoginViewController: BaseViewController {
     }
     
     // MARK: Life cycle
-    override internal func viewDidLoad() {
+    override func viewDidLoad() {
         
         super.viewDidLoad()
         registerForKeyboardNotifications()
@@ -41,7 +41,7 @@ class LoginViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
-        SVProgressHUD.dismiss()
+        SVProgressHUD.dismiss(withDelay: 0.5)
     }
     
     deinit {
@@ -50,13 +50,13 @@ class LoginViewController: BaseViewController {
     }
     
     // MARK: Actions
-    @IBAction fileprivate func signInButtonPressed(_ sender: UIButton) {
+    @IBAction private func signInButtonPressed(_ sender: UIButton) {
         
         let validation = ValidationManager.validate(login: login, password: password)
         validation ? present(alert: .validation) : authorization()
     }
     
-    fileprivate func authorization() {
+    private func authorization() {
        
         if Reachability.connectedToNetwork() {
             SVProgressHUD.show(withStatus: spinerMessage.loading)
@@ -68,24 +68,24 @@ class LoginViewController: BaseViewController {
         }
     }
     
-    fileprivate func authSuccess() {
+    private func authSuccess() {
         
         NavigationManager.shared.presentTabBarController()
     }
     
-    fileprivate func authFailed() {
+    private func authFailed() {
         
         present(alert: .authorization)
     }
     
     // MARK: ScrollView contentOffset
-    fileprivate func registerForKeyboardNotifications() {
+    private func registerForKeyboardNotifications() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(_:)), name: .keyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(_:)), name: .keyboardWillHide, object: nil)
     }
     
-    @objc fileprivate func keyboardWasShown(_ notification: Notification) {
+    @objc private func keyboardWasShown(_ notification: Notification) {
         
         let info: NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
         let keyboardFrame: CGRect = (info.object(forKey: UIKeyboardFrameEndUserInfoKey)! as AnyObject).cgRectValue
@@ -94,7 +94,7 @@ class LoginViewController: BaseViewController {
         scrollView.setContentOffset(CGPoint(x: 0, y: coveredFrame.height + 130), animated: true)
     }
     
-    @objc fileprivate func keyboardWillBeHidden(_ notification: Notification) {
+    @objc private func keyboardWillBeHidden(_ notification: Notification) {
         scrollView.contentOffset = CGPoint.zero
     }
 }

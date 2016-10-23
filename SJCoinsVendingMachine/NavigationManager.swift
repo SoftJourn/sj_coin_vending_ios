@@ -41,7 +41,7 @@ class NavigationManager: NSObject {
         let allItemsViewController = create(viewController: storyboards.allItemsViewController) as! AllItemsViewController
         allItemsViewController.usedSeeAll = true
         allItemsViewController.titleButton(name)
-        allItemsViewController.filterItems = items
+        allItemsViewController.filterItems = SortingManager().sortBy(name: items)
         visibleViewController?.navigationController?.pushViewController(allItemsViewController, animated: true)
     }
     

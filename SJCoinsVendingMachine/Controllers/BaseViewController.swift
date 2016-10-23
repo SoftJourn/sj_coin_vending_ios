@@ -59,12 +59,12 @@ class BaseViewController: UIViewController {
     
     // MARK: Downloading, Handling and Refreshing data.
     func fetchData() {
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
+        //SVProgressHUD.show(withStatus: spinerMessage.loading)
         if Reachability.connectedToNetwork() {
             fetchContent()
             self.refreshControl.endRefreshing()
         } else {
-            SVProgressHUD.dismiss()
+            //SVProgressHUD.dismiss(withDelay: 0.5)
             self.refreshControl.endRefreshing()
             present(alert: .connection)
         }
@@ -171,7 +171,7 @@ class BaseViewController: UIViewController {
         SVProgressHUD.show(withStatus: spinerMessage.loading)
         APIManager.buy(product: identifier, machineID: AuthorizationManager.getMachineId()) { [unowned self] object, error in
             
-            SVProgressHUD.dismiss()
+            SVProgressHUD.dismiss(withDelay: 0.5)
             if error == nil {
                 guard let amount = object else { return }
                 DataManager.shared.save(balance: amount as! Int)
@@ -196,7 +196,7 @@ class BaseViewController: UIViewController {
 
             //if error == nil {
                 DataManager.shared.add(favorite: product)
-                SVProgressHUD.dismiss()
+                SVProgressHUD.dismiss(withDelay: 0.5)
                 complition()
             //} else {
             //    self.present(alert: .favorite(error))
@@ -233,7 +233,7 @@ class BaseViewController: UIViewController {
     
     func present(alert type: alertType) {
         
-        SVProgressHUD.dismiss()
+        SVProgressHUD.dismiss(withDelay: 0.5)
         switch type {
         case .validation:
             AlertManager().present(alert: myError.title.validation, message: myError.message.validation)

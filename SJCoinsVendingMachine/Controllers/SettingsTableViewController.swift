@@ -33,7 +33,7 @@ class SettingsTableViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
-        SVProgressHUD.dismiss()
+        SVProgressHUD.dismiss(withDelay: 0.5)
     }
     
     deinit {

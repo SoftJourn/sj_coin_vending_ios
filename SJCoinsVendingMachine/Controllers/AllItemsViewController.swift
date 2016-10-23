@@ -23,10 +23,10 @@ class AllItemsViewController: BaseViewController {
     
     // MARK: Properties
     @IBOutlet fileprivate weak var tableView: UITableView!
-    @IBOutlet fileprivate weak var segmentControl: UISegmentedControl!
-    @IBOutlet fileprivate weak var titleButton: UIButton!
+    @IBOutlet private weak var segmentControl: UISegmentedControl!
+    @IBOutlet private weak var titleButton: UIButton!
     
-    fileprivate var sortingManager = SortingManager()
+    private var sortingManager = SortingManager()
     fileprivate lazy var searchData = [Products]()
     fileprivate lazy var resultSearchController: UISearchController = {
         
@@ -37,19 +37,19 @@ class AllItemsViewController: BaseViewController {
         return searchController
     }()
     
-    fileprivate var allItems: [Products]? {
+    private var allItems: [Products]? {
         
         return DataManager.shared.allItems
     }
-    fileprivate var lastAdded: [Products]? {
+    private var lastAdded: [Products]? {
         
         return DataManager.shared.lastAdded
     }
-    fileprivate var bestSellers: [Products]? {
+    private var bestSellers: [Products]? {
         
         return DataManager.shared.bestSellers
     }
-    fileprivate var categories: [Categories]? {
+    private var categories: [Categories]? {
         
         return DataManager.shared.features?.categories
     }
@@ -58,8 +58,11 @@ class AllItemsViewController: BaseViewController {
         return DataManager.shared.favorites
     }
     
-    var filterMode: Filter = .allItems
-    var filterItems: [Products]?
+    var filterItems: [Products]? {
+        willSet {
+            //filterItems = SortingManager().sortBy(name: filterItems)
+        }
+    }
     var usedSeeAll = false
     
     // MARK: Life cycle
@@ -69,22 +72,22 @@ class AllItemsViewController: BaseViewController {
         usedSeeAll ? viewDidLoadUsingSeeAll() : viewDidLoadNotUsingSeeAll()
     }
     
-    func viewDidLoadUsingSeeAll() {
+    private func viewDidLoadUsingSeeAll() {
         
         titleButton.removeTarget(self, action: #selector(self.titleButtonPressed(_:)), for: .touchUpInside)
     }
     
-    func viewDidLoadNotUsingSeeAll() {
+    private func viewDidLoadNotUsingSeeAll() {
         
-        filterItems = allItems
+        filterItems = SortingManager().sortBy(name: allItems)
+        tableView.addSubview(refreshControl)
         self.definesPresentationContext = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        filterItems = sortingManager.sortBy(name: filterItems)
-        //reloadTableView() after changes in sorting manager.
+        reloadTableView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -99,25 +102,22 @@ class AllItemsViewController: BaseViewController {
     }
     
     // MARK: Actions
-    @IBAction func selectSegment(_ sender: UISegmentedControl) {
-        //FIXME: Sorting and cresh by rowDelete.
-        if segmentControl.selectedSegmentIndex == 0 {
-            let sortedByName = sortingManager.sortBy(name: filterItems)
-            setAndReload(data: sortedByName)
-        }
+    @IBAction private func sameSegmentButtonPressed(_ sender: UISegmentedControl) {
         
-        if segmentControl.selectedSegmentIndex == 1 {
-            let sortedByPrice = sortingManager.sortBy(price: filterItems)
-            setAndReload(data: sortedByPrice)
-        }
+        sortItems()
     }
     
-    @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+    @IBAction private func anothedSegmentButtonPressed(_ sender: UISegmentedControl) {
+       
+        sortItems()
+    }
+    
+    @IBAction private func searchButtonPressed(_ sender: UIBarButtonItem) {
         
         present(resultSearchController, animated: true) { }
     }
     
-    @IBAction func titleButtonPressed(_ sender: UIButton) {
+    @IBAction private func titleButtonPressed(_ sender: UIButton) {
         
         //Present ActionSheet.
         AlertManager().present(actionSheet: predefinedActions())
@@ -131,13 +131,25 @@ class AllItemsViewController: BaseViewController {
     
     override func updateProducts() {
         
-        filterItems = allItems
         if filterItems != nil {
             self.change(filter: nil, items: self.filterItems)
         }
+        reloadTableView()
+    }
+
+    // MARK: Sorting via Segment Control.
+    private func sortItems() {
+        
+        switch segmentControl.selectedSegmentIndex {
+        case 0:
+            setAndReload(data: sortingManager.sortBy(name: filterItems))
+        case 1:
+            setAndReload(data: sortingManager.sortBy(price: filterItems))
+        default: break
+        }
     }
     
-    // MARK: Filtering.
+    // MARK: Filtering via BarButton and ActionSheet.
     fileprivate func predefinedActions() -> [UIAlertAction] {
         
         var actions = [UIAlertAction]()
@@ -173,7 +185,6 @@ class AllItemsViewController: BaseViewController {
     
     fileprivate func change(filter name: String?, items: [Products]?) {
         
-        
         let sortedItems = SortingManager().sortBy(name: items)
         filterItems = sortedItems
         titleButton(name)
@@ -186,13 +197,13 @@ class AllItemsViewController: BaseViewController {
         }
     }
     
-    fileprivate func prepared(name: String) -> String {
+    private func prepared(name: String) -> String {
         
         return "\(name) ▾"
     }
     
     //MARK: Others
-    fileprivate func setAndReload(data array: [Products]?) {
+    private func setAndReload(data array: [Products]?) {
         
         filterItems = array
         reloadTableView()
@@ -202,7 +213,7 @@ class AllItemsViewController: BaseViewController {
         
         DispatchQueue.main.async { [unowned self] in
             self.tableView.reloadData()
-            SVProgressHUD.dismiss()
+            SVProgressHUD.dismiss(withDelay: 0.5)
         }
     }
 }
@@ -271,7 +282,7 @@ extension AllItemsViewController: CellDelegate {
         
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         add(favorite: cell.item) { [unowned self] in
-            SVProgressHUD.dismiss()
+            SVProgressHUD.dismiss(withDelay: 0.5)
             self.tableView?.reloadRows(at: [indexPath], with: .fade)
         }
     }
@@ -280,7 +291,7 @@ extension AllItemsViewController: CellDelegate {
         
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         remove(favorite: cell.item) { [unowned self] in
-            SVProgressHUD.dismiss()
+            SVProgressHUD.dismiss(withDelay: 0.5)
             self.tableView?.deleteRows(at: [indexPath], with: .fade)
         }
     }

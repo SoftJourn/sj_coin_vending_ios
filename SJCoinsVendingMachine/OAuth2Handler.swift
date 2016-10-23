@@ -21,7 +21,7 @@ class OAuth2Handler: RequestRetrier {
     
     // MARK: - RequestRetrier
     func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: @escaping RequestRetryCompletion) {
-        SVProgressHUD.show()
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
         lock.lock() ; defer { lock.unlock() }
         
         if let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 {
@@ -36,7 +36,7 @@ class OAuth2Handler: RequestRetrier {
                     
                     guard model != nil else {
                         strongSelf.isRefreshing = false
-                        SVProgressHUD.dismiss()
+                        SVProgressHUD.dismiss(withDelay: 0.5)
                         print("refresh token failed \(error?.localizedDescription)")
                         completion(true, 1.0) // retry
                         return
@@ -45,13 +45,13 @@ class OAuth2Handler: RequestRetrier {
                     strongSelf.isRefreshing = false
                     strongSelf.requestsToRetry.forEach { $0(false, 0.0) }
                     strongSelf.requestsToRetry.removeAll()
-                    SVProgressHUD.dismiss()
+                    SVProgressHUD.dismiss(withDelay: 0.5)
                     completion(false, 0.0) // don't retry
                 }
             } else {
                 completion(false, 0.0)
             }
         }
-        SVProgressHUD.dismiss()
+        SVProgressHUD.dismiss(withDelay: 0.5)
     }
 }

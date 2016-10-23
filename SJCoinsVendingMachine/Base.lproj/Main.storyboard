@@ -150,17 +150,18 @@
                                     <segment title="Price"/>
                                 </segments>
                                 <connections>
-                                    <action selector="selectSegment:" destination="e6L-4s-RlD" eventType="valueChanged" id="Nbs-1s-TFg"/>
+                                    <action selector="anothedSegmentButtonPressed:" destination="e6L-4s-RlD" eventType="valueChanged" id="aq3-cD-Q72"/>
+                                    <action selector="sameSegmentButtonPressed:" destination="e6L-4s-RlD" eventType="touchUpInside" id="n1Q-LY-SYs"/>
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0gt-ah-bNE">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AllItemsTableViewCell" rowHeight="62" id="o5j-Km-FpP" customClass="AllItemsTableViewCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="62"/>
+                                        <rect key="frame" x="0.0" y="28" width="1000" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="o5j-Km-FpP" id="cJw-N7-63i">
-                                            <frame key="frameInset" width="375" height="62"/>
+                                            <frame key="frameInset" width="1000" height="62"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHz-k4-RBh">
@@ -312,7 +313,7 @@
                                         <rect key="frame" x="0.0" y="92" width="375" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IQx-AS-BO5" id="mV2-wj-6Qk">
-                                            <frame key="frameInset" width="375" height="61"/>
+                                            <frame key="frameInset" width="375" height="62"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4X2-ru-nrQ">
