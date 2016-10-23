@@ -39,29 +39,28 @@ class AllItemsViewController: BaseViewController {
     
     fileprivate var allItems: [Products]? {
         
-        return DataManager.shared.allItems()
+        return DataManager.shared.allItems
     }
     fileprivate var lastAdded: [Products]? {
         
-        return DataManager.shared.lastAdded()
+        return DataManager.shared.lastAdded
     }
     fileprivate var bestSellers: [Products]? {
         
-        return DataManager.shared.bestSellers()
+        return DataManager.shared.bestSellers
     }
     fileprivate var categories: [Categories]? {
         
-        return DataManager.shared.category()
+        return DataManager.shared.features?.categories
     }
     fileprivate var favorite: [Products]? {
         
-        return DataManager.shared.favorite()
+        return DataManager.shared.favorites
     }
     
     var filterMode: Filter = .allItems
     var filterItems: [Products]?
     var usedSeeAll = false
-    var searchFinished = false
     
     // MARK: Life cycle
     override func viewDidLoad() {
@@ -83,11 +82,14 @@ class AllItemsViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        super.viewWillAppear(true)
         filterItems = sortingManager.sortBy(name: filterItems)
+        //reloadTableView() after changes in sorting manager.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
+        super.viewDidAppear(true)
         NavigationManager.shared.visibleViewController = self
     }
     
@@ -98,7 +100,7 @@ class AllItemsViewController: BaseViewController {
     
     // MARK: Actions
     @IBAction func selectSegment(_ sender: UISegmentedControl) {
-        
+        //FIXME: Sorting and cresh by rowDelete.
         if segmentControl.selectedSegmentIndex == 0 {
             let sortedByName = sortingManager.sortBy(name: filterItems)
             setAndReload(data: sortedByName)
@@ -200,6 +202,7 @@ class AllItemsViewController: BaseViewController {
         
         DispatchQueue.main.async { [unowned self] in
             self.tableView.reloadData()
+            SVProgressHUD.dismiss()
         }
     }
 }
@@ -222,12 +225,14 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         if self.resultSearchController.isActive {
             return searchData.isEmpty ? cell : cell.configure(with: searchData[indexPath.item])
         } else {
-            guard let item = filterItems?[indexPath.item], let favorites = favorite else { return cell }
+            guard let item = filterItems?[indexPath.item] else { return cell }
             cell.delegate = self
             
-            for object in favorites {
-                if object == item {
-                    cell.favorite = true
+            if let favorites = favorite {
+                for object in favorites {
+                    if object == item {
+                        cell.favorite = true
+                    }
                 }
             }
             
@@ -262,31 +267,26 @@ extension AllItemsViewController: UISearchResultsUpdating {
 extension AllItemsViewController: CellDelegate {
     
     // MARK: CellDelegate
-    func add(favorite item: Products, index: IndexPath) {
+    func add(favorite cell: BaseTableViewCell) {
         
-        guard let identifier = item.internalIdentifier else { return }
-        APIManager.favorite(.post, identifier: identifier) { [unowned self] object, error in
-            if error == nil {
-                DataManager.shared.add(favorite: item)
-                self.tableView.reloadRows(at: [index], with: .middle)
-                SVProgressHUD.dismiss()
-            }
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        add(favorite: cell.item) { [unowned self] in
+            SVProgressHUD.dismiss()
+            self.tableView?.reloadRows(at: [indexPath], with: .fade)
         }
     }
     
-    func remove(favorite item: Products) {
+    func remove(favorite cell: BaseTableViewCell) {
         
-        //APIManager.favorite(.delete, identifier: identifier) { [unowned self] object, error in
-            //            if error == nil {
-            //                self.reloadTableView()
-            //                SVProgressHUD.dismiss()
-            //            }
-            //        }
-
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        remove(favorite: cell.item) { [unowned self] in
+            SVProgressHUD.dismiss()
+            self.tableView?.deleteRows(at: [indexPath], with: .fade)
+        }
     }
     
-    func buy(product identifier: Int, name: String, price: Int) {
+    func buy(product item: Products) {
         
-        confirmation(identifier, name: name, price: price)
+        present(confirmation: item)
     }
 }

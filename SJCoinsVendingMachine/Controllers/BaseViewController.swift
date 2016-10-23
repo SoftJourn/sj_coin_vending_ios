@@ -10,22 +10,38 @@ import UIKit
 import SVProgressHUD
 import PromiseKit
 
-protocol CellDelegate: class {
-    
-    func add(favorite item: Products, index: IndexPath)
-    func remove(favorite item: Products)
-    func buy(product identifier: Int, name: String, price: Int)
-}
-
 class BaseViewController: UIViewController {
     
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .machineChanged, object: nil)
+    // MARK: Constants
+    struct myError {
+        struct title {
+            static let validation = "Validation Error"
+            static let auth = "Authorization Error"
+            static let download = "Downloading Error"
+            static let reachability = "Internet Error"
+            static let favorite = "Favorite Error"
+        }
+        struct message {
+            static let validation = "Login and password should not be empty."
+            static let auth = "Login failed."
+            static let reachability = "Please verify your Internet connection."
+            static let retryDownload = "Error held while fetching list of machines. Please try again."
+            static let favorite = "Error held while adding to favorite. Please try again."
+        }
     }
     
-    // MARK: Constants
+    struct buying {
+        struct title {
+            static let success = "Success"
+            static let failed = "Failed"
+        }
+        struct message {
+            static let success = "Please take your order from Vending Machine."
+            static let failed = "Vending Machine doesn't have full information about chosen product. Please reload data and try again."
+        }
+    }
+    
+    // MARK: Properies
     lazy var refreshControl: UIRefreshControl = {
         
         let refresh = UIRefreshControl()
@@ -33,17 +49,24 @@ class BaseViewController: UIViewController {
         refresh.addTarget(self, action: #selector(fetchData), for: UIControlEvents.valueChanged)
         return refresh
     }()
-    
-    func fetchData() {
+
+    // MARK: Life cycle
+    override func viewDidLoad() {
         
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .machineChanged, object: nil)
+    }
+    
+    // MARK: Downloading, Handling and Refreshing data.
+    func fetchData() {
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
         if Reachability.connectedToNetwork() {
             fetchContent()
             self.refreshControl.endRefreshing()
         } else {
             SVProgressHUD.dismiss()
-            AlertManager().presentInternetConnectionError {
-                self.refreshControl.endRefreshing()
-            }
+            self.refreshControl.endRefreshing()
+            present(alert: .connection)
         }
     }
     
@@ -51,7 +74,7 @@ class BaseViewController: UIViewController {
         //Override in child.
     }
     
-    // MARK: Downloading, Handling and Refreshing data.
+    // MARK: Fetch and update Products.
     func fetchProducts() {
         
         firstly {
@@ -60,8 +83,7 @@ class BaseViewController: UIViewController {
             DataManager.shared.save(object)
             self.updateProducts()
         }.catch { error in
-            print("\(error)")
-            self.present(.downloading(error))
+            self.present(alert: .downloading(error))
         }
     }
     
@@ -69,17 +91,16 @@ class BaseViewController: UIViewController {
         //Override in child.
     }
     
-    func fetchFavorites(complition: @escaping ()->()) {
+    // MARK: Fetch and update Favorites.
+    func fetchFavorites() {
         
         firstly {
             APIManager.fetchFavorites()
         }.then { object -> Void in
             DataManager.shared.save(object)
             self.updateFavorites()
-            complition()
         }.catch { error in
-            self.present(.downloading(error))
-            complition()
+            self.present(alert: .downloading(error))
         }
     }
     
@@ -87,6 +108,7 @@ class BaseViewController: UIViewController {
         //Override in child.
     }
     
+    // MARK: Fetch and update Account.
     func fetchAccount() {
         
         firstly {
@@ -95,7 +117,7 @@ class BaseViewController: UIViewController {
             DataManager.shared.save(object)
             self.updateAccount()
         }.catch { error in
-            self.present(.downloading(error))
+            self.present(alert: .downloading(error))
         }
     }
     
@@ -103,15 +125,16 @@ class BaseViewController: UIViewController {
         //Override in child.
     }
     
+    // MARK: Fetch and update Purchase history.
     func fetchPurchaseHistory() {
         
         firstly {
             APIManager.fetchPurchaseHistory()
-            }.then { object -> Void in
-                DataManager.shared.save(object)
-                self.updatePurchaseHistory()
-            }.catch { error in
-                self.present(.downloading(error))
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+            self.updatePurchaseHistory()
+        }.catch { error in
+            self.present(alert: .downloading(error))
         }
     }
     
@@ -119,32 +142,13 @@ class BaseViewController: UIViewController {
         //Override in child.
     }
     
-    enum errorType {
-        
-        case validation
-        case authorization
-        case downloading(Error?)
-    }
-    
-    func present(_ error: errorType) {
-        
-        SVProgressHUD.dismiss()
-        switch error {
-        case .validation:
-            AlertManager().present(alert: errorTitle.validation, message: errorMessage.validation)
-        case .authorization:
-            AlertManager().present(alert: errorTitle.auth, message: errorMessage.auth)
-        case .downloading(let error):
-            guard let error = error else { return }
-            AlertManager().present(alert: errorTitle.download, message: error.localizedDescription)
-        }
-    }
-    
     // MARK: Confirmation and Buying.
-    func confirmation(_ identifier: Int?, name: String?, price: Int?) {
+    func present(confirmation product: Products) {
         
-        guard let identifier = identifier, let name = name, let price = price else { return }
-        AlertManager().present(confirmation: name, price: price, actions: buyingActions(with: identifier))
+        guard let identifier = product.internalIdentifier, let name = product.name, let price = product.price else {
+            return present(alert: .beforeBuying)
+        }
+        present(alert: .confirmation(name, price, buyingActions(with: identifier)))
     }
     
     fileprivate func buyingActions(with identifier: Int?) -> [UIAlertAction] {
@@ -152,16 +156,16 @@ class BaseViewController: UIViewController {
         let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .default) { [unowned self] action in
             
             if Reachability.connectedToNetwork() {
-                self.execute(buying: identifier)
+                self.buy(using: identifier)
             } else {
-                AlertManager().presentInternetConnectionError { }
+                self.present(alert: .connection)
             }
         }
         let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
         return [confirmButton, cancelButton]
     }
     
-    func execute(buying identifier: Int?) {
+    func buy(using identifier: Int?) {
         
         guard let identifier = identifier else { return }
         SVProgressHUD.show(withStatus: spinerMessage.loading)
@@ -169,21 +173,86 @@ class BaseViewController: UIViewController {
             
             SVProgressHUD.dismiss()
             if error == nil {
-                //Present success alert.
-                AlertManager().buying(result: buying.successTitle, message: buying.successMessage)
-                guard let object = object else { return }
-                let amount = object as! Int
-                //Save new balance in DataManager
-                DataManager.shared.saveAccount(balance: amount)
-                //Use Closure for updating balance on interface (as example).
+                guard let amount = object else { return }
+                DataManager.shared.save(balance: amount as! Int)
+                self.present(alert: .buyingSuccess)
                 self.updateUIafterBuying()
             } else {
-                AlertManager().buying(result: buying.failedTitle, message: error!.localizedDescription)
+                self.present(alert: .buying(error))
             }
         }
     }
     
     func updateUIafterBuying() {
         //Override in child.
+    }
+    
+    // MARK: Add/Delete favorites.
+    func add(favorite product: Products, complition: @escaping ()->()) {
+        
+        guard let identifier = product.internalIdentifier else { return }
+        APIManager.favorite(.post, identifier: identifier) { [unowned self] object, error in
+            //FIXME: Verify Response could not be serialized, input data was nil or zero length.
+
+            //if error == nil {
+                DataManager.shared.add(favorite: product)
+                SVProgressHUD.dismiss()
+                complition()
+            //} else {
+            //    self.present(alert: .favorite(error))
+            //}
+        }
+    }
+    
+    func remove(favorite product: Products, complition: @escaping ()->()) {
+        
+        guard let identifier = product.internalIdentifier else { return }
+        APIManager.favorite(.delete, identifier: identifier) { /*[unowned self]*/ object, error in
+            //if error == nil {
+                DataManager.shared.remove(favorite: product)
+                complition()
+//            } else {
+//                self.present(alert: .favorite(error))
+//            }
+        }
+    }
+    
+    // MARK: Alerts.
+    enum alertType {
+        
+        case validation
+        case authorization
+        case downloading(Error?)
+        case buying(Error?)
+        case beforeBuying
+        case connection
+        case favorite(Error?)
+        case buyingSuccess
+        case confirmation(String, Int, [UIAlertAction])
+    }
+    
+    func present(alert type: alertType) {
+        
+        SVProgressHUD.dismiss()
+        switch type {
+        case .validation:
+            AlertManager().present(alert: myError.title.validation, message: myError.message.validation)
+        case .authorization:
+            AlertManager().present(alert: myError.title.auth, message: myError.message.auth)
+        case .downloading(let error):
+            AlertManager().present(alert: myError.title.download, message: error!.localizedDescription)
+        case .buying(let error):
+            AlertManager().present(alert: buying.title.failed, message: error!.localizedDescription)
+        case .beforeBuying:
+            AlertManager().present(alert: buying.title.failed, message: buying.message.failed)
+        case .connection:
+            AlertManager().present(alert: myError.title.reachability, message: myError.message.reachability)
+        case .buyingSuccess:
+            AlertManager().present(alert: buying.title.success, message: buying.message.success)
+        case .favorite(let error):
+            AlertManager().present(alert: myError.title.favorite, message: error!.localizedDescription)
+        case .confirmation(let name, let price, let actions):
+            AlertManager().present(confirmation: name, price: price, actions: actions)
+        }
     }
 }

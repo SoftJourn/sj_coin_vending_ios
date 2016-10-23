@@ -10,7 +10,7 @@ import Foundation
 import SwiftyUserDefaults
 
 struct storyboards {
-
+    
     static let tabBarControllerIdentifier = "TabBarController"
     static let settingsNavigationController = "settingsNavigationController"
     static let settingsControllerIdentifier = "settingsControllerIdentifier"
@@ -41,21 +41,21 @@ struct category {
     static let cancel = "Cancel"
 }
 
-struct errorTitle {
+struct myError {
     
-    static let auth = "Authorization Error"
-    static let download = "Downloading Error"
-    static let buy = "Buying Error"
-    static let validation = "Validation Error"
-    static let reachability = "Internet Error"
-}
-
-struct errorMessage {
+    struct title {
+        static let validation = "Validation Error"
+        static let auth = "Authorization Error"
+        static let download = "Downloading Error"
+        static let reachability = "Internet Error"
+    }
     
-    static let validation = "Login and password should not be empty."
-    static let auth = "Login failed."
-    static let reachability = "Please verify your Internet connection."
-    static let retryDownload = "Error held while fetching list of machines. Please try again."
+    struct message {
+        static let validation = "Login and password should not be empty."
+        static let auth = "Login failed."
+        static let reachability = "Please verify your Internet connection."
+        static let retryDownload = "Error held while fetching list of machines. Please try again."
+    }
 }
 
 struct buttonTitle {
@@ -65,20 +65,15 @@ struct buttonTitle {
     static let cancel = "Cancel"
 }
 
-struct buying {
-    
-    static let successTitle = "Success"
-    static let failedTitle = "Failed"
-    static let successMessage = "Please take your order from Vending Machine."
-}
 
 struct spinerMessage {
-   
+    
     static let loading = "Loading"
 }
 
-struct favoriteImage {
+struct picture {
     
-    static let checked = UIImage(named: "FavouritesChecked")!
-    static let unchecked = UIImage(named: "FavouritesUnchecked")!
+    static let placeholder = #imageLiteral(resourceName: "Placeholder")
+    static let checked = #imageLiteral(resourceName: "checked")
+    static let unchecked = #imageLiteral(resourceName: "unchecked")
 }

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Zd3-tt-mhE">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Zd3-tt-mhE">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -182,7 +182,7 @@
                                                         <constraint firstAttribute="width" constant="25" id="7mT-Ej-EQ6"/>
                                                         <constraint firstAttribute="height" constant="25" id="xko-9D-WIL"/>
                                                     </constraints>
-                                                    <state key="normal" image="FavouritesUnchecked"/>
+                                                    <state key="normal" image="unchecked"/>
                                                     <connections>
                                                         <action selector="favouritesButtonPressed:" destination="o5j-Km-FpP" eventType="touchUpInside" id="vJE-xo-KVe"/>
                                                     </connections>
@@ -223,11 +223,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="buyButton" destination="CbL-aG-NL1" id="8UE-85-LDY"/>
-                                            <outlet property="favoriteButton" destination="afq-Ax-Sgq" id="853-sP-Qtq"/>
-                                            <outlet property="logo" destination="C4n-0E-hj4" id="rjp-n0-B4Q"/>
-                                            <outlet property="nameLabel" destination="fHz-k4-RBh" id="FVT-yU-d5G"/>
-                                            <outlet property="priceLabel" destination="CT2-Oa-Vr8" id="RBm-MY-kMp"/>
+                                            <outlet property="favoriteButton" destination="afq-Ax-Sgq" id="5mc-Xe-8fr"/>
+                                            <outlet property="logo" destination="C4n-0E-hj4" id="Cwk-sW-Dud"/>
+                                            <outlet property="nameLabel" destination="fHz-k4-RBh" id="r1h-Uu-V5A"/>
+                                            <outlet property="priceLabel" destination="CT2-Oa-Vr8" id="J85-Zx-aq8"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -251,7 +250,7 @@
                     <navigationItem key="navigationItem" id="f5F-lM-Sxk">
                         <nil key="title"/>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="m12-PW-6Np">
-                            <rect key="frame" x="123.5" y="7" width="128" height="30"/>
+                            <rect key="frame" x="124" y="7" width="128" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="All Items ▾"/>
                             <connections>
@@ -345,7 +344,7 @@
                                                         <constraint firstAttribute="width" constant="25" id="9cj-MC-oXt"/>
                                                         <constraint firstAttribute="height" constant="25" id="kLI-T0-bGn"/>
                                                     </constraints>
-                                                    <state key="normal" image="FavouritesUnchecked"/>
+                                                    <state key="normal" image="unchecked"/>
                                                     <connections>
                                                         <action selector="favoriteButtonPressed:" destination="IQx-AS-BO5" eventType="touchUpInside" id="0dj-uK-fNx"/>
                                                     </connections>
@@ -359,6 +358,9 @@
                                                     <state key="normal" title="Buy">
                                                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="buyButtonPressed:" destination="IQx-AS-BO5" eventType="touchUpInside" id="OLT-mr-tWQ"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -375,10 +377,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="favoriteButton" destination="Q5Y-5b-OIF" id="Qgv-3c-EkM"/>
-                                            <outlet property="favouritesLogo" destination="HHu-r4-VIF" id="puI-0T-PgX"/>
-                                            <outlet property="favouritesNameLabel" destination="4X2-ru-nrQ" id="CTZ-r6-ZIC"/>
-                                            <outlet property="favouritesPriceLabel" destination="XDE-v9-A2i" id="9Rd-ad-gai"/>
+                                            <outlet property="favoriteButton" destination="Q5Y-5b-OIF" id="HoI-uh-YXg"/>
+                                            <outlet property="logo" destination="HHu-r4-VIF" id="S5b-1b-GcH"/>
+                                            <outlet property="nameLabel" destination="4X2-ru-nrQ" id="9p9-tF-40B"/>
+                                            <outlet property="priceLabel" destination="XDE-v9-A2i" id="wDJ-dk-QLP"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -448,10 +450,10 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHistoryTableViewCell" id="Z6e-9B-FtI" customClass="PurchaseHistoryTableViewCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="1000" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z6e-9B-FtI" id="afN-2M-De0">
-                                            <frame key="frameInset" width="375" height="44"/>
+                                            <frame key="frameInset" width="1000" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2HW-q5-u9A">
@@ -607,7 +609,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeCollectionViewCell" id="fay-AC-zMa" customClass="HomeCollectionViewCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                                        <rect key="frame" x="27.5" y="0.0" width="320" height="180"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
@@ -635,7 +637,7 @@
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeCollectionViewInternalCell" id="DW1-w6-IAL" customClass="HomeCollectionViewInternalCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                                            <rect key="frame" x="5" y="0.0" width="100" height="140"/>
+                                                            <rect key="frame" x="5" y="1" width="100" height="140"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="140"/>
@@ -811,11 +813,11 @@
                                 <rect key="frame" x="0.0" y="120" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="nJ7-C4-1Pm" id="COh-hG-xEn">
-                                    <frame key="frameInset" width="375" height="43.5"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Foz-57-j0A">
-                                            <frame key="frameInset" minX="15" width="345" height="43.5"/>
+                                            <frame key="frameInset" minX="15" width="345" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -895,10 +897,10 @@
     <resources>
         <image name="All Items" width="25" height="25"/>
         <image name="Favourites" width="36" height="36"/>
-        <image name="FavouritesUnchecked" width="36" height="36"/>
         <image name="Home" width="25" height="25"/>
         <image name="Placeholder" width="1066" height="600"/>
         <image name="Profile" width="25" height="25"/>
+        <image name="unchecked" width="36" height="36"/>
         <image name="vending_machine_png" width="85" height="87"/>
     </resources>
 </document>

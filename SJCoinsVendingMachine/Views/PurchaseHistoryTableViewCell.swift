@@ -25,5 +25,4 @@ class PurchaseHistoryTableViewCell: UITableViewCell {
         transactionItem.text = ""
         transactionPrice.text = ""
     }
-    
 }

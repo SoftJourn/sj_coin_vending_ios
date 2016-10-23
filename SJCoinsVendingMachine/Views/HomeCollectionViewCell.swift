@@ -76,7 +76,7 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
     
     func load(image endpoint: String?, cell: HomeCollectionViewInternalCell) {
         
-        guard let endpoint = endpoint else { return cell.logo.image = UIImage(named: "Placeholder")! }
+        guard let endpoint = endpoint else { return cell.logo.image = picture.placeholder }
         guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
             APIManager.fetch(image: endpoint) { image in
                 cell.logo.image = image
@@ -89,11 +89,7 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
     //UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let item = categoryItems?[indexPath.item], let identifier = item.internalIdentifier, let name = item.name, let price = item.price else {
-            
-            //Present buying error Alert.
-            return
-        }
-        delegate?.buy(product: identifier, name: name, price: price)
+        guard let item = categoryItems?[indexPath.item] else { return }
+        delegate?.buy(product: item)
     }
 }

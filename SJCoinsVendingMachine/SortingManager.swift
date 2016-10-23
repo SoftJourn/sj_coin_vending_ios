@@ -10,9 +10,9 @@ import Foundation
 
 class SortingManager {
 
-    fileprivate lazy var nameSegmentCounter = Int()
-    fileprivate lazy var priceSegmentCounter = Int()
-    fileprivate lazy var sortedData = [Products]()
+    private lazy var nameSegmentCounter = Int()
+    private lazy var priceSegmentCounter = Int()
+    private lazy var sortedData = [Products]()
     
     func sortBy(name array: [Products]?) -> [Products]? {
         

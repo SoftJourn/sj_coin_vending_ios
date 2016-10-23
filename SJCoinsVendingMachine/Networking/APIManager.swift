@@ -137,7 +137,7 @@ class APIManager: RequestManager {
                     complition(image)
                 case .failure(let error):
                     print(error)
-                    complition(UIImage(named: "Placeholder")!)
+                    complition(picture.placeholder)
                 }
         }
     }

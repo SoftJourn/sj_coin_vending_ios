@@ -22,7 +22,7 @@ class HomeViewController: BaseViewController {
     
     fileprivate var categories: [Categories]? {
         
-        return DataManager.shared.preparedCategories()
+        return DataManager.shared.categories
     }
     
     // MARK: Life cycle
@@ -38,7 +38,7 @@ class HomeViewController: BaseViewController {
         
         NavigationManager.shared.visibleViewController = self
         if !Reachability.connectedToNetwork() {
-            AlertManager().presentInternetConnectionError { }
+            present(alert: .connection)
         }
     }
     
@@ -55,7 +55,7 @@ class HomeViewController: BaseViewController {
                 NavigationManager.shared.presentSettingsViewController()
             }
         } else {
-            AlertManager().presentInternetConnectionError { }
+            present(alert: .connection)
         }
     }
     
@@ -113,12 +113,11 @@ class HomeViewController: BaseViewController {
         
         fetchProducts()
         fetchAccount()
-        fetchFavorites { }
+        fetchFavorites()
     }
     
     override func updateProducts() {
         
-        SVProgressHUD.dismiss()
         updateCollectionView()
     }
     
@@ -137,7 +136,7 @@ class HomeViewController: BaseViewController {
     
     fileprivate func updateBalance() {
         
-        guard let balance = DataManager.shared.balance() else { return /* show */ }
+        guard let balance = DataManager.shared.account?.amount else { return /* show */ }
         
         DispatchQueue.main.async { [unowned self] in
             self.balanceLabel.text = "Your balance is \(balance) coins"
@@ -184,16 +183,16 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController: CellDelegate {
     
     // MARK: CellDelegate
-    func add(favorite item: Products, index: IndexPath) {
+    func add(favorite cell: BaseTableViewCell) {
         
     }
     
-    func remove(favorite item: Products) {
+    func remove(favorite cell: BaseTableViewCell) {
         
     }
     
-    func buy(product identifier: Int, name: String, price: Int) {
+    func buy(product item: Products) {
         
-        confirmation(identifier, name: name, price: price)
+        present(confirmation: item)
     }
 }

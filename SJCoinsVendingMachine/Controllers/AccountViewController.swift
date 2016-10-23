@@ -21,11 +21,11 @@ class AccountViewController: BaseViewController {
     
     fileprivate var accountInformation: AccountModel? {
         
-        return DataManager.shared.accountModel()
+        return DataManager.shared.account
     }
     fileprivate var purchases: [PurchaseHistoryModel]? {
         
-        return DataManager.shared.myPurchases()
+        return DataManager.shared.purchases
     }
     
     // MARK: Life cycle
@@ -44,9 +44,9 @@ class AccountViewController: BaseViewController {
         
         NavigationManager.shared.visibleViewController = self
         if !Reachability.connectedToNetwork() {
-            AlertManager().presentInternetConnectionError { }
+            present(alert: .connection)
         } else {
-            //SVProgressHUD.show(withStatus: spinerMessage.loading)
+            SVProgressHUD.show(withStatus: spinerMessage.loading)
         }
     }
     
@@ -84,6 +84,7 @@ class AccountViewController: BaseViewController {
     
     fileprivate func updateTableView() {
         
+        SVProgressHUD.dismiss()
         DispatchQueue.main.async { [unowned self] in
             self.tableView.reloadData()
         }

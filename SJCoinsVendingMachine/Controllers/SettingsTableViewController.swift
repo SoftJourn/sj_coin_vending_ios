@@ -16,15 +16,14 @@ class SettingsTableViewController: UITableViewController {
     
     // MARK: Property
     fileprivate var machines: [MachinesModel]? {
-        return DataManager.shared.machinesModel()
+        
+        return DataManager.shared.machines
     }
     
     // MARK: Life cycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        //SVProgressHUD.show(withStatus: spinerMessage.downloading)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {

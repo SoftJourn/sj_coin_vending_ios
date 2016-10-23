@@ -53,7 +53,7 @@ class LoginViewController: BaseViewController {
     @IBAction fileprivate func signInButtonPressed(_ sender: UIButton) {
         
         let validation = ValidationManager.validate(login: login, password: password)
-        validation ? present(errorType.validation) : authorization()
+        validation ? present(alert: .validation) : authorization()
     }
     
     fileprivate func authorization() {
@@ -64,7 +64,7 @@ class LoginViewController: BaseViewController {
                 error != nil ? self.authFailed() : self.authSuccess()
             }
         } else {
-            AlertManager().presentInternetConnectionError { }
+            present(alert: .connection)
         }
     }
     
@@ -75,7 +75,7 @@ class LoginViewController: BaseViewController {
     
     fileprivate func authFailed() {
         
-        present(errorType.authorization)
+        present(alert: .authorization)
     }
     
     // MARK: ScrollView contentOffset

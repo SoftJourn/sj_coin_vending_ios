@@ -11,8 +11,9 @@ import UIKit
 class AlertManager {
     
     func present(alert title: String, message: String) {
-        //FIXME:
-        let controller = information(alert: title, message: message)
+        
+        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
     
@@ -34,14 +35,6 @@ class AlertManager {
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
     
-    func presentInternetConnectionError(complition: @escaping ()->()) {
-        
-        let controller = information(alert: errorTitle.reachability, message: errorMessage.reachability)
-        NavigationManager.shared.visibleViewController?.present(controller, animated: true) {
-        complition()
-        }
-    }
-    
     //Confirmation message
     func present(confirmation name: String, price: Int, actions: [UIAlertAction]) {
         
@@ -50,20 +43,5 @@ class AlertManager {
             controller.addAction(action)
         }
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
-    }
-    
-    //Buying result message
-    func buying(result title: String, message: String) {
-        
-        let controller = information(alert: title, message: message)
-        NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
-    }
-    
-    //Default alertController
-    fileprivate func information(alert title: String, message: String) -> UIAlertController {
-        
-        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        return controller
     }
 }

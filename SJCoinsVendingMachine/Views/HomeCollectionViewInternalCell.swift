@@ -54,6 +54,6 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
 
     fileprivate func resetImage() {
         request?.cancel()
-        logo.image = UIImage(named: "Placeholder")
+        logo.image = picture.placeholder
     }
 }
