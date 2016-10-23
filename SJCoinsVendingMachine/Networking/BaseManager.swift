@@ -45,7 +45,8 @@ class BaseManager {
                 customManager.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
                     .validate(statusCode: 200..<300)
                     .responseJSON { response in
-                        print("\(response.response!)") // HTTP URL response
+                        debugPrint(response)
+                        //print("\(response.response!)") // HTTP URL response
                         switch response.result {
                         case .success(let json):
                             print(json)

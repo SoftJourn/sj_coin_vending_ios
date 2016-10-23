@@ -236,12 +236,12 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         if self.resultSearchController.isActive {
             return searchData.isEmpty ? cell : cell.configure(with: searchData[indexPath.item])
         } else {
-            guard let item = filterItems?[indexPath.item] else { return cell }
+            guard let item = filterItems?[indexPath.row] else { return cell }
             cell.delegate = self
-            
+            cell.favorite = false
             if let favorites = favorite {
                 for object in favorites {
-                    if object == item {
+                    if item == object {
                         cell.favorite = true
                     }
                 }
