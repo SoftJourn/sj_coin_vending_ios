@@ -55,6 +55,9 @@ class DataManager {
     
     func add(favorite item: Products) {
         
+        if favorites == nil {
+            favorites = [Products]()
+        }
         favorites?.append(item)
     }
     

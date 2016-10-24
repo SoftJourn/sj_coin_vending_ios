@@ -58,11 +58,7 @@ class AllItemsViewController: BaseViewController {
         return DataManager.shared.favorites
     }
     
-    var filterItems: [Products]? {
-        willSet {
-            //filterItems = SortingManager().sortBy(name: filterItems)
-        }
-    }
+    var filterItems: [Products]?
     var usedSeeAll = false
     
     // MARK: Life cycle
@@ -228,7 +224,7 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         if self.resultSearchController.isActive {
             return searchData.count
         } else {
-            return filterItems == nil ? 1 : filterItems!.count
+            return filterItems == nil ? 0 : filterItems!.count
         }
     }
     
@@ -292,7 +288,7 @@ extension AllItemsViewController: CellDelegate {
         
         guard let indexPath = tableView?.indexPath(for: cell) else { return }
         remove(favorite: cell.item) { [unowned self] in
-            self.tableView?.deleteRows(at: [indexPath], with: .fade)
+            self.tableView?.reloadRows(at: [indexPath], with: .fade)
         }
     }
     
