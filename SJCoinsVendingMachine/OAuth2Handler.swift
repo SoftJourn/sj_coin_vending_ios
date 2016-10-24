@@ -9,49 +9,52 @@
 import Foundation
 import Alamofire
 import SVProgressHUD
+import SwiftyJSON
 
 class OAuth2Handler: RequestRetrier {
     
-    fileprivate typealias RefreshCompletion = (_ succeeded: Bool, _ accessToken: String?, _ refreshToken: String?) -> Void
+    private typealias refreshComplited = (_ model: AuthModel?, _ error: Error?) -> ()
     
     // MARK: Properties
-    fileprivate var isRefreshing = false
-    fileprivate var requestsToRetry: [RequestRetryCompletion] = []
-    fileprivate let lock = NSLock()
+    private var isRefreshing = false
+    private var requestsToRetry: [Request] = []
+    private let lock = NSLock()
     
-    // MARK: - RequestRetrier
+    // MARK: Retrier
     func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: @escaping RequestRetryCompletion) {
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
         lock.lock() ; defer { lock.unlock() }
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
         
         if let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 {
-            requestsToRetry.append(completion)
+            requestsToRetry.append(request)
             
             if !isRefreshing {
+                
+                isRefreshing = true
                 AuthorizationManager.refreshRequest { [weak self] model, error in
-                    guard let strongSelf = self else { return }
-                    strongSelf.isRefreshing = true
-
-                    strongSelf.lock.lock() ; defer { strongSelf.lock.unlock() }
                     
-                    guard model != nil else {
-                        strongSelf.isRefreshing = false
-                        SVProgressHUD.dismiss(withDelay: 0.5)
-                        print("refresh token failed \(error?.localizedDescription)")
-                        completion(true, 1.0) // retry
-                        return
-                    }
-                    AuthorizationManager.save(authInfo: model!)
+                    guard let strongSelf = self else { return }
+                    strongSelf.lock.lock();  defer { strongSelf.lock.unlock() }
+                    
                     strongSelf.isRefreshing = false
-                    strongSelf.requestsToRetry.forEach { $0(false, 0.0) }
-                    strongSelf.requestsToRetry.removeAll()
                     SVProgressHUD.dismiss(withDelay: 0.5)
-                    completion(false, 0.0) // don't retry
+                    
+                    if model != nil {
+                        AuthorizationManager.save(authInfo: model!)
+                        for request in strongSelf.requestsToRetry {
+                            print(request)
+                            completion(false, 0.0)
+                        }
+                        strongSelf.requestsToRetry.removeAll()
+                        completion(false, 0.0) // retry after 1 second
+                    } else {
+                        //If refresh token invalig (ures more than month not use application) show login page.
+                        completion(true, 1.0) // retry after 1 second
+                    }
                 }
-            } else {
-                completion(false, 0.0)
             }
+        } else {
+            completion(false, 0.0) // don't retry
         }
-        SVProgressHUD.dismiss(withDelay: 0.5)
     }
 }

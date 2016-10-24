@@ -18,7 +18,7 @@ class BaseManager {
     static let customManager: Alamofire.SessionManager = {
         
         //Privacy configuration the Alamofire manager
-        let serverTrustPolicies: [String: ServerTrustPolicy] = [ "sjcoins.testing.softjourn.if.ua": .disableEvaluation ]
+        let serverTrustPolicies: [String: ServerTrustPolicy] = [ "sjcoins-testing.softjourn.if.ua": .disableEvaluation ]
         
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 30 //seconds
@@ -43,10 +43,9 @@ class BaseManager {
         let promise = Promise<AnyObject> { fulfill, reject in
             
                 customManager.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
-                    .validate(statusCode: 200..<300)
+                    .validate()
                     .responseJSON { response in
                         debugPrint(response)
-                        //print("\(response.response!)") // HTTP URL response
                         switch response.result {
                         case .success(let json):
                             print(json)
