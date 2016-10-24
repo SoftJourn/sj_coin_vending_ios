@@ -226,7 +226,7 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         if self.resultSearchController.isActive {
             return searchData.count
         } else {
-            return filterItems == nil ? 0 : filterItems!.count
+            return filterItems == nil ? 1 : filterItems!.count
         }
     }
     
@@ -282,7 +282,6 @@ extension AllItemsViewController: CellDelegate {
         
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         add(favorite: cell.item) { [unowned self] in
-            SVProgressHUD.dismiss(withDelay: 0.5)
             self.tableView?.reloadRows(at: [indexPath], with: .fade)
         }
     }
@@ -291,7 +290,6 @@ extension AllItemsViewController: CellDelegate {
         
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         remove(favorite: cell.item) { [unowned self] in
-            SVProgressHUD.dismiss(withDelay: 0.5)
             self.tableView?.deleteRows(at: [indexPath], with: .fade)
         }
     }

@@ -164,8 +164,8 @@ class APIManager: RequestManager {
         firstly {
             sendDefault(request: method, urlString: url)
         }.then { data -> Void in
-            let json = JSON(data)
-            complition(json as AnyObject?, nil)
+            let model = Products.init(json: JSON(data))
+            complition(model as AnyObject?, nil)
         }.catch { error in
             complition(nil, error)
         }

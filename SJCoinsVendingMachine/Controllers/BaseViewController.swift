@@ -192,28 +192,27 @@ class BaseViewController: UIViewController {
         
         guard let identifier = product.internalIdentifier else { return }
         APIManager.favorite(.post, identifier: identifier) { [unowned self] object, error in
-            //FIXME: Verify Response could not be serialized, input data was nil or zero length.
-
-            //if error == nil {
-                DataManager.shared.add(favorite: product)
-                SVProgressHUD.dismiss(withDelay: 0.5)
+            if object != nil {
+                SVProgressHUD.dismiss(withDelay: 0.2)
+                DataManager.shared.add(favorite: object as! Products)
                 complition()
-            //} else {
-            //    self.present(alert: .favorite(error))
-            //}
+            } else {
+                self.present(alert: .favorite(error))
+            }
         }
     }
     
     func remove(favorite product: Products, complition: @escaping ()->()) {
         
         guard let identifier = product.internalIdentifier else { return }
-        APIManager.favorite(.delete, identifier: identifier) { /*[unowned self]*/ object, error in
-            //if error == nil {
-                DataManager.shared.remove(favorite: product)
+        APIManager.favorite(.delete, identifier: identifier) { [unowned self] object, error in
+            if object != nil {
+                SVProgressHUD.dismiss(withDelay: 0.2)
+                DataManager.shared.remove(favorite: object as! Products)
                 complition()
-//            } else {
-//                self.present(alert: .favorite(error))
-//            }
+            } else {
+                self.present(alert: .favorite(error))
+            }
         }
     }
     
