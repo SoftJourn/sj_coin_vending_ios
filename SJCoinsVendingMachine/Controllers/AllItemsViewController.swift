@@ -132,7 +132,9 @@ class AllItemsViewController: BaseViewController {
     override func updateProducts() {
         
         if filterItems != nil {
-            self.change(filter: nil, items: self.filterItems)
+            //filterItems = allItems
+            self.change(filter: self.prepared(name: category.allItems), items: self.allItems)
+            //self.change(filter: nil, items: self.filterItems)
         }
         reloadTableView()
     }
@@ -280,7 +282,7 @@ extension AllItemsViewController: CellDelegate {
     // MARK: CellDelegate
     func add(favorite cell: BaseTableViewCell) {
         
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        guard let indexPath = tableView?.indexPath(for: cell) else { return }
         add(favorite: cell.item) { [unowned self] in
             self.tableView?.reloadRows(at: [indexPath], with: .fade)
         }
@@ -288,7 +290,7 @@ extension AllItemsViewController: CellDelegate {
     
     func remove(favorite cell: BaseTableViewCell) {
         
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        guard let indexPath = tableView?.indexPath(for: cell) else { return }
         remove(favorite: cell.item) { [unowned self] in
             self.tableView?.deleteRows(at: [indexPath], with: .fade)
         }

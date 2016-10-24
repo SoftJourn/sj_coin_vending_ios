@@ -172,7 +172,7 @@ class BaseViewController: UIViewController {
         APIManager.buy(product: identifier, machineID: AuthorizationManager.getMachineId()) { [unowned self] object, error in
             
             SVProgressHUD.dismiss(withDelay: 0.5)
-            if error == nil {
+            if object != nil {
                 guard let amount = object else { return }
                 DataManager.shared.save(balance: amount as! Int)
                 self.present(alert: .buyingSuccess)

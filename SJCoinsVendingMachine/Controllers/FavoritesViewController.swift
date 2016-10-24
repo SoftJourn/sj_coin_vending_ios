@@ -96,7 +96,7 @@ extension FavoritesViewController: CellDelegate {
     
     func remove(favorite cell: BaseTableViewCell) {
         
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        guard let indexPath = tableView?.indexPath(for: cell) else { return }
         remove(favorite: cell.item) { [unowned self] in
             self.tableView?.deleteRows(at: [indexPath], with: .fade)
         }
