@@ -34,8 +34,15 @@ class HomeViewController: BaseViewController {
         fetchContent()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(true)
+        updateCollectionView()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         
+        super.viewDidAppear(true)
         NavigationManager.shared.visibleViewController = self
         if !Reachability.connectedToNetwork() {
             present(alert: .connection)

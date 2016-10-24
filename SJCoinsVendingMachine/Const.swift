@@ -33,11 +33,12 @@ struct networking {
     static let pathAccount = "coins/api/v1/account"
 }
 
-struct category {
+struct categoryName {
     
     static let allItems = "All Items"
     static let lastAdded = "Last Added"
     static let bestSellers = "Best Sellers"
+    static let favorites = "Favorites"
     static let cancel = "Cancel"
 }
 

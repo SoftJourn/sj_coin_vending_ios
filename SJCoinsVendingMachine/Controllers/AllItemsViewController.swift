@@ -128,9 +128,7 @@ class AllItemsViewController: BaseViewController {
     override func updateProducts() {
         
         if filterItems != nil {
-            //filterItems = allItems
-            self.change(filter: self.prepared(name: category.allItems), items: self.allItems)
-            //self.change(filter: nil, items: self.filterItems)
+            self.change(filter: self.prepared(name: categoryName.allItems), items: self.allItems)
         }
         reloadTableView()
     }
@@ -152,22 +150,22 @@ class AllItemsViewController: BaseViewController {
         
         var actions = [UIAlertAction]()
         //Creating actions for ActionSheet and handle closures.
-        let allItems = UIAlertAction(title: category.allItems, style: .default) { [unowned self] action in
-            self.change(filter: self.prepared(name: category.allItems), items: self.allItems)
+        let allItems = UIAlertAction(title: categoryName.allItems, style: .default) { [unowned self] action in
+            self.change(filter: self.prepared(name: categoryName.allItems), items: self.allItems)
         }
         actions.append(allItems)
         
-        let lastAdded = UIAlertAction(title: category.lastAdded, style: .default) { [unowned self] action in
-            self.change(filter: self.prepared(name: category.lastAdded), items: self.lastAdded)
+        let lastAdded = UIAlertAction(title: categoryName.lastAdded, style: .default) { [unowned self] action in
+            self.change(filter: self.prepared(name: categoryName.lastAdded), items: self.lastAdded)
         }
         actions.append(lastAdded)
         
-        let bestSellers = UIAlertAction(title: category.bestSellers, style: .default) { [unowned self] action in
-            self.change(filter: self.prepared(name: category.bestSellers), items: self.bestSellers)
+        let bestSellers = UIAlertAction(title: categoryName.bestSellers, style: .default) { [unowned self] action in
+            self.change(filter: self.prepared(name: categoryName.bestSellers), items: self.bestSellers)
         }
         actions.append(bestSellers)
         
-        let cancel = UIAlertAction(title: category.cancel, style: .cancel) { action in }
+        let cancel = UIAlertAction(title: categoryName.cancel, style: .cancel) { action in }
         actions.append(cancel)
         
         guard let categories = categories else { return actions }

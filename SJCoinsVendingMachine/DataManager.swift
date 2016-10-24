@@ -16,7 +16,9 @@ class DataManager {
     private(set) var machines: [MachinesModel]?
     private(set) var features: FeaturesModel?
     private(set) var account: AccountModel?
-    private(set) var favorites: [Products]?
+    private(set) var favorites: [Products]? {
+        didSet { createCategories() }
+    }
     private(set) var purchases: [PurchaseHistoryModel]?
     
     private(set) var categories: [Categories]!
@@ -78,14 +80,19 @@ class DataManager {
     private func createCategories() {
         
         categories = [Categories]()
+        guard let favorites = favorites else { return }
+        if !favorites.isEmpty {
+            let category = Categories(name: categoryName.favorites, items: favorites)
+            categories.append(category)
+        }
         guard let features = features, let lastAdded = lastAdded else { return }
         if !lastAdded.isEmpty {
-            let category = Categories(name: features.kFeaturesModelLastAddedKey, items: lastAdded)
+            let category = Categories(name: categoryName.lastAdded, items: lastAdded)
             categories.append(category)
         }
         guard let bestSellers = bestSellers else { return }
         if !bestSellers.isEmpty {
-            let category = Categories(name: features.kFeaturesModelBestSellersKey, items: bestSellers)
+            let category = Categories(name: categoryName.bestSellers, items: bestSellers)
             categories.append(category)
         }
         guard let items = features.categories else { return }
