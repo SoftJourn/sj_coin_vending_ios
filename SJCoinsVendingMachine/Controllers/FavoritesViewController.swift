@@ -20,9 +20,9 @@ class FavoritesViewController: BaseViewController {
         return SortingManager().sortBy(name: DataManager.shared.favorites)
     }
     
-    fileprivate var notAvailable: [Int]? {
-        
-        return DataManager.shared.notAvailable
+    fileprivate var unavailable: [Int]? {
+
+        return DataManager.shared.unavailable
     }
     
     // MARK: Life cycle
@@ -86,8 +86,8 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         guard let item = favorites?[indexPath.item] else { return cell }
         cell.delegate = self
         cell.availability = true
-        if notAvailable != nil && item.internalIdentifier != nil {
-            if (notAvailable?.contains(item.internalIdentifier!))! {
+        if unavailable != nil && item.internalIdentifier != nil {
+            if (unavailable?.contains(item.internalIdentifier!))! {
                 cell.availability = false
             }
         }

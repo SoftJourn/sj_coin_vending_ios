@@ -26,7 +26,7 @@ class DataManager {
     private(set) var lastAdded: [Products]?
     private(set) var bestSellers: [Products]?
     
-    private(set) var notAvailable: [Int]?
+    private(set) var unavailable: [Int]?
     
     // MARK: Static Properties
     static let shared = DataManager()
@@ -47,9 +47,9 @@ class DataManager {
             createLastAdded()
             createBestSellers()
             createCategories()
+            unavailableFavorites()
         case let object as [Products]:
             favorites = object
-            notAvailableFavorite()
         case let object as AccountModel:
             account = object
         case let object as [PurchaseHistoryModel]:
@@ -150,18 +150,20 @@ class DataManager {
         }
     }
     
-    func notAvailableFavorite() {
-       
-        if notAvailable == nil {
-            notAvailable = [Int]()
+    func unavailableFavorites() {
+        
+        if unavailable == nil {
+            unavailable = [Int]()
         }
-        notAvailable?.removeAll()
+        unavailable?.removeAll()
         var allProducts = Set<Int>()
-        for category in categories {
-            guard let products = category.products else { return }
-            for product in products {
-                guard let identifier = product.internalIdentifier else { return }
-                allProducts.insert(identifier)
+        if let dynamicCategories = features?.categories {
+            for category in dynamicCategories {
+                guard let products = category.products else { return }
+                for product in products {
+                    guard let identifier = product.internalIdentifier else { return }
+                    allProducts.insert(identifier)
+                }
             }
         }
         var favoriteProducts = Set<Int>()
@@ -172,7 +174,7 @@ class DataManager {
         }
         for product in favoriteProducts {
             if !allProducts.contains(product) {
-                notAvailable?.append(product)
+                unavailable?.append(product)
             }
         }
     }

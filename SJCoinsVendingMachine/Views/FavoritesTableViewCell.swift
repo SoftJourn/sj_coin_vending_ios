@@ -15,6 +15,7 @@ class FavoritesTableViewCell: BaseTableViewCell {
     // MARK: Constants
     static let identifier = "\(FavoritesTableViewCell.self)"
     
+    // MARK: Property
     var availability: Bool = true {
         didSet {
             availability ? available() : unvailable()
@@ -50,10 +51,12 @@ class FavoritesTableViewCell: BaseTableViewCell {
     private func available() {
         
         buyButton.isEnabled = true
+        logo.alpha = 1
     }
     
     private func unvailable() {
        
         buyButton.isEnabled = false
+        logo.alpha = 0.3
     }
 }

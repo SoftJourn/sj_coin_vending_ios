@@ -723,6 +723,7 @@
                                         <connections>
                                             <outlet property="categoryNameLabel" destination="9mX-b8-kAs" id="Hiu-WY-paD"/>
                                             <outlet property="collectionView" destination="uAy-hp-NDp" id="fh3-6P-dbc"/>
+                                            <outlet property="showAllButton" destination="7FM-tb-gZz" id="qxg-9S-PH8"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -814,7 +815,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="10" reuseIdentifier="settingsCellIdentifier" textLabel="jli-AF-N6B" style="IBUITableViewCellStyleDefault" id="g55-PO-ocW">
-                                        <rect key="frame" x="0.0" y="120" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="120" width="376" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g55-PO-ocW" id="4hi-fp-fwm">
                                             <frame key="frameInset" width="375" height="43"/>

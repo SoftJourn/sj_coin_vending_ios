@@ -24,6 +24,10 @@ class HomeViewController: BaseViewController {
         
         return DataManager.shared.categories
     }
+    fileprivate var unavailable: [Int]? {
+        
+        return DataManager.shared.unavailable
+    }
     
     // MARK: Life cycle
     override func viewDidLoad() {
@@ -169,7 +173,12 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         guard let categories = categories?[indexPath.item], let products = categories.products else { return cell }
         if !products.isEmpty {
             cell.delegate = self
-            return cell.configure(with: categories)
+            if categories.name == categoryName.favorites {
+                cell.showAllButton.isHidden = true
+                return cell.configure(with: categories, unavailable: unavailable)
+            } else {
+                return cell.configure(with: categories, unavailable: nil)
+            }
         }
         return cell
     }

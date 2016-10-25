@@ -16,6 +16,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     // MARK: Properties
     @IBOutlet fileprivate weak var collectionView: UICollectionView!
     @IBOutlet fileprivate weak var categoryNameLabel: UILabel!
+    @IBOutlet weak var showAllButton: UIButton!
     
     fileprivate var categoryNames: String? {
         didSet {
@@ -24,25 +25,30 @@ class HomeCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-    weak var delegate: CellDelegate?
     fileprivate var categoryItems: [Products]?
-    
+    weak var delegate: CellDelegate?
+    fileprivate var unavailableFavorites: [Int]?
+    fileprivate var availability: Bool = true
+
     override func prepareForReuse() {
         
         super.prepareForReuse()
         categoryNameLabel.text = ""
         collectionView.scrollsToTop = true
+        showAllButton.isHidden = false
     }
     
-    @IBAction fileprivate func seeAllButtonPressed(_ sender: UIButton) {
+    @IBAction private func seeAllButtonPressed(_ sender: UIButton) {
         
-        print(categoryNames)
         guard let items = categoryItems else { return }
         NavigationManager.shared.presentAllItemsViewController(name: categoryNames, items: items)
     }
     
-    func configure(with item: Categories) -> HomeCollectionViewCell {
-        
+    func configure(with item: Categories, unavailable: [Int]?) -> HomeCollectionViewCell {
+       
+        if unavailable != nil {
+            unavailableFavorites = unavailable
+        }
         categoryNames = item.name
         categoryItems = item.products
         reloadDataInside()
@@ -71,6 +77,15 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         
         guard let item = categoryItems?[indexPath.item] else { return cell }
         load(image: item.imageUrl, cell: cell)
+        cell.availability = true
+        if categoryNames == categoryName.favorites {
+            guard let unavailable = unavailableFavorites, let identifier = item.internalIdentifier else {
+                return cell.configure(with: item)
+            }
+            if unavailable.contains(identifier) {
+                cell.availability = false
+            }
+        }
         return cell.configure(with: item)
     }
     
@@ -90,6 +105,18 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard let item = categoryItems?[indexPath.item] else { return }
-        delegate?.buy(product: item)
+        if categoryNames == categoryName.favorites {
+            guard let unavailable = unavailableFavorites, let identifier = item.internalIdentifier else { return }
+            if unavailable.contains(identifier) {
+                availability = false
+            }
+        }
+        availability ? delegate?.buy(product: item) : presenError()
+        availability = true
+    }
+    
+    private func presenError() {
+        
+        AlertManager().present(alert: myError.title.available, message: myError.message.available)
     }
 }

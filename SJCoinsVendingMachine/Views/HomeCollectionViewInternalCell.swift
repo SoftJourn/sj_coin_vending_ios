@@ -20,7 +20,6 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
     @IBOutlet fileprivate weak var priceLabel: UILabel!
     
     fileprivate var request: Request?
-
     fileprivate var name: String? {
         didSet {
             if let name = name {
@@ -28,12 +27,16 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
             }
         }
     }
-    
     fileprivate var price: Int? {
         didSet {
             if let price = price {
                 priceLabel.text = "\(price) Coins"
             }
+        }
+    }
+    var availability: Bool = true {
+        didSet {
+            availability ? available() : unvailable()
         }
     }
     
@@ -52,8 +55,18 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
         return self
     }
 
-    fileprivate func resetImage() {
+    private func resetImage() {
         request?.cancel()
         logo.image = picture.placeholder
+    }
+    
+    private func available() {
+        
+        logo.alpha = 1
+    }
+    
+    private func unvailable() {
+        
+        logo.alpha = 0.3
     }
 }
