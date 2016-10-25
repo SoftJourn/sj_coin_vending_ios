@@ -48,7 +48,6 @@ class BaseManager {
                         debugPrint(response)
                         switch response.result {
                         case .success(let json):
-                            print(json)
                             fulfill(json as AnyObject)
                         case .failure(let error):
                             guard let data = response.data else { return }

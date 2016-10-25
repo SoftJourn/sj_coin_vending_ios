@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "ic_favorite_border_36pt.png",
+      "filename" : "uhecked1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ic_favorite_border_36pt_2x.png",
+      "filename" : "uhecked2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ic_favorite_border_36pt_3x.png",
+      "filename" : "uhecked3x.png",
       "scale" : "3x"
     }
   ],

@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import PromiseKit
 
 class SettingsTableViewController: UITableViewController {
     
@@ -44,8 +45,36 @@ class SettingsTableViewController: UITableViewController {
     // MARK: Actions
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
         
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
         NotificationCenter.default.post(name: .machineChanged, object: nil)
-        dismiss(animated: true) { }
+        downloadData()
+    }
+    
+    private func downloadData() {
+    
+        firstly {
+            APIManager.fetchProducts(machineID: AuthorizationManager.getMachineId())
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+        }.catch { error in
+            SVProgressHUD.dismiss(withDelay: 0.5)
+            AlertManager().present(alert: myError.title.download, message: error.localizedDescription)
+        }.then {
+            APIManager.fetchFavorites()
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+        }.catch { error in
+            SVProgressHUD.dismiss(withDelay: 0.5)
+            AlertManager().present(alert: myError.title.download, message: error.localizedDescription)
+        }.then {
+            APIManager.fetchAccount()
+        }.then { object -> Void in
+            DataManager.shared.save(object)
+            SVProgressHUD.dismiss(withDelay: 2.0) { self.dismiss(animated: true) { } }
+        }.catch { error in
+            SVProgressHUD.dismiss(withDelay: 0.5)
+            AlertManager().present(alert: myError.title.download, message: error.localizedDescription)
+        }
     }
     
     // MARK: UITableViewDataSource

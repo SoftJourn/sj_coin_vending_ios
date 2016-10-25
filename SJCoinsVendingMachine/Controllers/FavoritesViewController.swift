@@ -20,6 +20,11 @@ class FavoritesViewController: BaseViewController {
         return SortingManager().sortBy(name: DataManager.shared.favorites)
     }
     
+    fileprivate var notAvailable: [Int]? {
+        
+        return DataManager.shared.notAvailable
+    }
+    
     // MARK: Life cycle
     override func viewDidLoad() {
         
@@ -80,8 +85,16 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as! FavoritesTableViewCell
         guard let item = favorites?[indexPath.item] else { return cell }
         cell.delegate = self
+        cell.availability = true
+        if notAvailable != nil && item.internalIdentifier != nil {
+            if (notAvailable?.contains(item.internalIdentifier!))! {
+                cell.availability = false
+            }
+        }
+        
         return cell.configure(with: item)
     }
+    
     
     // MARK: UITableViewDelegate
 

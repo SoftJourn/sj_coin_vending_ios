@@ -16,7 +16,7 @@ class InitialViewController: UIViewController {
         
         super.viewWillAppear(animated)
         NavigationManager.shared.visibleViewController = self
-        SVProgressHUD.show()
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
     }
     
     override func viewDidAppear(_ animated: Bool) {

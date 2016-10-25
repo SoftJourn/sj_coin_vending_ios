@@ -42,13 +42,15 @@ class OAuth2Handler: RequestRetrier {
                     if model != nil {
                         AuthorizationManager.save(authInfo: model!)
                         for request in strongSelf.requestsToRetry {
-                            print(request)
+                            //For all requests in array change access token, and run them. 
+                            var req = request.request
+                            req?.setValue("Bearer \(model?.accessToken)", forHTTPHeaderField: "Authorization")
                             completion(false, 0.0)
                         }
                         strongSelf.requestsToRetry.removeAll()
                         completion(false, 0.0) // retry after 1 second
                     } else {
-                        //If refresh token invalig (ures more than month not use application) show login page.
+                        //If refresh token invalig (users more than month not use application) show login page.
                         completion(true, 1.0) // retry after 1 second
                     }
                 }

@@ -26,6 +26,8 @@ class DataManager {
     private(set) var lastAdded: [Products]?
     private(set) var bestSellers: [Products]?
     
+    private(set) var notAvailable: [Int]?
+    
     // MARK: Static Properties
     static let shared = DataManager()
     static let imageCache = AutoPurgingImageCache(
@@ -47,6 +49,7 @@ class DataManager {
             createCategories()
         case let object as [Products]:
             favorites = object
+            notAvailableFavorite()
         case let object as AccountModel:
             account = object
         case let object as [PurchaseHistoryModel]:
@@ -114,7 +117,7 @@ class DataManager {
             }
         }
     }
-
+    
     private func createLastAdded() {
         
         guard let items = features?.lastAdded else { return }
@@ -143,6 +146,33 @@ class DataManager {
                 if items.contains(id) {
                     bestSellers!.append(product)
                 }
+            }
+        }
+    }
+    
+    func notAvailableFavorite() {
+       
+        if notAvailable == nil {
+            notAvailable = [Int]()
+        }
+        notAvailable?.removeAll()
+        var allProducts = Set<Int>()
+        for category in categories {
+            guard let products = category.products else { return }
+            for product in products {
+                guard let identifier = product.internalIdentifier else { return }
+                allProducts.insert(identifier)
+            }
+        }
+        var favoriteProducts = Set<Int>()
+        guard let favorites = favorites else { return }
+        for product in favorites {
+            guard let identifier = product.internalIdentifier else { return }
+            favoriteProducts.insert(identifier)
+        }
+        for product in favoriteProducts {
+            if !allProducts.contains(product) {
+                notAvailable?.append(product)
             }
         }
     }

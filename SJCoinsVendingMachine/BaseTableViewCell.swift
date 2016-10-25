@@ -15,6 +15,8 @@ class BaseTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var buyButton: UIButton!
+    
 
     weak var delegate: CellDelegate?
     var request: Request?
@@ -33,12 +35,12 @@ class BaseTableViewCell: UITableViewCell {
         resetImage()
     }
 
-    fileprivate func checked() {
+    private func checked() {
         
         favoriteButton.setImage(picture.checked, for: UIControlState())
     }
     
-    fileprivate func unchecked() {
+    private func unchecked() {
         
         favoriteButton.setImage(picture.unchecked, for: UIControlState())
     }

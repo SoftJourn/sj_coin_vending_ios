@@ -31,7 +31,7 @@ class AllItemsTableViewCell: BaseTableViewCell {
     // MARK: Methods
     func configure(with product: Products) -> AllItemsTableViewCell {
         
-        //print("Product id \(product.internalIdentifier!)")
+        print("Product id \(product.name!, product.internalIdentifier!)")
         item = product
         if let name = product.name, let price = product.price {
             nameLabel.text = name

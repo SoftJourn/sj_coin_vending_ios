@@ -33,6 +33,23 @@ struct networking {
     static let pathAccount = "coins/api/v1/account"
 }
 
+struct myError {
+    struct title {
+        static let validation = "Validation Error"
+        static let auth = "Authorization Error"
+        static let download = "Downloading Error"
+        static let reachability = "Internet Error"
+        static let favorite = "Favorite Error"
+    }
+    struct message {
+        static let validation = "Login and password should not be empty."
+        static let auth = "Login failed."
+        static let reachability = "Please verify your Internet connection."
+        static let retryDownload = "Error held while fetching list of machines. Please try again."
+        static let favorite = "Error held while adding to favorite. Please try again."
+    }
+}
+
 struct categoryName {
     
     static let allItems = "All Items"
@@ -40,23 +57,6 @@ struct categoryName {
     static let bestSellers = "Best Sellers"
     static let favorites = "Favorites"
     static let cancel = "Cancel"
-}
-
-struct myError {
-    
-    struct title {
-        static let validation = "Validation Error"
-        static let auth = "Authorization Error"
-        static let download = "Downloading Error"
-        static let reachability = "Internet Error"
-    }
-    
-    struct message {
-        static let validation = "Login and password should not be empty."
-        static let auth = "Login failed."
-        static let reachability = "Please verify your Internet connection."
-        static let retryDownload = "Error held while fetching list of machines. Please try again."
-    }
 }
 
 struct buttonTitle {
