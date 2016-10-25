@@ -37,7 +37,6 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .machineChanged, object: nil)
     }
     
     // MARK: Downloading, Handling and Refreshing data.

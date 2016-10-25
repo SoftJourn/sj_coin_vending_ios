@@ -43,7 +43,7 @@
 		35617D7F1DA82484000582F6 /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D7E1DA82484000582F6 /* AuthorizationManager.swift */; };
 		35617D811DA82728000582F6 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D801DA82728000582F6 /* NavigationManager.swift */; };
 		3580AD741DBA95AC0062DC68 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3580AD731DBA95AC0062DC68 /* Protocols.swift */; };
-		359441731DAFC3B600B8B693 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359441721DAFC3B600B8B693 /* SettingsTableViewController.swift */; };
+		359441731DAFC3B600B8B693 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359441721DAFC3B600B8B693 /* SettingsViewController.swift */; };
 		35B5A6371DB43316005E25C9 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B5A6361DB43316005E25C9 /* Reachability.swift */; };
 		35B80FF91DBB8A8200540659 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B80FF81DBB8A8200540659 /* BaseTableViewCell.swift */; };
 		35E29C0D1DACD8D9002B7045 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C0C1DACD8D9002B7045 /* AlertManager.swift */; };
@@ -94,7 +94,7 @@
 		35617D7E1DA82484000582F6 /* AuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
 		35617D801DA82728000582F6 /* NavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		3580AD731DBA95AC0062DC68 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		359441721DAFC3B600B8B693 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsTableViewController.swift; path = Controllers/SettingsTableViewController.swift; sourceTree = "<group>"; };
+		359441721DAFC3B600B8B693 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Controllers/SettingsViewController.swift; sourceTree = "<group>"; };
 		35B5A6361DB43316005E25C9 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		35B80FF81DBB8A8200540659 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		35E29C0C1DACD8D9002B7045 /* AlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
@@ -207,7 +207,7 @@
 				35089F641DAB9E4900DC3BAF /* BaseViewController.swift */,
 				35E29C0E1DACDCDD002B7045 /* InitialViewController.swift */,
 				35089F671DAB9E4900DC3BAF /* LoginViewController.swift */,
-				359441721DAFC3B600B8B693 /* SettingsTableViewController.swift */,
+				359441721DAFC3B600B8B693 /* SettingsViewController.swift */,
 				35089F661DAB9E4900DC3BAF /* HomeViewController.swift */,
 				35089F651DAB9E4900DC3BAF /* FavoritesViewController.swift */,
 				35089F631DAB9E4900DC3BAF /* AllItemsViewController.swift */,
@@ -443,7 +443,7 @@
 				35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */,
 				3580AD741DBA95AC0062DC68 /* Protocols.swift in Sources */,
 				35E504E91DAD360C00131567 /* FeaturesModel.swift in Sources */,
-				359441731DAFC3B600B8B693 /* SettingsTableViewController.swift in Sources */,
+				359441731DAFC3B600B8B693 /* SettingsViewController.swift in Sources */,
 				35089F6F1DABAB4A00DC3BAF /* DataManager.swift in Sources */,
 				35089F7D1DABB45F00DC3BAF /* PurchaseHistoryTableViewCell.swift in Sources */,
 				35089F5A1DAB813D00DC3BAF /* APIManager.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  SettingsTableViewController.swift
+//  SettingsViewController.swift
 //  SJCoinsVendingMachine
 //
 //  Created by Oleg Pankiv on 10/13/16.
@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 import PromiseKit
 
-class SettingsTableViewController: UITableViewController {
+class SettingsViewController: BaseViewController {
     
     // MARK: Constants
     let settingsCellIdentifier = "settingsCellIdentifier"
@@ -20,20 +20,24 @@ class SettingsTableViewController: UITableViewController {
         
         return DataManager.shared.machines
     }
+    private var machineIdentifier: Int?
     
     // MARK: Life cycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        machineIdentifier = AuthorizationManager.getMachineId()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
+        super.viewWillAppear(true)
         NavigationManager.shared.visibleViewController = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+     
+        super.viewDidAppear(true)
         SVProgressHUD.dismiss(withDelay: 0.5)
     }
     
@@ -43,47 +47,34 @@ class SettingsTableViewController: UITableViewController {
     }
     
     // MARK: Actions
-    @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
+    @IBAction private func doneButtonPressed(_ sender: UIBarButtonItem) {
         
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
-        NotificationCenter.default.post(name: .machineChanged, object: nil)
-        downloadData()
-    }
-    
-    private func downloadData() {
-    
-        firstly {
-            APIManager.fetchProducts(machineID: AuthorizationManager.getMachineId())
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-        }.catch { error in
-            SVProgressHUD.dismiss(withDelay: 0.5)
-            AlertManager().present(alert: myError.title.download, message: error.localizedDescription)
-        }.then {
-            APIManager.fetchFavorites()
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-        }.catch { error in
-            SVProgressHUD.dismiss(withDelay: 0.5)
-            AlertManager().present(alert: myError.title.download, message: error.localizedDescription)
-        }.then {
-            APIManager.fetchAccount()
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-            SVProgressHUD.dismiss(withDelay: 2.0) { self.dismiss(animated: true) { } }
-        }.catch { error in
-            SVProgressHUD.dismiss(withDelay: 0.5)
-            AlertManager().present(alert: myError.title.download, message: error.localizedDescription)
+        let newMachineIdentifier = AuthorizationManager.getMachineId()
+        if newMachineIdentifier == machineIdentifier {
+            self.dismiss(animated: true) { }
+        } else {
+            SVProgressHUD.show(withStatus: spinerMessage.loading)
+            fetchProducts()
         }
     }
     
+    override func updateProducts() {
+        
+        SVProgressHUD.dismiss(withDelay: 2.0) {
+            self.dismiss(animated: true) { }
+        }
+    }
+}
+
+extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
+
     // MARK: UITableViewDataSource
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         switch section {
         case 0:
@@ -93,7 +84,7 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch section {
         case 0:
@@ -103,7 +94,7 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: settingsCellIdentifier, for: indexPath)
         
@@ -124,11 +115,13 @@ class SettingsTableViewController: UITableViewController {
     }
     
     // MARK: UITableViewDelegate
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let machine = machines else { return }
+        guard let machine = machines?[indexPath.item] else { return }
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        AuthorizationManager.save(machineId: machine[indexPath.item].internalIdentifier!)
+        if let identifier = machine.internalIdentifier {
+            AuthorizationManager.save(machineId: identifier)
+        }
         tableView.reloadData()
     }
 }
