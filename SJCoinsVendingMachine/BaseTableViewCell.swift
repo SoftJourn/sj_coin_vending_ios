@@ -61,4 +61,13 @@ class BaseTableViewCell: UITableViewCell {
         }
         logo.image = cashedImage
     }
+    
+    func verifyConnection(execute: ()->()) {
+        
+        if !Reachability.connectedToNetwork() {
+            AlertManager().present(alert: myError.title.reachability, message: myError.message.reachability)
+        } else {
+            execute()
+        }
+    }
 }

@@ -14,18 +14,22 @@ class AllItemsTableViewCell: BaseTableViewCell {
     
     // MARK: Constants
     static let identifier = "\(AllItemsTableViewCell.self)"
-        
+    
     // MARK: Actions
-    @IBAction fileprivate func buyButtonPressed(_ sender: UIButton) {
+    @IBAction private func buyButtonPressed(_ sender: UIButton) {
         
-        delegate?.buy(product: item)
+        verifyConnection {
+            delegate?.buy(product: item)
+        }
     }
     
-    @IBAction fileprivate func favouritesButtonPressed(_ sender: UIButton) {
+    @IBAction private func favouritesButtonPressed(_ sender: UIButton) {
         
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
-        favorite = !favorite
-        favorite ? delegate?.add(favorite: self) : delegate?.remove(favorite: self)
+        verifyConnection {
+            SVProgressHUD.show(withStatus: spinerMessage.loading)
+            favorite = !favorite
+            favorite ? delegate?.add(favorite: self) : delegate?.remove(favorite: self)
+        }
     }
     
     // MARK: Methods

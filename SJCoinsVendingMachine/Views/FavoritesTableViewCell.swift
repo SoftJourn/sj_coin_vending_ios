@@ -22,16 +22,21 @@ class FavoritesTableViewCell: BaseTableViewCell {
         }
     }
     
-    @IBAction func buyButtonPressed(_ sender: UIButton) {
+    @IBAction private func buyButtonPressed(_ sender: UIButton) {
 
-        delegate?.buy(product: item)
+        verifyConnection {
+            delegate?.buy(product: item)
+        }
     }
+    
     // MARK: Actions
     @IBAction private func favoriteButtonPressed(_ sender: UIButton) {
     
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
-        favorite = !favorite
-        favorite ? delegate?.add(favorite: self) : delegate?.remove(favorite: self)
+        verifyConnection {
+            SVProgressHUD.show(withStatus: spinerMessage.loading)
+            favorite = !favorite
+            favorite ? delegate?.add(favorite: self) : delegate?.remove(favorite: self)
+        }
     }
 
     // MARK: Methods
@@ -53,7 +58,7 @@ class FavoritesTableViewCell: BaseTableViewCell {
         buyButton.isEnabled = true
         logo.alpha = 1
     }
-    
+
     private func unvailable() {
        
         buyButton.isEnabled = false
