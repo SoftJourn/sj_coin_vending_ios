@@ -36,6 +36,13 @@ class NavigationManager: NSObject {
         present(viewControllerAsRoot: loginController)
     }
     
+    func presentFavoritesViewController(items: [Products]?) {
+        
+        let favoritesViewController = create(viewController: storyboards.favoritesViewController) as! FavoritesViewController
+        //allItemsViewController.filterItems = SortingManager().sortBy(name: items)
+        visibleViewController?.navigationController?.pushViewController(favoritesViewController, animated: true)
+    }
+
     func presentAllItemsViewController(name: String?, items: [Products]?) {
         
         let allItemsViewController = create(viewController: storyboards.allItemsViewController) as! AllItemsViewController

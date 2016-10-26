@@ -41,7 +41,11 @@ class HomeCollectionViewCell: UICollectionViewCell {
     @IBAction private func seeAllButtonPressed(_ sender: UIButton) {
         
         guard let items = categoryItems else { return }
-        NavigationManager.shared.presentAllItemsViewController(name: categoryNames, items: items)
+        if categoryNames == categoryName.favorites {
+            NavigationManager.shared.presentFavoritesViewController(items: items)
+        } else {
+            NavigationManager.shared.presentAllItemsViewController(name: categoryNames, items: items)
+        }
     }
     
     func configure(with item: Categories, unavailable: [Int]?) -> HomeCollectionViewCell {

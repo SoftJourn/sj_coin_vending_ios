@@ -15,6 +15,7 @@ struct storyboards {
     static let settingsNavigationController = "settingsNavigationController"
     static let settingsControllerIdentifier = "settingsControllerIdentifier"
     static let allItemsViewController = "AllItemsViewController"
+    static let favoritesViewController = "FavoritesViewController"
 }
 
 struct networking {

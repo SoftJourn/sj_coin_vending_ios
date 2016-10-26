@@ -182,7 +182,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         if !products.isEmpty {
             cell.delegate = self
             if categories.name == categoryName.favorites {
-                cell.showAllButton.isHidden = true
                 return cell.configure(with: categories, unavailable: unavailable)
             } else {
                 return cell.configure(with: categories, unavailable: nil)

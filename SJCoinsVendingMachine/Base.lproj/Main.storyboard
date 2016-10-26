@@ -249,7 +249,7 @@
                     <navigationItem key="navigationItem" id="f5F-lM-Sxk">
                         <nil key="title"/>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="m12-PW-6Np">
-                            <rect key="frame" x="123.5" y="7" width="128" height="30"/>
+                            <rect key="frame" x="124" y="7" width="128" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="All Items ▾"/>
                             <connections>
@@ -295,7 +295,7 @@
         <!--Favorites-->
         <scene sceneID="uZr-4n-4Ee">
             <objects>
-                <viewController id="mLe-Ai-fG4" customClass="FavoritesViewController" customModule="SJCoinsVendingMachine" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FavoritesViewController" id="mLe-Ai-fG4" customClass="FavoritesViewController" customModule="SJCoinsVendingMachine" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="d5V-Z6-8sd"/>
                         <viewControllerLayoutGuide type="bottom" id="IH2-09-PKe"/>
@@ -403,7 +403,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RLr-JS-xWb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5919.1999999999998" y="-591.45427286356824"/>
+            <point key="canvasLocation" x="4980" y="-595"/>
         </scene>
         <!--All Items-->
         <scene sceneID="vuz-1b-1MZ">
@@ -583,7 +583,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Zl-xi-SGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5111.1999999999998" y="-591.45427286356824"/>
+            <point key="canvasLocation" x="4172" y="-595"/>
         </scene>
         <!--Vending Machine-->
         <scene sceneID="7S9-WC-Tdu">
@@ -778,7 +778,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YOZ-c1-0ZQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5919.1999999999998" y="-1361.4692653673164"/>
+            <point key="canvasLocation" x="4980" y="-1337"/>
         </scene>
         <!--Home-->
         <scene sceneID="rDE-ax-70T">
@@ -797,7 +797,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FVd-XC-VtZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5111.1999999999998" y="-1361.4692653673164"/>
+            <point key="canvasLocation" x="4172" y="-1337"/>
         </scene>
         <!--Setting-->
         <scene sceneID="FNo-iD-XeF">
@@ -815,7 +815,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="10" reuseIdentifier="settingsCellIdentifier" textLabel="jli-AF-N6B" style="IBUITableViewCellStyleDefault" id="g55-PO-ocW">
-                                        <rect key="frame" x="0.0" y="120" width="376" height="44"/>
+                                        <rect key="frame" x="0.0" y="120" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g55-PO-ocW" id="4hi-fp-fwm">
                                             <frame key="frameInset" width="375" height="43"/>
