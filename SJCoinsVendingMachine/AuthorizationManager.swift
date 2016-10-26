@@ -47,25 +47,35 @@ class AuthorizationManager: RequestManager {
         }
     }
     
-    class func refreshRequest(complition: @escaping refreshComplited) {
+    class func refreshRequest(complition: @escaping complited) {
         
         let urlString = "\(networking.baseURL)auth/oauth/token"
         let headers = [ "Authorization": "Basic \(networking.basicKey)",
                         "Content-Type": networking.authContentType ]
         let refreshData = "refresh_token=\(Defaults[.kRefreshToken])&grant_type=refresh_token"
         
-        customManager.request(urlString, method: .post, parameters: [:], encoding: refreshData, headers: headers)
-            .validate(statusCode: 200..<300)
-            .responseJSON { response in
-                debugPrint(response)
-                switch response.result {
-                case .success(let data):
-                    let model = AuthModel.init(json: JSON(data))
-                    complition(model, nil)
-                case .failure(let error):
-                    complition(nil, error)
-                }
+        firstly {
+            sendCustom(request: .post, urlString: urlString, parameters: [:], encoding: refreshData, headers: headers)
+        }.then { data -> Void in
+            let model = AuthModel.init(json: JSON(data))
+            save(authInfo: model)
+            complition(nil)
+        }.catch { error in
+            complition(error)
         }
+//        customManager.request(urlString, method: .post, parameters: [:], encoding: refreshData, headers: headers)
+//            .validate(statusCode: 200..<300)
+//            .responseJSON { response in
+//                debugPrint(response)
+//                switch response.result {
+//                case .success(let data):
+//                    let model = AuthModel.init(json: JSON(data))
+//                    complition(model, nil)
+//                case .failure(let error):
+//                    complition(nil, error)
+//                }
+//        }
+//        complition(nil, nil)
     }
 
     class func save(authInfo object: AuthModel) {

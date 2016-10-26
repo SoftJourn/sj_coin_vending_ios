@@ -38,25 +38,25 @@ class BaseManager {
                            parameters: [String: AnyObject]?,
                            encoding: ParameterEncoding,
                            headers: Dictionary<String, String>) -> Promise<AnyObject> {
-    
+        
         
         let promise = Promise<AnyObject> { fulfill, reject in
             
-                customManager.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
-                    .validate()
-                    .responseJSON { response in
-                        debugPrint(response)
-                        switch response.result {
-                        case .success(let json):
-                            fulfill(json as AnyObject)
-                        case .failure(let error):
-                            guard let data = response.data else { return }
-                            let errorData = NSString(data: data, encoding:String.Encoding.utf8.rawValue)
-                            print(errorData)
-                            print(error.localizedDescription)
-                            reject(error)
-                        }
-                }
+            customManager.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
+                .validate()
+                .responseJSON { response in
+                    debugPrint(response)
+                    switch response.result {
+                    case .success(let json):
+                        fulfill(json as AnyObject)
+                    case .failure(let error):
+                        guard let data = response.data else { return }
+                        let errorData = NSString(data: data, encoding:String.Encoding.utf8.rawValue)
+                        print(errorData)
+                        print(error.localizedDescription)
+                        reject(error)
+                    }
+            }
         }
         return promise
     }

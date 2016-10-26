@@ -13,50 +13,47 @@ import SwiftyJSON
 
 class OAuth2Handler: RequestRetrier {
     
-    private typealias refreshComplited = (_ model: AuthModel?, _ error: Error?) -> ()
-    
     // MARK: Properties
     private var isRefreshing = false
     private var requestsToRetry: [Request] = []
-    private let lock = NSLock()
     
     // MARK: Retrier
     func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: @escaping RequestRetryCompletion) {
-        lock.lock() ; defer { lock.unlock() }
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
+        
+        //
+        let code = request.task?.response as? HTTPURLResponse
+        print("\(code?.statusCode)")
+        //
         
         if let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 {
             requestsToRetry.append(request)
+            handle401StatusCode { completion($0, $1) } // $0 - shouldRetry parameter, $1 - timeDelay parameter.
+        }
+    }
+    
+    private func handle401StatusCode(completion: @escaping RequestRetryCompletion) {
+        
+        if !isRefreshing {
+            //SVProgressHUD.show(withStatus: spinerMessage.loading)
+            isRefreshing = true
             
-            if !isRefreshing {
-                
-                isRefreshing = true
-                AuthorizationManager.refreshRequest { [weak self] model, error in
-                    
-                    guard let strongSelf = self else { return }
-                    strongSelf.lock.lock();  defer { strongSelf.lock.unlock() }
-                    
-                    strongSelf.isRefreshing = false
-                    SVProgressHUD.dismiss(withDelay: 0.5)
-                    
-                    if model != nil {
-                        AuthorizationManager.save(authInfo: model!)
-                        for request in strongSelf.requestsToRetry {
-                            //For all requests in array change access token, and run them. 
-                            var req = request.request
-                            req?.setValue("Bearer \(model?.accessToken)", forHTTPHeaderField: "Authorization")
-                            completion(false, 0.0)
-                        }
-                        strongSelf.requestsToRetry.removeAll()
-                        completion(false, 0.0) // retry after 1 second
-                    } else {
-                        //If refresh token invalig (users more than month not use application) show login page.
-                        completion(true, 1.0) // retry after 1 second
-                    }
+            AuthorizationManager.refreshRequest { [unowned self] error in
+                if error != nil {
+                    AuthorizationManager.removeAccessToken()
+                    NavigationManager.shared.presentLoginViewController()
                 }
+                self.requestsToRetry.forEach { request in
+                    var req = request.request
+                    let newToken = AuthorizationManager.getToken()
+                    //FIXME: Need investigate token change.
+                    req?.setValue("Bearer \(newToken)", forHTTPHeaderField: "Authorization")
+                    completion(false, 0.0) // don't retry
+                }
+                self.requestsToRetry.removeAll()
+                self.isRefreshing = false
+                SVProgressHUD.dismiss(withDelay: 0.5)
+                completion(false, 0.0) // don't retry
             }
-        } else {
-            completion(false, 0.0) // don't retry
         }
     }
 }

@@ -90,7 +90,9 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func load(image endpoint: String?, cell: HomeCollectionViewInternalCell) {
-        
+        /*
+         FIXME: Need to move this method to cell
+        */
         guard let endpoint = endpoint else { return cell.logo.image = picture.placeholder }
         guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
             APIManager.fetch(image: endpoint) { image in

@@ -11,6 +11,12 @@ import SVProgressHUD
 import PromiseKit
 import SwiftyUserDefaults
 
+/*
+ FIXME: Application runned at first time.
+ FechProduct called before default Vending Machnine ID saved in UserDefaults.
+ Thats why first api call return 404 error.
+ */
+
 class HomeViewController: BaseViewController {
     
     // MARK: Constants
@@ -21,7 +27,7 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var balanceLabel: UILabel!
     
     fileprivate var categories: [Categories]? {
-        
+
         return DataManager.shared.categories
     }
     fileprivate var unavailable: [Int]? {
@@ -72,9 +78,11 @@ class HomeViewController: BaseViewController {
     
     @IBAction func refreshTokenTest(_ sender: UIBarButtonItem) {
         
-        AuthorizationManager.refreshRequest { model, error in
-            guard model != nil else { return print(error?.localizedDescription) }
-            AuthorizationManager.save(authInfo: model!)
+        AuthorizationManager.refreshRequest { error in
+            //print(model)
+            print(error?.localizedDescription)
+            //guard let model = model else { return print(error?.localizedDescription) }
+            //AuthorizationManager.save(authInfo: model)
         }
     }
     
