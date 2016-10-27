@@ -9,18 +9,23 @@
 import Foundation
 
 class SortingManager {
-
-    private lazy var nameSegmentCounter = Int()
-    private lazy var priceSegmentCounter = Int()
-    private lazy var sortedData = [Products]()
     
-    func sortBy(name array: [Products]?) -> [Products]? {
+    private var nameSegmentCounter = Int()
+    private var priceSegmentCounter = Int()
+    private var sortedData = [Products]()
+    
+    enum counter {
+        
+        case name
+        case price
+    }
+    
+    func sortBy(name array: [Products]?, state: Bool?) -> [Products]? {
         
         guard let array = array else { return nil }
-        priceSegmentCounter -= 1
-        nameSegmentCounter += 1
+        change(counter.name, for: state)
         
-        if nameSegmentCounter % 2 == 0 {
+        if nameSegmentCounter % 2 != 0 {
             sortedData = array.sorted { $1.name!.localizedCaseInsensitiveCompare($0.name!) == ComparisonResult.orderedAscending }
             return sortedData
         } else {
@@ -29,18 +34,33 @@ class SortingManager {
         }
     }
     
-    func sortBy(price array: [Products]?) -> [Products]? {
+    func sortBy(price array: [Products]?, state: Bool?) -> [Products]? {
         
         guard let array = array else { return nil }
-        nameSegmentCounter -= 1
-        priceSegmentCounter += 1
+        change(counter.price, for: state)
         
-        if priceSegmentCounter % 2 == 0 {
+        if priceSegmentCounter % 2 != 0 {
             sortedData = array.sorted { $0.price! > $1.price! }
             return sortedData
         } else {
             sortedData = array.sorted { $0.price! < $1.price! }
             return sortedData
+        }
+    }
+    
+    private func change(_ couter: counter, for state: Bool?) {
+        
+        if state != nil {
+            switch couter {
+            case .name:
+                if state! {
+                   nameSegmentCounter += 1
+                }
+            case .price:
+                if state! {
+                    priceSegmentCounter += 1
+                }
+            }
         }
     }
 }

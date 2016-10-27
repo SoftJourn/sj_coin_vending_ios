@@ -17,7 +17,7 @@ class FavoritesViewController: BaseViewController {
     
     fileprivate var favorites: [Products]? {
         
-        return SortingManager().sortBy(name: DataManager.shared.favorites)
+        return SortingManager().sortBy(name: DataManager.shared.favorites, state: nil)
     }
     
     fileprivate var unavailable: [Int]? {

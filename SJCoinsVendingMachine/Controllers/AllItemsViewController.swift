@@ -27,7 +27,8 @@ class AllItemsViewController: BaseViewController {
     @IBOutlet private weak var segmentControl: UISegmentedControl!
     @IBOutlet private weak var titleButton: UIButton!
     
-    private var sortingManager = SortingManager()
+    private lazy var sortingByName = SortingManager()
+    private lazy var sortingByPrice = SortingManager()
     fileprivate lazy var searchData = [Products]()
     fileprivate lazy var resultSearchController: UISearchController = {
         
@@ -76,7 +77,7 @@ class AllItemsViewController: BaseViewController {
     
     private func viewDidLoadNotUsingSeeAll() {
         
-        filterItems = SortingManager().sortBy(name: allItems)
+        filterItems = SortingManager().sortBy(name: allItems, state: nil)
         tableView.addSubview(refreshControl)
         self.definesPresentationContext = true
     }
@@ -101,12 +102,12 @@ class AllItemsViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func sameSegmentButtonPressed(_ sender: UISegmentedControl) {
         
-        sortItems()
+        sortItems(bySameButton: true)
     }
     
     @IBAction private func anothedSegmentButtonPressed(_ sender: UISegmentedControl) {
        
-        sortItems()
+        sortItems(bySameButton: false)
     }
     
     @IBAction private func searchButtonPressed(_ sender: UIBarButtonItem) {
@@ -139,13 +140,13 @@ class AllItemsViewController: BaseViewController {
     }
     
     // MARK: Sorting via Segment Control.
-    private func sortItems() {
+    private func sortItems(bySameButton: Bool) {
         
         switch segmentControl.selectedSegmentIndex {
         case 0:
-            setAndReload(data: sortingManager.sortBy(name: filterItems))
+            setAndReload(data: sortingByName.sortBy(name: filterItems, state: bySameButton))
         case 1:
-            setAndReload(data: sortingManager.sortBy(price: filterItems))
+            setAndReload(data: sortingByPrice.sortBy(price: filterItems, state: bySameButton))
         default: break
         }
     }
@@ -186,7 +187,7 @@ class AllItemsViewController: BaseViewController {
     
     private func change(filter name: String?, items: [Products]?) {
         
-        let sortedItems = SortingManager().sortBy(name: items)
+        let sortedItems = SortingManager().sortBy(name: items, state: nil)
         filterItems = sortedItems
         titleButton(name)
         reloadTableView()
