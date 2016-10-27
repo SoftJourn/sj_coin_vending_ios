@@ -129,9 +129,13 @@ class HomeViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
-        fetchProducts()
-        fetchAccount()
-        fetchFavorites()
+        firstly {
+            self.fetchProducts().asVoid()
+        }.then {
+            self.fetchAccount().asVoid()
+        }.then {
+            self.fetchFavorites().asVoid()
+        }
     }
     
     override func updateProducts() {

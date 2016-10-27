@@ -42,7 +42,7 @@ class APIManager: RequestManager {
     class func fetchProducts(machineID: Int)  -> Promise<AnyObject> {
         
         let promise = Promise<AnyObject> { fulfill, reject in
-
+            print("fetchProducts")
             let url = "\(networking.baseURL)vending/v1/machines/\(machineID)/features"
         
             firstly {
@@ -58,7 +58,7 @@ class APIManager: RequestManager {
     }
     
     class func fetchFavorites() -> Promise<AnyObject> {
-        
+        print("fetchFavorites")
         let promise = Promise<AnyObject> { fulfill, reject in
 
             let url = "\(networking.baseURL)vending/v1/favorites"
@@ -83,7 +83,7 @@ class APIManager: RequestManager {
     }
     
     class func fetchAccount() -> Promise<AnyObject> {
-        
+        print("fetchAccount")
         let promise = Promise<AnyObject> { fulfill, reject in
 
             let url = "\(networking.baseURL)coins/api/v1/account"

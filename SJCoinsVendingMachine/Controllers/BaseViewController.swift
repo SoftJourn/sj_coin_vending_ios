@@ -57,15 +57,19 @@ class BaseViewController: UIViewController {
     }
     
     // MARK: Fetch and update Products.
-    func fetchProducts() {
+    func fetchProducts() -> Promise<AnyObject> {
         
-        firstly {
-            APIManager.fetchProducts(machineID: AuthorizationManager.getMachineId())
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-            self.updateProducts()
-        }.catch { error in
-            self.present(alert: .downloading(error))
+        return Promise<AnyObject> { fulfill, reject in
+            firstly {
+                APIManager.fetchProducts(machineID: AuthorizationManager.getMachineId())
+            }.then { object -> Void in
+                print("fetchProducts result")
+                DataManager.shared.save(object)
+                self.updateProducts()
+                fulfill(object)
+            }.catch { error in
+                self.present(alert: .downloading(error))
+            }
         }
     }
     
@@ -74,15 +78,19 @@ class BaseViewController: UIViewController {
     }
     
     // MARK: Fetch and update Favorites.
-    func fetchFavorites() {
-        
-        firstly {
-            APIManager.fetchFavorites()
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-            self.updateFavorites()
-        }.catch { error in
-            self.present(alert: .downloading(error))
+    func fetchFavorites() -> Promise<AnyObject> {
+    
+        return Promise<AnyObject> { fulfill, reject in
+            firstly {
+                APIManager.fetchFavorites()
+            }.then { object -> Void in
+                print("fetchFavorites result")
+                DataManager.shared.save(object)
+                self.updateFavorites()
+                fulfill(object)
+            }.catch { error in
+                self.present(alert: .downloading(error))
+            }
         }
     }
     
@@ -91,15 +99,19 @@ class BaseViewController: UIViewController {
     }
     
     // MARK: Fetch and update Account.
-    func fetchAccount() {
+    func fetchAccount() -> Promise<AnyObject> {
         
-        firstly {
-            APIManager.fetchAccount()
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-            self.updateAccount()
-        }.catch { error in
-            self.present(alert: .downloading(error))
+        return Promise<AnyObject> { fulfill, reject in
+            firstly {
+                APIManager.fetchAccount()
+            }.then { object -> Void in
+                print("fetchAccount result")
+                DataManager.shared.save(object)
+                self.updateAccount()
+                fulfill(object)
+            }.catch { error in
+                self.present(alert: .downloading(error))
+            }
         }
     }
     
