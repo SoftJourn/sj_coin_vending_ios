@@ -29,7 +29,7 @@ class BaseManager {
             configuration: configuration,
             serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies)
         )
-        manager.retrier = oauthHandler
+        //manager.retrier = oauthHandler
         return manager
     }()
     
@@ -50,11 +50,15 @@ class BaseManager {
                     case .success(let json):
                         fulfill(json as AnyObject)
                     case .failure(let error):
-                        guard let data = response.data else { return }
-                        let errorData = NSString(data: data, encoding:String.Encoding.utf8.rawValue)
-                        print(errorData)
-                        print(error.localizedDescription)
-                        reject(error)
+                        if response.response?.statusCode == 401 {
+                            reject(ServerError.unauthorized)
+                        } else {
+                            guard let data = response.data else { return }
+                            let errorData = NSString(data: data, encoding:String.Encoding.utf8.rawValue)
+                            print(errorData)
+                            print(error.localizedDescription)
+                            reject(error)
+                        }
                     }
             }
         }

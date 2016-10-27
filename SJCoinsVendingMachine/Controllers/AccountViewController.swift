@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyUserDefaults
 import SVProgressHUD
+import PromiseKit
 
 class AccountViewController: BaseViewController {
     
@@ -37,12 +38,14 @@ class AccountViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        super.viewWillAppear(true)
         SVProgressHUD.show(withStatus: spinerMessage.loading)
         fetchContent()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
+        super.viewDidAppear(true)
         NavigationManager.shared.visibleViewController = self
         if !Reachability.connectedToNetwork() {
             present(alert: .connection)
@@ -55,7 +58,7 @@ class AccountViewController: BaseViewController {
     }
     
     // MARK: Actions
-    @IBAction fileprivate func logOutButton(_ sender: UIBarButtonItem) {
+    @IBAction private func logOutButton(_ sender: UIBarButtonItem) {
         
         //ExecuteLogOut
         AuthorizationManager.removeAccessToken()
@@ -65,21 +68,18 @@ class AccountViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
-        fetchPurchaseHistory()
-        fetchAccount()
+        firstly {
+            fetchPurchaseHistory().asVoid()
+        }.then {
+            self.updateTableView()
+        }.then {
+            self.fetchAccount().asVoid()
+        }.then {
+            self.updateViewWithAccountContent()
+        }
     }
     
-    override func updatePurchaseHistory() {
-        
-        updateTableView()
-    }
-    
-    override func updateAccount() {
-        
-        updateViewWithAccountContent()
-    }
-    
-    fileprivate func updateTableView() {
+    private func updateTableView() {
         
         SVProgressHUD.dismiss(withDelay: 1)
         DispatchQueue.main.async { [unowned self] in
@@ -87,7 +87,7 @@ class AccountViewController: BaseViewController {
         }
     }
     
-    fileprivate func updateViewWithAccountContent() {
+    private func updateViewWithAccountContent() {
         
         guard let amount = accountInformation?.amount else { return }
         amountLabel.text = "\(String(amount)) Coins"

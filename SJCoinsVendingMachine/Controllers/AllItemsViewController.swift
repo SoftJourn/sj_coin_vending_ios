@@ -9,6 +9,7 @@
 import UIKit
 import SVProgressHUD
 import AlamofireImage
+import PromiseKit
 
 enum Filter {
     case lastAdded
@@ -122,17 +123,21 @@ class AllItemsViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
-        fetchProducts()
+        firstly {
+            fetchProducts().asVoid()
+        }.then {
+            self.changeAndReload()
+        }
     }
     
-    override func updateProducts() {
+    private func changeAndReload() {
         
-        if filterItems != nil {
+        if self.filterItems != nil {
             self.change(filter: self.prepared(name: categoryName.allItems), items: self.allItems)
         }
         reloadTableView()
     }
-
+    
     // MARK: Sorting via Segment Control.
     private func sortItems() {
         
@@ -179,7 +184,7 @@ class AllItemsViewController: BaseViewController {
         return actions
     }
     
-    fileprivate func change(filter name: String?, items: [Products]?) {
+    private func change(filter name: String?, items: [Products]?) {
         
         let sortedItems = SortingManager().sortBy(name: items)
         filterItems = sortedItems

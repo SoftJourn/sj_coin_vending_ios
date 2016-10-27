@@ -54,11 +54,15 @@ class SettingsViewController: BaseViewController {
             self.dismiss(animated: true) { }
         } else {
             SVProgressHUD.show(withStatus: spinerMessage.loading)
-            fetchProducts()
+            firstly {
+                self.fetchProducts().asVoid()
+            }.then {
+                self.updateProducts()
+            }
         }
     }
     
-    override func updateProducts() {
+    func updateProducts() {
         
         SVProgressHUD.dismiss(withDelay: 2.0) {
             self.dismiss(animated: true) { }

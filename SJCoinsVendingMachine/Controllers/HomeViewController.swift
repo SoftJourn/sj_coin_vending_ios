@@ -76,18 +76,8 @@ class HomeViewController: BaseViewController {
         }
     }
     
-    @IBAction func refreshTokenTest(_ sender: UIBarButtonItem) {
-        
-        AuthorizationManager.refreshRequest { error in
-            //print(model)
-            print(error?.localizedDescription)
-            //guard let model = model else { return print(error?.localizedDescription) }
-            //AuthorizationManager.save(authInfo: model)
-        }
-    }
-    
     // MARK: Set default vending machnine when app launched first time.
-    fileprivate func fetchMachinesFirstTime() {
+    private func fetchMachinesFirstTime() {
         
         if Defaults[.fistLaunch] {
             
@@ -134,18 +124,12 @@ class HomeViewController: BaseViewController {
         }.then {
             self.fetchAccount().asVoid()
         }.then {
+            self.updateBalance()
+        }.then {
             self.fetchFavorites().asVoid()
+        }.then {
+            self.updateCollectionView()
         }
-    }
-    
-    override func updateProducts() {
-        
-        updateCollectionView()
-    }
-    
-    override func updateAccount() {
-        
-        updateBalance()
     }
     
     fileprivate func updateCollectionView() {

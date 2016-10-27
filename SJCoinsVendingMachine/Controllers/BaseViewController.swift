@@ -43,8 +43,8 @@ class BaseViewController: UIViewController {
     func fetchData() {
         //SVProgressHUD.show(withStatus: spinerMessage.loading)
         if Reachability.connectedToNetwork() {
-            fetchContent()
             self.refreshControl.endRefreshing()
+            fetchContent()
         } else {
             //SVProgressHUD.dismiss(withDelay: 0.5)
             self.refreshControl.endRefreshing()
@@ -65,7 +65,6 @@ class BaseViewController: UIViewController {
             }.then { object -> Void in
                 print("fetchProducts result")
                 DataManager.shared.save(object)
-                self.updateProducts()
                 fulfill(object)
             }.catch { error in
                 self.present(alert: .downloading(error))
@@ -73,11 +72,6 @@ class BaseViewController: UIViewController {
         }
     }
     
-    func updateProducts() {
-        //Override in child.
-    }
-    
-    // MARK: Fetch and update Favorites.
     func fetchFavorites() -> Promise<AnyObject> {
     
         return Promise<AnyObject> { fulfill, reject in
@@ -86,7 +80,6 @@ class BaseViewController: UIViewController {
             }.then { object -> Void in
                 print("fetchFavorites result")
                 DataManager.shared.save(object)
-                self.updateFavorites()
                 fulfill(object)
             }.catch { error in
                 self.present(alert: .downloading(error))
@@ -94,11 +87,6 @@ class BaseViewController: UIViewController {
         }
     }
     
-    func updateFavorites() {
-        //Override in child.
-    }
-    
-    // MARK: Fetch and update Account.
     func fetchAccount() -> Promise<AnyObject> {
         
         return Promise<AnyObject> { fulfill, reject in
@@ -107,7 +95,6 @@ class BaseViewController: UIViewController {
             }.then { object -> Void in
                 print("fetchAccount result")
                 DataManager.shared.save(object)
-                self.updateAccount()
                 fulfill(object)
             }.catch { error in
                 self.present(alert: .downloading(error))
@@ -115,25 +102,19 @@ class BaseViewController: UIViewController {
         }
     }
     
-    func updateAccount() {
-        //Override in child.
-    }
-    
-    // MARK: Fetch and update Purchase history.
-    func fetchPurchaseHistory() {
+    func fetchPurchaseHistory() -> Promise<AnyObject> {
         
-        firstly {
-            APIManager.fetchPurchaseHistory()
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-            self.updatePurchaseHistory()
-        }.catch { error in
-            self.present(alert: .downloading(error))
+        return Promise<AnyObject> { fulfill, reject in
+
+            firstly {
+                APIManager.fetchPurchaseHistory()
+            }.then { object -> Void in
+                DataManager.shared.save(object)
+                fulfill(object)
+            }.catch { error in
+                self.present(alert: .downloading(error))
+            }
         }
-    }
-    
-    func updatePurchaseHistory() {
-        //Override in child.
     }
     
     // MARK: Confirmation and Buying.

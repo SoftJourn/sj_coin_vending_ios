@@ -55,12 +55,11 @@ class FavoritesViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
-        fetchFavorites()
-    }
-    
-    override func updateFavorites() {
-        
-        reloadTableView()
+        firstly {
+            fetchFavorites().asVoid()
+        }.then {
+            self.reloadTableView()
+        }
     }
     
     private func reloadTableView() {
