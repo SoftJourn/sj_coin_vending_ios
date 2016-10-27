@@ -9,14 +9,14 @@
 import UIKit
 import SVProgressHUD
 import SwiftyUserDefaults
+import PromiseKit
 
-class InitialViewController: UIViewController {
+class InitialViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         NavigationManager.shared.visibleViewController = self
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -30,14 +30,29 @@ class InitialViewController: UIViewController {
         print("InitialViewController deinited")
     }
     
-    fileprivate func launch() {
+    private func launch() {
         
         Defaults[.fistLaunch] = true
         
         if AuthorizationManager.accessTokenExist() {
-            NavigationManager.shared.presentTabBarController()
+            fetchAllData {
+                NavigationManager.shared.presentTabBarController()
+            }
         } else {
             NavigationManager.shared.presentLoginViewController()
+        }
+    }
+    
+    private func fetchAllData(executeTask: @escaping ()->()) {
+        
+        firstly {
+            self.fetchProducts().asVoid()
+        }.then {
+            self.fetchAccount().asVoid()
+        }.then {
+            self.fetchFavorites().asVoid()
+        }.then {
+            executeTask()
         }
     }
 }

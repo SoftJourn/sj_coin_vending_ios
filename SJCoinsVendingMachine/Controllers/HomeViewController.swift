@@ -47,7 +47,8 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        updateCollectionView()
+        //updateCollectionView()
+        updateBalance()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -122,12 +123,6 @@ class HomeViewController: BaseViewController {
         firstly {
             self.fetchProducts().asVoid()
         }.then {
-            self.fetchAccount().asVoid()
-        }.then {
-            self.updateBalance()
-        }.then {
-            self.fetchFavorites().asVoid()
-        }.then {
             self.updateCollectionView()
         }
     }
@@ -140,7 +135,7 @@ class HomeViewController: BaseViewController {
         }
     }
     
-    fileprivate func updateBalance() {
+    private func updateBalance() {
         
         guard let balance = DataManager.shared.account?.amount else { return /* show */ }
         

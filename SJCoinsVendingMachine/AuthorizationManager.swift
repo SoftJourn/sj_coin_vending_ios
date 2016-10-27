@@ -63,19 +63,6 @@ class AuthorizationManager: RequestManager {
         }.catch { error in
             complition(error)
         }
-//        customManager.request(urlString, method: .post, parameters: [:], encoding: refreshData, headers: headers)
-//            .validate(statusCode: 200..<300)
-//            .responseJSON { response in
-//                debugPrint(response)
-//                switch response.result {
-//                case .success(let data):
-//                    let model = AuthModel.init(json: JSON(data))
-//                    complition(model, nil)
-//                case .failure(let error):
-//                    complition(nil, error)
-//                }
-//        }
-//        complition(nil, nil)
     }
 
     class func save(authInfo object: AuthModel) {

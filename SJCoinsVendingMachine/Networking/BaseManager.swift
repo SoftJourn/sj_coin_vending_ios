@@ -13,8 +13,6 @@ import PromiseKit
 class BaseManager {
     
     // MARK: Properties
-    static let oauthHandler = OAuth2Handler()
-    
     static let customManager: Alamofire.SessionManager = {
         
         //Privacy configuration the Alamofire manager
@@ -29,7 +27,6 @@ class BaseManager {
             configuration: configuration,
             serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies)
         )
-        //manager.retrier = oauthHandler
         return manager
     }()
     
@@ -38,7 +35,6 @@ class BaseManager {
                            parameters: [String: AnyObject]?,
                            encoding: ParameterEncoding,
                            headers: Dictionary<String, String>) -> Promise<AnyObject> {
-        
         
         let promise = Promise<AnyObject> { fulfill, reject in
             
