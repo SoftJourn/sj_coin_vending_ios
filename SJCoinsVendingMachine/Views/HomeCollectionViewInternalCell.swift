@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SVProgressHUD
 
 class HomeCollectionViewInternalCell: UICollectionViewCell {
    
@@ -52,14 +53,29 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
         
         name = item.name
         price = item.price
+        load(image: item.imageUrl)
         return self
     }
-
+    
     private func resetImage() {
+        
         request?.cancel()
         logo.image = picture.placeholder
     }
     
+    private func load(image endpoint: String?) {
+        guard let endpoint = endpoint else { return logo.image = picture.placeholder }
+        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
+            //SVProgressHUD.show()
+            APIManager.fetch(image: endpoint) { [unowned self] image in
+                //SVProgressHUD.dismiss(withDelay: 3.0)
+                self.logo.image = image
+            }
+            return
+        }
+        return logo.image = cashedImage
+    }
+
     private func available() {
         
         logo.alpha = 1

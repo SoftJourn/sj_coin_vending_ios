@@ -65,7 +65,7 @@ class HomeViewController: BaseViewController {
     }
     
     // MARK: Actions
-    @IBAction func settingsButtonPressed(_ sender: UIBarButtonItem) {
+    @IBAction private func settingsButtonPressed(_ sender: UIBarButtonItem) {
         
         if Reachability.connectedToNetwork() {
             fetchMachines { _ in
