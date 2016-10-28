@@ -64,6 +64,13 @@ class DataManager {
             favorites = [Products]()
         }
         favorites?.append(item)
+        
+        categories.forEach { category in
+            if category.name == categoryName.favorites {
+                guard var favoriteProducts = category.products else { return }
+                favoriteProducts.append(item)
+            }
+        }
     }
     
     func remove(favorite item: Products) {

@@ -25,10 +25,8 @@ class RequestManager: BaseManager {
         
         let headers = [ "Authorization" : "Bearer \(AuthorizationManager.getToken())"]
         let encoding = JSONEncoding.default
-        
-        /*
-         Create request object (with information for it retry) and save it.
-         */
+    
+         //Create request object (with information for it retry) and save it.
         let request = MyRequest.init(method, urlString: urlString)
         requestsToRetry.append(request)
         
@@ -74,6 +72,7 @@ class RequestManager: BaseManager {
             isRefreshing = true
             AuthorizationManager.refreshRequest { error in
                 if error != nil {
+                    print(error)
                     AuthorizationManager.removeAccessToken()
                     NavigationManager.shared.presentLoginViewController()
                 }

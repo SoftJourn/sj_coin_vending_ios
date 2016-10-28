@@ -15,7 +15,7 @@ import SwiftyUserDefaults
  FIXME: Application runned at first time.
  FechProduct called before default Vending Machnine ID saved in UserDefaults.
  Thats why first api call return 404 error.
- */
+*/
 
 class HomeViewController: BaseViewController {
     
@@ -23,7 +23,7 @@ class HomeViewController: BaseViewController {
     let cellHeight: CGFloat = 180
     
     // MARK: Properties
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak fileprivate var collectionView: UICollectionView!
     @IBOutlet weak var balanceLabel: UILabel!
     
     fileprivate var categories: [Categories]? {
@@ -47,8 +47,8 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        //updateCollectionView()
         updateBalance()
+        updateCollectionView()
     }
     
     override func viewDidAppear(_ animated: Bool) {

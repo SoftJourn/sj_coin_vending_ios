@@ -102,8 +102,15 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
                 availability = false
             }
         }
-        availability ? delegate?.buy(product: item) : presenError()
-        availability = true
+        
+        if Reachability.connectedToNetwork() {
+            availability ? delegate?.buy(product: item) : presenError()
+            availability = true
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                AlertManager().present(alert: myError.title.reachability, message: myError.message.reachability)
+            }
+        }
     }
     
     private func presenError() {
