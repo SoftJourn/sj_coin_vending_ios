@@ -17,8 +17,6 @@ enum ServerError: Error {
 
 class RequestManager: BaseManager {
     
-    private static var isRefreshing = false
-    private static var requestsToRetry: [MyRequest] = []
     private static var myPromise: Promise<AnyObject>?
     
     class func sendDefault(request method: Alamofire.HTTPMethod,
@@ -26,24 +24,19 @@ class RequestManager: BaseManager {
         
         let headers = [ "Authorization" : "Bearer \(AuthorizationManager.getToken())"]
         let encoding = JSONEncoding.default
-    
-         //Create request object (with information for it retry) and save it.
-        let request = MyRequest.init(method, urlString: urlString)
-        requestsToRetry.append(request)
         
         myPromise = Promise<AnyObject> { fulfill, reject in
             firstly {
                 sendCustom(request: method, urlString: urlString, parameters: nil, encoding: encoding, headers: headers)
-            }.then { data -> Void in
-                requestsToRetry.removeAll()
-                fulfill(data)
-            }.catch { error in
-                switch error {
-                case ServerError.unauthorized:
-                    self.handle401StatusCode(request: request, success: fulfill, failed: reject)
-                default:
-                    reject(error)
-                }
+                }.then { data -> Void in
+                    fulfill(data)
+                }.catch { error in
+                    switch error {
+                    case ServerError.unauthorized:
+                        handle401StatusCode(method: method, url: urlString, success: fulfill, failed: reject)
+                    default:
+                        reject(error)
+                    }
             }
         }
         return myPromise!
@@ -58,60 +51,37 @@ class RequestManager: BaseManager {
         let promise = Promise<AnyObject> { fulfill, reject in
             firstly {
                 sendRequest(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
-            }.then { data in
-                fulfill(data)
-            }.catch { error in
-                reject(error)
+                }.then { data in
+                    fulfill(data)
+                }.catch { error in
+                    reject(error)
             }
         }
         return promise
     }
     
-    private class func handle401StatusCode(request: MyRequest, success: @escaping (AnyObject) -> Swift.Void, failed: @escaping (Error) -> Swift.Void) {
+    private class func handle401StatusCode(method: Alamofire.HTTPMethod, url: URLConvertible, success: @escaping (AnyObject) -> Swift.Void, failed: @escaping (Error) -> Swift.Void) {
         
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
-        if !isRefreshing {
-            isRefreshing = true
+        AuthorizationManager.refreshRequest { error in
             
-            AuthorizationManager.refreshRequest { error in
-
-                if error != nil {
-                    print(error)
-                    AuthorizationManager.removeAccessToken()
-                    NavigationManager.shared.presentLoginViewController()
-                }
-//                self.requestsToRetry.forEach { request in
-//                    //guard let method = request.method, let url = request.urlString else { return }
-//                    //self.sendDefault(request: method, urlString: url)
-//                }
-                self.requestsToRetry.removeAll()
-                self.isRefreshing = false
+            if error != nil {
+                print(error)
+                AuthorizationManager.removeAccessToken()
+                NavigationManager.shared.presentLoginViewController()
+            }
             
-                let headers = [ "Authorization" : "Bearer \(AuthorizationManager.getToken())"]
-                let encoding = JSONEncoding.default
-                
-                myPromise = Promise<AnyObject> { fulfill, reject in
-                    firstly {
-                        sendCustom(request: request.method!, urlString: request.urlString!, parameters: nil, encoding: encoding, headers: headers)
+            let headers = [ "Authorization" : "Bearer \(AuthorizationManager.getToken())"]
+            let encoding = JSONEncoding.default
+            
+            myPromise = Promise<AnyObject> { fulfill, reject in
+                firstly {
+                    sendCustom(request: method, urlString: url, parameters: nil, encoding: encoding, headers: headers)
                     }.then { data -> Void in
                         success(data)
                     }.catch { error in
                         failed(error)
-                    }
                 }
             }
         }
-    }
-}
-
-class MyRequest {
-    
-    var method: Alamofire.HTTPMethod?
-    var urlString: URLConvertible?
-    
-    init(_ method: Alamofire.HTTPMethod, urlString: URLConvertible) {
-        
-        self.method = method
-        self.urlString = urlString
     }
 }
