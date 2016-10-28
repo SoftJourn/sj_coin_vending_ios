@@ -22,7 +22,9 @@ class InitialViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        launch()
+        connectionVerification {
+            launch()
+        }
     }
     
     deinit {

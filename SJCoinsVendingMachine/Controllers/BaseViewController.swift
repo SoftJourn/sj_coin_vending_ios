@@ -39,16 +39,25 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    func connectionVerification(execute: ()->()) {
+        
+        if Reachability.connectedToNetwork() {
+            execute()
+        } else {
+            refreshControl.endRefreshing()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [unowned self] in
+                self.present(alert: .connection)
+            }
+        }
+    }
+    
     // MARK: Downloading, Handling and Refreshing data.
     func fetchData() {
         //SVProgressHUD.show(withStatus: spinerMessage.loading)
-        if Reachability.connectedToNetwork() {
-            self.refreshControl.endRefreshing()
+        connectionVerification {
             fetchContent()
-        } else {
-            //SVProgressHUD.dismiss(withDelay: 0.5)
-            self.refreshControl.endRefreshing()
-            present(alert: .connection)
+            refreshControl.endRefreshing()
         }
     }
     
@@ -105,7 +114,6 @@ class BaseViewController: UIViewController {
     func fetchPurchaseHistory() -> Promise<AnyObject> {
         
         return Promise<AnyObject> { fulfill, reject in
-
             firstly {
                 APIManager.fetchPurchaseHistory()
             }.then { object -> Void in
@@ -130,10 +138,8 @@ class BaseViewController: UIViewController {
         
         let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .default) { [unowned self] action in
             
-            if Reachability.connectedToNetwork() {
+            self.connectionVerification { [unowned self] in
                 self.buy(using: identifier)
-            } else {
-                self.present(alert: .connection)
             }
         }
         let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)

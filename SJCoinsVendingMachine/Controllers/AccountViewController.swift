@@ -39,17 +39,16 @@ class AccountViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
-        fetchContent()
+        connectionVerification {
+            SVProgressHUD.show(withStatus: spinerMessage.loading)
+            fetchContent()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(true)
         NavigationManager.shared.visibleViewController = self
-        if !Reachability.connectedToNetwork() {
-            present(alert: .connection)
-        }
     }
     
     deinit {
@@ -81,7 +80,7 @@ class AccountViewController: BaseViewController {
     
     private func updateTableView() {
         
-        SVProgressHUD.dismiss(withDelay: 1)
+        SVProgressHUD.dismiss(withDelay: 0.5)
         DispatchQueue.main.async { [unowned self] in
             self.tableView.reloadData()
         }

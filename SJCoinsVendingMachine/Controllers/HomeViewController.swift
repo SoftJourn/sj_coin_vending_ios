@@ -55,9 +55,7 @@ class HomeViewController: BaseViewController {
         
         super.viewDidAppear(true)
         NavigationManager.shared.visibleViewController = self
-        if !Reachability.connectedToNetwork() {
-            present(alert: .connection)
-        }
+        connectionVerification { }
     }
     
     deinit {
@@ -68,12 +66,10 @@ class HomeViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func settingsButtonPressed(_ sender: UIBarButtonItem) {
         
-        if Reachability.connectedToNetwork() {
+        connectionVerification {
             fetchMachines { _ in
                 NavigationManager.shared.presentSettingsViewController()
             }
-        } else {
-            present(alert: .connection)
         }
     }
     

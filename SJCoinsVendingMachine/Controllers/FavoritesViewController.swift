@@ -42,9 +42,7 @@ class FavoritesViewController: BaseViewController {
 
         super.viewDidAppear(true)
         NavigationManager.shared.visibleViewController = self
-        if !Reachability.connectedToNetwork() {
-            present(alert: .connection)
-        }
+        connectionVerification { }
     }
     
     deinit {

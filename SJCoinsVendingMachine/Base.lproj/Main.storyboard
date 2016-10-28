@@ -247,11 +247,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="f5F-lM-Sxk">
-                        <nil key="title"/>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="m12-PW-6Np">
-                            <rect key="frame" x="123.5" y="7" width="128" height="30"/>
+                            <rect key="frame" x="124" y="7" width="128" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="All Items ▾"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                            <state key="normal" title="All Items ▾">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
                                 <action selector="titleButtonPressed:" destination="e6L-4s-RlD" eventType="touchUpInside" id="2QL-9S-9sb"/>
                             </connections>
@@ -813,11 +815,11 @@
                                         <rect key="frame" x="0.0" y="120" width="1000" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g55-PO-ocW" id="4hi-fp-fwm">
-                                            <frame key="frameInset" width="1000" height="43.5"/>
+                                            <frame key="frameInset" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jli-AF-N6B">
-                                                    <frame key="frameInset" minX="174" width="662" height="43.5"/>
+                                                    <frame key="frameInset" minX="25" width="335" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
