@@ -19,6 +19,7 @@ class RequestManager: BaseManager {
     
     private static var isRefreshing = false
     private static var requestsToRetry: [MyRequest] = []
+    private static var myPromise: Promise<AnyObject>?
     
     class func sendDefault(request method: Alamofire.HTTPMethod,
                            urlString: URLConvertible) -> Promise<AnyObject> {
@@ -30,7 +31,7 @@ class RequestManager: BaseManager {
         let request = MyRequest.init(method, urlString: urlString)
         requestsToRetry.append(request)
         
-        let promise = Promise<AnyObject> { fulfill, reject in
+        myPromise = Promise<AnyObject> { fulfill, reject in
             firstly {
                 sendCustom(request: method, urlString: urlString, parameters: nil, encoding: encoding, headers: headers)
             }.then { data -> Void in
@@ -39,13 +40,13 @@ class RequestManager: BaseManager {
             }.catch { error in
                 switch error {
                 case ServerError.unauthorized:
-                    self.handle401StatusCode()
+                    self.handle401StatusCode(request: request, success: fulfill, failed: reject)
                 default:
                     reject(error)
                 }
             }
         }
-        return promise
+        return myPromise!
     }
     
     class func sendCustom(request method: Alamofire.HTTPMethod,
@@ -66,24 +67,38 @@ class RequestManager: BaseManager {
         return promise
     }
     
-    private class func handle401StatusCode() {
+    private class func handle401StatusCode(request: MyRequest, success: @escaping (AnyObject) -> Swift.Void, failed: @escaping (Error) -> Swift.Void) {
         
         SVProgressHUD.show(withStatus: spinerMessage.loading)
         if !isRefreshing {
             isRefreshing = true
+            
             AuthorizationManager.refreshRequest { error in
+
                 if error != nil {
                     print(error)
                     AuthorizationManager.removeAccessToken()
                     NavigationManager.shared.presentLoginViewController()
                 }
-                self.requestsToRetry.forEach { request in
-                    guard let method = request.method, let url = request.urlString else { return }
-                    self.sendDefault(request: method, urlString: url)
-                }
+//                self.requestsToRetry.forEach { request in
+//                    //guard let method = request.method, let url = request.urlString else { return }
+//                    //self.sendDefault(request: method, urlString: url)
+//                }
                 self.requestsToRetry.removeAll()
                 self.isRefreshing = false
-                SVProgressHUD.dismiss(withDelay: 0.5)
+            
+                let headers = [ "Authorization" : "Bearer \(AuthorizationManager.getToken())"]
+                let encoding = JSONEncoding.default
+                
+                myPromise = Promise<AnyObject> { fulfill, reject in
+                    firstly {
+                        sendCustom(request: request.method!, urlString: request.urlString!, parameters: nil, encoding: encoding, headers: headers)
+                    }.then { data -> Void in
+                        success(data)
+                    }.catch { error in
+                        failed(error)
+                    }
+                }
             }
         }
     }
