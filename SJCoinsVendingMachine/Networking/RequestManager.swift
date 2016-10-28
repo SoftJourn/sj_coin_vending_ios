@@ -40,7 +40,8 @@ class RequestManager: BaseManager {
                 switch error {
                 case ServerError.unauthorized:
                     self.handle401StatusCode()
-                default: break
+                default:
+                    reject(error)
                 }
             }
         }
