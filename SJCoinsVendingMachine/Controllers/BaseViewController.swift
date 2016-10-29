@@ -32,8 +32,9 @@ class BaseViewController: UIViewController {
         refresh.addTarget(self, action: #selector(fetchData), for: UIControlEvents.valueChanged)
         return refresh
     }()
+    let dataManager = DataManager.shared
 
-    // MARK: Life cycle
+    // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -150,7 +151,7 @@ class BaseViewController: UIViewController {
         
         guard let identifier = identifier else { return }
         SVProgressHUD.show(withStatus: spinerMessage.loading)
-        APIManager.buy(product: identifier, machineID: AuthorizationManager.getMachineId()) { [unowned self] object, error in
+        APIManager.buy(product: identifier, machineID: DataManager.shared.machineId) { [unowned self] object, error in
             
             SVProgressHUD.dismiss(withDelay: 0.5)
             if object != nil {

@@ -29,7 +29,7 @@ class AccountViewController: BaseViewController {
         return DataManager.shared.purchases
     }
     
-    // MARK: Life cycle
+    // MARK: Lifecycle
     override internal func viewDidLoad() {
         
         super.viewDidLoad()

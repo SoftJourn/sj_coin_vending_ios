@@ -14,7 +14,6 @@ import SwiftyUserDefaults
 class DataManager: NSObject {
     
     // MARK: Properties
-    dynamic var test = "test"
     dynamic var machineId: Int {
         get { return Defaults[.kMachineId] }
         set { Defaults[.kMachineId] = newValue }

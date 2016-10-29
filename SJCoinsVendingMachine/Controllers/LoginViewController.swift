@@ -29,7 +29,7 @@ class LoginViewController: BaseViewController {
         return self.passwordTexField.text!
     }
     
-    // MARK: Life cycle
+    // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()

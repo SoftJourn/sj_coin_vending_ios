@@ -28,15 +28,15 @@ class RequestManager: BaseManager {
         myPromise = Promise<AnyObject> { fulfill, reject in
             firstly {
                 sendCustom(request: method, urlString: urlString, parameters: nil, encoding: encoding, headers: headers)
-                }.then { data -> Void in
-                    fulfill(data)
-                }.catch { error in
-                    switch error {
-                    case ServerError.unauthorized:
-                        handle401StatusCode(method: method, url: urlString, success: fulfill, failed: reject)
-                    default:
-                        reject(error)
-                    }
+            }.then { data -> Void in
+                fulfill(data)
+            }.catch { error in
+                switch error {
+                case ServerError.unauthorized:
+                    handle401StatusCode(method: method, url: urlString, success: fulfill, failed: reject)
+                default:
+                    reject(error)
+                }
             }
         }
         return myPromise!
@@ -51,10 +51,10 @@ class RequestManager: BaseManager {
         let promise = Promise<AnyObject> { fulfill, reject in
             firstly {
                 sendRequest(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
-                }.then { data in
-                    fulfill(data)
-                }.catch { error in
-                    reject(error)
+            }.then { data in
+                fulfill(data)
+            }.catch { error in
+                reject(error)
             }
         }
         return promise
@@ -76,10 +76,10 @@ class RequestManager: BaseManager {
             myPromise = Promise<AnyObject> { fulfill, reject in
                 firstly {
                     sendCustom(request: method, urlString: url, parameters: nil, encoding: encoding, headers: headers)
-                    }.then { data -> Void in
-                        success(data)
-                    }.catch { error in
-                        failed(error)
+                }.then { data -> Void in
+                    success(data)
+                }.catch { error in
+                    failed(error)
                 }
             }
         }

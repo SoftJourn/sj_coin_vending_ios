@@ -25,7 +25,7 @@ class FavoritesViewController: BaseViewController {
         return DataManager.shared.unavailable
     }
     
-    // MARK: Life cycle
+    // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()

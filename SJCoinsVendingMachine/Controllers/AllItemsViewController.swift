@@ -63,7 +63,7 @@ class AllItemsViewController: BaseViewController {
     var filterItems: [Products]?
     var usedSeeAll = false
     
-    // MARK: Life cycle
+    // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()

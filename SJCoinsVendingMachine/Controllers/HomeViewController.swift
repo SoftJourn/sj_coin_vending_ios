@@ -21,7 +21,6 @@ class HomeViewController: BaseViewController {
     
     // MARK: Constants
     let cellHeight: CGFloat = 180
-    let dataManager = DataManager.shared
     
     // MARK: Properties
     @IBOutlet weak fileprivate var collectionView: UICollectionView!
@@ -36,23 +35,21 @@ class HomeViewController: BaseViewController {
         return DataManager.shared.unavailable
     }
     
-    // MARK: Life cycle
+    // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
         fetchMachinesFirstTime()
         collectionView.addSubview(refreshControl)
-        
-        addObserver(self, forKeyPath: #keyPath(dataManager.test), options: [.old, .new, .initial], context: nil)
-        
         fetchContent()
+        addObserver(self, forKeyPath: #keyPath(dataManager.machineId), options: [.new], context: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
         updateBalance()
-        updateCollectionView()
+        //updateCollectionView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,16 +61,11 @@ class HomeViewController: BaseViewController {
     
     deinit {
         
+        removeObserver(self, forKeyPath: #keyPath(dataManager.machineId))
         print("HomeViewController deinited")
     }
     
     // MARK: Actions
-    @IBAction func test(_ sender: UIBarButtonItem) {
-    
-        dataManager.test = "ololo"
-        //print(machineId)
-    }
-    
     @IBAction private func settingsButtonPressed(_ sender: UIBarButtonItem) {
         
         connectionVerification {
@@ -90,8 +82,8 @@ class HomeViewController: BaseViewController {
             
             fetchMachines { [unowned self] object in
                 let machines = object as! [MachinesModel]
-                guard let id = machines[0].internalIdentifier else { return }
-                AuthorizationManager.save(machineId: id)
+                guard let identifier = machines[0].internalIdentifier else { return }
+                DataManager.shared.machineId = identifier
                 Defaults[.fistLaunch] = false
                 self.fetchContent()
             }
@@ -157,7 +149,7 @@ class HomeViewController: BaseViewController {
     
     // MARK: - Key-Value Observing
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == #keyPath(dataManager.test) {
+        if keyPath == #keyPath(dataManager.machineId) {
             fetchContent()
         }
     }

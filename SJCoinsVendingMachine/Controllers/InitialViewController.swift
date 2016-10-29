@@ -29,6 +29,7 @@ class InitialViewController: BaseViewController {
     
     deinit {
         
+        //removeObserver(self, forKeyPath: #keyPath(dataManager.machineId))
         print("InitialViewController deinited")
     }
     

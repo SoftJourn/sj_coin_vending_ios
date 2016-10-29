@@ -75,21 +75,6 @@ class AuthorizationManager: RequestManager {
         //print("ACCESS: \(Defaults[.kAccessToken])")
     }
     
-    class func save(machineId: Int) {
-        
-        Defaults[.kMachineId] = machineId
-    }
-    
-    class func getMachineId() -> Int {
-        
-        return Defaults[.kMachineId]
-    }
-
-    class func machineIdExist() -> Bool {
-        
-        return Defaults.hasKey(.kMachineId)
-    }
-    
     class func removeAccessToken() {
         
         Defaults.remove(.kAccessToken)

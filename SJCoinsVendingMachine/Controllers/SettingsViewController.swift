@@ -21,13 +21,11 @@ class SettingsViewController: BaseViewController {
         
         return DataManager.shared.machines
     }
-    private var machineIdentifier: Int?
     
-    // MARK: Life cycle
+    // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        //machineIdentifier = DataManager.shared.machineId
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,28 +48,7 @@ class SettingsViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func doneButtonPressed(_ sender: UIBarButtonItem) {
         
-        print("\(Defaults[.kMachineId])")
         self.dismiss(animated: true) { }
-
-        
-//        if DataManager.shared.machineId == machineIdentifier {
-//            self.dismiss(animated: true) { }
-//        } else {
-//            print("\(Defaults[.kMachineId])")
-//            SVProgressHUD.show(withStatus: spinerMessage.loading)
-//            firstly {
-//                self.fetchProducts().asVoid()
-//            }.then {
-//                self.updateProducts()
-//            }
-//        }
-    }
-    
-    func updateProducts() {
-        
-        SVProgressHUD.dismiss(withDelay: 1.0) {
-            self.dismiss(animated: true) { }
-        }
     }
 }
 
@@ -110,7 +87,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             guard let machine = machines else { return cell }
-            let machineId = AuthorizationManager.getMachineId()
+            let machineId = DataManager.shared.machineId
             cell.textLabel?.text = machine[indexPath.item].name
             if machine[indexPath.item].internalIdentifier == machineId {
                 cell.accessoryType = .checkmark
@@ -129,11 +106,10 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         guard let machine = machines?[indexPath.item] else { return }
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         if let identifier = machine.internalIdentifier {
-            
-            
-            
-            DataManager.shared.test = String(identifier)
-            print("\(identifier)")
+            let id = DataManager.shared.machineId
+            if !Bool(identifier == id) {
+                DataManager.shared.machineId = identifier
+            }
         }
         tableView.reloadData()
     }
