@@ -9,6 +9,7 @@
 import UIKit
 import SVProgressHUD
 import PromiseKit
+import SwiftyUserDefaults
 
 class SettingsViewController: BaseViewController {
     
@@ -26,7 +27,7 @@ class SettingsViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        machineIdentifier = AuthorizationManager.getMachineId()
+        //machineIdentifier = DataManager.shared.machineId
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,22 +50,26 @@ class SettingsViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func doneButtonPressed(_ sender: UIBarButtonItem) {
         
-        let newMachineIdentifier = AuthorizationManager.getMachineId()
-        if newMachineIdentifier == machineIdentifier {
-            self.dismiss(animated: true) { }
-        } else {
-            SVProgressHUD.show(withStatus: spinerMessage.loading)
-            firstly {
-                self.fetchProducts().asVoid()
-            }.then {
-                self.updateProducts()
-            }
-        }
+        print("\(Defaults[.kMachineId])")
+        self.dismiss(animated: true) { }
+
+        
+//        if DataManager.shared.machineId == machineIdentifier {
+//            self.dismiss(animated: true) { }
+//        } else {
+//            print("\(Defaults[.kMachineId])")
+//            SVProgressHUD.show(withStatus: spinerMessage.loading)
+//            firstly {
+//                self.fetchProducts().asVoid()
+//            }.then {
+//                self.updateProducts()
+//            }
+//        }
     }
     
     func updateProducts() {
         
-        SVProgressHUD.dismiss(withDelay: 2.0) {
+        SVProgressHUD.dismiss(withDelay: 1.0) {
             self.dismiss(animated: true) { }
         }
     }
@@ -124,7 +129,11 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         guard let machine = machines?[indexPath.item] else { return }
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         if let identifier = machine.internalIdentifier {
-            AuthorizationManager.save(machineId: identifier)
+            
+            
+            
+            DataManager.shared.test = String(identifier)
+            print("\(identifier)")
         }
         tableView.reloadData()
     }

@@ -21,6 +21,7 @@ class HomeViewController: BaseViewController {
     
     // MARK: Constants
     let cellHeight: CGFloat = 180
+    let dataManager = DataManager.shared
     
     // MARK: Properties
     @IBOutlet weak fileprivate var collectionView: UICollectionView!
@@ -41,6 +42,9 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         fetchMachinesFirstTime()
         collectionView.addSubview(refreshControl)
+        
+        addObserver(self, forKeyPath: #keyPath(dataManager.test), options: [.old, .new, .initial], context: nil)
+        
         fetchContent()
     }
     
@@ -64,6 +68,12 @@ class HomeViewController: BaseViewController {
     }
     
     // MARK: Actions
+    @IBAction func test(_ sender: UIBarButtonItem) {
+    
+        dataManager.test = "ololo"
+        //print(machineId)
+    }
+    
     @IBAction private func settingsButtonPressed(_ sender: UIBarButtonItem) {
         
         connectionVerification {
@@ -143,6 +153,13 @@ class HomeViewController: BaseViewController {
     override func updateUIafterBuying() {
         
         updateBalance()
+    }
+    
+    // MARK: - Key-Value Observing
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(dataManager.test) {
+            fetchContent()
+        }
     }
 }
 

@@ -9,10 +9,17 @@
 import Foundation
 import SwiftyJSON
 import AlamofireImage
+import SwiftyUserDefaults
 
-class DataManager {
+class DataManager: NSObject {
     
     // MARK: Properties
+    dynamic var test = "test"
+    dynamic var machineId: Int {
+        get { return Defaults[.kMachineId] }
+        set { Defaults[.kMachineId] = newValue }
+    }
+    
     private(set) var machines: [MachinesModel]?
     private(set) var features: FeaturesModel?
     private(set) var account: AccountModel?
@@ -54,6 +61,8 @@ class DataManager {
             account = object
         case let object as [PurchaseHistoryModel]:
             purchases = object
+        case let object as Int:
+            machineId = object
         default: break
         }
     }

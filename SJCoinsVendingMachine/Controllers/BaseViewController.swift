@@ -70,7 +70,7 @@ class BaseViewController: UIViewController {
         
         return Promise<AnyObject> { fulfill, reject in
             firstly {
-                APIManager.fetchProducts(machineID: AuthorizationManager.getMachineId())
+                APIManager.fetchProducts(machineID: DataManager.shared.machineId)
             }.then { object -> Void in
                 print("fetchProducts result")
                 DataManager.shared.save(object)

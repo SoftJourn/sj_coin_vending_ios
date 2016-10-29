@@ -26,7 +26,7 @@ class AuthorizationManager: RequestManager {
     fileprivate static let grantType = "password"
     typealias complited = (_ error: Error?) -> ()
     typealias refreshComplited = (_ model: AuthModel?, _ error: Error?) -> ()
-    
+        
     // MARK: Authorization
     class func authRequest(login: String, password: String, complition: @escaping complited) {
         
