@@ -39,9 +39,8 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        fetchMachinesFirstTime()
         collectionView.addSubview(refreshControl)
-        fetchContent()
+        //fetchContent()
         addObserver(self, forKeyPath: #keyPath(dataManager.machineId), options: [.new], context: nil)
     }
     
@@ -69,50 +68,12 @@ class HomeViewController: BaseViewController {
     @IBAction private func settingsButtonPressed(_ sender: UIBarButtonItem) {
         
         connectionVerification {
-            fetchMachines { _ in
+            firstly {
+                self.fetchMachinesList().asVoid()
+            }.then {
                 NavigationManager.shared.presentSettingsViewController()
             }
         }
-    }
-    
-    // MARK: Set default vending machnine when app launched first time.
-    private func fetchMachinesFirstTime() {
-        
-        if Defaults[.fistLaunch] {
-            
-            fetchMachines { [unowned self] object in
-                let machines = object as! [MachinesModel]
-                guard let identifier = machines[0].internalIdentifier else { return }
-                DataManager.shared.machineId = identifier
-                Defaults[.fistLaunch] = false
-                self.fetchContent()
-            }
-        }
-    }
-    
-    private func fetchMachines(complition: @escaping (_ object: AnyObject)->()) {
-        
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
-        firstly {
-            APIManager.fetchMachines()
-        }.then { object -> Void in
-            DataManager.shared.save(object)
-            complition(object)
-        }.catch { error in
-            SVProgressHUD.dismiss(withDelay: 0.5)
-            //AlertManager().present(retryAlert: errorTitle.download, message: errorMessage.retryDownload, actions: self.retryActions())
-        }
-    }
-    
-    private func retryActions() -> [UIAlertAction] {
-        
-        let confirmButton = UIAlertAction(title: buttonTitle.retry , style: .destructive) { [unowned self] action in
-            self.fetchMachines { _ in
-                SVProgressHUD.dismiss(withDelay: 0.5)
-            }
-        }
-        let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
-        return [cancelButton, confirmButton]
     }
     
     // MARK: Downloading, Handling and Refreshing data.

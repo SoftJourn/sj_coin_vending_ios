@@ -126,6 +126,38 @@ class BaseViewController: UIViewController {
         }
     }
     
+    func fetchDefaultMachine() -> Promise<AnyObject> {
+        
+        return Promise<AnyObject> { fulfill, reject in
+            firstly {
+                APIManager.fetchMachines()
+            }.then { object -> Void in
+                let machines = object as! [MachinesModel]
+                guard let identifier = machines[0].internalIdentifier else { return }
+                DataManager.shared.machineId = identifier
+                fulfill(object)
+            }.catch { error in
+                self.present(alert: .downloading(error))
+                //AlertManager().present(retryAlert: myError.title.download, message: myError.message.retryDownload, actions: self.retryMachineFetching())
+            }
+        }
+    }
+
+    func fetchMachinesList() -> Promise<AnyObject> {
+        
+        return Promise<AnyObject> { fulfill, reject in
+            firstly {
+                APIManager.fetchMachines()
+            }.then { object -> Void in
+                DataManager.shared.save(object)
+                fulfill(object)
+            }.catch { error in
+                self.present(alert: .downloading(error))
+                //AlertManager().present(retryAlert: myError.title.download, message: myError.message.retryDownload, actions: self.retryMachineFetching())
+            }
+        }
+    }
+    
     // MARK: Confirmation and Buying.
     func present(confirmation product: Products) {
         

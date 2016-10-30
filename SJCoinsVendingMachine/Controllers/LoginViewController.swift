@@ -58,19 +58,27 @@ class LoginViewController: BaseViewController {
     
     private func authorization() {
        
-        if Reachability.connectedToNetwork() {
+        connectionVerification {
             SVProgressHUD.show(withStatus: spinerMessage.loading)
             AuthorizationManager.authRequest(login: login, password: password) { [unowned self] error in
                 error != nil ? self.authFailed() : self.authSuccess()
             }
-        } else {
-            present(alert: .connection)
         }
     }
     
     private func authSuccess() {
-        
-        NavigationManager.shared.presentTabBarController()
+  
+        firstly {
+            self.fetchDefaultMachine().asVoid()
+        }.then {
+            self.fetchProducts().asVoid()
+        }.then {
+            self.fetchAccount().asVoid()
+        }.then {
+            self.fetchFavorites().asVoid()
+        }.then {
+            NavigationManager.shared.presentTabBarController()
+        }
     }
     
     private func authFailed() {

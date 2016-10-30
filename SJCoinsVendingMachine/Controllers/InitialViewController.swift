@@ -13,6 +13,7 @@ import PromiseKit
 
 class InitialViewController: BaseViewController {
     
+    // MARK: Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
@@ -29,24 +30,19 @@ class InitialViewController: BaseViewController {
     
     deinit {
         
-        //removeObserver(self, forKeyPath: #keyPath(dataManager.machineId))
         print("InitialViewController deinited")
     }
     
     private func launch() {
         
-        Defaults[.fistLaunch] = true
-        
         if AuthorizationManager.accessTokenExist() {
-            fetchAllData {
-                NavigationManager.shared.presentTabBarController()
-            }
+            regularLaunching()
         } else {
             NavigationManager.shared.presentLoginViewController()
         }
     }
     
-    private func fetchAllData(executeTask: @escaping ()->()) {
+    private func regularLaunching() {
         
         firstly {
             self.fetchProducts().asVoid()
@@ -55,7 +51,7 @@ class InitialViewController: BaseViewController {
         }.then {
             self.fetchFavorites().asVoid()
         }.then {
-            executeTask()
+            NavigationManager.shared.presentTabBarController()
         }
     }
 }
