@@ -34,21 +34,21 @@ class HomeViewController: BaseViewController {
         
         return DataManager.shared.unavailable
     }
+    fileprivate var favoriteItemIndexPath: IndexPath?
     
     // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
         collectionView.addSubview(refreshControl)
-        //fetchContent()
         addObserver(self, forKeyPath: #keyPath(dataManager.machineId), options: [.new], context: nil)
+        addObserver(self, forKeyPath: #keyPath(dataManager.favorites), options: [.new], context: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
         updateBalance()
-        //updateCollectionView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,6 +61,7 @@ class HomeViewController: BaseViewController {
     deinit {
         
         removeObserver(self, forKeyPath: #keyPath(dataManager.machineId))
+        removeObserver(self, forKeyPath: #keyPath(dataManager.favorites))
         print("HomeViewController deinited")
     }
     
@@ -110,8 +111,15 @@ class HomeViewController: BaseViewController {
     
     // MARK: - Key-Value Observing
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == #keyPath(dataManager.machineId) {
+        guard let keyPath = keyPath else { return }
+        switch keyPath {
+        case #keyPath(dataManager.machineId):
             fetchContent()
+        case #keyPath(dataManager.favorites):
+            if let indexPath = favoriteItemIndexPath {
+                self.collectionView.reloadItems(at: [indexPath])
+            }
+        default: break
         }
     }
 }
@@ -131,6 +139,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         if !products.isEmpty {
             cell.delegate = self
             if categories.name == categoryName.favorites {
+                favoriteItemIndexPath = indexPath
                 return cell.configure(with: categories, unavailable: unavailable)
             } else {
                 return cell.configure(with: categories, unavailable: nil)

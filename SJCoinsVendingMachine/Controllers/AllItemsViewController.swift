@@ -248,7 +248,6 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
                     }
                 }
             }
-            
             return cell.configure(with: item)
         }
     }

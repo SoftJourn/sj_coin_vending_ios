@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-class Products {
+class Products: NSObject {
     
     // MARK: String constants
     let kProductsPriceKey: String = "price"
@@ -42,5 +42,9 @@ class Products {
         internalIdentifier = json[kProductsInternalIdentifierKey].int
         category = Category(json: json[kProductsCategoryKey])
         name = json[kProductsNameKey].string
+    }
+    
+    static func ==(lhs: Products, rhs: Products) -> Bool {
+        return lhs.internalIdentifier == rhs.internalIdentifier
     }
 }

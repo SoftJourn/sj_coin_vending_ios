@@ -22,7 +22,7 @@ class DataManager: NSObject {
     private(set) var machines: [MachinesModel]?
     private(set) var features: FeaturesModel?
     private(set) var account: AccountModel?
-    private(set) var favorites: [Products]? {
+    dynamic private(set) var favorites: [Products]? {
         didSet { createCategories() }
     }
     private(set) var purchases: [PurchaseHistoryModel]?
@@ -60,8 +60,6 @@ class DataManager: NSObject {
             account = object
         case let object as [PurchaseHistoryModel]:
             purchases = object
-        case let object as Int:
-            machineId = object
         default: break
         }
     }
@@ -72,20 +70,22 @@ class DataManager: NSObject {
             favorites = [Products]()
         }
         favorites?.append(item)
-        
-        categories.forEach { category in
-            if category.name == categoryName.favorites {
-                guard var favoriteProducts = category.products else { return }
-                favoriteProducts.append(item)
-            }
-        }
+
+//        categories.forEach { category in
+//            if category.name == categoryName.favorites {
+//                guard var favoriteProducts = category.products else { return }
+//                favoriteProducts.append(item)
+//            }
+//        }
     }
     
     func remove(favorite item: Products) {
         
         guard let favoritesItems = favorites else { return }
-        if favoritesItems.contains(item) {
-            favorites = favoritesItems.filter { $0 != item }
+        favoritesItems.forEach { product in
+            if product == item {
+                favorites = favoritesItems.filter { $0 != item }
+            }
         }
     }
     
@@ -98,7 +98,9 @@ class DataManager: NSObject {
     private func createCategories() {
         
         categories = [Categories]()
+        
         guard let favorites = favorites else { return }
+        
         if !favorites.isEmpty {
             let category = Categories(name: categoryName.favorites, items: favorites)
             categories.append(category)

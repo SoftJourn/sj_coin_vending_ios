@@ -71,11 +71,11 @@ class LoginViewController: BaseViewController {
         firstly {
             self.fetchDefaultMachine().asVoid()
         }.then {
+            self.fetchFavorites().asVoid()
+        }.then {
             self.fetchProducts().asVoid()
         }.then {
             self.fetchAccount().asVoid()
-        }.then {
-            self.fetchFavorites().asVoid()
         }.then {
             NavigationManager.shared.presentTabBarController()
         }
