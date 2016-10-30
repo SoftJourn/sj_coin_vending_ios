@@ -22,10 +22,10 @@ class DataManager: NSObject {
     private(set) var machines: [MachinesModel]?
     private(set) var features: FeaturesModel?
     private(set) var account: AccountModel?
-    private(set) var favorites: [Products]? /*{
+    private(set) var favorites: [Products]? {
         didSet { createCategories() }
     }
-    */
+    
     private(set) var purchases: [PurchaseHistoryModel]?
     
     private(set) var categories: [Categories]!
@@ -83,8 +83,13 @@ class DataManager: NSObject {
     func remove(favorite item: Products) {
         
         guard let favoritesItems = favorites else { return }
-        favorites = favoritesItems.filter { $0 != item }
-        dump(favorites)
+        if favoritesItems.contains(item) {
+            favorites = favoritesItems.filter { $0 != item }
+        }
+
+//        guard let favoritesItems = favorites else { return }
+//        favorites = favoritesItems.filter { $0 != item }
+//        dump(favorites)
     }
     
     func save(balance amount: Int) {

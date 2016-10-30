@@ -42,7 +42,7 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         collectionView.addSubview(refreshControl)
         addObserver(self, forKeyPath: #keyPath(dataManager.machineId), options: [.new], context: nil)
-        addObserver(self, forKeyPath: #keyPath(dataManager.favorites), options: [.new], context: nil)
+        //addObserver(self, forKeyPath: #keyPath(dataManager.favorites), options: [.new], context: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,7 +61,7 @@ class HomeViewController: BaseViewController {
     deinit {
         
         removeObserver(self, forKeyPath: #keyPath(dataManager.machineId))
-        removeObserver(self, forKeyPath: #keyPath(dataManager.favorites))
+        //removeObserver(self, forKeyPath: #keyPath(dataManager.favorites))
         print("HomeViewController deinited")
     }
     
@@ -115,10 +115,10 @@ class HomeViewController: BaseViewController {
         switch keyPath {
         case #keyPath(dataManager.machineId):
             fetchContent()
-        case #keyPath(dataManager.favorites):
-            if let indexPath = favoriteItemIndexPath {
-                self.collectionView.reloadItems(at: [indexPath])
-            }
+//        case #keyPath(dataManager.favorites):
+//            if let indexPath = favoriteItemIndexPath {
+//                self.collectionView.reloadItems(at: [indexPath])
+//            }
         default: break
         }
     }
