@@ -11,12 +11,6 @@ import SVProgressHUD
 import PromiseKit
 import SwiftyUserDefaults
 
-/*
- FIXME: Application runned at first time.
- FechProduct called before default Vending Machnine ID saved in UserDefaults.
- Thats why first api call return 404 error.
-*/
-
 class HomeViewController: BaseViewController {
     
     // MARK: Constants
@@ -34,7 +28,6 @@ class HomeViewController: BaseViewController {
         
         return DataManager.shared.unavailable
     }
-    fileprivate var favoriteItemIndexPath: IndexPath?
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -42,7 +35,7 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         collectionView.addSubview(refreshControl)
         addObserver(self, forKeyPath: #keyPath(dataManager.machineId), options: [.new], context: nil)
-        //addObserver(self, forKeyPath: #keyPath(dataManager.favorites), options: [.new], context: nil)
+        addObserver(self, forKeyPath: #keyPath(dataManager.favorites), options: [.new], context: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,7 +54,7 @@ class HomeViewController: BaseViewController {
     deinit {
         
         removeObserver(self, forKeyPath: #keyPath(dataManager.machineId))
-        //removeObserver(self, forKeyPath: #keyPath(dataManager.favorites))
+        removeObserver(self, forKeyPath: #keyPath(dataManager.favorites))
         print("HomeViewController deinited")
     }
     
@@ -115,10 +108,8 @@ class HomeViewController: BaseViewController {
         switch keyPath {
         case #keyPath(dataManager.machineId):
             fetchContent()
-//        case #keyPath(dataManager.favorites):
-//            if let indexPath = favoriteItemIndexPath {
-//                self.collectionView.reloadItems(at: [indexPath])
-//            }
+        case #keyPath(dataManager.favorites):
+            collectionView.reloadData()
         default: break
         }
     }
@@ -139,7 +130,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         if !products.isEmpty {
             cell.delegate = self
             if categories.name == categoryName.favorites {
-                favoriteItemIndexPath = indexPath
                 return cell.configure(with: categories, unavailable: unavailable)
             } else {
                 return cell.configure(with: categories, unavailable: nil)

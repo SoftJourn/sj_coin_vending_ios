@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-class Products:  {
+class Products: NSObject {
     
     // MARK: String constants
     let kProductsPriceKey: String = "price"

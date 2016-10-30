@@ -18,11 +18,15 @@ class DataManager: NSObject {
         get { return Defaults[.kMachineId] }
         set { Defaults[.kMachineId] = newValue }
     }
+    var fistLaunch: Bool {
+        get { return Defaults[.fistLaunch] }
+        set { Defaults[.fistLaunch] = newValue }
+    }
     
     private(set) var machines: [MachinesModel]?
     private(set) var features: FeaturesModel?
     private(set) var account: AccountModel?
-    private(set) var favorites: [Products]? {
+    dynamic var favorites: [Products]? {
         didSet { createCategories() }
     }
     
@@ -71,25 +75,11 @@ class DataManager: NSObject {
             favorites = [Products]()
         }
         favorites?.append(item)
-
-        categories.forEach { category in
-            if category.name == categoryName.favorites {
-                guard var favoriteProducts = category.products else { return }
-                favoriteProducts.append(item)
-            }
-        }
     }
     
     func remove(favorite item: Products) {
         
-        guard let favoritesItems = favorites else { return }
-        if favoritesItems.contains(item) {
-            favorites = favoritesItems.filter { $0 != item }
-        }
-
-//        guard let favoritesItems = favorites else { return }
-//        favorites = favoritesItems.filter { $0 != item }
-//        dump(favorites)
+        favorites = favorites?.filter { $0.internalIdentifier != item.internalIdentifier }
     }
     
     func save(balance amount: Int) {

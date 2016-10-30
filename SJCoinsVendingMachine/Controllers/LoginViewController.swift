@@ -68,16 +68,28 @@ class LoginViewController: BaseViewController {
     
     private func authSuccess() {
   
-        firstly {
-            self.fetchDefaultMachine().asVoid()
-        }.then {
-            self.fetchFavorites().asVoid()
-        }.then {
-            self.fetchProducts().asVoid()
-        }.then {
-            self.fetchAccount().asVoid()
-        }.then {
-            NavigationManager.shared.presentTabBarController()
+        if DataManager.shared.fistLaunch {
+            firstly {
+                self.fetchDefaultMachine().asVoid()
+            }.then {
+                self.fetchFavorites().asVoid()
+            }.then {
+                self.fetchProducts().asVoid()
+            }.then {
+                self.fetchAccount().asVoid()
+            }.then {
+                NavigationManager.shared.presentTabBarController()
+            }
+        } else {
+            firstly {
+                self.fetchFavorites().asVoid()
+            }.then {
+                self.fetchProducts().asVoid()
+            }.then {
+                self.fetchAccount().asVoid()
+            }.then {
+                NavigationManager.shared.presentTabBarController()
+            }
         }
     }
     

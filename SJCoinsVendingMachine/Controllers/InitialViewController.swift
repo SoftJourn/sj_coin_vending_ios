@@ -38,12 +38,14 @@ class InitialViewController: BaseViewController {
         if AuthorizationManager.accessTokenExist() {
             regularLaunching()
         } else {
+            DataManager.shared.fistLaunch = true
             NavigationManager.shared.presentLoginViewController()
         }
     }
     
     private func regularLaunching() {
         
+        DataManager.shared.fistLaunch = false
         firstly {
             self.fetchFavorites().asVoid()
         }.then {
