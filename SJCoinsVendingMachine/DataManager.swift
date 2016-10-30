@@ -22,9 +22,10 @@ class DataManager: NSObject {
     private(set) var machines: [MachinesModel]?
     private(set) var features: FeaturesModel?
     private(set) var account: AccountModel?
-    dynamic private(set) var favorites: [Products]? {
+    private(set) var favorites: [Products]? /*{
         didSet { createCategories() }
     }
+    */
     private(set) var purchases: [PurchaseHistoryModel]?
     
     private(set) var categories: [Categories]!
@@ -71,22 +72,19 @@ class DataManager: NSObject {
         }
         favorites?.append(item)
 
-//        categories.forEach { category in
-//            if category.name == categoryName.favorites {
-//                guard var favoriteProducts = category.products else { return }
-//                favoriteProducts.append(item)
-//            }
-//        }
+        categories.forEach { category in
+            if category.name == categoryName.favorites {
+                guard var favoriteProducts = category.products else { return }
+                favoriteProducts.append(item)
+            }
+        }
     }
     
     func remove(favorite item: Products) {
         
         guard let favoritesItems = favorites else { return }
-        favoritesItems.forEach { product in
-            if product == item {
-                favorites = favoritesItems.filter { $0 != item }
-            }
-        }
+        favorites = favoritesItems.filter { $0 != item }
+        dump(favorites)
     }
     
     func save(balance amount: Int) {
@@ -99,11 +97,11 @@ class DataManager: NSObject {
         
         categories = [Categories]()
         
-        guard let favorites = favorites else { return }
-        
-        if !favorites.isEmpty {
-            let category = Categories(name: categoryName.favorites, items: favorites)
-            categories.append(category)
+        if let favorites = favorites {
+            if !favorites.isEmpty {
+                let category = Categories(name: categoryName.favorites, items: favorites)
+                categories.append(category)
+            }
         }
         guard let features = features, let lastAdded = lastAdded else { return }
         if !lastAdded.isEmpty {
