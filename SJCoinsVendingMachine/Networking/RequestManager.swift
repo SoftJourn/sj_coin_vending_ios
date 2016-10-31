@@ -17,15 +17,13 @@ enum ServerError: Error {
 
 class RequestManager: BaseManager {
     
-    private static var myPromise: Promise<AnyObject>?
-    
     class func sendDefault(request method: Alamofire.HTTPMethod,
                            urlString: URLConvertible) -> Promise<AnyObject> {
         
         let headers = [ "Authorization" : "Bearer \(AuthorizationManager.getToken())"]
         let encoding = JSONEncoding.default
         
-        myPromise = Promise<AnyObject> { fulfill, reject in
+        let promise = Promise<AnyObject> { fulfill, reject in
             firstly {
                 sendCustom(request: method, urlString: urlString, parameters: nil, encoding: encoding, headers: headers)
             }.then { data -> Void in
@@ -39,7 +37,7 @@ class RequestManager: BaseManager {
                 }
             }
         }
-        return myPromise!
+        return promise
     }
     
     class func sendCustom(request method: Alamofire.HTTPMethod,
@@ -73,7 +71,7 @@ class RequestManager: BaseManager {
             let headers = [ "Authorization" : "Bearer \(AuthorizationManager.getToken())"]
             let encoding = JSONEncoding.default
             
-            myPromise = Promise<AnyObject> { fulfill, reject in
+            _ = Promise<AnyObject> { fulfill, reject in
                 firstly {
                     sendCustom(request: method, urlString: url, parameters: nil, encoding: encoding, headers: headers)
                 }.then { data -> Void in

@@ -108,15 +108,19 @@ class LoginViewController: BaseViewController {
     
     @objc private func keyboardWasShown(_ notification: Notification) {
         
-        let info: NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
-        let keyboardFrame: CGRect = (info.object(forKey: UIKeyboardFrameEndUserInfoKey)! as AnyObject).cgRectValue
-        let loginButtonFrame: CGRect = self.view.convert(self.loginButton.frame, from: nil)
-        let coveredFrame: CGRect = loginButtonFrame.intersection(keyboardFrame)
-        scrollView.setContentOffset(CGPoint(x: 0, y: coveredFrame.height + 130), animated: true)
+        var userInfo = notification.userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        
+        var contentInset:UIEdgeInsets = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        self.scrollView.contentInset = contentInset
     }
     
     @objc private func keyboardWillBeHidden(_ notification: Notification) {
-        scrollView.contentOffset = CGPoint.zero
+        
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
     }
 }
 
@@ -130,6 +134,7 @@ extension LoginViewController {
     }
     
     func dismissKeyboard() {
+        
         view.endEditing(true)
     }
 }

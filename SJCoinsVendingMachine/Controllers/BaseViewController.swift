@@ -185,7 +185,7 @@ class BaseViewController: UIViewController {
         SVProgressHUD.show(withStatus: spinerMessage.loading)
         APIManager.buy(product: identifier, machineID: DataManager.shared.machineId) { [unowned self] object, error in
             
-            SVProgressHUD.dismiss(withDelay: 0.5)
+            SVProgressHUD.dismiss()
             if object != nil {
                 guard let amount = object else { return }
                 DataManager.shared.save(balance: amount as! Int)
