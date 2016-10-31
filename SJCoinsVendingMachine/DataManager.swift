@@ -98,6 +98,7 @@ class DataManager: NSObject {
                 categories.append(category)
             }
         }
+        
         guard let features = features, let lastAdded = lastAdded else { return }
         if !lastAdded.isEmpty {
             let category = Categories(name: categoryName.lastAdded, items: lastAdded)
@@ -108,11 +109,16 @@ class DataManager: NSObject {
             let category = Categories(name: categoryName.bestSellers, items: bestSellers)
             categories.append(category)
         }
+        
         guard let items = features.categories else { return }
-        for item in items {
-            guard let name = item.name, let products = item.products else { return }
-            let category = Categories(name: name, items: products)
-            categories.append(category)
+        if !items.isEmpty {
+            for item in items {
+                guard let name = item.name, let products = item.products else { return }
+                if !products.isEmpty {
+                    let category = Categories(name: name, items: products)
+                    categories.append(category)
+                }
+            }
         }
     }
     
