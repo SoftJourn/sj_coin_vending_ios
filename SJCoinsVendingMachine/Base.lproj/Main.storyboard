@@ -743,6 +743,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Vending Machine" id="wE0-4D-ToB">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="6mm-Xr-UIx"/>
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="Znq-ra-1Tq">
                             <connections>
                                 <action selector="settingsButtonPressed:" destination="oMC-8B-X15" id="0wV-EZ-PXC"/>
