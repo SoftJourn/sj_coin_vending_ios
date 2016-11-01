@@ -28,7 +28,7 @@ class BaseViewController: UIViewController {
     lazy var refreshControl: UIRefreshControl = {
         
         let refresh = UIRefreshControl()
-        refresh.attributedTitle = NSAttributedString(string: "Refreshing")
+        //refresh.attributedTitle = NSAttributedString(string: "Refreshing")
         refresh.addTarget(self, action: #selector(fetchData), for: UIControlEvents.valueChanged)
         return refresh
     }()
@@ -55,7 +55,6 @@ class BaseViewController: UIViewController {
     
     // MARK: Downloading, Handling and Refreshing data.
     func fetchData() {
-        //SVProgressHUD.show(withStatus: spinerMessage.loading)
         connectionVerification {
             fetchContent()
             refreshControl.endRefreshing()

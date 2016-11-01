@@ -17,6 +17,8 @@ class SettingsViewController: BaseViewController {
     let settingsCellIdentifier = "settingsCellIdentifier"
     
     // MARK: Property
+    @IBOutlet weak var tableView: UITableView!
+    
     fileprivate var machines: [MachinesModel]? {
         
         return DataManager.shared.machines
@@ -26,18 +28,20 @@ class SettingsViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        tableView.addSubview(refreshControl)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
         NavigationManager.shared.visibleViewController = self
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
+        fetchData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-     
+        
         super.viewDidAppear(true)
-        SVProgressHUD.dismiss(withDelay: 0.5)
     }
     
     deinit {
@@ -48,25 +52,79 @@ class SettingsViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func doneButtonPressed(_ sender: UIBarButtonItem) {
         
-        self.dismiss(animated: true) { }
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
+        firstly {
+            self.fetchFavorites().asVoid()
+        }.then {
+            self.fetchProducts().asVoid()
+        }.then {
+            self.fetchAccount().asVoid()
+        }.then {
+            SVProgressHUD.dismiss()
+        }.then {
+            self.dismiss(animated: true) { }
+        }
+    }
+    
+    // MARK: Methods
+    override func fetchData() {
+        
+        if Reachability.connectedToNetwork() {
+            fetchContent()
+        } else {
+            reloadTableView()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [unowned self] in
+                self.present(alert: .connection)
+            }
+        }
+        refreshControl.endRefreshing()
+    }
+    
+    override func fetchContent() {
+        
+        firstly {
+            self.fetchMachinesList().asVoid()
+        }.then {
+            self.reloadTableView()
+        }
+    }
+
+    private func reloadTableView() {
+        
+        DispatchQueue.main.async { [unowned self] in
+            self.tableView.reloadData()
+            SVProgressHUD.dismiss()
+        }
     }
 }
 
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
-
+    
     // MARK: UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         switch section {
         case 0:
-            return "Vending machines"
+            let customView = UIView()
+            let label = UILabel(frame: CGRect(x: 16, y: 16, width: 300, height: 20))
+            label.textAlignment = .left
+
+            if Reachability.connectedToNetwork() {
+                label.text = "Vending machines"
+                label.textColor = UIColor.gray
+            } else {
+                label.text = "No Internet connection"
+                label.textColor = UIColor.red
+            }
+            customView.addSubview(label)
+            return customView
         default:
-            return "Other settings"
+            return nil
         }
     }
     
@@ -76,7 +134,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             return machines == nil ? 0 : machines!.count
         default:
-            return 1
+            return 0
         }
     }
     
@@ -101,6 +159,12 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     // MARK: UITableViewDelegate
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return 40
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let machine = machines?[indexPath.item] else { return }

@@ -34,7 +34,6 @@ class HomeViewController: BaseViewController {
         
         super.viewDidLoad()
         collectionView.addSubview(refreshControl)
-        addObserver(self, forKeyPath: #keyPath(dataManager.machineId), options: [.new], context: nil)
         addObserver(self, forKeyPath: #keyPath(dataManager.favorites), options: [.new], context: nil)
     }
     
@@ -53,7 +52,6 @@ class HomeViewController: BaseViewController {
     
     deinit {
         
-        removeObserver(self, forKeyPath: #keyPath(dataManager.machineId))
         removeObserver(self, forKeyPath: #keyPath(dataManager.favorites))
         print("HomeViewController deinited")
     }
@@ -61,13 +59,7 @@ class HomeViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func settingsButtonPressed(_ sender: UIBarButtonItem) {
         
-        connectionVerification {
-            firstly {
-                self.fetchMachinesList().asVoid()
-            }.then {
-                NavigationManager.shared.presentSettingsViewController()
-            }
-        }
+        NavigationManager.shared.presentSettingsViewController()
     }
     
     // MARK: Downloading, Handling and Refreshing data.
@@ -106,8 +98,6 @@ class HomeViewController: BaseViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard let keyPath = keyPath else { return }
         switch keyPath {
-        case #keyPath(dataManager.machineId):
-            fetchContent()
         case #keyPath(dataManager.favorites):
             collectionView.reloadData()
         default: break
