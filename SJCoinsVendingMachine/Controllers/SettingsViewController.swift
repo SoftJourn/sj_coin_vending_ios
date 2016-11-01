@@ -23,12 +23,14 @@ class SettingsViewController: BaseViewController {
         
         return DataManager.shared.machines
     }
-    
+    fileprivate var oldMachineId: Int!
+
     // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
         tableView.addSubview(refreshControl)
+        oldMachineId = DataManager.shared.machineId
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,17 +54,21 @@ class SettingsViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func doneButtonPressed(_ sender: UIBarButtonItem) {
         
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
-        firstly {
-            self.fetchFavorites().asVoid()
-        }.then {
-            self.fetchProducts().asVoid()
-        }.then {
-            self.fetchAccount().asVoid()
-        }.then {
-            SVProgressHUD.dismiss()
-        }.then {
+        if DataManager.shared.machineId == oldMachineId {
             self.dismiss(animated: true) { }
+        } else {
+            SVProgressHUD.show(withStatus: spinerMessage.loading)
+            firstly {
+                self.fetchFavorites().asVoid()
+            }.then {
+                self.fetchProducts().asVoid()
+            }.then {
+                self.fetchAccount().asVoid()
+            }.then {
+                SVProgressHUD.dismiss()
+            }.then {
+                self.dismiss(animated: true) { }
+            }
         }
     }
     
@@ -111,7 +117,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         switch section {
         case 0:
             let customView = UIView()
-            let label = UILabel(frame: CGRect(x: 16, y: 16, width: 300, height: 20))
+            let label = UILabel(frame: CGRect(x: 25, y: 16, width: 300, height: 20))
             label.textAlignment = .left
 
             if Reachability.connectedToNetwork() {
@@ -159,7 +165,6 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     // MARK: UITableViewDelegate
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         return 40
@@ -170,8 +175,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         guard let machine = machines?[indexPath.item] else { return }
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         if let identifier = machine.internalIdentifier {
-            let id = DataManager.shared.machineId
-            if !Bool(identifier == id) {
+            if !Bool(identifier == DataManager.shared.machineId) {
                 DataManager.shared.machineId = identifier
             }
         }
