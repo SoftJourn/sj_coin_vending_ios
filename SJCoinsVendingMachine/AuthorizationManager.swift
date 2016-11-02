@@ -11,11 +11,10 @@ import Alamofire
 import SwiftyJSON
 import PromiseKit
 import SwiftyUserDefaults
+import KeychainAccess
 
 extension DefaultsKeys {
     
-    static let kAccessToken = DefaultsKey<String>("access_token")
-    static let kRefreshToken = DefaultsKey<String>("refresh_token")
     static let kMachineId = DefaultsKey<Int>("machineId")
     static let fistLaunch = DefaultsKey<Bool>("fistLaunch")
 }
@@ -23,10 +22,11 @@ extension DefaultsKeys {
 class AuthorizationManager: RequestManager {
     
     // MARK: Constants
-    fileprivate static let grantType = "password"
+    private static let grantType = "password"
+    private static var keychain = Keychain(service: "com.softjourn.SJCoinsVendingMachine")
+
     typealias complited = (_ error: Error?) -> ()
-    typealias refreshComplited = (_ model: AuthModel?, _ error: Error?) -> ()
-        
+    
     // MARK: Authorization
     class func authRequest(login: String, password: String, complition: @escaping complited) {
         
@@ -52,7 +52,7 @@ class AuthorizationManager: RequestManager {
         let urlString = "\(networking.baseURL)auth/oauth/token"
         let headers = [ "Authorization": "Basic \(networking.basicKey)",
                         "Content-Type": networking.authContentType ]
-        let refreshData = "refresh_token=\(Defaults[.kRefreshToken])&grant_type=refresh_token"
+        let refreshData = "refresh_token=\(getRefreshToken())&grant_type=refresh_token"
         
         firstly {
             sendCustom(request: .post, urlString: urlString, parameters: [:], encoding: refreshData, headers: headers)
@@ -68,31 +68,42 @@ class AuthorizationManager: RequestManager {
     class func save(authInfo object: AuthModel) {
         
         guard let token = object.accessToken, let refresh = object.refreshToken else { return }
-        Defaults[.kAccessToken] = token
-        Defaults[.kRefreshToken] = refresh
-        print("Token saved")
-        //print("REFRESH: \(Defaults[.kRefreshToken])")
+        do {
+            try keychain.set(token, key: "token")
+            try keychain.set(refresh, key: "refresh")
+            print("Token saved")
+        } catch let error {
+            print(error)
+        }
         //print("ACCESS: \(Defaults[.kAccessToken])")
+        //print("REFRESH: \(Defaults[.kRefreshToken])")
     }
     
     class func removeAccessToken() {
         
-        Defaults.remove(.kAccessToken)
-        print("Token removed")
+        do {
+            try keychain.remove("token")
+            print("Token removed")
+        } catch let error {
+            print("error: \(error)")
+        }
     }
     
     class func accessTokenExist() -> Bool {
         
-        return Defaults.hasKey(.kAccessToken)
+        guard let token = keychain["token"] else { return false }
+        return !token.isEmpty
     }
     
     class func getToken() -> String {
         
-        return Defaults[.kAccessToken]
+        guard let token = keychain["token"] else { return "" }
+        return token
     }
     
     class func getRefreshToken() -> String {
         
-        return Defaults[.kRefreshToken]
+        guard let refresh = keychain["refresh"] else { return "" }
+        return refresh
     }
 }
