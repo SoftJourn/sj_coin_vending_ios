@@ -11,6 +11,15 @@ import Foundation
 class ValidationManager {
     
     class func validate(login: String, password: String) -> Bool {
-        return login.isEmpty || password.isEmpty
+        
+        let regex = "[a-z^]*"
+        let loginTest = NSPredicate.init(format: "SELF MATCHES %@", regex)
+        
+        if login.isEmpty || password.isEmpty {
+            return false
+        } else {
+            let isValid = loginTest.evaluate(with: login)
+            return isValid
+        }
     }
 }

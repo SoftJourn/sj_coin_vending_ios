@@ -53,7 +53,7 @@ class LoginViewController: BaseViewController {
     @IBAction private func signInButtonPressed(_ sender: UIButton) {
         
         let validation = ValidationManager.validate(login: login, password: password)
-        validation ? present(alert: .validation) : authorization()
+        validation ? authorization() : present(alert: .validation)
     }
     
     private func authorization() {
