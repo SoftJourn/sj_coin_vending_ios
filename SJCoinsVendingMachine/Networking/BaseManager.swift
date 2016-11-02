@@ -47,12 +47,15 @@ class BaseManager {
                         fulfill(json as AnyObject)
                     case .failure(let error):
                         if response.response?.statusCode == 401 {
-                            reject(ServerError.unauthorized)
-                        } else {
+                            reject(serverError.unauthorized)
+                        } else if response.response?.statusCode == 409 {
                             guard let data = response.data else { return }
-                            let errorData = NSString(data: data, encoding:String.Encoding.utf8.rawValue)
-                            print(errorData)
-                            print(error.localizedDescription)
+                            let error = ResponseHandler.handle(data)
+                            if error != nil {
+                                reject(error!)
+                            }
+                        } else {
+                            _ = ResponseHandler.handle(response.data)
                             reject(error)
                         }
                     }
@@ -60,4 +63,5 @@ class BaseManager {
         }
         return promise
     }
+    
 }

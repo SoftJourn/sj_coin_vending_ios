@@ -14,7 +14,7 @@ import PromiseKit
 
 class APIManager: RequestManager {
     
-    typealias dataHandler = (_ object: AnyObject?, _ error: Error?) -> ()
+    typealias dataHandler = (_ object: AnyObject?, _ errorDescription: String?) -> ()
 
     // MARK: Fetching
     class func fetchMachines() -> Promise<AnyObject> {
@@ -142,32 +142,40 @@ class APIManager: RequestManager {
         }
     }
     
-    class func buy(product identifier: Int, machineID: Int, complition: @escaping dataHandler) {
+    class func buy(product identifier: Int, machineID: Int) -> Promise<AnyObject> {
         
-        let url = "\(networking.baseURL)vending/v1/machines/\(machineID)/products/\(identifier)"
-        
-        firstly {
-            sendDefault(request: .post, urlString: url)
-        }.then { data -> Void in
-            let json = JSON(data)
-            let amount = json["amount"].intValue
-            complition(amount as AnyObject?, nil)
-        }.catch { error in
-            complition(nil, error)
+        let promise = Promise<AnyObject> { fulfill, reject in
+
+            let url = "\(networking.baseURL)vending/v1/machines/\(machineID)/products/\(identifier)"
+            
+            firstly {
+                sendDefault(request: .post, urlString: url)
+            }.then { data -> Void in
+                let json = JSON(data)
+                let amount = json["amount"].intValue
+                fulfill(amount as AnyObject)
+            }.catch { error in
+                reject(error)
+            }
         }
+        return promise
     }
     
-    class func favorite(_ method: Alamofire.HTTPMethod, identifier: Int, complition: @escaping dataHandler) {
+    class func favorite(_ method: Alamofire.HTTPMethod, identifier: Int) -> Promise<AnyObject> {
         
-        let url = "\(networking.baseURL)vending/v1/favorites/\(identifier)"
-        
-        firstly {
-            sendDefault(request: method, urlString: url)
-        }.then { data -> Void in
-            let model = Products.init(json: JSON(data))
-            complition(model as AnyObject?, nil)
-        }.catch { error in
-            complition(nil, error)
+        let promise = Promise<AnyObject> { fulfill, reject in
+
+            let url = "\(networking.baseURL)vending/v1/favorites/\(identifier)"
+            
+            firstly {
+                sendDefault(request: method, urlString: url)
+            }.then { data -> Void in
+                let model = Products.init(json: JSON(data))
+                fulfill(model as AnyObject)
+            }.catch { error in
+                reject(error)
+            }
         }
+        return promise
     }
 }

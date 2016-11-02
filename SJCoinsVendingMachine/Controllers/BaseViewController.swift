@@ -152,7 +152,6 @@ class BaseViewController: UIViewController {
                 fulfill(object)
             }.catch { error in
                 self.present(alert: .downloading(error))
-                //AlertManager().present(retryAlert: myError.title.download, message: myError.message.retryDownload, actions: self.retryMachineFetching())
             }
         }
     }
@@ -180,22 +179,27 @@ class BaseViewController: UIViewController {
     
     func buy(using identifier: Int?) {
         
-        guard let identifier = identifier else { return }
-        SVProgressHUD.show(withStatus: spinerMessage.loading)
-        APIManager.buy(product: identifier, machineID: DataManager.shared.machineId) { [unowned self] object, error in
-            
-            SVProgressHUD.dismiss()
-            if object != nil {
-                guard let amount = object else { return }
+            guard let identifier = identifier else { return }
+            SVProgressHUD.show(withStatus: spinerMessage.loading)
+            firstly {
+                APIManager.buy(product: identifier, machineID: DataManager.shared.machineId)
+            }.then { amount -> Void in
+                SVProgressHUD.dismiss()
                 DataManager.shared.save(balance: amount as! Int)
                 self.present(alert: .buyingSuccess)
                 self.updateUIafterBuying()
-            } else {
-                self.present(alert: .buying(error))
+            }.catch { error in
+                SVProgressHUD.dismiss()
+                switch error {
+                case serverError.notEnoughCoins(let errorDescription):
+                    self.present(alert: .buying(errorDescription))
+                default:
+                    self.present(alert: .buying(String(error.localizedDescription)))
+                }
             }
-        }
     }
-    
+
+
     func updateUIafterBuying() {
         //Override in child.
     }
@@ -204,28 +208,28 @@ class BaseViewController: UIViewController {
     func add(favorite product: Products, complition: @escaping ()->()) {
         
         guard let identifier = product.internalIdentifier else { return }
-        APIManager.favorite(.post, identifier: identifier) { [unowned self] object, error in
-            if object != nil {
-                SVProgressHUD.dismiss(withDelay: 0.2)
-                DataManager.shared.add(favorite: object as! Products)
-                complition()
-            } else {
-                self.present(alert: .favorite(error))
-            }
+        firstly {
+            APIManager.favorite(.post, identifier: identifier)
+        }.then { object -> Void in
+            SVProgressHUD.dismiss(withDelay: 0.2)
+            DataManager.shared.add(favorite: object as! Products)
+            complition()
+        }.catch { error in
+             print(error)
         }
     }
     
     func remove(favorite product: Products, complition: @escaping ()->()) {
         
         guard let identifier = product.internalIdentifier else { return }
-        APIManager.favorite(.delete, identifier: identifier) { [unowned self] object, error in
-            if object != nil {
-                SVProgressHUD.dismiss(withDelay: 0.2)
-                DataManager.shared.remove(favorite: object as! Products)
-                complition()
-            } else {
-                self.present(alert: .favorite(error))
-            }
+        firstly {
+            APIManager.favorite(.delete, identifier: identifier)
+        }.then { object -> Void in
+            SVProgressHUD.dismiss(withDelay: 0.2)
+            DataManager.shared.remove(favorite: object as! Products)
+            complition()
+        }.catch { error in
+            print(error)
         }
     }
     
@@ -235,10 +239,10 @@ class BaseViewController: UIViewController {
         case validation
         case authorization
         case downloading(Error?)
-        case buying(Error?)
+        case buying(String)
         case beforeBuying
         case connection
-        case favorite(Error?)
+        case favorite(String)
         case buyingSuccess
         case confirmation(String, Int, [UIAlertAction])
     }
@@ -253,18 +257,19 @@ class BaseViewController: UIViewController {
             AlertManager().present(alert: myError.title.auth, message: myError.message.auth)
         case .downloading(let error):
             AlertManager().present(alert: myError.title.download, message: error!.localizedDescription)
-        case .buying(let error):
-            AlertManager().present(alert: buying.title.failed, message: error!.localizedDescription)
+        case .buying(let errorDescription):
+            AlertManager().present(alert: buying.title.failed, message: errorDescription)
         case .beforeBuying:
             AlertManager().present(alert: buying.title.failed, message: buying.message.failed)
         case .connection:
             AlertManager().present(alert: myError.title.reachability, message: myError.message.reachability)
         case .buyingSuccess:
             AlertManager().present(alert: buying.title.success, message: buying.message.success)
-        case .favorite(let error):
-            AlertManager().present(alert: myError.title.favorite, message: error!.localizedDescription)
+        case .favorite(let errorDescription):
+            AlertManager().present(alert: myError.title.favorite, message: errorDescription)
         case .confirmation(let name, let price, let actions):
             AlertManager().present(confirmation: name, price: price, actions: actions)
         }
     }
 }
+

@@ -11,9 +11,7 @@ import Alamofire
 import PromiseKit
 import SVProgressHUD
 
-enum ServerError: Error {
-    case unauthorized
-}
+
 
 class RequestManager: BaseManager {
     
@@ -30,7 +28,7 @@ class RequestManager: BaseManager {
                 fulfill(data)
             }.catch { error in
                 switch error {
-                case ServerError.unauthorized:
+                case serverError.unauthorized:
                     handle401StatusCode(method: method, url: urlString, success: fulfill, failed: reject)
                 default:
                     reject(error)

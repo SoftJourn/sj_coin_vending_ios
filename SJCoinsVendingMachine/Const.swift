@@ -20,6 +20,7 @@ struct storyboards {
 
 struct networking {
     
+    //static let baseURL = "http://192.168.102.251:8111/"   // Testing Vasyl.
     static let baseURL = "https://sjcoins-testing.softjourn.if.ua/"
     //Auth
     static let pathAuth = "auth/oauth/token"
