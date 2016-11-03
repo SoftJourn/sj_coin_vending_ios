@@ -8,18 +8,47 @@
 
 import Foundation
 
+enum validationStatus {
+    
+    case success
+    case isEmpty
+    case notAllowed
+}
+
 class ValidationManager {
     
-    class func validate(login: String, password: String) -> Bool {
+    class func validate(login: String) -> validationStatus {
+        
+        if stringEmpty(login) {
+            return .isEmpty
+        } else {
+            return stringValidation(login)
+        }
+    }
+    
+    class func validate(password: String) -> validationStatus {
+        
+        if stringEmpty(password) {
+            return .isEmpty
+        } else {
+            return .success
+        }
+    }
+    
+    private class func stringEmpty(_ string: String) -> Bool {
+        
+        return string.isEmpty
+    }
+    
+    private class func stringValidation(_ string: String) -> validationStatus {
         
         let regex = "[a-z^]*"
         let loginTest = NSPredicate.init(format: "SELF MATCHES %@", regex)
         
-        if login.isEmpty || password.isEmpty {
-            return false
+        if loginTest.evaluate(with: string) {
+            return .success
         } else {
-            let isValid = loginTest.evaluate(with: login)
-            return isValid
+            return .notAllowed
         }
     }
 }

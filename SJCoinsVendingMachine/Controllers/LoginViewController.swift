@@ -14,7 +14,9 @@ class LoginViewController: BaseViewController {
     
     // MARK: Constants
     static let identifier = "\(LoginViewController.self)"
-    
+    let isEmptyString = "This field is required."
+    let notAllowedString = "These symbols are not allowed."
+
     // MARK: Properties
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTexField: UITextField!
@@ -22,17 +24,28 @@ class LoginViewController: BaseViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak private var scrollView: UIScrollView!
     
+    @IBOutlet weak private var loginErrorLabel: UILabel!
+    @IBOutlet weak private var passwordErrorLabel: UILabel!
+    
     fileprivate var login: String {
         return self.loginTextField.text!
     }
     fileprivate var password: String {
         return self.passwordTexField.text!
     }
+    private var loginValidation: validationStatus {
+        return ValidationManager.validate(login: loginTextField.text!)
+    }
+    private var passwordValidation: validationStatus {
+        return ValidationManager.validate(password: passwordTexField.text!)
+    }
     
     // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        loginTextField.delegate = self
+        passwordTexField.delegate = self
         registerForKeyboardNotifications()
         hideKeyboardWhenTappedAround()
         LoginPage.decorateLoginViewController(self)
@@ -41,7 +54,9 @@ class LoginViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
-        SVProgressHUD.dismiss(withDelay: 0.5)
+        loginErrorLabel.isHidden = true
+        passwordErrorLabel.isHidden = true
+        SVProgressHUD.dismiss(withDelay: 0.2)
     }
     
     deinit {
@@ -52,8 +67,56 @@ class LoginViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func signInButtonPressed(_ sender: UIButton) {
         
-        let validation = ValidationManager.validate(login: login, password: password)
-        validation ? authorization() : present(alert: .validation)
+        loginValidation == .success && passwordValidation == .success ? authorization() : showError()
+    }
+    
+    @IBAction private func loginTextFieldDidChange(_ sender: UITextField) {
+        
+        handleValidation(loginValidation, label: loginErrorLabel)
+    }
+    
+    @IBAction private func passwordTextFieldDidChange(_ sender: UITextField) {
+    
+        handleValidation(passwordValidation, label: passwordErrorLabel)
+    }
+    
+    //MARK: Others
+    private func showError() {
+        
+        presentErrorLabels()
+        present(alert: .validation)
+    }
+    
+    private func presentErrorLabels() {
+        
+        if let login = loginTextField.text {
+            if login.isEmpty {
+                handleValidation(.isEmpty, label: loginErrorLabel)
+            }
+        }
+        if let password = passwordTexField.text {
+            if password.isEmpty {
+                handleValidation(.isEmpty, label: passwordErrorLabel)
+            }
+        }
+    }
+    
+    private func handleValidation(_ result: validationStatus, label: UILabel) {
+        
+        switch result {
+        case .isEmpty:
+            config(label, text: isEmptyString, hidden: false)
+        case .notAllowed:
+            config(label, text: notAllowedString, hidden: false)
+        case .success:
+            config(label, text: "", hidden: true)
+        }
+    }
+    
+    private func config(_ label: UILabel, text: String, hidden: Bool) {
+        
+        label.text = text
+        label.isHidden = hidden
     }
     
     private func authorization() {
@@ -138,3 +201,15 @@ extension LoginViewController {
         view.endEditing(true)
     }
 }
+
+extension LoginViewController: UITextFieldDelegate {
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if string == " " {
+            return false
+        }
+        return true
+    }
+}
+

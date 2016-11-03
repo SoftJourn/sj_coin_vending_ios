@@ -106,9 +106,9 @@ class BaseViewController: UIViewController {
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in
-                self.present(alert: .downloading(error))
+                print(error)
             }
-        }
+         }
     }
     
     func fetchPurchaseHistory() -> Promise<AnyObject> {

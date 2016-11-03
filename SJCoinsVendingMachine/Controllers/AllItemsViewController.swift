@@ -112,6 +112,7 @@ class AllItemsViewController: BaseViewController {
     
     @IBAction private func searchButtonPressed(_ sender: UIBarButtonItem) {
         
+        tableView.reloadData()
         present(resultSearchController, animated: true) { }
     }
     
@@ -225,7 +226,7 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if self.resultSearchController.isActive {
+        if resultSearchController.isActive && resultSearchController.searchBar.text! != "" {
             return searchData.count
         } else {
             return filterItems == nil ? 0 : filterItems!.count
@@ -235,7 +236,7 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: AllItemsTableViewCell.identifier, for: indexPath) as! AllItemsTableViewCell
-        if self.resultSearchController.isActive {
+        if resultSearchController.isActive && resultSearchController.searchBar.text! != "" {
             return searchData.isEmpty ? cell : cell.configure(with: searchData[indexPath.item])
         } else {
             guard let item = filterItems?[indexPath.row] else { return cell }

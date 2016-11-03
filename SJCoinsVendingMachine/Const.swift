@@ -45,8 +45,8 @@ struct myError {
         static let available = "Availability Error"
     }
     struct message {
-        static let validation = "Login and password incorrect."
-        static let auth = "Login failed."
+        static let validation = "Login and password should not be empty."
+        static let auth = "Login failed." //The credentials you supplied were not correct
         static let reachability = "Please verify your Internet connection."
         static let retryDownload = "Error held while fetching list of machines. Please try again."
         static let favorite = "Error held while adding to favorite. Please try again."
