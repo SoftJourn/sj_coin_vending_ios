@@ -117,7 +117,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         switch section {
         case 0:
             let customView = UIView()
-            let label = UILabel(frame: CGRect(x: 25, y: 16, width: 300, height: 20))
+            let label = UILabel(frame: CGRect(x: 30, y: 16, width: 300, height: 20))
             label.textAlignment = .left
 
             if Reachability.connectedToNetwork() {
