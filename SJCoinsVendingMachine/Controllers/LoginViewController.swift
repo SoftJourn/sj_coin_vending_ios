@@ -100,7 +100,7 @@ class LoginViewController: BaseViewController {
         showHidden(imageLogo, delay: 0.1)
         showHidden(loginTextField, delay: 0.5)
         showHidden(passwordTexField, delay: 0.8)
-        showHidden(loginButton, delay: 1.4)
+        showHidden(loginButton, delay: 1.2)
     }
     
     private func showHidden(_ element: UIView, delay: TimeInterval) {
