@@ -32,7 +32,7 @@ class BaseManager {
     
     class func sendRequest(_ urlString: URLConvertible,
                            method: Alamofire.HTTPMethod,
-                           parameters: [String: AnyObject]?,
+                           parameters: Parameters?,
                            encoding: ParameterEncoding,
                            headers: Dictionary<String, String>) -> Promise<AnyObject> {
         

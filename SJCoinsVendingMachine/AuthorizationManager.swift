@@ -34,10 +34,10 @@ class AuthorizationManager: RequestManager {
         let URL = "\(networking.baseURL)auth/oauth/token"
         let headers = [ "Authorization": "Basic \(networking.basicKey)",
                         "Content-Type": networking.authContentType ]
-        let credentialData = "username=\(login)&password=\(password)&grant_type=\(grantType)"
+        let parameters: Parameters = ["username": login, "password" : password, "grant_type" : "password"]
         
         firstly {
-            sendCustom(request: .post, urlString: URL, parameters: [:], encoding: credentialData, headers: headers)
+            sendCustom(request: .post, urlString: URL, parameters: parameters, encoding: URLEncoding.httpBody, headers: headers)
         }.then { data -> Void in
             let model = AuthModel.init(json: JSON(data))
             save(authInfo: model)
@@ -52,10 +52,10 @@ class AuthorizationManager: RequestManager {
         let urlString = "\(networking.baseURL)auth/oauth/token"
         let headers = [ "Authorization": "Basic \(networking.basicKey)",
                         "Content-Type": networking.authContentType ]
-        let refreshData = "refresh_token=\(getRefreshToken())&grant_type=refresh_token"
-        
+        let parameters: Parameters = ["refresh_token": getRefreshToken(), "grant_type" : "refresh_token"]
+
         firstly {
-            sendCustom(request: .post, urlString: urlString, parameters: [:], encoding: refreshData, headers: headers)
+            sendCustom(request: .post, urlString: urlString, parameters: parameters, encoding: URLEncoding.httpBody, headers: headers)
         }.then { data -> Void in
             let model = AuthModel.init(json: JSON(data))
             save(authInfo: model)

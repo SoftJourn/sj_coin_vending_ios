@@ -13,7 +13,6 @@
 		35089F551DAB7D9000DC3BAF /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F541DAB7D9000DC3BAF /* BaseManager.swift */; };
 		35089F581DAB7EC200DC3BAF /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F571DAB7EC200DC3BAF /* RequestManager.swift */; };
 		35089F5A1DAB813D00DC3BAF /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F591DAB813D00DC3BAF /* APIManager.swift */; };
-		35089F5E1DAB901900DC3BAF /* StringDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F5D1DAB901900DC3BAF /* StringDecorator.swift */; };
 		35089F681DAB9E4900DC3BAF /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F621DAB9E4900DC3BAF /* AccountViewController.swift */; };
 		35089F691DAB9E4900DC3BAF /* AllItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F631DAB9E4900DC3BAF /* AllItemsViewController.swift */; };
 		35089F6A1DAB9E4900DC3BAF /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F641DAB9E4900DC3BAF /* BaseViewController.swift */; };
@@ -63,7 +62,6 @@
 		35089F541DAB7D9000DC3BAF /* BaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseManager.swift; path = Networking/BaseManager.swift; sourceTree = "<group>"; };
 		35089F571DAB7EC200DC3BAF /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestManager.swift; path = Networking/RequestManager.swift; sourceTree = "<group>"; };
 		35089F591DAB813D00DC3BAF /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIManager.swift; path = Networking/APIManager.swift; sourceTree = "<group>"; };
-		35089F5D1DAB901900DC3BAF /* StringDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringDecorator.swift; sourceTree = "<group>"; };
 		35089F621DAB9E4900DC3BAF /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = Controllers/AccountViewController.swift; sourceTree = "<group>"; };
 		35089F631DAB9E4900DC3BAF /* AllItemsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AllItemsViewController.swift; path = Controllers/AllItemsViewController.swift; sourceTree = "<group>"; };
 		35089F641DAB9E4900DC3BAF /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseViewController.swift; path = Controllers/BaseViewController.swift; sourceTree = "<group>"; };
@@ -256,7 +254,6 @@
 			isa = PBXGroup;
 			children = (
 				3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */,
-				35089F5D1DAB901900DC3BAF /* StringDecorator.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -441,7 +438,6 @@
 				35089F581DAB7EC200DC3BAF /* RequestManager.swift in Sources */,
 				35089F681DAB9E4900DC3BAF /* AccountViewController.swift in Sources */,
 				35089F781DABB45F00DC3BAF /* CustomSegmentControl.swift in Sources */,
-				35089F5E1DAB901900DC3BAF /* StringDecorator.swift in Sources */,
 				35089F6A1DAB9E4900DC3BAF /* BaseViewController.swift in Sources */,
 				35B80FF91DBB8A8200540659 /* BaseTableViewCell.swift in Sources */,
 				35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */,

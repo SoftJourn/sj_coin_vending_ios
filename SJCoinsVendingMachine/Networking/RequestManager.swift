@@ -40,7 +40,7 @@ class RequestManager: BaseManager {
     
     class func sendCustom(request method: Alamofire.HTTPMethod,
                           urlString: URLConvertible,
-                          parameters: [String: AnyObject]?,
+                          parameters: Parameters?,
                           encoding: ParameterEncoding,
                           headers: Dictionary<String, String>) -> Promise<AnyObject> {
         
