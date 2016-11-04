@@ -146,14 +146,16 @@ class LoginViewController: BaseViewController {
     
     private func regularLaunching() {
         
-        firstly {
-            self.fetchFavorites().asVoid()
-        }.then {
-            self.fetchProducts().asVoid()
-        }.then {
-            self.fetchAccount().asVoid()
-        }.then {
+        let favorites = fetchFavorites().asVoid()
+        let products = fetchProducts().asVoid()
+        let account = fetchAccount().asVoid()
+        
+        when(fulfilled: favorites, products, account).then { _ -> Void in
+            SVProgressHUD.dismiss()
             NavigationManager.shared.presentTabBarController()
+        }.catch { error in
+            SVProgressHUD.dismiss()
+            self.present(alert: .retryLaunch(self.downloadingActions()))
         }
     }
     
@@ -211,5 +213,15 @@ extension LoginViewController: UITextFieldDelegate {
         }
         return true
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == loginTextField {
+            passwordTexField.becomeFirstResponder()
+        }
+        if textField == passwordTexField {
+            passwordTexField.resignFirstResponder()
+        }
+        return true
+    }
 }
-

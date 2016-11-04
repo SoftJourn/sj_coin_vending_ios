@@ -76,7 +76,7 @@ class BaseViewController: UIViewController {
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in
-                self.present(alert: .downloading(error))
+                reject(error)
             }
         }
     }
@@ -91,7 +91,7 @@ class BaseViewController: UIViewController {
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in
-                self.present(alert: .downloading(error))
+                reject(error)
             }
         }
     }
@@ -106,7 +106,7 @@ class BaseViewController: UIViewController {
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in
-                print(error)
+                reject(error)
             }
          }
     }
@@ -120,7 +120,7 @@ class BaseViewController: UIViewController {
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in
-                self.present(alert: .downloading(error))
+                reject(error)
             }
         }
     }
@@ -156,6 +156,27 @@ class BaseViewController: UIViewController {
         }
     }
     
+    // MARK: Downloading from server.
+    func downloadingActions() -> [UIAlertAction] {
+        
+        let retryButton = UIAlertAction(title: buttonTitle.retry, style: .destructive) { [unowned self] action in
+            
+            let favorites = self.fetchFavorites().asVoid()
+            let products = self.fetchProducts().asVoid()
+            let account = self.fetchAccount().asVoid()
+            
+            when(fulfilled: favorites, products, account).then { _ -> Void in
+                SVProgressHUD.dismiss()
+                NavigationManager.shared.presentTabBarController()
+            }.catch { error -> Void in
+                SVProgressHUD.dismiss()
+                self.present(alert: .retryLaunch(self.downloadingActions()))
+            }
+        }
+        let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
+        return [cancelButton, retryButton]
+    }
+    
     // MARK: Confirmation and Buying.
     func present(confirmation product: Products) {
         
@@ -167,14 +188,14 @@ class BaseViewController: UIViewController {
     
     fileprivate func buyingActions(with identifier: Int?) -> [UIAlertAction] {
         
-        let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .default) { [unowned self] action in
+        let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .destructive) { [unowned self] action in
             
             self.connectionVerification { [unowned self] in
                 self.buy(using: identifier)
             }
         }
         let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
-        return [confirmButton, cancelButton]
+        return [cancelButton, confirmButton]
     }
     
     func buy(using identifier: Int?) {
@@ -198,7 +219,6 @@ class BaseViewController: UIViewController {
                 }
             }
     }
-
 
     func updateUIafterBuying() {
         //Override in child.
@@ -245,6 +265,7 @@ class BaseViewController: UIViewController {
         case favorite(String)
         case buyingSuccess
         case confirmation(String, Int, [UIAlertAction])
+        case retryLaunch([UIAlertAction])
     }
     
     func present(alert type: alertType) {
@@ -269,6 +290,8 @@ class BaseViewController: UIViewController {
             AlertManager().present(alert: myError.title.favorite, message: errorDescription)
         case .confirmation(let name, let price, let actions):
             AlertManager().present(confirmation: name, price: price, actions: actions)
+        case .retryLaunch(let actions):
+            AlertManager().present(retryAlert: myError.title.download, message: "Information could not be downloaded from server.", actions: actions)
         }
     }
 }

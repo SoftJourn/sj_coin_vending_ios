@@ -46,14 +46,14 @@ class InitialViewController: BaseViewController {
     private func regularLaunching() {
         
         DataManager.shared.fistLaunch = false
-        firstly {
-            self.fetchFavorites().asVoid()
-        }.then {
-            self.fetchProducts().asVoid()
-        }.then {
-            self.fetchAccount().asVoid()
-        }.then {
+        let favorites = fetchFavorites().asVoid()
+        let products = fetchProducts().asVoid()
+        let account = fetchAccount().asVoid()
+        
+        when(fulfilled: favorites, products, account).then { _ in
             NavigationManager.shared.presentTabBarController()
+        }.catch { error in
+            self.present(alert: .retryLaunch(self.downloadingActions()))
         }
     }
 }
