@@ -156,7 +156,7 @@
                                         <rect key="frame" x="0.0" y="92" width="375" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E2l-Ms-ODl" id="BRI-dD-bUt">
-                                            <frame key="frameInset" width="375" height="62"/>
+                                            <frame key="frameInset" width="375" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucn-1K-30q">
@@ -326,10 +326,10 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FavoritesTableViewCell" rowHeight="62" id="IQx-AS-BO5" customClass="FavoritesTableViewCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="1000" height="62"/>
+                                        <rect key="frame" x="0.0" y="92" width="375" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IQx-AS-BO5" id="mV2-wj-6Qk">
-                                            <frame key="frameInset" width="1000" height="62"/>
+                                            <frame key="frameInset" width="375" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4X2-ru-nrQ">
@@ -466,10 +466,10 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHistoryTableViewCell" id="Z6e-9B-FtI" customClass="PurchaseHistoryTableViewCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="1000" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z6e-9B-FtI" id="afN-2M-De0">
-                                            <frame key="frameInset" width="1000" height="44"/>
+                                            <frame key="frameInset" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2HW-q5-u9A">
@@ -551,7 +551,7 @@
                     <navigationItem key="navigationItem" title="Profile" id="dwi-xz-rxG">
                         <barButtonItem key="rightBarButtonItem" title="Log out" id="8LO-Xl-IZj">
                             <connections>
-                                <action selector="logOutButton:" destination="hRE-fz-u0l" id="Inc-pr-uE6"/>
+                                <action selector="logOutButton:" destination="hRE-fz-u0l" id="dWo-yA-hxa"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -625,7 +625,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeCollectionViewCell" id="fay-AC-zMa" customClass="HomeCollectionViewCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="361" height="180"/>
+                                        <rect key="frame" x="7" y="0.0" width="361" height="180"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="361" height="180"/>
@@ -653,7 +653,7 @@
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeCollectionViewInternalCell" id="DW1-w6-IAL" customClass="HomeCollectionViewInternalCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                                            <rect key="frame" x="5" y="0.0" width="90" height="125"/>
+                                                            <rect key="frame" x="5" y="9" width="90" height="125"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                                 <rect key="frame" x="0.0" y="0.0" width="90" height="125"/>
@@ -832,7 +832,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="10" reuseIdentifier="settingsCellIdentifier" textLabel="ujP-Zl-dEZ" style="IBUITableViewCellStyleDefault" id="g55-PO-ocW">
-                                        <rect key="frame" x="0.0" y="120" width="1000" height="44"/>
+                                        <rect key="frame" x="0.0" y="120" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" tableViewCell="g55-PO-ocW" id="4hi-fp-fwm">
                                             <frame key="frameInset" width="375" height="43"/>

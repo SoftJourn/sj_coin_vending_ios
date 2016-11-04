@@ -92,7 +92,7 @@ class AuthorizationManager: RequestManager {
     class func accessTokenExist() -> Bool {
         
         guard let token = keychain["token"] else { return false }
-        return !token.isEmpty
+        return true
     }
     
     class func getToken() -> String {
