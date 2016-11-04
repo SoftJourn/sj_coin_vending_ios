@@ -57,6 +57,12 @@ class LoginViewController: BaseViewController {
         loginErrorLabel.isHidden = true
         passwordErrorLabel.isHidden = true
         SVProgressHUD.dismiss(withDelay: 0.2)
+        prepareAnimation()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        showElementsAnimated()
     }
     
     deinit {
@@ -78,6 +84,30 @@ class LoginViewController: BaseViewController {
     @IBAction private func passwordTextFieldDidChange(_ sender: UITextField) {
     
         handleValidation(passwordValidation, label: passwordErrorLabel)
+    }
+    
+    //MARK: Animation methods.
+    private func prepareAnimation() {
+        
+        imageLogo.alpha = 0
+        loginTextField.alpha = 0
+        passwordTexField.alpha = 0
+        loginButton.alpha = 0
+    }
+    
+    private func showElementsAnimated() {
+        
+        showHidden(imageLogo, delay: 0.1)
+        showHidden(loginTextField, delay: 0.5)
+        showHidden(passwordTexField, delay: 0.8)
+        showHidden(loginButton, delay: 1.4)
+    }
+    
+    private func showHidden(_ element: UIView, delay: TimeInterval) {
+        
+        UIView.animate(withDuration: 0.5, delay: delay, options: .showHideTransitionViews, animations: { () -> Void in
+            element.alpha = 1
+            }, completion: nil)
     }
     
     //MARK: Others
