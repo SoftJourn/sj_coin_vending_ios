@@ -46,6 +46,7 @@ class LoginViewController: BaseViewController {
         super.viewDidLoad()
         loginTextField.delegate = self
         passwordTexField.delegate = self
+        passwordTexField.returnKeyType = .done
         registerForKeyboardNotifications()
         hideKeyboardWhenTappedAround()
         LoginPage.decorateLoginViewController(self)
