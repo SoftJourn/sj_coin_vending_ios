@@ -192,6 +192,7 @@ class LoginViewController: BaseViewController {
     
     private func authFailed() {
         
+        SVProgressHUD.dismiss()
         present(alert: .authorization)
     }
     
