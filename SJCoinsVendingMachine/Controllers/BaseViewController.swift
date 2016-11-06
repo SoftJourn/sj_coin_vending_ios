@@ -136,8 +136,7 @@ class BaseViewController: UIViewController {
                 DataManager.shared.machineId = identifier
                 fulfill(object)
             }.catch { error in
-                self.present(alert: .downloading(error))
-                //AlertManager().present(retryAlert: myError.title.download, message: myError.message.retryDownload, actions: self.retryMachineFetching())
+                reject(error)
             }
         }
     }
@@ -156,14 +155,46 @@ class BaseViewController: UIViewController {
         }
     }
     
+    // MARK: Launching.
+    func launching(firstTime: Bool?) {
+        
+        if firstTime != nil {
+            DataManager.shared.fistLaunch = firstTime!
+        }
+        let favorites = fetchFavorites()
+        let products = fetchProducts()
+        let account = fetchAccount()
+        
+        when(fulfilled: favorites, products, account).then { _ in
+            NavigationManager.shared.presentTabBarController()
+        }.catch { error in
+            self.present(alert: .retryLaunch(self.downloadingActions()))
+        }
+    }
+    
     // MARK: Downloading from server.
+    func machinesFetchingActions() -> [UIAlertAction] {
+        
+        let retryButton = UIAlertAction(title: buttonTitle.retry, style: .destructive) { [unowned self] action in
+            firstly {
+                self.fetchDefaultMachine()
+            }.then { object -> Void in
+                self.launching(firstTime: false)
+            }.catch { error in
+                self.present(alert: .retryLaunch(self.machinesFetchingActions()))
+            }
+        }
+        let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
+        return [cancelButton, retryButton]
+    }
+
     func downloadingActions() -> [UIAlertAction] {
         
         let retryButton = UIAlertAction(title: buttonTitle.retry, style: .destructive) { [unowned self] action in
             
-            let favorites = self.fetchFavorites().asVoid()
-            let products = self.fetchProducts().asVoid()
-            let account = self.fetchAccount().asVoid()
+            let favorites = self.fetchFavorites()
+            let products = self.fetchProducts()
+            let account = self.fetchAccount()
             
             when(fulfilled: favorites, products, account).then { _ -> Void in
                 SVProgressHUD.dismiss()

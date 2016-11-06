@@ -69,6 +69,8 @@ class HomeViewController: BaseViewController {
             self.fetchProducts().asVoid()
         }.then {
             self.updateCollectionView()
+        }.catch { error in
+            print(error)
         }
     }
     

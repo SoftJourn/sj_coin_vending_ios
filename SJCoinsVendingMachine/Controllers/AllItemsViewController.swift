@@ -129,6 +129,8 @@ class AllItemsViewController: BaseViewController {
             fetchProducts().asVoid()
         }.then {
             self.changeAndReload()
+        }.catch { error in
+            print(error)
         }
     }
     

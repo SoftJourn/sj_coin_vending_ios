@@ -68,6 +68,8 @@ class SettingsViewController: BaseViewController {
                 SVProgressHUD.dismiss()
             }.then {
                 self.dismiss(animated: true) { }
+            }.catch { error in
+                print(error)
             }
         }
     }
@@ -92,6 +94,8 @@ class SettingsViewController: BaseViewController {
             self.fetchMachinesList().asVoid()
         }.then {
             self.reloadTableView()
+        }.catch { error in
+            print(error)
         }
     }
 

@@ -75,6 +75,8 @@ class AccountViewController: BaseViewController {
             self.fetchAccount().asVoid()
         }.then {
             self.updateViewWithAccountContent()
+        }.catch { error in
+            print(error)
         }
     }
     

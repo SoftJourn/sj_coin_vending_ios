@@ -164,29 +164,15 @@ class LoginViewController: BaseViewController {
   
         if DataManager.shared.fistLaunch {
             
-            DataManager.shared.fistLaunch = false
             firstly {
-                self.fetchDefaultMachine().asVoid()
-            }.then {
-                self.regularLaunching()
+                self.fetchDefaultMachine()
+            }.then { object -> Void in
+                self.launching(firstTime: false)
+            }.catch { error in
+                self.present(alert: .retryLaunch(self.machinesFetchingActions()))
             }
         } else {
-            regularLaunching()
-        }
-    }
-    
-    private func regularLaunching() {
-        
-        let favorites = fetchFavorites().asVoid()
-        let products = fetchProducts().asVoid()
-        let account = fetchAccount().asVoid()
-        
-        when(fulfilled: favorites, products, account).then { _ -> Void in
-            SVProgressHUD.dismiss()
-            NavigationManager.shared.presentTabBarController()
-        }.catch { error in
-            SVProgressHUD.dismiss()
-            self.present(alert: .retryLaunch(self.downloadingActions()))
+            launching(firstTime: false)
         }
     }
     

@@ -24,7 +24,7 @@ class InitialViewController: BaseViewController {
         
         super.viewDidAppear(animated)
         connectionVerification {
-            launch()
+            tokenVerification()
         }
     }
     
@@ -33,27 +33,13 @@ class InitialViewController: BaseViewController {
         print("InitialViewController deinited")
     }
     
-    private func launch() {
+    private func tokenVerification() {
         
         if AuthorizationManager.accessTokenExist() {
-            regularLaunching()
+            launching(firstTime: false)
         } else {
             DataManager.shared.fistLaunch = true
             NavigationManager.shared.presentLoginViewController()
         }
-    }
-    
-    private func regularLaunching() {
-        
-        DataManager.shared.fistLaunch = false
-        let favorites = fetchFavorites().asVoid()
-        let products = fetchProducts().asVoid()
-        let account = fetchAccount().asVoid()
-        
-        when(fulfilled: favorites, products, account).then { _ in
-            NavigationManager.shared.presentTabBarController()
-        }.catch { error in
-            self.present(alert: .retryLaunch(self.downloadingActions()))
-        }
-    }
+    }    
 }

@@ -57,6 +57,8 @@ class FavoritesViewController: BaseViewController {
             fetchFavorites().asVoid()
         }.then {
             self.reloadTableView()
+        }.catch { error in
+            print(error)
         }
     }
     
