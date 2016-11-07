@@ -81,6 +81,7 @@
 		35089F821DABBA4900DC3BAF /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountModel.swift; path = Models/AccountModel.swift; sourceTree = "<group>"; };
 		35089F841DABCCE800DC3BAF /* DateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDecorator.swift; sourceTree = "<group>"; };
+		353956A51DD0D241007E752B /* coin.bks */ = {isa = PBXFileReference; lastKnownFileType = file; path = coin.bks; sourceTree = "<group>"; };
 		355CAEBA1DC9F41E00DBA64F /* ResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseHandler.swift; sourceTree = "<group>"; };
 		3560E19F1DB8C49E00DF42C7 /* PurchaseHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryModel.swift; sourceTree = "<group>"; };
 		35617D711DA814A6000582F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -193,6 +194,7 @@
 		07854FCF1D4B8E1A00F31AB3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				353956A51DD0D241007E752B /* coin.bks */,
 				07854FC01D4B8C5300F31AB3 /* Assets.xcassets */,
 				07854FC51D4B8C5300F31AB3 /* Info.plist */,
 			);
