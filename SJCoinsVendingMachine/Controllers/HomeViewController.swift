@@ -66,12 +66,14 @@ class HomeViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
+        //PullToRefresh
         firstly {
             self.fetchProducts().asVoid()
         }.then {
             self.updateCollectionView()
         }.catch { error in
             print(error)
+            self.present(alert: .downloading)
         }
     }
     

@@ -63,5 +63,4 @@ class BaseManager {
         }
         return promise
     }
-    
 }

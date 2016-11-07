@@ -53,12 +53,14 @@ class FavoritesViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
+        //PullToRefresh
         firstly {
             fetchFavorites().asVoid()
         }.then {
             self.reloadTableView()
         }.catch { error in
             print(error)
+            self.present(alert: .downloading)
         }
     }
     

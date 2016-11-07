@@ -67,6 +67,7 @@ class AccountViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
+        //PullToRefresh
         firstly {
             fetchPurchaseHistory().asVoid()
         }.then {
@@ -77,6 +78,7 @@ class AccountViewController: BaseViewController {
             self.updateViewWithAccountContent()
         }.catch { error in
             print(error)
+            self.present(alert: .downloading)
         }
     }
     

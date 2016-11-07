@@ -125,12 +125,14 @@ class AllItemsViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
+        //PullToRefresh
         firstly {
             fetchProducts().asVoid()
         }.then {
             self.changeAndReload()
         }.catch { error in
             print(error)
+            self.present(alert: .downloading)
         }
     }
     

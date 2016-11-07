@@ -151,7 +151,7 @@ class BaseViewController: UIViewController {
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in
-                self.present(alert: .downloading(error))
+                reject(error)
             }
         }
     }
@@ -245,9 +245,9 @@ class BaseViewController: UIViewController {
                 SVProgressHUD.dismiss()
                 switch error {
                 case serverError.notEnoughCoins(let errorDescription):
-                    self.present(alert: .buying(errorDescription))
+                    self.present(alert: .buyingFailed(errorDescription))
                 default:
-                    self.present(alert: .buying(String(error.localizedDescription)))
+                    self.present(alert: .buyingFailed(String(error.localizedDescription)))
                 }
             }
     }
@@ -290,12 +290,12 @@ class BaseViewController: UIViewController {
         
         case validation
         case authorization
-        case downloading(Error?)
-        case buying(String)
+        case downloading
         case beforeBuying
         case connection
-        case favorite(String)
         case buyingSuccess
+        case buyingFailed(String)
+        case favorite(String)
         case confirmation(String, Int, [UIAlertAction])
         case retryLaunch([UIAlertAction])
     }
@@ -304,26 +304,36 @@ class BaseViewController: UIViewController {
         
         SVProgressHUD.dismiss(withDelay: 0.5)
         switch type {
+            
         case .validation:
             AlertManager().present(alert: myError.title.validation, message: myError.message.validation)
+        
         case .authorization:
             AlertManager().present(alert: myError.title.auth, message: myError.message.auth)
-        case .downloading(let error):
-            AlertManager().present(alert: myError.title.download, message: error!.localizedDescription)
-        case .buying(let errorDescription):
-            AlertManager().present(alert: buying.title.failed, message: errorDescription)
+        
+        case .downloading:
+            AlertManager().present(alert: myError.title.download, message: myError.message.download)
+        
         case .beforeBuying:
             AlertManager().present(alert: buying.title.failed, message: buying.message.failed)
+        
         case .connection:
             AlertManager().present(alert: myError.title.reachability, message: myError.message.reachability)
+        
         case .buyingSuccess:
             AlertManager().present(alert: buying.title.success, message: buying.message.success)
+        
+        case .buyingFailed(let errorDescription):
+            AlertManager().present(alert: buying.title.failed, message: errorDescription)
+        
         case .favorite(let errorDescription):
             AlertManager().present(alert: myError.title.favorite, message: errorDescription)
+        
         case .confirmation(let name, let price, let actions):
             AlertManager().present(confirmation: name, price: price, actions: actions)
+        
         case .retryLaunch(let actions):
-            AlertManager().present(retryAlert: myError.title.download, message: "Information could not be downloaded from server.", actions: actions)
+            AlertManager().present(retryAlert: myError.title.download, message: myError.message.download, actions: actions)
         }
     }
 }
