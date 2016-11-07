@@ -16,6 +16,7 @@ import KeychainAccess
 extension DefaultsKeys {
     
     static let kMachineId = DefaultsKey<Int>("machineId")
+    static let kMachineName = DefaultsKey<String>("machineName")
     static let fistLaunch = DefaultsKey<Bool>("fistLaunch")
 }
 

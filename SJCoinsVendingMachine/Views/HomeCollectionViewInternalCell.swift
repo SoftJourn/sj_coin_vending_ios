@@ -46,7 +46,6 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
         super.prepareForReuse()
         nameLabel.text = ""
         priceLabel.text = ""
-        logo.alpha = 0
         resetImage()
     }
     
@@ -61,32 +60,30 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
     private func resetImage() {
         
         request?.cancel()
-        //showImageAnimated(picture.placeholder)
         logo.image = picture.placeholder
     }
     
     private func load(image endpoint: String?) {
         
-        guard let endpoint = endpoint else { return showImageAnimated(picture.placeholder) }
+        guard let endpoint = endpoint else { return logo.image = picture.placeholder }
         guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
-            //SVProgressHUD.show()
             APIManager.fetch(image: endpoint) { [unowned self] image in
-                //SVProgressHUD.dismiss(withDelay: 3.0)
-                self.showImageAnimated(image)
-                //self.logo.image = image
+                self.logo.image = image
             }
             return
         }
-        return showImageAnimated(cashedImage) //logo.image = cashedImage
+        return logo.image = cashedImage
     }
     
-    private func showImageAnimated(_ image: UIImage) {
-        
-        self.logo.image = image
-        UIView.animate(withDuration: 0, delay: 0.5, options: .showHideTransitionViews, animations: { () -> Void in
-            self.logo.alpha = 1
-            }, completion: nil)
-    }
+//    private func showImageAnimated(_ image: UIImage) {
+//        
+//        logo.image = image
+//        logo.alpha = 0
+//
+//        UIView.animate(withDuration: 0, delay: 0.3, options: .curveEaseOut, animations: { () -> Void in
+//            self.logo.alpha = 1
+//            }, completion: nil)
+//    }
 
     private func available() {
         

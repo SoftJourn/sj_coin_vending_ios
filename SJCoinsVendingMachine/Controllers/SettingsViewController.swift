@@ -178,9 +178,10 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         
         guard let machine = machines?[indexPath.item] else { return }
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        if let identifier = machine.internalIdentifier {
+        if let identifier = machine.internalIdentifier, let name = machine.name {
             if !Bool(identifier == DataManager.shared.machineId) {
                 DataManager.shared.machineId = identifier
+                DataManager.shared.machineName = name
             }
         }
         tableView.reloadData()

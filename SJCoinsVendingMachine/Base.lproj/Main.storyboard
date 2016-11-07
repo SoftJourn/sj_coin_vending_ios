@@ -603,7 +603,7 @@
             </objects>
             <point key="canvasLocation" x="4172" y="-595"/>
         </scene>
-        <!--Vending Machine-->
+        <!--Home View Controller-->
         <scene sceneID="7S9-WC-Tdu">
             <objects>
                 <viewController id="oMC-8B-X15" customClass="HomeViewController" customModule="SJCoinsVendingMachine" customModuleProvider="target" sceneMemberID="viewController">
@@ -780,7 +780,7 @@
                             <constraint firstItem="V3y-Ip-W9B" firstAttribute="bottom" secondItem="zZ7-D6-j0o" secondAttribute="top" id="uP7-Ra-CJ6"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Vending Machine" id="wE0-4D-ToB">
+                    <navigationItem key="navigationItem" id="wE0-4D-ToB">
                         <barButtonItem key="backBarButtonItem" title="Back" id="6mm-Xr-UIx"/>
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="Znq-ra-1Tq">
                             <connections>
@@ -816,7 +816,7 @@
             </objects>
             <point key="canvasLocation" x="4172" y="-1337"/>
         </scene>
-        <!--Setting-->
+        <!--Settings-->
         <scene sceneID="FNo-iD-XeF">
             <objects>
                 <viewController id="a5c-G4-fqF" customClass="SettingsViewController" customModule="SJCoinsVendingMachine" customModuleProvider="target" sceneMemberID="viewController">
@@ -863,7 +863,7 @@
                             <constraint firstItem="hp6-cN-bD1" firstAttribute="centerX" secondItem="CLI-hs-giy" secondAttribute="centerX" id="qar-PN-aig"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Setting" id="351-ok-RQj">
+                    <navigationItem key="navigationItem" title="Settings" id="351-ok-RQj">
                         <barButtonItem key="rightBarButtonItem" title="Done" id="3og-Ry-neP">
                             <connections>
                                 <action selector="doneButtonPressed:" destination="a5c-G4-fqF" id="h7Q-o9-iwc"/>

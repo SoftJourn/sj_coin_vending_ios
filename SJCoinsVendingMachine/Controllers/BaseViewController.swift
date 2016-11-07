@@ -132,8 +132,9 @@ class BaseViewController: UIViewController {
                 APIManager.fetchMachines()
             }.then { object -> Void in
                 let machines = object as! [MachinesModel]
-                guard let identifier = machines[0].internalIdentifier else { return }
+                guard let identifier = machines[0].internalIdentifier, let name = machines[0].name else { return }
                 DataManager.shared.machineId = identifier
+                DataManager.shared.machineName = name
                 fulfill(object)
             }.catch { error in
                 reject(error)

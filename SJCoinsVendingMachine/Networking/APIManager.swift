@@ -130,6 +130,7 @@ class APIManager: RequestManager {
     class func fetch(image urlString : String, complition: @escaping withImage) {
         
         customManager.request("\(networking.baseURL)vending/v1/\(urlString)")
+            .validate()
             .responseImage { response in
                 switch response.result {
                 case .success(let image):

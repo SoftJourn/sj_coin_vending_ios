@@ -18,6 +18,11 @@ class DataManager: NSObject {
         get { return Defaults[.kMachineId] }
         set { Defaults[.kMachineId] = newValue }
     }
+    var machineName: String {
+        get { return Defaults[.kMachineName] }
+        set { Defaults[.kMachineName] = newValue }
+    }
+    
     var fistLaunch: Bool {
         get { return Defaults[.fistLaunch] }
         set { Defaults[.fistLaunch] = newValue }

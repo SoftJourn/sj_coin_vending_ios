@@ -40,6 +40,7 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
+        title = DataManager.shared.machineName
         updateBalance()
     }
     
