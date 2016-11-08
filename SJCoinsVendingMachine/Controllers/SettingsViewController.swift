@@ -24,7 +24,9 @@ class SettingsViewController: BaseViewController {
         return DataManager.shared.machines
     }
     fileprivate var oldMachineId: Int!
-
+    fileprivate var chosenMachineID = DataManager.shared.machineId
+    fileprivate var chosenMachineName = DataManager.shared.machineName
+    
     // MARK: Lifecycle
     override func viewDidLoad() {
         
@@ -54,10 +56,14 @@ class SettingsViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func doneButtonPressed(_ sender: UIBarButtonItem) {
         
-        if DataManager.shared.machineId == oldMachineId {
+        
+        if DataManager.shared.machineId == chosenMachineID {
             self.dismiss(animated: true) { }
         } else {
             SVProgressHUD.show(withStatus: spinerMessage.loading)
+            DataManager.shared.machineId = self.chosenMachineID
+            DataManager.shared.machineName = self.chosenMachineName
+            
             firstly {
                 self.fetchFavorites().asVoid()
             }.then {
@@ -155,9 +161,8 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             guard let machine = machines else { return cell }
-            let machineId = DataManager.shared.machineId
             cell.textLabel?.text = machine[indexPath.item].name
-            if machine[indexPath.item].internalIdentifier == machineId {
+            if machine[indexPath.item].internalIdentifier == chosenMachineID {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
@@ -176,14 +181,9 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let machine = machines?[indexPath.item] else { return }
-        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        if let identifier = machine.internalIdentifier, let name = machine.name {
-            if !Bool(identifier == DataManager.shared.machineId) {
-                DataManager.shared.machineId = identifier
-                DataManager.shared.machineName = name
-            }
-        }
+        guard let machine = machines?[indexPath.item], let identifier = machine.internalIdentifier, let name = machine.name else { return }
+        chosenMachineID = identifier
+        chosenMachineName = name
         tableView.reloadData()
     }
 }

@@ -51,16 +51,16 @@ class BaseTableViewCell: UITableViewCell {
         logo.image = picture.placeholder
     }
     
-    func load(image endpoint: String?) {
-        
-        guard let endpoint = endpoint else { return logo.image = picture.placeholder }
-        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
-            return APIManager.fetch(image: endpoint) { [unowned self] image in
-                self.logo.image = image
-            }
-        }
-        logo.image = cashedImage
-    }
+//    func load(image endpoint: String?) {
+//        
+//        guard let endpoint = endpoint else { return logo.image = picture.placeholder }
+//        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
+//            return APIManager.fetch(image: endpoint) { [unowned self] image in
+//                self.logo.image = image
+//            }
+//        }
+//        logo.image = cashedImage
+//    }
     
     func verifyConnection(execute: ()->()) {
         

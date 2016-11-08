@@ -49,7 +49,9 @@ class FavoritesTableViewCell: BaseTableViewCell {
             nameLabel.text = name
             priceLabel.text = "\(price) Coins"
         }
-        load(image: product.imageUrl)
+        if let url = URL.init(string: "\(networking.baseURL)vending/v1/\(item.imageUrl)") {
+            logo.af_setImage(withURL: url)
+        }
         return self
     }
     

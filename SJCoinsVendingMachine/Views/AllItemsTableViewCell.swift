@@ -41,7 +41,8 @@ class AllItemsTableViewCell: BaseTableViewCell {
             nameLabel.text = name
             priceLabel.text = "\(price) Coins"
         }
-        load(image: product.imageUrl)
+        
+        //load(image: product.imageUrl)
         return self
     }
 }

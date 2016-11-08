@@ -21,11 +21,9 @@ class AccountViewController: BaseViewController {
     @IBOutlet fileprivate var tableView: UITableView!
     
     fileprivate var accountInformation: AccountModel? {
-        
         return DataManager.shared.account
     }
     fileprivate var purchases: [PurchaseHistoryModel]? {
-        
         return DataManager.shared.purchases
     }
     

@@ -14,3 +14,9 @@ protocol CellDelegate: class {
     func remove(favorite cell: BaseTableViewCell)
     func buy(product item: Products)
 }
+
+protocol DataManagerDelegate: class {
+    
+    func didChangeMachine()
+}
+

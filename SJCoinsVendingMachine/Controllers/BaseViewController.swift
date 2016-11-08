@@ -169,7 +169,7 @@ class BaseViewController: UIViewController {
         when(fulfilled: favorites, products, account).then { _ in
             NavigationManager.shared.presentTabBarController()
         }.catch { error in
-            self.present(alert: .retryLaunch(self.downloadingActions()))
+            //self.present(alert: .retryLaunch(self.downloadingActions()))
         }
     }
     

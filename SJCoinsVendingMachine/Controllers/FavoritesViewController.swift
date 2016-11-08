@@ -96,7 +96,6 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         return cell.configure(with: item)
     }
     
-    
     // MARK: UITableViewDelegate
 
 }

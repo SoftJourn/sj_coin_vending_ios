@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import KeychainAccess
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,13 +17,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        customSVProgressHUD()
+        //customSVProgressHUD()
+        verifyFirstLaunch()
         return true
     }
     
-    fileprivate func customSVProgressHUD() {
+//    private func customSVProgressHUD() {
+//        
+//        SVProgressHUD.setDefaultMaskType(.clear)
+//        SVProgressHUD.setDefaultStyle(.light)
+//    }
+    
+    private func verifyFirstLaunch() {
         
-        SVProgressHUD.setDefaultMaskType(.clear)
-        SVProgressHUD.setDefaultStyle(.light)
+        if DataManager.shared.fistLaunch {
+            do {
+                try AuthorizationManager.keychain.remove("token")
+                try AuthorizationManager.keychain.remove("refresh")
+            } catch let error {
+                print("error: \(error)")
+            }
+        }
     }
 }

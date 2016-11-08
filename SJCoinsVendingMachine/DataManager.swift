@@ -14,6 +14,8 @@ import SwiftyUserDefaults
 class DataManager: NSObject {
     
     // MARK: Properties
+    weak var delegate: DataManagerDelegate?
+
     dynamic var machineId: Int {
         get { return Defaults[.kMachineId] }
         set { Defaults[.kMachineId] = newValue }
@@ -22,21 +24,17 @@ class DataManager: NSObject {
         get { return Defaults[.kMachineName] }
         set { Defaults[.kMachineName] = newValue }
     }
-    
     var fistLaunch: Bool {
         get { return Defaults[.fistLaunch] }
         set { Defaults[.fistLaunch] = newValue }
     }
-    
     private(set) var machines: [MachinesModel]?
     private(set) var features: FeaturesModel?
     private(set) var account: AccountModel?
     dynamic var favorites: [Products]? {
         didSet { createCategories() }
     }
-    
     private(set) var purchases: [PurchaseHistoryModel]?
-    
     private(set) var categories: [Categories]!
     private(set) var allItems: [Products]?
     private(set) var lastAdded: [Products]?
@@ -64,6 +62,7 @@ class DataManager: NSObject {
             createBestSellers()
             createCategories()
             unavailableFavorites()
+            delegate?.didChangeMachine()
         case let object as [Products]:
             favorites = object
         case let object as AccountModel:

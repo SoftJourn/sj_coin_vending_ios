@@ -41,5 +41,5 @@ class InitialViewController: BaseViewController {
             DataManager.shared.fistLaunch = true
             NavigationManager.shared.presentLoginViewController()
         }
-    }    
+    }
 }

@@ -39,24 +39,19 @@ class AllItemsViewController: BaseViewController {
         return searchController
     }()
     
-    private var allItems: [Products]? {
-        
+    fileprivate var allItems: [Products]? {
         return DataManager.shared.allItems
     }
     private var lastAdded: [Products]? {
-        
         return DataManager.shared.lastAdded
     }
     private var bestSellers: [Products]? {
-        
         return DataManager.shared.bestSellers
     }
     private var categories: [Categories]? {
-        
         return DataManager.shared.features?.categories
     }
     fileprivate var favorite: [Products]? {
-        
         return DataManager.shared.favorites
     }
     
@@ -78,6 +73,7 @@ class AllItemsViewController: BaseViewController {
     private func viewDidLoadNotUsingSeeAll() {
         
         filterItems = SortingManager().sortBy(name: allItems, state: nil)
+        DataManager.shared.delegate = self
         tableView.addSubview(refreshControl)
         self.definesPresentationContext = true
     }
@@ -139,7 +135,7 @@ class AllItemsViewController: BaseViewController {
     private func changeAndReload() {
         
         if self.filterItems != nil {
-            self.change(filter: self.prepared(name: categoryName.allItems), items: self.allItems)
+            change(filter: self.prepared(name: categoryName.allItems), items: self.allItems)
         }
         reloadTableView()
     }
@@ -190,7 +186,7 @@ class AllItemsViewController: BaseViewController {
         return actions
     }
     
-    private func change(filter name: String?, items: [Products]?) {
+    fileprivate func change(filter name: String?, items: [Products]?) {
         
         let sortedItems = SortingManager().sortBy(name: items, state: nil)
         filterItems = sortedItems
@@ -204,7 +200,7 @@ class AllItemsViewController: BaseViewController {
         }
     }
     
-    private func prepared(name: String) -> String {
+    fileprivate func prepared(name: String) -> String {
         
         return "\(name) ▾"
     }
@@ -303,5 +299,14 @@ extension AllItemsViewController: CellDelegate {
     func buy(product item: Products) {
         
         present(confirmation: item)
+    }
+}
+
+extension AllItemsViewController: DataManagerDelegate {
+    
+    // MARK: DataManagerDelegate
+    func didChangeMachine() {
+        
+        change(filter: self.prepared(name: categoryName.allItems), items: self.allItems)
     }
 }

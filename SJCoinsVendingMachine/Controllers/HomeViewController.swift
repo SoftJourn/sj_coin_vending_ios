@@ -21,11 +21,9 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var balanceLabel: UILabel!
     
     fileprivate var categories: [Categories]? {
-
         return DataManager.shared.categories
     }
     fileprivate var unavailable: [Int]? {
-        
         return DataManager.shared.unavailable
     }
     

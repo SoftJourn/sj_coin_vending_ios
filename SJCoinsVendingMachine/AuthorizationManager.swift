@@ -18,13 +18,14 @@ extension DefaultsKeys {
     static let kMachineId = DefaultsKey<Int>("machineId")
     static let kMachineName = DefaultsKey<String>("machineName")
     static let fistLaunch = DefaultsKey<Bool>("fistLaunch")
+    static let kAppID = DefaultsKey<String>("appID")
 }
 
 class AuthorizationManager: RequestManager {
     
     // MARK: Constants
     private static let grantType = "password"
-    private static var keychain = Keychain(service: "com.softjourn.SJCoinsVendingMachine")
+    static var keychain = Keychain(service: "com.softjourn.SJCoinsVendingMachine")
 
     typealias complited = (_ error: Error?) -> ()
     
@@ -76,8 +77,6 @@ class AuthorizationManager: RequestManager {
         } catch let error {
             print(error)
         }
-        //print("ACCESS: \(Defaults[.kAccessToken])")
-        //print("REFRESH: \(Defaults[.kRefreshToken])")
     }
     
     class func removeAccessToken() {
@@ -93,6 +92,7 @@ class AuthorizationManager: RequestManager {
     class func accessTokenExist() -> Bool {
         
         guard let _ = keychain["token"] else { return false }
+        //return false
         return true
     }
     
