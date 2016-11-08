@@ -16,7 +16,21 @@ class BaseManager {
     static let customManager: Alamofire.SessionManager = {
         
         //Privacy configuration the Alamofire manager
-        let serverTrustPolicies: [String: ServerTrustPolicy] = [ "sjcoins-testing.softjourn.if.ua": .disableEvaluation ]
+        let pathToCert = Bundle.main.path(forResource: "coin", ofType: "bks")
+        let certificateData = NSData(contentsOfFile: pathToCert!)!
+        let certificate = SecCertificateCreateWithData(nil, certificateData)
+
+//        let serverTrustPolicy = ServerTrustPolicy.pinCertificates(
+//            
+//            // Getting the certificate from the certificate data
+//            certificates: [certificate!],
+//            // Choose to validate the complete certificate chain, not only the certificate itself
+//            validateCertificateChain: true,
+//            // Check that the certificate mathes the host who provided it
+//            validateHost: true
+//        )
+        
+        let serverTrustPolicies: [String: ServerTrustPolicy] = [ "sjcoins-testing.softjourn.if.ua": .disableEvaluation ] //serverTrustPolicy ]
         
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 20 //seconds
