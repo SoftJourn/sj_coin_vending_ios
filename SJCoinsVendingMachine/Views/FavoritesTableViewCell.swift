@@ -8,7 +8,8 @@
 
 import UIKit
 import Alamofire
-import  SVProgressHUD
+import SVProgressHUD
+import AlamofireImage
 
 class FavoritesTableViewCell: BaseTableViewCell {
     
@@ -49,9 +50,11 @@ class FavoritesTableViewCell: BaseTableViewCell {
             nameLabel.text = name
             priceLabel.text = "\(price) Coins"
         }
-        if let url = URL.init(string: "\(networking.baseURL)vending/v1/\(item.imageUrl)") {
-            logo.af_setImage(withURL: url)
-        }
+        
+        guard let imageUrl = item.imageUrl else { return self }
+        logo.af_setImage(withURL: URL(string: "\(networking.baseURL)vending/v1/\(imageUrl)")!,
+                         placeholderImage: #imageLiteral(resourceName: "Placeholder"),
+                         imageTransition: .crossDissolve(0.5))
         return self
     }
     

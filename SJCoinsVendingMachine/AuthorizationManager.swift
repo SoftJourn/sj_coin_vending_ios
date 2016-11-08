@@ -18,7 +18,6 @@ extension DefaultsKeys {
     static let kMachineId = DefaultsKey<Int>("machineId")
     static let kMachineName = DefaultsKey<String>("machineName")
     static let fistLaunch = DefaultsKey<Bool>("fistLaunch")
-    static let kAppID = DefaultsKey<String>("appID")
 }
 
 class AuthorizationManager: RequestManager {

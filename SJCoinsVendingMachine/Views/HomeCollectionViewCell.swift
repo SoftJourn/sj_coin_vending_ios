@@ -82,13 +82,7 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         guard let item = categoryItems?[indexPath.item] else { return cell }
         cell.availability = true
         
-        let urlString = "\(networking.baseURL)vending/v1/\(item.imageUrl)"
-        let url1 = URL.init(string: urlString)
-        
-        
-        if let url = URL(string: "\(networking.baseURL)vending/v1/\(item.imageUrl)") {
-            cell.logo.af_setImage(withURL: url, placeholderImage: #imageLiteral(resourceName: "Placeholder"), filter: nil, imageTransition: .crossDissolve(0.5), runImageTransitionIfCached: false) { _ in }
-        }
+        //fetchImage(withEndpoint: item.imageUrl, cell: cell)
         
         if categoryNames == categoryName.favorites {
             guard let unavailable = unavailableFavorites, let identifier = item.internalIdentifier else {
@@ -100,7 +94,15 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         }
         return cell.configure(with: item)
     }
-        
+    
+//    private func fetchImage(withEndpoint: String?, cell: HomeCollectionViewInternalCell) {
+//    
+//    guard let imageUrl = withEndpoint else { return }
+//    cell.logo.af_setImage(withURL: URL(string: "\(networking.baseURL)vending/v1/\(imageUrl)")!,
+//                          placeholderImage: #imageLiteral(resourceName: "Placeholder"),
+//                          imageTransition: .crossDissolve(0.5))
+//    }
+    
     //UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         

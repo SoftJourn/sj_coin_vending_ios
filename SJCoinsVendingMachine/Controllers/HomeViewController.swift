@@ -38,7 +38,7 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        title = DataManager.shared.machineName
+        navigationItem.title = DataManager.shared.machineName
         updateBalance()
     }
     
@@ -85,8 +85,7 @@ class HomeViewController: BaseViewController {
     
     private func updateBalance() {
         
-        guard let balance = DataManager.shared.account?.amount else { return /* show */ }
-        
+        guard let balance = DataManager.shared.account?.amount else { return }
         DispatchQueue.main.async { [unowned self] in
             self.balanceLabel.text = "Your balance is \(balance) coins"
         }

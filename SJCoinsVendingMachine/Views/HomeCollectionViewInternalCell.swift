@@ -51,7 +51,7 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
         
         name = item.name
         price = item.price
-        //load(image: item.imageUrl)
+        load(image: item.imageUrl)
         return self
     }
     
@@ -61,26 +61,26 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
         logo.image = picture.placeholder
     }
     
-//    private func load(image endpoint: String?) {
-//        
-//        guard let endpoint = endpoint else { return logo.image = picture.placeholder }
-//        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
-//            APIManager.fetch(image: endpoint) { [unowned self] image in
-//                self.availability ? self.showImageAnimated(image, alpha: 1, duration: 1) : self.showImageAnimated(image, alpha: 0.3, duration: 1)
-//            }
-//            return
-//        }
-//        availability ? showImageAnimated(cashedImage, alpha: 1, duration: 0.5) : showImageAnimated(cashedImage, alpha: 0.3, duration: 0.5)
-//        return
-//    }
-//    
-//    private func showImageAnimated(_ image: UIImage, alpha: CGFloat, duration: TimeInterval) {
-//        
-//        logo.image = image
-//        logo.alpha = 0
-//
-//        UIView.animate(withDuration: duration, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
-//            self.logo.alpha = alpha
-//            }, completion: nil)
-//    }
+    private func load(image endpoint: String?) {
+        
+        guard let endpoint = endpoint else { return logo.image = picture.placeholder }
+        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
+            APIManager.fetch(image: endpoint) { [unowned self] image in
+                self.availability ? self.showImageAnimated(image, alpha: 1, duration: 1) : self.showImageAnimated(image, alpha: 0.3, duration: 1)
+            }
+            return
+        }
+        availability ? showImageAnimated(cashedImage, alpha: 1, duration: 0.5) : showImageAnimated(cashedImage, alpha: 0.3, duration: 0.5)
+        return
+    }
+    
+    private func showImageAnimated(_ image: UIImage, alpha: CGFloat, duration: TimeInterval) {
+        
+        logo.image = image
+        logo.alpha = 0
+
+        UIView.animate(withDuration: duration, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
+            self.logo.alpha = alpha
+            }, completion: nil)
+    }
 }

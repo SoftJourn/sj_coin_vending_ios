@@ -20,7 +20,6 @@ class SettingsViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     
     fileprivate var machines: [MachinesModel]? {
-        
         return DataManager.shared.machines
     }
     fileprivate var oldMachineId: Int!
@@ -55,7 +54,6 @@ class SettingsViewController: BaseViewController {
     
     // MARK: Actions
     @IBAction private func doneButtonPressed(_ sender: UIBarButtonItem) {
-        
         
         if DataManager.shared.machineId == chosenMachineID {
             self.dismiss(animated: true) { }

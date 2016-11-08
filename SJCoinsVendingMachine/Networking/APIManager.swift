@@ -132,6 +132,7 @@ class APIManager: RequestManager {
         customManager.request("\(networking.baseURL)vending/v1/\(urlString)")
             .validate()
             .responseImage { response in
+                //debugPrint(response)
                 switch response.result {
                 case .success(let image):
                     DataManager.imageCache.add(image, withIdentifier: urlString)

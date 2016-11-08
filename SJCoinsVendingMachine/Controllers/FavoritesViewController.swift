@@ -92,7 +92,6 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.availability = false
             }
         }
-        
         return cell.configure(with: item)
     }
     

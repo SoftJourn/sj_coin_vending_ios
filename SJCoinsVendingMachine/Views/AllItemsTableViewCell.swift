@@ -41,8 +41,10 @@ class AllItemsTableViewCell: BaseTableViewCell {
             nameLabel.text = name
             priceLabel.text = "\(price) Coins"
         }
-        
-        //load(image: product.imageUrl)
+        guard let imageUrl = item.imageUrl else { return self }
+        logo.af_setImage(withURL: URL(string: "\(networking.baseURL)vending/v1/\(imageUrl)")!,
+                         placeholderImage: #imageLiteral(resourceName: "Placeholder"),
+                         imageTransition: .crossDissolve(0.5))
         return self
     }
 }
