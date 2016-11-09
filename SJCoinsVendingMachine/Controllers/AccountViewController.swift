@@ -110,8 +110,8 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: PurchaseHistoryTableViewCell.identifier, for: indexPath) as! PurchaseHistoryTableViewCell
         
-        guard let item = purchases?[indexPath.item], let price = item.price, let name = item.name else  { return cell }
-        let date = DateManager().convertData(from: item.time!)
+        guard let item = purchases?[indexPath.item], let price = item.price, let name = item.name, let time = item.time else { return cell }
+        let date = DateManager().convertData(from: time)
         cell.transactionDate.text = date
         cell.transactionItem.text = name
         cell.transactionPrice.text = "\(price) Coins"

@@ -83,3 +83,8 @@ struct picture {
     static let checked = #imageLiteral(resourceName: "checked")
     static let unchecked = #imageLiteral(resourceName: "unchecked")
 }
+
+struct labels {
+    
+    static let noItems = "Currently there are no products in this category."
+}

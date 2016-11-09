@@ -8,7 +8,6 @@
 
 import UIKit
 import SVProgressHUD
-import SwiftyUserDefaults
 import PromiseKit
 
 class InitialViewController: BaseViewController {

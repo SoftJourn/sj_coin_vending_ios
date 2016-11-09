@@ -11,21 +11,22 @@ import SVProgressHUD
 import AlamofireImage
 import PromiseKit
 
-enum Filter {
-    case lastAdded
-    case bestSellers
-    case allItems
-}
-
 class AllItemsViewController: BaseViewController {
     
+    private enum Filter {
+        case lastAdded
+        case bestSellers
+        case allItems
+    }
+
     // MARK: Constants
     static let identifier = "\(AllItemsViewController.self)"
     
     // MARK: Properties
     @IBOutlet fileprivate weak var tableView: UITableView!
-    @IBOutlet private weak var segmentControl: UISegmentedControl!
+    @IBOutlet fileprivate weak var segmentControl: UISegmentedControl!
     @IBOutlet private weak var titleButton: UIButton!
+    @IBOutlet fileprivate weak var noItemsLabel: UILabel!
     
     private lazy var sortingByName = SortingManager()
     private lazy var sortingByPrice = SortingManager()
@@ -62,6 +63,7 @@ class AllItemsViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        noItemsLabel.isHidden = true
         usedSeeAll ? viewDidLoadUsingSeeAll() : viewDidLoadNotUsingSeeAll()
     }
     
@@ -229,7 +231,21 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         if resultSearchController.isActive && resultSearchController.searchBar.text! != "" {
             return searchData.count
         } else {
-            return filterItems == nil ? 0 : filterItems!.count
+            return numberOfRows()
+        }
+    }
+    
+    private func numberOfRows() -> Int {
+        
+        if filterItems == nil || (filterItems?.isEmpty)! {
+            segmentControl.isHidden = true
+            noItemsLabel.isHidden = false
+            noItemsLabel.text = labels.noItems
+            return 0
+        } else {
+            segmentControl.isHidden = false
+            noItemsLabel.isHidden = true
+            return filterItems!.count
         }
     }
     

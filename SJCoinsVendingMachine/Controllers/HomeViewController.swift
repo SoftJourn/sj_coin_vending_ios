@@ -9,16 +9,15 @@
 import UIKit
 import SVProgressHUD
 import PromiseKit
-import SwiftyUserDefaults
 
 class HomeViewController: BaseViewController {
     
     // MARK: Constants
-    let cellHeight: CGFloat = 180
+    fileprivate let cellHeight: CGFloat = 180
     
     // MARK: Properties
-    @IBOutlet weak fileprivate var collectionView: UICollectionView!
-    @IBOutlet weak var balanceLabel: UILabel!
+    @IBOutlet fileprivate weak var collectionView: UICollectionView!
+    @IBOutlet private weak var balanceLabel: UILabel!
     
     fileprivate var categories: [Categories]? {
         return DataManager.shared.categories
@@ -98,6 +97,7 @@ class HomeViewController: BaseViewController {
     
     // MARK: - Key-Value Observing
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
         guard let keyPath = keyPath else { return }
         switch keyPath {
         case #keyPath(dataManager.favorites):

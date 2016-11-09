@@ -14,8 +14,8 @@ class LoginViewController: BaseViewController {
     
     // MARK: Constants
     static let identifier = "\(LoginViewController.self)"
-    let isEmptyString = "This field is required."
-    let notAllowedString = "These symbols are not allowed."
+    private let isEmptyString = "This field is required."
+    private let notAllowedString = "These symbols are not allowed."
 
     // MARK: Properties
     @IBOutlet weak var loginTextField: UITextField!
@@ -120,15 +120,11 @@ class LoginViewController: BaseViewController {
     
     private func presentErrorLabels() {
         
-        if let login = loginTextField.text {
-            if login.isEmpty {
-                handleValidation(.isEmpty, label: loginErrorLabel)
-            }
+        if loginTextField.text != nil || loginTextField.text?.isEmpty == false {
+            handleValidation(.isEmpty, label: loginErrorLabel)
         }
-        if let password = passwordTexField.text {
-            if password.isEmpty {
-                handleValidation(.isEmpty, label: passwordErrorLabel)
-            }
+        if passwordTexField.text != nil || passwordTexField.text?.isEmpty == false {
+            handleValidation(.isEmpty, label: passwordErrorLabel)
         }
     }
     
@@ -205,10 +201,8 @@ class LoginViewController: BaseViewController {
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
     }
-}
-
-extension LoginViewController {
     
+    // MARK: UITapGestureRecognizer
     func hideKeyboardWhenTappedAround() {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))

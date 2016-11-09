@@ -13,12 +13,12 @@ import PromiseKit
 class FavoritesViewController: BaseViewController {
     
     // MARK: Properties
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet fileprivate weak var tableView: UITableView!
+    @IBOutlet fileprivate weak var noItemsLabel: UILabel!
     
     fileprivate var favorites: [Products]? {
         return SortingManager().sortBy(name: DataManager.shared.favorites, state: nil)
     }
-    
     fileprivate var unavailable: [Int]? {
         return DataManager.shared.unavailable
     }
@@ -28,6 +28,7 @@ class FavoritesViewController: BaseViewController {
         
         super.viewDidLoad()
         tableView.addSubview(refreshControl)
+        noItemsLabel.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,14 +77,14 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        if favorites == nil {
-//            showEmptyView()
-//            return 0
-//        } else {
-//            hideEmptyView()
-//            return favorites!.count
-//        }
-        return favorites == nil ? 0 : favorites!.count
+        if favorites == nil || (favorites?.isEmpty)! {
+            noItemsLabel.isHidden = false
+            noItemsLabel.text = labels.noItems
+            return 0
+        } else {
+            noItemsLabel.isHidden = true
+            return favorites!.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -13,7 +13,7 @@ import PromiseKit
 class BaseViewController: UIViewController {
     
     // MARK: Constants
-    struct buying {
+    private struct buying {
         struct title {
             static let success = "Success"
             static let failed = "Failed"
@@ -189,7 +189,7 @@ class BaseViewController: UIViewController {
         return [cancelButton, retryButton]
     }
 
-    func downloadingActions() -> [UIAlertAction] {
+    private func downloadingActions() -> [UIAlertAction] {
         
         let retryButton = UIAlertAction(title: buttonTitle.retry, style: .destructive) { [unowned self] action in
             
@@ -218,7 +218,7 @@ class BaseViewController: UIViewController {
         present(alert: .confirmation(name, price, buyingActions(with: identifier)))
     }
     
-    fileprivate func buyingActions(with identifier: Int?) -> [UIAlertAction] {
+    private func buyingActions(with identifier: Int?) -> [UIAlertAction] {
         
         let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .destructive) { [unowned self] action in
             
@@ -230,7 +230,7 @@ class BaseViewController: UIViewController {
         return [cancelButton, confirmButton]
     }
     
-    func buy(using identifier: Int?) {
+    private func buy(using identifier: Int?) {
         
             guard let identifier = identifier else { return }
             SVProgressHUD.show(withStatus: spinerMessage.loading)

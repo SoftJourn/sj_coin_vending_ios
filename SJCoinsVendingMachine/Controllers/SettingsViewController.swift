@@ -14,7 +14,7 @@ import SwiftyUserDefaults
 class SettingsViewController: BaseViewController {
     
     // MARK: Constants
-    let settingsCellIdentifier = "settingsCellIdentifier"
+    fileprivate let settingsCellIdentifier = "settingsCellIdentifier"
     
     // MARK: Property
     @IBOutlet weak var tableView: UITableView!
@@ -124,22 +124,27 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         
         switch section {
         case 0:
-            let customView = UIView()
-            let label = UILabel(frame: CGRect(x: 30, y: 16, width: 300, height: 20))
-            label.textAlignment = .left
-
-            if Reachability.connectedToNetwork() {
-                label.text = "Vending machines"
-                label.textColor = UIColor.gray
-            } else {
-                label.text = "No Internet connection"
-                label.textColor = UIColor.red
-            }
-            customView.addSubview(label)
-            return customView
+            return customizedTableViewHeader()
         default:
             return nil
         }
+    }
+    
+    private func customizedTableViewHeader() -> UIView {
+        
+        let customView = UIView()
+        let label = UILabel(frame: CGRect(x: 30, y: 16, width: 300, height: 20))
+        label.textAlignment = .left
+        
+        if Reachability.connectedToNetwork() {
+            label.text = "Vending machines"
+            label.textColor = UIColor.gray
+        } else {
+            label.text = "No Internet connection"
+            label.textColor = UIColor.red
+        }
+        customView.addSubview(label)
+        return customView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
