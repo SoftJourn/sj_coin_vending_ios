@@ -52,6 +52,8 @@
 		35E504EC1DAD360C00131567 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504E81DAD360C00131567 /* Category.swift */; };
 		35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504F31DAE569B00131567 /* MachinesModel.swift */; };
 		35E504F61DAE569B00131567 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504F41DAE569B00131567 /* Size.swift */; };
+		35FAA1C91DD35430007D3680 /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35FAA1C81DD35430007D3680 /* EmptyStateView.xib */; };
+		35FAA1CB1DD354D6007D3680 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FAA1CA1DD354D6007D3680 /* EmptyStateView.swift */; };
 		35FFBE9A1DD26B3300A078A9 /* coin.bks in Resources */ = {isa = PBXBuildFile; fileRef = 353956A51DD0D241007E752B /* coin.bks */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +106,8 @@
 		35E504E81DAD360C00131567 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		35E504F31DAE569B00131567 /* MachinesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachinesModel.swift; sourceTree = "<group>"; };
 		35E504F41DAE569B00131567 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
+		35FAA1C81DD35430007D3680 /* EmptyStateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyStateView.xib; sourceTree = "<group>"; };
+		35FAA1CA1DD354D6007D3680 /* EmptyStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		6F5FAFC8CD94B442E353D50F /* Pods-SJCoinsVendingMachine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.release.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.release.xcconfig"; sourceTree = "<group>"; };
 		CFFCE6A93FAD050282DD61EF /* Pods-SJCoinsVendingMachine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.debug.xcconfig"; sourceTree = "<group>"; };
 		E4A8354A24EE6A6C35DDA347 /* Pods_SJCoinsVendingMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SJCoinsVendingMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				35617D731DA814E3000582F6 /* Main.storyboard */,
+				35FAA1C81DD35430007D3680 /* EmptyStateView.xib */,
 				35617D701DA814A6000582F6 /* Launch Screen.storyboard */,
 			);
 			name = Interface;
@@ -228,6 +233,7 @@
 				35089F701DABB45F00DC3BAF /* AllItemsTableViewCell.swift */,
 				35089F761DABB45F00DC3BAF /* PurchaseHistoryTableViewCell.swift */,
 				35089F711DABB45F00DC3BAF /* CustomSegmentControl.swift */,
+				35FAA1CA1DD354D6007D3680 /* EmptyStateView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -384,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35FFBE9A1DD26B3300A078A9 /* coin.bks in Resources */,
+				35FAA1C91DD35430007D3680 /* EmptyStateView.xib in Resources */,
 				35617D751DA814E3000582F6 /* Main.storyboard in Resources */,
 				35617D721DA814A6000582F6 /* Launch Screen.storyboard in Resources */,
 				07854FC11D4B8C5300F31AB3 /* Assets.xcassets in Resources */,
@@ -451,6 +458,7 @@
 				35089F681DAB9E4900DC3BAF /* AccountViewController.swift in Sources */,
 				35089F781DABB45F00DC3BAF /* CustomSegmentControl.swift in Sources */,
 				35089F6A1DAB9E4900DC3BAF /* BaseViewController.swift in Sources */,
+				35FAA1CB1DD354D6007D3680 /* EmptyStateView.swift in Sources */,
 				35B80FF91DBB8A8200540659 /* BaseTableViewCell.swift in Sources */,
 				35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */,
 				3580AD741DBA95AC0062DC68 /* Protocols.swift in Sources */,

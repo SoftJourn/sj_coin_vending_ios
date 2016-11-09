@@ -118,6 +118,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
+        //fatal error: Index out of range
         guard let categories = categories?[indexPath.item], let products = categories.products else { return cell }
         if !products.isEmpty {
             cell.delegate = self

@@ -26,7 +26,7 @@ class ResponseHandler {
         let jsonMessage = json["message"]
         switch jsonMessage {
         case "Not enough coins.":
-            return serverError.notEnoughCoins("Not enough coins.")
+            return serverError.notEnoughCoins("Not enough coins to buy item.")
         default:
             return nil
         }
