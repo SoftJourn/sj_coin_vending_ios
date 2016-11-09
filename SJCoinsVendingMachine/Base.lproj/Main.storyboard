@@ -328,10 +328,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="64" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BI9-hU-qmc">
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="fUq-HM-gTW" userLabel="FooterView">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="Qxl-iy-KCE" userLabel="FooterView">
                                     <rect key="frame" x="0.0" y="154" width="375" height="0.0"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
@@ -390,6 +390,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="XDE-v9-A2i" firstAttribute="bottom" secondItem="HHu-r4-VIF" secondAttribute="bottom" id="8d2-cd-jQW"/>
+                                                <constraint firstItem="Q5Y-5b-OIF" firstAttribute="centerY" secondItem="Qso-Zh-68v" secondAttribute="centerY" id="UF3-ao-D7E"/>
                                                 <constraint firstItem="XDE-v9-A2i" firstAttribute="leading" secondItem="4X2-ru-nrQ" secondAttribute="leading" id="UJP-RO-SPz"/>
                                                 <constraint firstItem="XDE-v9-A2i" firstAttribute="leading" secondItem="HHu-r4-VIF" secondAttribute="trailing" constant="8" symbolic="YES" id="UYl-nV-gcH"/>
                                                 <constraint firstItem="HHu-r4-VIF" firstAttribute="centerY" secondItem="mV2-wj-6Qk" secondAttribute="centerY" id="bOc-5N-iG8"/>
@@ -397,6 +398,7 @@
                                                 <constraint firstItem="Qso-Zh-68v" firstAttribute="leading" secondItem="Q5Y-5b-OIF" secondAttribute="trailing" constant="5" id="ktQ-0I-ZnY"/>
                                                 <constraint firstItem="XDE-v9-A2i" firstAttribute="top" secondItem="4X2-ru-nrQ" secondAttribute="bottom" constant="8" symbolic="YES" id="oAq-6s-X3o"/>
                                                 <constraint firstItem="Q5Y-5b-OIF" firstAttribute="centerY" secondItem="mV2-wj-6Qk" secondAttribute="centerY" id="pgX-eK-M2K"/>
+                                                <constraint firstItem="Q5Y-5b-OIF" firstAttribute="centerY" secondItem="HHu-r4-VIF" secondAttribute="centerY" id="q3d-dR-608"/>
                                                 <constraint firstItem="Qso-Zh-68v" firstAttribute="centerY" secondItem="mV2-wj-6Qk" secondAttribute="centerY" id="tgz-CP-Lon"/>
                                                 <constraint firstItem="HHu-r4-VIF" firstAttribute="leading" secondItem="mV2-wj-6Qk" secondAttribute="leadingMargin" constant="6" id="wzE-1x-YRA"/>
                                             </constraints>
@@ -415,13 +417,21 @@
                                     <outlet property="delegate" destination="mLe-Ai-fG4" id="yfR-BS-9HU"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently there are no products in this category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vps-jN-WFC">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="BI9-hU-qmc" firstAttribute="centerX" secondItem="uiT-tH-9ia" secondAttribute="centerX" id="CM7-wR-tmD"/>
                             <constraint firstItem="BI9-hU-qmc" firstAttribute="centerY" secondItem="uiT-tH-9ia" secondAttribute="centerY" id="U2H-F3-cFd"/>
                             <constraint firstItem="BI9-hU-qmc" firstAttribute="height" secondItem="uiT-tH-9ia" secondAttribute="height" id="cFC-eT-hki"/>
+                            <constraint firstItem="vps-jN-WFC" firstAttribute="leading" secondItem="uiT-tH-9ia" secondAttribute="leadingMargin" constant="4" id="cwp-vK-jM6"/>
+                            <constraint firstItem="vps-jN-WFC" firstAttribute="centerX" secondItem="BI9-hU-qmc" secondAttribute="centerX" id="i1N-y3-675"/>
                             <constraint firstItem="BI9-hU-qmc" firstAttribute="width" secondItem="uiT-tH-9ia" secondAttribute="width" id="mO5-ZH-qyb"/>
+                            <constraint firstItem="vps-jN-WFC" firstAttribute="centerY" secondItem="uiT-tH-9ia" secondAttribute="centerY" id="wsz-8h-QKs"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Favorites" id="PkW-ob-IYM"/>

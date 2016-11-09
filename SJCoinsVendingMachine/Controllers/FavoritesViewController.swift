@@ -16,15 +16,12 @@ class FavoritesViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     
     fileprivate var favorites: [Products]? {
-        
         return SortingManager().sortBy(name: DataManager.shared.favorites, state: nil)
     }
     
     fileprivate var unavailable: [Int]? {
-
         return DataManager.shared.unavailable
     }
-    var emptyView = EmptyStateView()
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -72,17 +69,6 @@ class FavoritesViewController: BaseViewController {
             //SVProgressHUD.dismiss(withDelay: 0.5)
         }
     }
-   
-    // MARK: empty view methods
-    func showEmptyView() {
-        emptyView.isHidden = false
-        tableView.bringSubview(toFront: emptyView)
-    }
-    
-    func hideEmptyView() {
-        emptyView.isHidden = true
-        tableView.sendSubview(toBack: emptyView)
-    }
 }
 
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
@@ -90,6 +76,13 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+//        if favorites == nil {
+//            showEmptyView()
+//            return 0
+//        } else {
+//            hideEmptyView()
+//            return favorites!.count
+//        }
         return favorites == nil ? 0 : favorites!.count
     }
     
