@@ -11,13 +11,21 @@ import UIKit
 class EmptyStateView: UIView {
 
     @IBOutlet weak var textLabel: UILabel!
+    @IBOutlet weak var view: UIView!
 
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+        setupView()
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
     
     func setupView() {
-        Bundle.main.loadNibNamed(EmptyStateView, owner: self, options: nil)
+        Bundle.main.loadNibNamed("EmptyStateView", owner: self, options: nil)
         view.frame = self.frame
         addSubview(view)
     }
-    
 }
-

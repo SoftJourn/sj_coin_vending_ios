@@ -24,7 +24,8 @@ class FavoritesViewController: BaseViewController {
 
         return DataManager.shared.unavailable
     }
-    
+    var emptyView = EmptyStateView()
+
     // MARK: Lifecycle
     override func viewDidLoad() {
         
@@ -70,6 +71,17 @@ class FavoritesViewController: BaseViewController {
             self.tableView.reloadData()
             //SVProgressHUD.dismiss(withDelay: 0.5)
         }
+    }
+   
+    // MARK: empty view methods
+    func showEmptyView() {
+        emptyView.isHidden = false
+        tableView.bringSubview(toFront: emptyView)
+    }
+    
+    func hideEmptyView() {
+        emptyView.isHidden = true
+        tableView.sendSubview(toBack: emptyView)
     }
 }
 
