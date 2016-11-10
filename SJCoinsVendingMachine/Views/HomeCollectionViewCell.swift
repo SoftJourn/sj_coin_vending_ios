@@ -80,10 +80,7 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewInternalCell.identifier, for: indexPath) as! HomeCollectionViewInternalCell
         
         guard let item = categoryItems?[indexPath.item] else { return cell }
-        cell.availability = true
-        
-        //fetchImage(withEndpoint: item.imageUrl, cell: cell)
-        
+        cell.availability = true        
         if categoryNames == categoryName.favorites {
             guard let unavailable = unavailableFavorites, let identifier = item.internalIdentifier else {
                 return cell.configure(with: item)
@@ -94,14 +91,6 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         }
         return cell.configure(with: item)
     }
-    
-//    private func fetchImage(withEndpoint: String?, cell: HomeCollectionViewInternalCell) {
-//    
-//    guard let imageUrl = withEndpoint else { return }
-//    cell.logo.af_setImage(withURL: URL(string: "\(networking.baseURL)vending/v1/\(imageUrl)")!,
-//                          placeholderImage: #imageLiteral(resourceName: "Placeholder"),
-//                          imageTransition: .crossDissolve(0.5))
-//    }
     
     //UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

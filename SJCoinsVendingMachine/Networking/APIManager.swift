@@ -125,25 +125,6 @@ class APIManager: RequestManager {
         return promise
     }
     
-    typealias withImage = (_ image: UIImage) -> ()
-    
-    class func fetch(image urlString : String, complition: @escaping withImage) {
-        
-        customManager.request("\(networking.baseURL)vending/v1/\(urlString)")
-            .validate()
-            .responseImage { response in
-                //debugPrint(response)
-                switch response.result {
-                case .success(let image):
-                    DataManager.imageCache.add(image, withIdentifier: urlString)
-                    complition(image)
-                case .failure(let error):
-                    print(error)
-                    complition(picture.placeholder)
-                }
-        }
-    }
-    
     class func buy(product identifier: Int, machineID: Int) -> Promise<AnyObject> {
         
         let promise = Promise<AnyObject> { fulfill, reject in

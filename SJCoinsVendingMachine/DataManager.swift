@@ -44,10 +44,10 @@ class DataManager: NSObject {
     
     // MARK: Static Properties
     static let shared = DataManager()
-    static let imageCache = AutoPurgingImageCache(
-        memoryCapacity: 100 * 1024 * 1024,
-        preferredMemoryUsageAfterPurge: 60 * 1024 * 1024
-    )
+//    static let imageCache = AutoPurgingImageCache(
+//        memoryCapacity: 100 * 1024 * 1024,
+//        preferredMemoryUsageAfterPurge: 60 * 1024 * 1024
+//    )
     
     // MARK: Setters
     func save(_ object: AnyObject) {

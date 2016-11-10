@@ -44,43 +44,20 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
         super.prepareForReuse()
         nameLabel.text = ""
         priceLabel.text = ""
-        resetImage()
+        logo.af_cancelImageRequest()
+        logo.layer.removeAllAnimations()
+        logo.image = nil
     }
     
     func configure(with item: Products) -> HomeCollectionViewInternalCell {
         
         name = item.name
         price = item.price
-        load(image: item.imageUrl)
+        
+        guard let imageUrl = item.imageUrl else { return self }
+        logo.af_setImage(withURL: URL(string: "\(networking.baseURL)vending/v1/\(imageUrl)")!,
+                         placeholderImage: #imageLiteral(resourceName: "Placeholder"),
+                         imageTransition: .crossDissolve(0.5))
         return self
-    }
-    
-    private func resetImage() {
-        
-        request?.cancel()
-        logo.image = picture.placeholder
-    }
-    
-    private func load(image endpoint: String?) {
-        
-        guard let endpoint = endpoint else { return logo.image = picture.placeholder }
-        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
-            APIManager.fetch(image: endpoint) { [unowned self] image in
-                self.availability ? self.showImageAnimated(image, alpha: 1, duration: 1) : self.showImageAnimated(image, alpha: 0.3, duration: 1)
-            }
-            return
-        }
-        availability ? showImageAnimated(cashedImage, alpha: 1, duration: 0.5) : showImageAnimated(cashedImage, alpha: 0.3, duration: 0.5)
-        return
-    }
-    
-    private func showImageAnimated(_ image: UIImage, alpha: CGFloat, duration: TimeInterval) {
-        
-        logo.image = image
-        logo.alpha = 0
-
-        UIView.animate(withDuration: duration, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
-            self.logo.alpha = alpha
-            }, completion: nil)
     }
 }
