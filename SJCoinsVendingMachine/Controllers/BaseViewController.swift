@@ -72,7 +72,7 @@ class BaseViewController: UIViewController {
             firstly {
                 APIManager.fetchProducts(machineID: DataManager.shared.machineId)
             }.then { object -> Void in
-                print("fetchProducts result")
+                print("FetchProducts result comes from server")
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in
@@ -87,7 +87,7 @@ class BaseViewController: UIViewController {
             firstly {
                 APIManager.fetchFavorites()
             }.then { object -> Void in
-                print("fetchFavorites result")
+                print("FetchFavorites result comes from server")
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in
@@ -102,7 +102,7 @@ class BaseViewController: UIViewController {
             firstly {
                 APIManager.fetchAccount()
             }.then { object -> Void in
-                print("fetchAccount result")
+                print("FetchAccount result comes from server")
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in

@@ -78,7 +78,7 @@ class HomeViewController: BaseViewController {
         
         DispatchQueue.main.async { [unowned self] in
             self.collectionView.reloadData()
-            SVProgressHUD.dismiss(withDelay: 0.5)
+            SVProgressHUD.dismiss(withDelay: 0.2)
         }
     }
     

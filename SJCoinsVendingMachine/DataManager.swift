@@ -63,10 +63,13 @@ class DataManager: NSObject {
             createCategories()
             unavailableFavorites()
             delegate?.didChangeMachine()
+            print("Products saved in DataManager")
         case let object as [Products]:
             favorites = object
+            print("Favorites saved in DataManager")
         case let object as AccountModel:
             account = object
+            print("Account saved in DataManager")
         case let object as [PurchaseHistoryModel]:
             purchases = object
         default: break

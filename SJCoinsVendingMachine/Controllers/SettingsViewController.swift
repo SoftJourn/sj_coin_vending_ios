@@ -62,23 +62,43 @@ class SettingsViewController: BaseViewController {
             DataManager.shared.machineId = self.chosenMachineID
             DataManager.shared.machineName = self.chosenMachineName
             
-            firstly {
-                self.fetchFavorites().asVoid()
-            }.then {
-                self.fetchProducts().asVoid()
-            }.then {
-                self.fetchAccount().asVoid()
-            }.then {
+            let favorites = fetchFavorites()
+            let products = fetchProducts()
+            let account = fetchAccount()
+            
+            when(fulfilled: favorites, products, account).then { _ -> Void in
                 SVProgressHUD.dismiss()
-            }.then {
+                //Reload table view in home controller.
                 self.dismiss(animated: true) { }
             }.catch { error in
                 print(error)
+                self.present(alert: .retryLaunch(self.downloadingActions()))
             }
         }
     }
     
     // MARK: Methods
+    private func downloadingActions() -> [UIAlertAction] {
+        
+        let retryButton = UIAlertAction(title: buttonTitle.retry, style: .destructive) { [unowned self] action in
+            
+            let favorites = self.fetchFavorites()
+            let products = self.fetchProducts()
+            let account = self.fetchAccount()
+            
+            when(fulfilled: favorites, products, account).then { _ -> Void in
+                SVProgressHUD.dismiss()
+                self.dismiss(animated: true) { }
+                }.catch { error in
+                    print(error)
+                    SVProgressHUD.dismiss()
+                    self.present(alert: .retryLaunch(self.downloadingActions()))
+            }
+        }
+        let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
+        return [cancelButton, retryButton]
+    }
+
     override func fetchData() {
         
         if Reachability.connectedToNetwork() {
