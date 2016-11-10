@@ -91,7 +91,6 @@ class LoginViewController: BaseViewController {
     //MARK: Animation methods.
     private func prepareAnimation() {
         
-        imageLogo.alpha = 0
         loginTextField.alpha = 0
         passwordTexField.alpha = 0
         loginButton.alpha = 0
@@ -100,11 +99,11 @@ class LoginViewController: BaseViewController {
     
     private func showElementsAnimated() {
         
-        showHidden(imageLogo, delay: 0.1)
-        showHidden(loginTextField, delay: 0.5)
-        showHidden(passwordTexField, delay: 0.8)
-        showHidden(loginButton, delay: 1.2)
-        showHidden(versionLabel, delay: 1.2)
+        show(imageLogo)
+        showHidden(loginTextField, delay: 0.2)
+        showHidden(passwordTexField, delay: 0.4)
+        showHidden(loginButton, delay: 0.8)
+        showHidden(versionLabel, delay: 1)
     }
     
     private func showHidden(_ element: UIView, delay: TimeInterval) {
@@ -115,6 +114,14 @@ class LoginViewController: BaseViewController {
     }
     
     //MARK: Others
+    private func show(_ logo: UIImageView) {
+        
+        UIView.animate(withDuration: 0.6 ,
+                       animations: { self.imageLogo.transform = CGAffineTransform(scaleX: 0.6, y: 0.6) }) { finish in
+                        UIView.animate(withDuration: 0.6) { self.imageLogo.transform = CGAffineTransform.identity }
+        }
+    }
+    
     private func showError() {
         
         presentErrorLabels()
