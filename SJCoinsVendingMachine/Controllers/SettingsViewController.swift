@@ -26,6 +26,8 @@ class SettingsViewController: BaseViewController {
     fileprivate var chosenMachineID = DataManager.shared.machineId
     fileprivate var chosenMachineName = DataManager.shared.machineName
     
+    weak var delegate: SettingsViewControllerDelegate?
+
     // MARK: Lifecycle
     override func viewDidLoad() {
         
@@ -66,9 +68,12 @@ class SettingsViewController: BaseViewController {
             let products = fetchProducts()
             let account = fetchAccount()
             
-            when(fulfilled: favorites, products, account).then { _ -> Void in
+            when(fulfilled: favorites, products, account).then { [unowned self] _ -> Void in
                 SVProgressHUD.dismiss()
+                
                 //Reload table view in home controller.
+                self.delegate?.machineDidChange()
+                
                 self.dismiss(animated: true) { }
             }.catch { error in
                 print(error)
@@ -89,10 +94,10 @@ class SettingsViewController: BaseViewController {
             when(fulfilled: favorites, products, account).then { _ -> Void in
                 SVProgressHUD.dismiss()
                 self.dismiss(animated: true) { }
-                }.catch { error in
-                    print(error)
-                    SVProgressHUD.dismiss()
-                    self.present(alert: .retryLaunch(self.downloadingActions()))
+            }.catch { error in
+                print(error)
+                SVProgressHUD.dismiss()
+                self.present(alert: .retryLaunch(self.downloadingActions()))
             }
         }
         let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)

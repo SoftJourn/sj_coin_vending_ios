@@ -26,6 +26,8 @@ class NavigationManager: NSObject {
     func presentSettingsViewController() {
         
         let settingsController = create(viewController: storyboards.settingsNavigationController) as! UINavigationController
+        let controller = settingsController.viewControllers[0] as! SettingsViewController
+        controller.delegate = visibleViewController as! HomeViewController
         visibleViewController?.present(settingsController, animated: true) { }
     }
     

@@ -321,7 +321,7 @@ extension AllItemsViewController: CellDelegate {
 extension AllItemsViewController: DataManagerDelegate {
     
     // MARK: DataManagerDelegate
-    func didChangeMachine() {
+    func productsDidChange() {
         
         change(filter: self.prepared(name: categoryName.allItems), items: self.allItems)
     }

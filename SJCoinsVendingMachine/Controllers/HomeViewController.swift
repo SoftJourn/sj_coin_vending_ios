@@ -159,3 +159,12 @@ extension HomeViewController: CellDelegate {
         present(confirmation: item)
     }
 }
+
+extension HomeViewController: SettingsViewControllerDelegate {
+    
+    // MARK: SettingsViewControllerDelegate
+    func machineDidChange() {
+        
+        updateCollectionView()
+    }
+}

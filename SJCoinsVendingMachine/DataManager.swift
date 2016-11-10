@@ -62,7 +62,7 @@ class DataManager: NSObject {
             createBestSellers()
             createCategories()
             unavailableFavorites()
-            delegate?.didChangeMachine()
+            delegate?.productsDidChange()
             print("Products saved in DataManager")
         case let object as [Products]:
             favorites = object

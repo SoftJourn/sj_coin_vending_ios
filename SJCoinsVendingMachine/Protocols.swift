@@ -17,6 +17,10 @@ protocol CellDelegate: class {
 
 protocol DataManagerDelegate: class {
     
-    func didChangeMachine()
+    func productsDidChange()
 }
 
+protocol SettingsViewControllerDelegate: class {
+    
+    func machineDidChange()
+}
