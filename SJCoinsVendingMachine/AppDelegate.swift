@@ -17,16 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        //customSVProgressHUD()
+        customSVProgressHUD()
         verifyFirstLaunch()
         return true
     }
     
-//    private func customSVProgressHUD() {
-//        
-//        SVProgressHUD.setDefaultMaskType(.clear)
-//        SVProgressHUD.setDefaultStyle(.light)
-//    }
+    private func customSVProgressHUD() {
+        
+        SVProgressHUD.setDefaultMaskType(.clear)
+        SVProgressHUD.setDefaultStyle(.light)
+    }
     
     private func verifyFirstLaunch() {
         
