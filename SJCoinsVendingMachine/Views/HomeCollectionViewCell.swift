@@ -16,7 +16,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     // MARK: Properties
     @IBOutlet fileprivate weak var collectionView: UICollectionView!
     @IBOutlet fileprivate weak var categoryNameLabel: UILabel!
-    @IBOutlet weak var showAllButton: UIButton!
+    @IBOutlet private weak var showAllButton: UIButton!
     
     fileprivate var categoryNames: String? {
         didSet {

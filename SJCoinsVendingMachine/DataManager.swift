@@ -173,7 +173,7 @@ class DataManager: NSObject {
         }
     }
     
-    func unavailableFavorites() {
+    private func unavailableFavorites() {
         
         if unavailable == nil {
             unavailable = [Int]()
