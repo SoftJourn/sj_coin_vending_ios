@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func verifyFirstLaunch() {
         
-        if DataManager.shared.fistLaunch {
+        if DataManager.shared.fistLaunch || DataManager.shared.machineId == 0 {
             do {
                 try AuthorizationManager.keychain.remove("token")
                 try AuthorizationManager.keychain.remove("refresh")
