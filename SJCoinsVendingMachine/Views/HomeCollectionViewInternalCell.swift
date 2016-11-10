@@ -36,8 +36,12 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
             }
         }
     }
-    var availability: Bool = true
-    
+    var availability: Bool = true {
+        didSet {
+            availability ? available() : unvailable()
+        }
+    }
+
     // MARK: Methods
     override func prepareForReuse() {
         
@@ -59,5 +63,15 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
                          placeholderImage: #imageLiteral(resourceName: "Placeholder"),
                          imageTransition: .crossDissolve(0.5))
         return self
+    }
+    
+    private func available() {
+        
+        logo.alpha = 1
+    }
+    
+    private func unvailable() {
+        
+        logo.alpha = 0.3
     }
 }
