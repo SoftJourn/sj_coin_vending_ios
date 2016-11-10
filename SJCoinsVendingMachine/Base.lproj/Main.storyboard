@@ -513,14 +513,15 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="l9V-FB-uOc">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="l9V-FB-uOc">
+                                <frame key="frameInset" minY="219" width="375" height="400"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHistoryTableViewCell" id="Z6e-9B-FtI" customClass="PurchaseHistoryTableViewCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="1000" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z6e-9B-FtI" id="afN-2M-De0">
-                                            <frame key="frameInset" width="1000" height="43"/>
+                                            <frame key="frameInset" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2HW-q5-u9A">
@@ -562,16 +563,16 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="rect" keyPath="contentInset">
+                                        <rect key="value" x="50" y="0.0" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="hRE-fz-u0l" id="9S6-bY-dyH"/>
                                     <outlet property="delegate" destination="hRE-fz-u0l" id="7zq-Lz-dOd"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purchase History" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Cj-dw-6EE">
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRY-hd-RA6">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="SZh-v3-aHs"/>
@@ -580,12 +581,31 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oeE-oU-pnA">
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purchase History" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Cj-dw-6EE">
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="dse-WI-Jrj"/>
+                                    <constraint firstItem="6Cj-dw-6EE" firstAttribute="centerY" secondItem="oeE-oU-pnA" secondAttribute="centerY" id="vl3-Fk-MLj"/>
+                                    <constraint firstItem="6Cj-dw-6EE" firstAttribute="centerX" secondItem="oeE-oU-pnA" secondAttribute="centerX" id="zCS-KM-ejH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="i3h-A5-nll" firstAttribute="leading" secondItem="XLm-nt-hQv" secondAttribute="leadingMargin" constant="20" id="0fP-AF-jVa"/>
                             <constraint firstItem="l9V-FB-uOc" firstAttribute="leading" secondItem="XLm-nt-hQv" secondAttribute="leading" id="324-EW-Qrk"/>
-                            <constraint firstItem="6Cj-dw-6EE" firstAttribute="centerX" secondItem="XLm-nt-hQv" secondAttribute="centerX" id="BYu-t2-JHQ"/>
+                            <constraint firstItem="oeE-oU-pnA" firstAttribute="top" secondItem="YRY-hd-RA6" secondAttribute="bottom" constant="25" id="4ZI-XS-fyd"/>
+                            <constraint firstItem="oeE-oU-pnA" firstAttribute="top" secondItem="l9V-FB-uOc" secondAttribute="top" id="74p-dl-YkI"/>
+                            <constraint firstItem="oeE-oU-pnA" firstAttribute="leading" secondItem="XLm-nt-hQv" secondAttribute="leading" id="BYd-sJ-ynZ"/>
+                            <constraint firstAttribute="trailing" secondItem="oeE-oU-pnA" secondAttribute="trailing" id="HDa-Ug-3zf"/>
+                            <constraint firstItem="oeE-oU-pnA" firstAttribute="centerX" secondItem="XLm-nt-hQv" secondAttribute="centerX" id="QJ7-dB-MHB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="i3h-A5-nll" secondAttribute="trailing" constant="20" id="UAc-Ya-Kwg"/>
                             <constraint firstItem="i3h-A5-nll" firstAttribute="centerX" secondItem="XLm-nt-hQv" secondAttribute="centerX" id="Ud1-iT-RmU"/>
                             <constraint firstItem="YRY-hd-RA6" firstAttribute="top" secondItem="i3h-A5-nll" secondAttribute="bottom" constant="30" id="UtY-Yt-le1"/>
@@ -593,9 +613,7 @@
                             <constraint firstAttribute="trailing" secondItem="l9V-FB-uOc" secondAttribute="trailing" id="bDD-L3-adC"/>
                             <constraint firstItem="tsu-eu-RaK" firstAttribute="top" secondItem="l9V-FB-uOc" secondAttribute="bottom" id="eqF-Sa-hCu"/>
                             <constraint firstItem="YRY-hd-RA6" firstAttribute="leading" secondItem="XLm-nt-hQv" secondAttribute="leadingMargin" constant="20" id="kJS-uJ-VI6"/>
-                            <constraint firstItem="l9V-FB-uOc" firstAttribute="top" secondItem="6Cj-dw-6EE" secondAttribute="bottom" constant="8" id="tpF-mX-EVc"/>
                             <constraint firstItem="i3h-A5-nll" firstAttribute="top" secondItem="I3Q-aa-QTG" secondAttribute="bottom" constant="40" id="uPm-xR-1Yh"/>
-                            <constraint firstItem="6Cj-dw-6EE" firstAttribute="top" secondItem="YRY-hd-RA6" secondAttribute="bottom" constant="50" id="udq-Lu-zbg"/>
                             <constraint firstItem="YRY-hd-RA6" firstAttribute="centerX" secondItem="XLm-nt-hQv" secondAttribute="centerX" id="v6m-lM-hdA"/>
                         </constraints>
                     </view>
