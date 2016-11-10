@@ -23,6 +23,7 @@ class LoginViewController: BaseViewController {
     @IBOutlet weak private var imageLogo: UIImageView!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak private var scrollView: UIScrollView!
+    @IBOutlet weak var versionLabel: UILabel!
     
     @IBOutlet weak private var loginErrorLabel: UILabel!
     @IBOutlet weak private var passwordErrorLabel: UILabel!
@@ -94,6 +95,7 @@ class LoginViewController: BaseViewController {
         loginTextField.alpha = 0
         passwordTexField.alpha = 0
         loginButton.alpha = 0
+        versionLabel.alpha = 0
     }
     
     private func showElementsAnimated() {
@@ -102,6 +104,7 @@ class LoginViewController: BaseViewController {
         showHidden(loginTextField, delay: 0.5)
         showHidden(passwordTexField, delay: 0.8)
         showHidden(loginButton, delay: 1.2)
+        showHidden(versionLabel, delay: 1.2)
     }
     
     private func showHidden(_ element: UIView, delay: TimeInterval) {
