@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Zd3-tt-mhE">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Zd3-tt-mhE">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -236,11 +236,6 @@
                                     <outlet property="delegate" destination="xW5-rt-L3t" id="KVO-qN-Fpi"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently there are no products in this category." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMH-AT-kt1">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NbS-w4-X6P">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -258,10 +253,17 @@
                                     <action selector="sameSegmentButtonPressed:" destination="xW5-rt-L3t" eventType="touchUpInside" id="R2I-AF-j7A"/>
                                 </connections>
                             </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jok-9I-iOA">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="H2y-FX-nxR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="DR1-gO-6eE" firstAttribute="top" secondItem="XMH-AT-kt1" secondAttribute="bottom" constant="255" id="0eJ-xc-MGp"/>
                             <constraint firstItem="Awg-qy-TsH" firstAttribute="centerX" secondItem="vuw-BD-y7k" secondAttribute="centerX" constant="-1" id="7E4-C1-E5s"/>
                             <constraint firstItem="Awg-qy-TsH" firstAttribute="width" secondItem="vuw-BD-y7k" secondAttribute="width" id="9BE-13-GEa"/>
                             <constraint firstItem="FBZ-Ao-mEc" firstAttribute="leading" secondItem="vuw-BD-y7k" secondAttribute="leadingMargin" constant="10" id="CSu-8u-GEh"/>
@@ -269,10 +271,10 @@
                             <constraint firstItem="NbS-w4-X6P" firstAttribute="top" secondItem="vQF-ov-qy4" secondAttribute="bottom" id="Ej4-BJ-xGO"/>
                             <constraint firstItem="FBZ-Ao-mEc" firstAttribute="centerX" secondItem="vuw-BD-y7k" secondAttribute="centerX" id="JrC-GE-idE"/>
                             <constraint firstItem="NbS-w4-X6P" firstAttribute="width" secondItem="vuw-BD-y7k" secondAttribute="width" id="WYR-oM-NVy"/>
-                            <constraint firstItem="XMH-AT-kt1" firstAttribute="centerX" secondItem="FBZ-Ao-mEc" secondAttribute="centerX" id="Xnx-mg-BJK"/>
                             <constraint firstItem="Awg-qy-TsH" firstAttribute="centerY" secondItem="vuw-BD-y7k" secondAttribute="centerY" constant="24" id="e0x-y8-2WO"/>
-                            <constraint firstItem="XMH-AT-kt1" firstAttribute="leading" secondItem="vuw-BD-y7k" secondAttribute="leadingMargin" constant="4" id="m2O-Xj-9hn"/>
-                            <constraint firstItem="XMH-AT-kt1" firstAttribute="centerY" secondItem="vuw-BD-y7k" secondAttribute="centerY" id="qsr-nG-kHa"/>
+                            <constraint firstItem="jok-9I-iOA" firstAttribute="leading" secondItem="vuw-BD-y7k" secondAttribute="leadingMargin" constant="4" id="lLd-j6-0xv"/>
+                            <constraint firstItem="jok-9I-iOA" firstAttribute="centerY" secondItem="vuw-BD-y7k" secondAttribute="centerY" id="o4Z-4P-L5s"/>
+                            <constraint firstItem="jok-9I-iOA" firstAttribute="centerX" secondItem="vuw-BD-y7k" secondAttribute="centerX" id="qAC-y0-u5a"/>
                             <constraint firstItem="Awg-qy-TsH" firstAttribute="height" secondItem="vuw-BD-y7k" secondAttribute="height" constant="-50" id="rCh-Yg-uPa"/>
                             <constraint firstItem="FBZ-Ao-mEc" firstAttribute="top" secondItem="vQF-ov-qy4" secondAttribute="bottom" constant="11" id="taJ-PC-KMO"/>
                             <constraint firstItem="NbS-w4-X6P" firstAttribute="centerX" secondItem="vuw-BD-y7k" secondAttribute="centerX" id="we2-6d-99Q"/>
@@ -297,7 +299,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="noItemsLabel" destination="XMH-AT-kt1" id="OAZ-c3-mVp"/>
+                        <outlet property="noItems" destination="jok-9I-iOA" id="UYe-Iw-cig"/>
                         <outlet property="segmentControl" destination="FBZ-Ao-mEc" id="wcA-jc-NJI"/>
                         <outlet property="tableView" destination="Awg-qy-TsH" id="9uM-HX-msN"/>
                         <outlet property="titleButton" destination="SNQ-gm-D9i" id="Zlu-sT-bXE"/>
@@ -351,7 +353,7 @@
                                         <rect key="frame" x="0.0" y="92" width="375" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IQx-AS-BO5" id="mV2-wj-6Qk">
-                                            <frame key="frameInset" width="375" height="62"/>
+                                            <frame key="frameInset" width="375" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4X2-ru-nrQ">
@@ -429,7 +431,7 @@
                                     <outlet property="delegate" destination="mLe-Ai-fG4" id="yfR-BS-9HU"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently there are no products in this category." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vps-jN-WFC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vps-jN-WFC">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="9q3-hE-YM4"/>
                                 </constraints>
@@ -446,7 +448,7 @@
                             <constraint firstItem="vps-jN-WFC" firstAttribute="leading" secondItem="uiT-tH-9ia" secondAttribute="leadingMargin" constant="4" id="cwp-vK-jM6"/>
                             <constraint firstItem="vps-jN-WFC" firstAttribute="centerX" secondItem="BI9-hU-qmc" secondAttribute="centerX" id="i1N-y3-675"/>
                             <constraint firstItem="BI9-hU-qmc" firstAttribute="width" secondItem="uiT-tH-9ia" secondAttribute="width" id="mO5-ZH-qyb"/>
-                            <constraint firstItem="vps-jN-WFC" firstAttribute="centerY" secondItem="uiT-tH-9ia" secondAttribute="centerY" constant="20" id="wsz-8h-QKs"/>
+                            <constraint firstItem="vps-jN-WFC" firstAttribute="centerY" secondItem="uiT-tH-9ia" secondAttribute="centerY" id="wsz-8h-QKs"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Favorites" id="PkW-ob-IYM"/>
@@ -502,10 +504,10 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHistoryTableViewCell" id="Z6e-9B-FtI" customClass="PurchaseHistoryTableViewCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="1000" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z6e-9B-FtI" id="afN-2M-De0">
-                                            <frame key="frameInset" width="1000" height="43"/>
+                                            <frame key="frameInset" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2HW-q5-u9A">
@@ -689,7 +691,7 @@
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeCollectionViewInternalCell" id="DW1-w6-IAL" customClass="HomeCollectionViewInternalCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                                            <rect key="frame" x="5" y="8.5" width="90" height="125"/>
+                                                            <rect key="frame" x="5" y="9" width="90" height="125"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                                 <rect key="frame" x="0.0" y="0.0" width="90" height="125"/>

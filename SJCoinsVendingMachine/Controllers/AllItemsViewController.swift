@@ -26,7 +26,7 @@ class AllItemsViewController: BaseViewController {
     @IBOutlet fileprivate weak var tableView: UITableView!
     @IBOutlet fileprivate weak var segmentControl: UISegmentedControl!
     @IBOutlet private weak var titleButton: UIButton!
-    @IBOutlet fileprivate weak var noItemsLabel: UILabel!
+    @IBOutlet fileprivate weak var noItems: UILabel!
     
     private lazy var sortingByName = SortingManager()
     private lazy var sortingByPrice = SortingManager()
@@ -63,7 +63,7 @@ class AllItemsViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        noItemsLabel.isHidden = true
+        noItems.isHidden = true
         usedSeeAll ? viewDidLoadUsingSeeAll() : viewDidLoadNotUsingSeeAll()
     }
     
@@ -239,12 +239,12 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         
         if filterItems == nil || (filterItems?.isEmpty)! {
             segmentControl.isHidden = true
-            noItemsLabel.isHidden = false
-            noItemsLabel.text = labels.noItems
+            noItems.isHidden = false
+            noItems.text = labels.noItems
             return 0
         } else {
             segmentControl.isHidden = false
-            noItemsLabel.isHidden = true
+            noItems.isHidden = true
             return filterItems!.count
         }
     }

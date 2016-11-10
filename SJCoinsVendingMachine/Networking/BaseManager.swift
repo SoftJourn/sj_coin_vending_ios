@@ -12,37 +12,44 @@ import PromiseKit
 
 class BaseManager {
     
+    // MARK: Constants
+    static let coinServer = "sjcoins-testing.softjourn.if.ua"
+
     // MARK: Properties
     static let customManager: Alamofire.SessionManager = {
         
-        //Privacy configuration the Alamofire manager
-        let pathToCert = Bundle.main.path(forResource: "coin", ofType: "bks")
-        let certificateData = NSData(contentsOfFile: pathToCert!)!
-        let certificate = SecCertificateCreateWithData(nil, certificateData)
-
-//        let serverTrustPolicy = ServerTrustPolicy.pinCertificates(
-//            
-//            // Getting the certificate from the certificate data
-//            certificates: [certificate!],
-//            // Choose to validate the complete certificate chain, not only the certificate itself
-//            validateCertificateChain: true,
-//            // Check that the certificate mathes the host who provided it
-//            validateHost: true
-//        )
+        return Alamofire.SessionManager(configuration: sessionConfiguration(), serverTrustPolicyManager: securityConfiguration())
+    }()
+    
+    class func securityConfiguration() -> ServerTrustPolicyManager {
         
-        let serverTrustPolicies: [String: ServerTrustPolicy] = [ "sjcoins-testing.softjourn.if.ua": .disableEvaluation ] //serverTrustPolicy ]
+        //Security configuration the Alamofire manager.
+        guard let pathToCert = Bundle.main.path(forResource: "coin", ofType: "cer"), let certificateData = NSData(contentsOfFile: pathToCert), let certificate = SecCertificateCreateWithData(nil, certificateData) else {
+            //Use DefaultEvaluation.
+            return ServerTrustPolicyManager(policies: [ coinServer: .performDefaultEvaluation(validateHost: true) ])
+        }
+        let serverTrustPolicy = ServerTrustPolicy.pinCertificates(
+            // Getting the certificate from the certificate data
+            certificates: [certificate],
+            // Choose to validate the complete certificate chain, not only the certificate itself
+            validateCertificateChain: true,
+            // Check that the certificate mathes the host who provided it
+            validateHost: true
+        )
         
+        //Use CustomEvaluation.
+        return ServerTrustPolicyManager(policies: [ coinServer: serverTrustPolicy ])
+    }
+    
+    class func sessionConfiguration() -> URLSessionConfiguration {
+        
+        //Session configuration of the Alamofire manager.
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 20 //seconds
         configuration.timeoutIntervalForResource = 20 //seconds
         configuration.httpAdditionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
-        
-        let manager = Alamofire.SessionManager(
-            configuration: configuration,
-            serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies)
-        )
-        return manager
-    }()
+        return configuration
+    }
     
     class func sendRequest(_ urlString: URLConvertible,
                            method: Alamofire.HTTPMethod,
