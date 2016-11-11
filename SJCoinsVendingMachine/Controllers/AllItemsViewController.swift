@@ -216,10 +216,8 @@ class AllItemsViewController: BaseViewController {
     
     fileprivate func reloadTableView() {
         
-        DispatchQueue.main.async { [unowned self] in
-            self.tableView.reloadData()
-            SVProgressHUD.dismiss(withDelay: 0.5)
-        }
+        tableView.reloadData()
+        SVProgressHUD.dismiss(withDelay: 0.5)
     }
 }
 

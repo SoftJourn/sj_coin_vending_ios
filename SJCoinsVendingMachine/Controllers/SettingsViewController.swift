@@ -130,10 +130,8 @@ class SettingsViewController: BaseViewController {
 
     private func reloadTableView() {
         
-        DispatchQueue.main.async { [unowned self] in
-            self.tableView.reloadData()
-            SVProgressHUD.dismiss()
-        }
+        tableView.reloadData()
+        SVProgressHUD.dismiss()
     }
 }
 

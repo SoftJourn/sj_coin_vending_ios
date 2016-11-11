@@ -83,9 +83,7 @@ class AccountViewController: BaseViewController {
     private func updateTableView() {
         
         SVProgressHUD.dismiss(withDelay: 0.2)
-        DispatchQueue.main.async { [unowned self] in
-            self.tableView.reloadData()
-        }
+        tableView.reloadData()
     }
     
     private func updateViewWithAccountContent() {

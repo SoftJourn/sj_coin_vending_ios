@@ -76,10 +76,8 @@ class HomeViewController: BaseViewController {
     
     fileprivate func updateCollectionView() {
         
-        DispatchQueue.main.async { [unowned self] in
-            self.collectionView.reloadData()
-            SVProgressHUD.dismiss(withDelay: 0.2)
-        }
+        self.collectionView.reloadData()
+        SVProgressHUD.dismiss(withDelay: 0.2)
     }
     
     private func updateBalance() {
