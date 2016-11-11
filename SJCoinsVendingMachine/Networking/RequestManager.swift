@@ -11,8 +11,6 @@ import Alamofire
 import PromiseKit
 import SVProgressHUD
 
-
-
 class RequestManager: BaseManager {
     
     class func sendDefault(request method: Alamofire.HTTPMethod,
@@ -59,9 +57,9 @@ class RequestManager: BaseManager {
     private class func handle401StatusCode(method: Alamofire.HTTPMethod, url: URLConvertible, success: @escaping (AnyObject) -> Swift.Void, failed: @escaping (Error) -> Swift.Void) {
         
         AuthorizationManager.refreshRequest { error in
-            
+
             if error != nil {
-                print(error)
+                print(error!)
                 AuthorizationManager.removeAccessToken()
                 NavigationManager.shared.presentLoginViewController()
             }
