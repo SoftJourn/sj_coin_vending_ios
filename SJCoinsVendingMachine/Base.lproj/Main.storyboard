@@ -513,8 +513,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="l9V-FB-uOc">
-                                <frame key="frameInset" minY="219" width="375" height="400"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="l9V-FB-uOc">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PurchaseHistoryTableViewCell" id="Z6e-9B-FtI" customClass="PurchaseHistoryTableViewCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
@@ -611,7 +610,7 @@
                             <constraint firstItem="YRY-hd-RA6" firstAttribute="top" secondItem="i3h-A5-nll" secondAttribute="bottom" constant="30" id="UtY-Yt-le1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YRY-hd-RA6" secondAttribute="trailing" constant="20" id="Vvy-5h-kk0"/>
                             <constraint firstAttribute="trailing" secondItem="l9V-FB-uOc" secondAttribute="trailing" id="bDD-L3-adC"/>
-                            <constraint firstItem="tsu-eu-RaK" firstAttribute="top" secondItem="l9V-FB-uOc" secondAttribute="bottom" id="eqF-Sa-hCu"/>
+                            <constraint firstItem="tsu-eu-RaK" firstAttribute="top" secondItem="l9V-FB-uOc" secondAttribute="bottom" constant="-1" id="eqF-Sa-hCu"/>
                             <constraint firstItem="YRY-hd-RA6" firstAttribute="leading" secondItem="XLm-nt-hQv" secondAttribute="leadingMargin" constant="20" id="kJS-uJ-VI6"/>
                             <constraint firstItem="i3h-A5-nll" firstAttribute="top" secondItem="I3Q-aa-QTG" secondAttribute="bottom" constant="40" id="uPm-xR-1Yh"/>
                             <constraint firstItem="YRY-hd-RA6" firstAttribute="centerX" secondItem="XLm-nt-hQv" secondAttribute="centerX" id="v6m-lM-hdA"/>
