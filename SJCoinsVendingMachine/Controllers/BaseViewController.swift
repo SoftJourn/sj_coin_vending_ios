@@ -159,9 +159,9 @@ class BaseViewController: UIViewController {
     // MARK: Launching.
     func launching(firstTime: Bool?) {
         
-        if firstTime != nil {
-            DataManager.shared.fistLaunch = firstTime!
-        }
+        guard let firstTime = firstTime else { return }
+        DataManager.shared.fistLaunch = firstTime
+        
         let favorites = fetchFavorites()
         let products = fetchProducts()
         let account = fetchAccount()
@@ -169,44 +169,11 @@ class BaseViewController: UIViewController {
         when(fulfilled: favorites, products, account).then { _ in
             NavigationManager.shared.presentTabBarController()
         }.catch { error in
-            //self.present(alert: .retryLaunch(self.downloadingActions()))
-        }
-    }
-    
-    // MARK: Downloading from server.
-    func machinesFetchingActions() -> [UIAlertAction] {
-        
-        let retryButton = UIAlertAction(title: buttonTitle.retry, style: .destructive) { [unowned self] action in
-            firstly {
-                self.fetchDefaultMachine()
-            }.then { object -> Void in
-                self.launching(firstTime: false)
-            }.catch { error in
-                self.present(alert: .retryLaunch(self.machinesFetchingActions()))
+            let actions = AlertManager().alertActions(cancel: false) { [unowned self] _ in
+                self.launchingProcess()
             }
+            self.present(alert: .retryLaunch(actions))
         }
-        let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
-        return [cancelButton, retryButton]
-    }
-
-    private func downloadingActions() -> [UIAlertAction] {
-        
-        let retryButton = UIAlertAction(title: buttonTitle.retry, style: .destructive) { [unowned self] action in
-            
-            let favorites = self.fetchFavorites()
-            let products = self.fetchProducts()
-            let account = self.fetchAccount()
-            
-            when(fulfilled: favorites, products, account).then { _ -> Void in
-                SVProgressHUD.dismiss()
-                NavigationManager.shared.presentTabBarController()
-            }.catch { error -> Void in
-                SVProgressHUD.dismiss()
-                self.present(alert: .retryLaunch(self.downloadingActions()))
-            }
-        }
-        let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
-        return [cancelButton, retryButton]
     }
     
     // MARK: Confirmation and Buying.
@@ -267,7 +234,7 @@ class BaseViewController: UIViewController {
             DataManager.shared.add(favorite: object as! Products)
             complition()
         }.catch { error in
-             print(error)
+            print(error)
         }
     }
     

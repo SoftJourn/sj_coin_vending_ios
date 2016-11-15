@@ -39,7 +39,7 @@
                                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="frame.height/2"/>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="opankiv" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aMW-md-VeR" userLabel="Login">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aMW-md-VeR" userLabel="Login">
                                                 <rect key="frame" x="28" y="313.5" width="319" height="40"/>
                                                 <accessibility key="accessibilityConfiguration" label="Login"/>
                                                 <constraints>
@@ -52,7 +52,7 @@
                                                     <action selector="loginTextFieldDidChange:" destination="GX4-ll-rbg" eventType="editingChanged" id="1PV-fp-mFU"/>
                                                 </connections>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="azKI87987" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yCO-qR-FRw">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yCO-qR-FRw">
                                                 <rect key="frame" x="28" y="383.5" width="319" height="40"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
@@ -735,7 +735,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeCollectionViewCell" id="fay-AC-zMa" customClass="HomeCollectionViewCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="361" height="180"/>
+                                        <rect key="frame" x="7" y="0.0" width="361" height="180"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="361" height="180"/>
@@ -765,7 +765,7 @@
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeCollectionViewInternalCell" id="DW1-w6-IAL" customClass="HomeCollectionViewInternalCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                                            <rect key="frame" x="5" y="0.0" width="90" height="125"/>
+                                                            <rect key="frame" x="5" y="8.5" width="90" height="125"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                                 <rect key="frame" x="0.0" y="0.0" width="90" height="125"/>

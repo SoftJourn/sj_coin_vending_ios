@@ -177,7 +177,10 @@ class LoginViewController: BaseViewController {
             }.then { object -> Void in
                 self.launching(firstTime: false)
             }.catch { error in
-                self.present(alert: .retryLaunch(self.machinesFetchingActions()))
+                let actions = AlertManager().alertActions(cancel: true) {
+                    self.authSuccess()  //FIXME: Verify
+                }
+                self.present(alert: .retryLaunch(actions))
             }
         } else {
             launching(firstTime: false)

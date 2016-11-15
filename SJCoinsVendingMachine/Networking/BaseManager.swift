@@ -45,8 +45,8 @@ class BaseManager {
         
         //Session configuration of the Alamofire manager.
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 20 //seconds
-        configuration.timeoutIntervalForResource = 20 //seconds
+        configuration.timeoutIntervalForRequest = 15 //seconds
+        configuration.timeoutIntervalForResource = 15 //seconds
         configuration.httpAdditionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
         return configuration
     }

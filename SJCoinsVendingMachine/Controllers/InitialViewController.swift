@@ -22,9 +22,7 @@ class InitialViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        connectionVerification {
-            tokenVerification()
-        }
+        launchingProcess()
     }
     
     deinit {
@@ -32,8 +30,17 @@ class InitialViewController: BaseViewController {
         print("InitialViewController deinited")
     }
     
-    private func tokenVerification() {
-        
+    // MARK: Launching.
+    func launchingProcess() {
+        //Verify internet connection.
+        let actions = AlertManager().alertActions(cancel: false) {
+            self.launchingProcess() //FIXME: Verify
+        }
+        Reachability.connectedToNetwork() ? tokenVerification() : present(alert: .retryLaunch(actions))
+    }
+    
+    func tokenVerification() {
+        //Verify token and ascertain if its a first launch.
         if AuthorizationManager.accessTokenExist() {
             launching(firstTime: false)
         } else {

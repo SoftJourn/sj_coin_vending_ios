@@ -35,7 +35,7 @@ class AlertManager {
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
     
-    //Confirmation message
+    //Confirmation message.
     func present(confirmation name: String, price: Int, actions: [UIAlertAction]) {
         
         let controller = UIAlertController(title: "Confirmation", message: "Buy \(name) for the \(price) coins?", preferredStyle: .alert)
@@ -44,4 +44,15 @@ class AlertManager {
         }
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
+    
+    //Retry download actions.
+    func alertActions(cancel: Bool, retry: @escaping ()->()) -> [UIAlertAction] {
+        
+        let retryButton = UIAlertAction(title: buttonTitle.retry, style: .destructive) { _ in
+            retry()
+        }
+        let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
+        return cancel ? [cancelButton, retryButton] : [retryButton]
+    }
+
 }
