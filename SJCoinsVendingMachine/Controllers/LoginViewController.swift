@@ -53,6 +53,7 @@ class LoginViewController: BaseViewController {
         registerForKeyboardNotifications()
         hideKeyboardWhenTappedAround()
         LoginPage.decorateLoginViewController(self)
+        AnimationHelper().applyMotionEffect(toView: imageLogo, magnitude: 15)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,27 +102,12 @@ class LoginViewController: BaseViewController {
     
     private func showElementsAnimated() {
         
-        show(imageLogo)
-        showHidden(loginTextField, delay: 0.2)
-        showHidden(passwordTexField, delay: 0.4)
-        showHidden(loginButton, delay: 0.8)
-        showHidden(versionLabel, delay: 1)
-    }
-    
-    private func showHidden(_ element: UIView, delay: TimeInterval) {
-        
-        UIView.animate(withDuration: 0.5, delay: delay, options: .showHideTransitionViews, animations: { () -> Void in
-            element.alpha = 1
-            }, completion: nil)
-    }
-    
-    //MARK: Others
-    private func show(_ logo: UIImageView) {
-        
-        UIView.animate(withDuration: 0.6 ,
-                       animations: { self.imageLogo.transform = CGAffineTransform(scaleX: 0.6, y: 0.6) }) { finish in
-                        UIView.animate(withDuration: 0.6) { self.imageLogo.transform = CGAffineTransform.identity }
-        }
+        let animator = AnimationHelper()
+        animator.show(imageLogo)
+        animator.showHidden(loginTextField, delay: 0.2)
+        animator.showHidden(passwordTexField, delay: 0.4)
+        animator.showHidden(loginButton, delay: 0.8)
+        animator.showHidden(versionLabel, delay: 1)
     }
     
     private func showError() {
