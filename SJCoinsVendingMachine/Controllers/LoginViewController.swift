@@ -23,7 +23,7 @@ class LoginViewController: BaseViewController {
     @IBOutlet weak private var imageLogo: UIImageView!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak private var scrollView: UIScrollView!
-    @IBOutlet weak var versionLabel: UILabel!
+    @IBOutlet weak private var versionLabel: UILabel!
     
     @IBOutlet weak private var loginErrorLabel: UILabel!
     @IBOutlet weak private var passwordErrorLabel: UILabel!

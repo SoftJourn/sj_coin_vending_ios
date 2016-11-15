@@ -165,7 +165,7 @@ class BaseViewController: UIViewController {
         
         when(fulfilled: favorites, products, account).then { _ in
             NavigationManager.shared.presentTabBarController()
-        }.catch { error in
+        }.catch { _ in
             let actions = AlertManager().alertActions(cancel: false) { [unowned self] _ in
                 self.regularLaunching()
             }
@@ -196,24 +196,24 @@ class BaseViewController: UIViewController {
     
     private func buy(using identifier: Int?) {
         
-            guard let identifier = identifier else { return }
-            SVProgressHUD.show(withStatus: spinerMessage.loading)
-            firstly {
-                APIManager.buy(product: identifier, machineID: DataManager.shared.machineId)
-            }.then { amount -> Void in
-                SVProgressHUD.dismiss()
-                DataManager.shared.save(balance: amount as! Int)
-                self.present(alert: .buyingSuccess)
-                self.updateUIafterBuying()
-            }.catch { error in
-                SVProgressHUD.dismiss()
-                switch error {
-                case serverError.notEnoughCoins(let errorDescription):
-                    self.present(alert: .buyingFailed(errorDescription))
-                default:
-                    self.present(alert: .buyingFailed(String(error.localizedDescription)))
-                }
+        guard let identifier = identifier else { return }
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
+        firstly {
+            APIManager.buy(product: identifier, machineID: DataManager.shared.machineId)
+        }.then { amount -> Void in
+            SVProgressHUD.dismiss()
+            DataManager.shared.save(balance: amount as! Int)
+            self.present(alert: .buyingSuccess)
+            self.updateUIafterBuying()
+        }.catch { error in
+            SVProgressHUD.dismiss()
+            switch error {
+            case serverError.notEnoughCoins(let errorDescription):
+                self.present(alert: .buyingFailed(errorDescription))
+            default:
+                self.present(alert: .buyingFailed(String(error.localizedDescription)))
             }
+        }
     }
 
     func updateUIafterBuying() {
@@ -230,8 +230,8 @@ class BaseViewController: UIViewController {
             SVProgressHUD.dismiss(withDelay: 0.2)
             DataManager.shared.add(favorite: object as! Products)
             complition()
-        }.catch { error in
-            print(error)
+        }.catch { _ in
+            self.present(alert: .favorite)
         }
     }
     
@@ -244,8 +244,8 @@ class BaseViewController: UIViewController {
             SVProgressHUD.dismiss(withDelay: 0.2)
             DataManager.shared.remove(favorite: object as! Products)
             complition()
-        }.catch { error in
-            print(error)
+        }.catch { _ in
+            self.present(alert: .favorite)
         }
     }
     
@@ -259,7 +259,7 @@ class BaseViewController: UIViewController {
         case connection
         case buyingSuccess
         case buyingFailed(String)
-        case favorite(String)
+        case favorite
         case confirmation(String, Int, [UIAlertAction])
         case retryLaunch([UIAlertAction])
     }
@@ -290,8 +290,8 @@ class BaseViewController: UIViewController {
         case .buyingFailed(let errorDescription):
             AlertManager().present(alert: buying.title.failed, message: errorDescription)
         
-        case .favorite(let errorDescription):
-            AlertManager().present(alert: myError.title.favorite, message: errorDescription)
+        case .favorite:
+            AlertManager().present(alert: myError.title.favorite, message: myError.message.favorite)
         
         case .confirmation(let name, let price, let actions):
             AlertManager().present(confirmation: name, price: price, actions: actions)
