@@ -157,11 +157,8 @@ class BaseViewController: UIViewController {
     }
     
     // MARK: Launching.
-    func launching(firstTime: Bool?) {
-        
-        guard let firstTime = firstTime else { return }
-        DataManager.shared.fistLaunch = firstTime
-        
+    func regularLaunching() {
+                
         let favorites = fetchFavorites()
         let products = fetchProducts()
         let account = fetchAccount()
@@ -170,7 +167,7 @@ class BaseViewController: UIViewController {
             NavigationManager.shared.presentTabBarController()
         }.catch { error in
             let actions = AlertManager().alertActions(cancel: false) { [unowned self] _ in
-                self.launchingProcess()
+                self.regularLaunching()
             }
             self.present(alert: .retryLaunch(actions))
         }

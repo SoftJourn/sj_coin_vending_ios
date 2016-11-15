@@ -42,7 +42,8 @@ class InitialViewController: BaseViewController {
     func tokenVerification() {
         //Verify token and ascertain if its a first launch.
         if AuthorizationManager.accessTokenExist() {
-            launching(firstTime: false)
+            DataManager.shared.fistLaunch = false
+            regularLaunching()
         } else {
             DataManager.shared.fistLaunch = true
             NavigationManager.shared.presentLoginViewController()

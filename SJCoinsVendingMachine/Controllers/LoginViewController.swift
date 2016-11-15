@@ -170,20 +170,20 @@ class LoginViewController: BaseViewController {
     
     private func authSuccess() {
   
-        if DataManager.shared.fistLaunch {
-            
-            firstly {
-                self.fetchDefaultMachine()
-            }.then { object -> Void in
-                self.launching(firstTime: false)
-            }.catch { error in
-                let actions = AlertManager().alertActions(cancel: true) {
-                    self.authSuccess()  //FIXME: Verify
-                }
-                self.present(alert: .retryLaunch(actions))
+        DataManager.shared.fistLaunch ? firstLaunching() : regularLaunching()
+    }
+    
+    private func firstLaunching() {
+        
+        firstly {
+            fetchDefaultMachine()
+        }.then { _ in
+            self.regularLaunching()
+        }.catch { _ in
+            let actions = AlertManager().alertActions(cancel: true) {
+                self.authSuccess()  //FIXME: Verify
             }
-        } else {
-            launching(firstTime: false)
+            self.present(alert: .retryLaunch(actions))
         }
     }
     
