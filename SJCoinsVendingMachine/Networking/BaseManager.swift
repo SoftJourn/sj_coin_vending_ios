@@ -66,19 +66,9 @@ class BaseManager {
                     switch response.result {
                     case .success(let json):
                         fulfill(json as AnyObject)
-                    case .failure(let error):
-                        if response.response?.statusCode == 401 {
-                            reject(serverError.unauthorized)
-                        } else if response.response?.statusCode == 409 {
-                            guard let data = response.data else { return }
-                            let error = ResponseHandler.handle(data)
-                            if error != nil {
-                                reject(error!)
-                            }
-                        } else {
-                            _ = ResponseHandler.handle(response.data)
-                            reject(error)
-                        }
+                    case .failure:
+                        let error = ResponseHandler.handle(response)
+                        reject(error)
                     }
             }
         }

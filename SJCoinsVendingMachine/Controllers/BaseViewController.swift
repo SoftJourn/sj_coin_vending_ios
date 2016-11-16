@@ -28,7 +28,6 @@ class BaseViewController: UIViewController {
     lazy var refreshControl: UIRefreshControl = {
         
         let refresh = UIRefreshControl()
-        //refresh.attributedTitle = NSAttributedString(string: "Refreshing")
         refresh.addTarget(self, action: #selector(fetchData), for: UIControlEvents.valueChanged)
         return refresh
     }()
