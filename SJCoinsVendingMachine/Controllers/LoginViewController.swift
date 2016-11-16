@@ -103,7 +103,7 @@ class LoginViewController: BaseViewController {
     private func showElementsAnimated() {
         
         let animator = AnimationHelper()
-        animator.show(imageLogo)
+        animator.showScaled(imageLogo)
         animator.showHidden(loginTextField, delay: 0.2)
         animator.showHidden(passwordTexField, delay: 0.4)
         animator.showHidden(loginButton, delay: 0.8)
@@ -167,7 +167,7 @@ class LoginViewController: BaseViewController {
             self.regularLaunching()
         }.catch { _ in
             let actions = AlertManager().alertActions(cancel: true) {
-                self.authSuccess()  //FIXME: Verify
+                self.firstLaunching()
             }
             self.present(alert: .retryLaunch(actions))
         }

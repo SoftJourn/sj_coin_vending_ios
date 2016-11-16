@@ -36,7 +36,7 @@ class AnimationHelper {
     }
     
     //MARK: Scaling effect.
-    func show(_ logo: UIImageView) {
+    func showScaled(_ logo: UIImageView) {
         
         UIView.animate(withDuration: 0.6 ,
                        animations: { logo.transform = CGAffineTransform(scaleX: 0.6, y: 0.6) }) { finish in
