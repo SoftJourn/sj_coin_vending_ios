@@ -206,12 +206,17 @@ class BaseViewController: UIViewController {
             self.updateUIafterBuying()
         }.catch { error in
             SVProgressHUD.dismiss()
-            switch error {
-            case serverError.notEnoughCoins(let errorDescription):
-                self.present(alert: .buyingFailed(errorDescription))
-            default:
-                self.present(alert: .buyingFailed(String(error.localizedDescription)))
-            }
+            self.handleBuying(error)
+        }
+    }
+    
+    private func handleBuying(_ error: Error) {
+        
+        switch error {
+        case serverError.notEnoughCoins (let description), serverError.machineLocked (let description), serverError.unavailableProduct (let description):
+            self.present(alert: .buyingFailed(description))
+        default:
+            self.present(alert: .buyingFailed("Buying failed. Please try again."))
         }
     }
 

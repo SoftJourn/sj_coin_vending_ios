@@ -22,7 +22,7 @@ enum serverError: Error {
 class ResponseHandler {
     
     //Error messages.
-    static let unownedMessage = "" // Need message.
+    static let unownedMessage = "Unowned error has occurred. Please try again." //unhandled error has occurred.
     static let notEnoughCoinsMessage = "Not enough coins to buy item."
     static let unavailableProductMessage = "Chosen product is not available. Please refresh the page."
     static let machineLockedMessage = "Machine is locked by queue. Try again later."
@@ -52,7 +52,7 @@ class ResponseHandler {
         }
     }
 
-    class func handle(_ data: Data) -> Error {
+    private class func handle(_ data: Data) -> Error {
         
         let json = JSON(data: data)
         let jsonMessage = json["message"]
