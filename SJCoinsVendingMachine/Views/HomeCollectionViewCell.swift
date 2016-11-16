@@ -33,9 +33,11 @@ class HomeCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         
         super.prepareForReuse()
+        categoryItems = nil
         categoryNameLabel.text = ""
         collectionView.scrollsToTop = true
         showAllButton.isHidden = false
+        collectionView.reloadData()
     }
     
     @IBAction private func seeAllButtonPressed(_ sender: UIButton) {
@@ -55,15 +57,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
         }
         categoryNames = item.name
         categoryItems = item.products
-        reloadDataInside()
+        collectionView.reloadData()
         return self
-    }
-
-    fileprivate func reloadDataInside() {
-        
-        DispatchQueue.main.async { [unowned self] in
-            self.collectionView.reloadData()
-        }
     }
 }
 

@@ -69,7 +69,6 @@ class HomeViewController: BaseViewController {
         }.then {
             self.updateCollectionView()
         }.catch { error in
-            print(error)
             self.present(alert: .downloading)
         }
     }
@@ -83,9 +82,7 @@ class HomeViewController: BaseViewController {
     private func updateBalance() {
         
         guard let balance = DataManager.shared.account?.amount else { return }
-        DispatchQueue.main.async { [unowned self] in
-            self.balanceLabel.text = "Your balance is \(balance) coins"
-        }
+        self.balanceLabel.text = "Your balance is \(balance) coins"
     }
     
     override func updateUIafterBuying() {
