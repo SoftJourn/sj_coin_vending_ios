@@ -117,7 +117,7 @@ class AllItemsViewController: BaseViewController {
     @IBAction private func titleButtonPressed(_ sender: UIButton) {
         
         //Present ActionSheet.
-        AlertManager().present(actionSheet: predefinedActions())
+        AlertManager().present(actionSheet: predefinedActions(), sender: sender)
     }
     
     // MARK: Downloading, Handling and Refreshing data.
