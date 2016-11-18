@@ -103,13 +103,13 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
             availability = true
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                AlertManager().present(alert: myError.title.reachability, message: myError.message.reachability)
+                AlertManager().present(alert: errorMessage.reachability)
             }
         }
     }
     
     private func presenError() {
         
-        AlertManager().present(alert: myError.title.available, message: myError.message.available)
+        AlertManager().present(alert: errorMessage.available)
     }
 }

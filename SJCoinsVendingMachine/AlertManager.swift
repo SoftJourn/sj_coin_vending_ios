@@ -10,16 +10,16 @@ import UIKit
 
 class AlertManager {
     
-    func present(alert title: String, message: String) {
+    func present(alert message: String) {
         
-        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let controller = UIAlertController(title: "", message: message, preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
     
-    func present(retryAlert title: String, message: String, actions: [UIAlertAction]) {
+    func present(retryAlert message: String, actions: [UIAlertAction]) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
         for action in actions {
             alertController.addAction(action)
         }
@@ -42,7 +42,7 @@ class AlertManager {
     //Confirmation message.
     func present(confirmation name: String, price: Int, actions: [UIAlertAction]) {
         
-        let controller = UIAlertController(title: "Confirmation", message: "Buy \(name) for the \(price) coins?", preferredStyle: .alert)
+        let controller = UIAlertController(title: "Confirm Purchase", message: "Buy \(name) for the \(price) coins?", preferredStyle: .alert)
         for action in actions {
             controller.addAction(action)
         }

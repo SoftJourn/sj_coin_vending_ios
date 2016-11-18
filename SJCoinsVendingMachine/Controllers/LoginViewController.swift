@@ -110,7 +110,7 @@ class LoginViewController: BaseViewController {
     
     //MARK: Validation methods.
     private func showError() {
-                
+        
         if loginTextField.text?.isEmpty == true {
             handle(validationResult: .isEmpty, viaLabel: loginErrorLabel)
         }
@@ -163,13 +163,13 @@ class LoginViewController: BaseViewController {
         
         firstly {
             fetchDefaultMachine()
-            }.then { _ in
-                self.regularLaunching()
-            }.catch { _ in
-                let actions = AlertManager().alertActions(cancel: true) {
-                    self.firstLaunching()
-                }
-                self.present(alert: .retryLaunch(actions))
+        }.then { _ in
+            self.regularLaunching()
+        }.catch { _ in
+            let actions = AlertManager().alertActions(cancel: true) {
+                self.firstLaunching()
+            }
+            self.present(alert: .retryLaunch(actions))
         }
     }
 

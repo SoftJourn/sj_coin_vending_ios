@@ -40,20 +40,16 @@ class BaseTableViewCell: UITableViewCell {
 
     private func checked() {
         
-        favoriteButton.setImage(picture.checked, for: UIControlState())
+        favoriteButton.setImage(#imageLiteral(resourceName: "checked"), for: UIControlState())
     }
     
     private func unchecked() {
         
-        favoriteButton.setImage(picture.unchecked, for: UIControlState())
+        favoriteButton.setImage(#imageLiteral(resourceName: "unchecked"), for: UIControlState())
     }
     
     func verifyConnection(execute: ()->()) {
         
-        if !Reachability.connectedToNetwork() {
-            AlertManager().present(alert: myError.title.reachability, message: myError.message.reachability)
-        } else {
-            execute()
-        }
+        !Reachability.connectedToNetwork() ? AlertManager().present(alert: errorMessage.reachability) : execute()
     }
 }

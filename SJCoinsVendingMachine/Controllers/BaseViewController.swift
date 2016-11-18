@@ -13,16 +13,8 @@ import PromiseKit
 class BaseViewController: UIViewController {
     
     // MARK: Constants
-    private struct buying {
-        struct title {
-            static let success = "Success"
-            static let failed = "Failed"
-        }
-        struct message {
-            static let success = "Please take your order from Vending Machine."
-            static let failed = "Vending Machine doesn't have full information about chosen product. Please reload data and try again."
-        }
-    }
+    let buyingSuccess = "Please take your order from Vending Machine."
+    let buyingFailed = "Not enough information about chosen product. Please reload data and try again."
     
     // MARK: Properies
     lazy var refreshControl: UIRefreshControl = {
@@ -256,7 +248,6 @@ class BaseViewController: UIViewController {
     // MARK: Alerts.
     enum alertType {
         
-        case validation
         case authorization
         case downloading
         case beforeBuying
@@ -273,35 +264,32 @@ class BaseViewController: UIViewController {
         SVProgressHUD.dismiss(withDelay: 0.5)
         switch type {
             
-        case .validation:
-            AlertManager().present(alert: myError.title.validation, message: myError.message.validation)
-        
         case .authorization:
-            AlertManager().present(alert: myError.title.auth, message: myError.message.auth)
+            AlertManager().present(alert: errorMessage.auth)
         
         case .downloading:
-            AlertManager().present(alert: myError.title.download, message: myError.message.download)
+            AlertManager().present(alert: errorMessage.download)
         
         case .beforeBuying:
-            AlertManager().present(alert: buying.title.failed, message: buying.message.failed)
+            AlertManager().present(alert: buyingFailed)
         
         case .connection:
-            AlertManager().present(alert: myError.title.reachability, message: myError.message.reachability)
+            AlertManager().present(alert: errorMessage.reachability)
         
         case .buyingSuccess:
-            AlertManager().present(alert: buying.title.success, message: buying.message.success)
+            AlertManager().present(alert: buyingSuccess)
         
         case .buyingFailed(let errorDescription):
-            AlertManager().present(alert: buying.title.failed, message: errorDescription)
+            AlertManager().present(alert: errorDescription)    //????????
         
         case .favorite:
-            AlertManager().present(alert: myError.title.favorite, message: myError.message.favorite)
+            AlertManager().present(alert: errorMessage.favorite)
         
         case .confirmation(let name, let price, let actions):
             AlertManager().present(confirmation: name, price: price, actions: actions)
         
         case .retryLaunch(let actions):
-            AlertManager().present(retryAlert: myError.title.download, message: myError.message.download, actions: actions)
+            AlertManager().present(retryAlert: errorMessage.download, actions: actions)
         }
     }
 }

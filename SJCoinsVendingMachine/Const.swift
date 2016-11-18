@@ -35,24 +35,13 @@ struct networking {
     static let pathAccount = "coins/api/v1/account"
 }
 
-struct myError {
-    struct title {
-        static let validation = "Validation Error"
-        static let auth = "Authorization Error"
-        static let download = "Downloading Error"
-        static let reachability = "Internet Error"
-        static let favorite = "Favorite Error"
-        static let available = "Availability Error"
-    }
-    struct message {
-        static let validation = "Login and password should not be empty."
-        static let auth = "Login failed." //The credentials you supplied were not correct.
-        static let download = "Information could not be downloaded from server. Please try again later."
-        static let reachability = "Please verify your Internet connection."
-        static let retryDownload = "Error held while fetching list of machines. Please try again."
-        static let favorite = "Error held while adding to favorite. Please try again."
-        static let available = "Chosen product is not available in current vending machine."
-    }
+struct errorMessage {
+    
+    static let auth = "The credentials not correct."
+    static let download = "Information could not be downloaded. Please try again later."
+    static let reachability = "No internet connection."
+    static let favorite = "Error held while adding to favorite. Please try again."
+    static let available = "Chosen product is not available in current vending machine."
 }
 
 struct categoryName {
@@ -75,13 +64,6 @@ struct buttonTitle {
 struct spinerMessage {
     
     static let loading = "Loading"
-}
-
-struct picture {
-    
-    static let placeholder = #imageLiteral(resourceName: "Placeholder")
-    static let checked = #imageLiteral(resourceName: "checked")
-    static let unchecked = #imageLiteral(resourceName: "unchecked")
 }
 
 struct labels {
