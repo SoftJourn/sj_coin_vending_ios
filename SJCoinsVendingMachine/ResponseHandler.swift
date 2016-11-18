@@ -36,34 +36,27 @@ class ResponseHandler {
         case 401:
             return serverError.unauthorized
             
-        case 404:
-            guard let data = response.data else { return serverError.unowned(unownedMessage) }
-            return ResponseHandler.handle(data)
-            
-        case 409:
-            guard let data = response.data else { return serverError.unowned(unownedMessage) }
-            return ResponseHandler.handle(data)
-            
-        case 509:
-            return serverError.machineLocked(machineLockedMessage)
-            
         default:
-            return serverError.unowned(unownedMessage)
+            guard let data = response.data else { return serverError.unowned(unownedMessage) }
+            return ResponseHandler.handle(data)
         }
     }
 
     private class func handle(_ data: Data) -> Error {
         
         let json = JSON(data: data)
-        let jsonMessage = json["message"]
+        let jsonMessage = json["code"]
         switch jsonMessage {
         
-        case "Not enough coins.":
+        case 40901:
             return serverError.notEnoughCoins(notEnoughCoinsMessage)
             
-        case "There is no products in this field.":
+        case 40404:
             return serverError.unavailableProduct(unavailableProductMessage)
             
+        case 50901:
+            return serverError.machineLocked(machineLockedMessage)
+        
         default:
             return serverError.unowned(unownedMessage)
         }
