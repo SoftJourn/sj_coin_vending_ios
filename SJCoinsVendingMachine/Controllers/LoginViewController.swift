@@ -45,8 +45,6 @@ class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        
         loginTextField.delegate = self
         passwordTexField.delegate = self
         passwordTexField.returnKeyType = .done
@@ -83,12 +81,12 @@ class LoginViewController: BaseViewController {
     
     @IBAction private func loginTextFieldDidChange(_ sender: UITextField) {
         
-        handleValidation(loginValidation, label: loginErrorLabel)
+        handle(validationResult: loginValidation, viaLabel: loginErrorLabel)
     }
     
     @IBAction private func passwordTextFieldDidChange(_ sender: UITextField) {
-    
-        handleValidation(passwordValidation, label: passwordErrorLabel)
+        
+        handle(validationResult: passwordValidation, viaLabel: passwordErrorLabel)
     }
     
     //MARK: Animation methods.
@@ -110,40 +108,36 @@ class LoginViewController: BaseViewController {
         animator.showHidden(versionLabel, delay: 1)
     }
     
+    //MARK: Validation methods.
     private func showError() {
-        
-        presentErrorLabels()
-        present(alert: .validation)
-    }
-    
-    private func presentErrorLabels() {
-        
-        if loginTextField.text != nil || loginTextField.text?.isEmpty == false {
-            handleValidation(.isEmpty, label: loginErrorLabel)
+                
+        if loginTextField.text?.isEmpty == true {
+            handle(validationResult: .isEmpty, viaLabel: loginErrorLabel)
         }
-        if passwordTexField.text != nil || passwordTexField.text?.isEmpty == false {
-            handleValidation(.isEmpty, label: passwordErrorLabel)
+        if passwordTexField.text?.isEmpty == true {
+            handle(validationResult: .isEmpty, viaLabel: passwordErrorLabel)
         }
     }
     
-    private func handleValidation(_ result: validationStatus, label: UILabel) {
+    private func handle(validationResult result: validationStatus, viaLabel label: UILabel) {
+        
+        func config(_ label: UILabel, text: String, isHidden: Bool) {
+            
+            label.text = text
+            label.isHidden = isHidden
+        }
         
         switch result {
         case .isEmpty:
-            config(label, text: isEmptyString, hidden: false)
+            config(label, text: isEmptyString, isHidden: false)
         case .notAllowed:
-            config(label, text: notAllowedString, hidden: false)
+            config(label, text: notAllowedString, isHidden: false)
         case .success:
-            config(label, text: "", hidden: true)
+            config(label, text: "", isHidden: true)
         }
     }
     
-    private func config(_ label: UILabel, text: String, hidden: Bool) {
-        
-        label.text = text
-        label.isHidden = hidden
-    }
-    
+    // MARK: Authorization methods.
     private func authorization() {
        
         connectionVerification {
@@ -159,26 +153,26 @@ class LoginViewController: BaseViewController {
         DataManager.shared.fistLaunch ? firstLaunching() : regularLaunching()
     }
     
-    private func firstLaunching() {
-        
-        firstly {
-            fetchDefaultMachine()
-        }.then { _ in
-            self.regularLaunching()
-        }.catch { _ in
-            let actions = AlertManager().alertActions(cancel: true) {
-                self.firstLaunching()
-            }
-            self.present(alert: .retryLaunch(actions))
-        }
-    }
-    
     private func authFailed() {
         
         SVProgressHUD.dismiss()
         present(alert: .authorization)
     }
     
+    private func firstLaunching() {
+        
+        firstly {
+            fetchDefaultMachine()
+            }.then { _ in
+                self.regularLaunching()
+            }.catch { _ in
+                let actions = AlertManager().alertActions(cancel: true) {
+                    self.firstLaunching()
+                }
+                self.present(alert: .retryLaunch(actions))
+        }
+    }
+
     // MARK: ScrollView contentOffset
     private func registerForKeyboardNotifications() {
         
