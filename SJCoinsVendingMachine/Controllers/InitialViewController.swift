@@ -34,9 +34,9 @@ class InitialViewController: BaseViewController {
     func launchingProcess() {
         //Verify internet connection.
         let actions = AlertManager().alertActions(cancel: false) {
-            self.launchingProcess() //FIXME: Verify
+            self.launchingProcess()
         }
-        Reachability.connectedToNetwork() ? tokenVerification() : present(alert: .retryLaunch(actions))
+        Reachability.connectedToNetwork() ? tokenVerification() : present(alert: .retryLaunchNoInternet(actions))
     }
     
     func tokenVerification() {

@@ -39,7 +39,7 @@ struct errorMessage {
     
     static let auth = "The credentials not correct."
     static let download = "Information could not be downloaded. Please try again later."
-    static let reachability = "No internet connection."
+    static let reachability = "There is no internet connection."
     static let favorite = "Error held while adding to favorite. Please try again."
     static let available = "Chosen product is not available in current vending machine."
 }

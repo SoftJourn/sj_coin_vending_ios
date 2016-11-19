@@ -257,6 +257,7 @@ class BaseViewController: UIViewController {
         case favorite
         case confirmation(String, Int, [UIAlertAction])
         case retryLaunch([UIAlertAction])
+        case retryLaunchNoInternet([UIAlertAction])
     }
     
     func present(alert type: alertType) {
@@ -280,7 +281,7 @@ class BaseViewController: UIViewController {
             AlertManager().present(alert: buyingSuccess)
         
         case .buyingFailed(let errorDescription):
-            AlertManager().present(alert: errorDescription)    //????????
+            AlertManager().present(alert: errorDescription)
         
         case .favorite:
             AlertManager().present(alert: errorMessage.favorite)
@@ -290,7 +291,12 @@ class BaseViewController: UIViewController {
         
         case .retryLaunch(let actions):
             AlertManager().present(retryAlert: errorMessage.download, actions: actions)
+        
+        case .retryLaunchNoInternet(let actions):
+            AlertManager().present(retryAlert: errorMessage.reachability, actions: actions)
+
         }
+        
     }
 }
 
