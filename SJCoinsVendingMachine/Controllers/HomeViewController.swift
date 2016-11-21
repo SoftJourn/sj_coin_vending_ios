@@ -31,6 +31,7 @@ class HomeViewController: BaseViewController {
         
         super.viewDidLoad()
         collectionView.addSubview(refreshControl)
+        collectionView.alwaysBounceVertical = true
         addObserver(self, forKeyPath: #keyPath(dataManager.favorites), options: [.new], context: nil)
     }
     
