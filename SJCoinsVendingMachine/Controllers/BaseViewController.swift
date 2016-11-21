@@ -149,12 +149,14 @@ class BaseViewController: UIViewController {
     
     // MARK: Launching.
     func regularLaunching() {
-                
-        let favorites = fetchFavorites()
-        let products = fetchProducts()
-        let account = fetchAccount()
         
-        when(fulfilled: favorites, products, account).then { _ in
+        firstly {
+            fetchFavorites()
+        }.then { _ in
+            self.fetchProducts()
+        }.then { _ in
+            self.fetchAccount()
+        }.then { _ in
             NavigationManager.shared.presentTabBarController()
         }.catch { _ in
             let actions = AlertManager().alertActions(cancel: false) { [unowned self] _ in
