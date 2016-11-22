@@ -74,8 +74,8 @@ class AccountViewController: BaseViewController {
             self.fetchAccount().asVoid()
         }.then {
             self.updateViewWithAccountContent()
-        }.catch { error in
-            print(error)
+        }.catch { _ in
+            SVProgressHUD.dismiss()
             self.present(alert: .downloading)
         }
     }
