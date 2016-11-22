@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func customSVProgressHUD() {
         
+        SVProgressHUD.setDefaultAnimationType(.native)
         SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.setDefaultStyle(.light)
     }
