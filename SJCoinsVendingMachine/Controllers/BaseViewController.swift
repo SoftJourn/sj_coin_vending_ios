@@ -229,6 +229,7 @@ class BaseViewController: UIViewController {
             DataManager.shared.add(favorite: object as! Products)
             complition()
         }.catch { _ in
+            SVProgressHUD.dismiss()
             self.present(alert: .favorite)
         }
     }
@@ -243,6 +244,7 @@ class BaseViewController: UIViewController {
             DataManager.shared.remove(favorite: object as! Products)
             complition()
         }.catch { _ in
+            SVProgressHUD.dismiss()
             self.present(alert: .favorite)
         }
     }

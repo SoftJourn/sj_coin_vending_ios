@@ -298,6 +298,7 @@ extension AllItemsViewController: CellDelegate {
         
         guard let indexPath = tableView?.indexPath(for: cell) else { return }
         add(favorite: cell.item) { [unowned self] in
+            cell.favorite = true
             self.tableView?.reloadRows(at: [indexPath], with: .fade)
         }
     }
@@ -306,6 +307,7 @@ extension AllItemsViewController: CellDelegate {
         
         guard let indexPath = tableView?.indexPath(for: cell) else { return }
         remove(favorite: cell.item) { [unowned self] in
+            cell.favorite = false
             self.tableView?.reloadRows(at: [indexPath], with: .fade)
         }
     }

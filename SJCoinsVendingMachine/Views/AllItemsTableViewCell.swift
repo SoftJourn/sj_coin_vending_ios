@@ -27,8 +27,7 @@ class AllItemsTableViewCell: BaseTableViewCell {
         
         verifyConnection {
             SVProgressHUD.show(withStatus: spinerMessage.loading)
-            favorite = !favorite
-            favorite ? delegate?.add(favorite: self) : delegate?.remove(favorite: self)
+            favorite ? delegate?.remove(favorite: self) : delegate?.add(favorite: self)
         }
     }
     

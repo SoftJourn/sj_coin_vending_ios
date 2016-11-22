@@ -35,8 +35,7 @@ class FavoritesTableViewCell: BaseTableViewCell {
     
         verifyConnection {
             SVProgressHUD.show(withStatus: spinerMessage.loading)
-            favorite = !favorite
-            favorite ? delegate?.add(favorite: self) : delegate?.remove(favorite: self)
+            delegate?.remove(favorite: self)
         }
     }
 
