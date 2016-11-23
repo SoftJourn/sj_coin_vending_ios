@@ -53,6 +53,7 @@
 		35E504EC1DAD360C00131567 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504E81DAD360C00131567 /* Category.swift */; };
 		35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504F31DAE569B00131567 /* MachinesModel.swift */; };
 		35E504F61DAE569B00131567 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504F41DAE569B00131567 /* Size.swift */; };
+		35EA51251DE5E00A00AC8CA3 /* ArrayDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EA51241DE5E00A00AC8CA3 /* ArrayDecorator.swift */; };
 		35FAA1FD1DD469CF007D3680 /* coin.cer in Resources */ = {isa = PBXBuildFile; fileRef = 35FAA1FC1DD469BD007D3680 /* coin.cer */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +106,7 @@
 		35E504E81DAD360C00131567 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		35E504F31DAE569B00131567 /* MachinesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachinesModel.swift; sourceTree = "<group>"; };
 		35E504F41DAE569B00131567 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
+		35EA51241DE5E00A00AC8CA3 /* ArrayDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDecorator.swift; sourceTree = "<group>"; };
 		35FAA1FC1DD469BD007D3680 /* coin.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = coin.cer; sourceTree = "<group>"; };
 		6F5FAFC8CD94B442E353D50F /* Pods-SJCoinsVendingMachine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.release.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.release.xcconfig"; sourceTree = "<group>"; };
 		CFFCE6A93FAD050282DD61EF /* Pods-SJCoinsVendingMachine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.debug.xcconfig"; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */,
+				35EA51241DE5E00A00AC8CA3 /* ArrayDecorator.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				35E504EC1DAD360C00131567 /* Category.swift in Sources */,
 				35617D7D1DA822E8000582F6 /* ValidationManager.swift in Sources */,
 				35E504EB1DAD360C00131567 /* Products.swift in Sources */,
+				35EA51251DE5E00A00AC8CA3 /* ArrayDecorator.swift in Sources */,
 				35617D811DA82728000582F6 /* NavigationManager.swift in Sources */,
 				35089F7C1DABB45F00DC3BAF /* LoginPageDecorator.swift in Sources */,
 				3560E1A01DB8C49E00DF42C7 /* PurchaseHistoryModel.swift in Sources */,
