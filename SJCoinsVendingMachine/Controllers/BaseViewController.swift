@@ -13,8 +13,8 @@ import PromiseKit
 class BaseViewController: UIViewController {
     
     // MARK: Constants
-    let buyingSuccess = "Please take your order from Vending Machine."
-    let buyingFailed = "Not enough information about chosen product. Please reload data and try again."
+    private let buyingSuccess = "Please take your order from Vending Machine."
+    private let buyingFailed = "Not enough information about chosen product. Please reload data and try again."
     
     // MARK: Properies
     lazy var refreshControl: UIRefreshControl = {
@@ -25,12 +25,7 @@ class BaseViewController: UIViewController {
     }()
     let dataManager = DataManager.shared
 
-    // MARK: Lifecycle
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-    }
-    
+    // MARK: Methods
     func connectionVerification(execute: ()->()) {
         
         if Reachability.connectedToNetwork() {
@@ -63,7 +58,6 @@ class BaseViewController: UIViewController {
             firstly {
                 APIManager.fetchProducts(machineID: DataManager.shared.machineId)
             }.then { object -> Void in
-                print("FetchProducts result comes from server")
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in
@@ -78,7 +72,6 @@ class BaseViewController: UIViewController {
             firstly {
                 APIManager.fetchFavorites()
             }.then { object -> Void in
-                print("FetchFavorites result comes from server")
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in
@@ -93,7 +86,6 @@ class BaseViewController: UIViewController {
             firstly {
                 APIManager.fetchAccount()
             }.then { object -> Void in
-                print("FetchAccount result comes from server")
                 DataManager.shared.save(object)
                 fulfill(object)
             }.catch { error in
@@ -300,7 +292,5 @@ class BaseViewController: UIViewController {
             AlertManager().present(retryAlert: errorMessage.reachability, actions: actions)
 
         }
-        
     }
 }
-

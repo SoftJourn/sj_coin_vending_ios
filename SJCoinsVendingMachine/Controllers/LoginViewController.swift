@@ -68,11 +68,6 @@ class LoginViewController: BaseViewController {
         showElementsAnimated()
     }
     
-    deinit {
-        
-        print("LoginViewController deinited")
-    }
-    
     // MARK: Actions
     @IBAction private func signInButtonPressed(_ sender: UIButton) {
         
@@ -215,10 +210,7 @@ extension LoginViewController: UITextFieldDelegate {
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        if string == " " {
-            return false
-        }
-        return true
+        return string == " " ? false : true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

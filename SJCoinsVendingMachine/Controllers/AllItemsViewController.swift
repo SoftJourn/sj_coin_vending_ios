@@ -14,6 +14,7 @@ import PromiseKit
 class AllItemsViewController: BaseViewController {
     
     private enum Filter {
+        
         case lastAdded
         case bestSellers
         case allItems
@@ -90,11 +91,6 @@ class AllItemsViewController: BaseViewController {
         
         super.viewDidAppear(true)
         NavigationManager.shared.visibleViewController = self
-    }
-    
-    deinit {
-        
-        print("AllItemsViewController deinited")
     }
     
     // MARK: Actions
@@ -266,8 +262,6 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
             return cell.configure(with: item)
         }
     }
-    
-    // MARK: UITableViewDelegate
     
 }
 

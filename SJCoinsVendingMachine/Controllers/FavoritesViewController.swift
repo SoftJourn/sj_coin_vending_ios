@@ -34,7 +34,7 @@ class FavoritesViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        reloadTableView()
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -44,11 +44,6 @@ class FavoritesViewController: BaseViewController {
         connectionVerification { }
     }
     
-    deinit {
-        
-        print("FavoritesViewController deinited")
-    }
-    
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
@@ -56,21 +51,14 @@ class FavoritesViewController: BaseViewController {
         firstly {
             fetchFavorites().asVoid()
         }.then {
-            self.reloadTableView()
-        }.catch { error in
-            print(error)
+            self.tableView.reloadData()
+        }.catch { _ in
             self.present(alert: .downloading)
         }
     }
-    
-    private func reloadTableView() {
-        
-        tableView.reloadData()
-        //SVProgressHUD.dismiss(withDelay: 0.5)
-    }
 }
 
-extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
+extension FavoritesViewController: UITableViewDataSource {
     
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,18 +86,11 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return cell.configure(with: item)
     }
-    
-    // MARK: UITableViewDelegate
-
 }
 
 extension FavoritesViewController: CellDelegate {
     
-    func add(favorite cell: BaseTableViewCell) {
-        
-        //From Favorite tab user can only delete product.
-    }
-    
+    // MARK: CellDelegate
     func remove(favorite cell: BaseTableViewCell) {
         
         guard let indexPath = tableView?.indexPath(for: cell) else { return }

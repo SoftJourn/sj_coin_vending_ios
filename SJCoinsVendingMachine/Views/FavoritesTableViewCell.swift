@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import Alamofire
 import SVProgressHUD
-import AlamofireImage
 
 class FavoritesTableViewCell: BaseTableViewCell {
     

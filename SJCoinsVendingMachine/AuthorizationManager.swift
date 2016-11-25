@@ -31,7 +31,6 @@ class AuthorizationManager: RequestManager {
     // MARK: Authorization
     class func authRequest(login: String, password: String, complition: @escaping complited) {
         
-        //Parameters
         let URL = "\(networking.baseURL)auth/oauth/token"
         let headers = [ "Authorization": "Basic \(networking.basicKey)",
                         "Content-Type": networking.authContentType ]
@@ -91,7 +90,6 @@ class AuthorizationManager: RequestManager {
     class func accessTokenExist() -> Bool {
         
         guard let _ = keychain["token"] else { return false }
-        //return false
         return true
     }
     

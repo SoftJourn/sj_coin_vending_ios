@@ -52,7 +52,6 @@ class HomeViewController: BaseViewController {
     deinit {
         
         removeObserver(self, forKeyPath: #keyPath(dataManager.favorites))
-        print("HomeViewController deinited")
     }
     
     // MARK: Actions
@@ -66,10 +65,10 @@ class HomeViewController: BaseViewController {
         
         //PullToRefresh
         firstly {
-            self.fetchProducts().asVoid()
+            fetchProducts().asVoid()
         }.then {
             self.updateCollectionView()
-        }.catch { error in
+        }.catch { _ in
             self.present(alert: .downloading)
         }
     }
@@ -83,7 +82,7 @@ class HomeViewController: BaseViewController {
     private func updateBalance() {
         
         guard let balance = DataManager.shared.account?.amount else { return }
-        self.balanceLabel.text = "Your balance is \(balance) coins"
+        balanceLabel.text = "Your balance is \(balance) coins"
     }
     
     override func updateUIafterBuying() {
@@ -103,7 +102,7 @@ class HomeViewController: BaseViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension HomeViewController: UICollectionViewDataSource {
     
     // MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -125,9 +124,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         return cell
     }
-    
-    // MARK: UICollectionViewDelegate
-    
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
@@ -142,14 +138,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController: CellDelegate {
     
     // MARK: CellDelegate
-    func add(favorite cell: BaseTableViewCell) {
-        
-    }
-    
-    func remove(favorite cell: BaseTableViewCell) {
-        
-    }
-    
     func buy(product item: Products) {
         
         present(confirmation: item)

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SVProgressHUD
 import PromiseKit
 
 class InitialViewController: BaseViewController {
@@ -23,11 +22,6 @@ class InitialViewController: BaseViewController {
         
         super.viewDidAppear(animated)
         launchingProcess()
-    }
-    
-    deinit {
-        
-        print("InitialViewController deinited")
     }
     
     // MARK: Launching.

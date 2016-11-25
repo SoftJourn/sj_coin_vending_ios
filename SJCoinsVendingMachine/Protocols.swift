@@ -24,3 +24,11 @@ protocol SettingsViewControllerDelegate: class {
     
     func machineDidChange()
 }
+
+extension CellDelegate {
+    
+    // Leftover them empty for making optional.
+    func add(favorite cell: BaseTableViewCell) { }
+    func remove(favorite cell: BaseTableViewCell) { }
+    func buy(product item: Products) { }
+}

@@ -10,13 +10,14 @@ import UIKit
 
 class NavigationManager: NSObject {
     
+    // MARK: Properties
     static let shared = NavigationManager()
-    var mainStoryboard: UIStoryboard {
-        
+    var visibleViewController: UIViewController?
+    private var mainStoryboard: UIStoryboard {
         return UIStoryboard(name: "Main", bundle: nil)
     }
-    var visibleViewController: UIViewController?
     
+    // MARK: Methods
     func presentTabBarController() {
         
         let tabBarController = create(viewController: storyboards.tabBarControllerIdentifier) as! UITabBarController
@@ -52,12 +53,12 @@ class NavigationManager: NSObject {
         visibleViewController?.navigationController?.pushViewController(allItemsViewController, animated: true)
     }
     
-    fileprivate func create(viewController identifier: String) -> UIViewController {
+    private func create(viewController identifier: String) -> UIViewController {
         
         return mainStoryboard.instantiateViewController(withIdentifier: identifier)
     }
     
-    fileprivate func present(viewControllerAsRoot: UIViewController) {
+    private func present(viewControllerAsRoot: UIViewController) {
         
         UIApplication.shared.keyWindow?.rootViewController? = viewControllerAsRoot
     }

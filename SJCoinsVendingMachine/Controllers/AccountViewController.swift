@@ -7,13 +7,10 @@
 //
 
 import UIKit
-import SwiftyUserDefaults
 import SVProgressHUD
 import PromiseKit
 
 class AccountViewController: BaseViewController {
-    
-    // MARK: Constants
     
     // MARK: Properties
     @IBOutlet fileprivate var nameLabel: UILabel!
@@ -47,11 +44,6 @@ class AccountViewController: BaseViewController {
         
         super.viewDidAppear(true)
         NavigationManager.shared.visibleViewController = self
-    }
-    
-    deinit {
-        
-        print("AccountViewController deinited")
     }
     
     // MARK: Actions
@@ -95,7 +87,7 @@ class AccountViewController: BaseViewController {
     }
 }
 
-extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
+extension AccountViewController: UITableViewDataSource {
     
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -115,6 +107,4 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
         cell.transactionPrice.text = "\(price) Coins"
         return cell        
     }
-    
-    // MARK: UITableViewDelegate
 }

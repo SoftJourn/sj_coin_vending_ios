@@ -7,13 +7,13 @@
 //
 
 import Foundation
-import SwiftyJSON
-import AlamofireImage
 import SwiftyUserDefaults
 
 class DataManager: NSObject {
     
     // MARK: Properties
+    static let shared = DataManager()
+
     weak var delegate: DataManagerDelegate?
 
     dynamic var machineId: Int {
@@ -39,10 +39,8 @@ class DataManager: NSObject {
     private(set) var allItems: [Products]?
     private(set) var lastAdded: [Products]?
     private(set) var bestSellers: [Products]?
-    
     private(set) var unavailable: [Int]?
     
-    static let shared = DataManager()
     
     // MARK: Setters
     func save(_ object: AnyObject) {
@@ -58,13 +56,10 @@ class DataManager: NSObject {
             createCategories()
             unavailableFavorites()
             delegate?.productsDidChange()
-            print("Products saved in DataManager")
         case let object as [Products]:
             favorites = object
-            print("Favorites saved in DataManager")
         case let object as AccountModel:
             account = object
-            print("Account saved in DataManager")
         case let object as [PurchaseHistoryModel]:
             purchases = object
         default: break

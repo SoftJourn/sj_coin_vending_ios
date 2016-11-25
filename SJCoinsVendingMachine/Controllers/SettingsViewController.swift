@@ -52,16 +52,6 @@ class SettingsViewController: BaseViewController {
         fetchData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-        super.viewDidAppear(true)
-    }
-    
-    deinit {
-        
-        print("SettingsTableViewController deinited")
-    }
-    
     // MARK: Actions
     @IBAction private func doneButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -128,7 +118,7 @@ class SettingsViewController: BaseViewController {
         }.catch { _ in
             SVProgressHUD.dismiss()
             let actions = AlertManager().alertActions(cancel: true) {
-                self.fetchContent() //FIXME: Verify
+                self.fetchContent()
             }
             self.present(alert: .retryLaunch(actions))
         }
