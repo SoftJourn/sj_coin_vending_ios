@@ -37,7 +37,7 @@ struct networking {
 
 struct errorMessage {
     
-    static let auth = "The credentials not correct."
+    static let auth = "The credentials are not correct."
     static let download = "Information could not be downloaded. Please try again later."
     static let reachability = "There is no internet connection."
     static let favorite = "Error held while adding to favorite. Please try again."
