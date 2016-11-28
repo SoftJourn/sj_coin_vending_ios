@@ -11,33 +11,33 @@ import Alamofire
 import SwiftyJSON
 import PromiseKit
 import SwiftyUserDefaults
+import KeychainAccess
 
 extension DefaultsKeys {
     
-    static let kAccessToken = DefaultsKey<String>("access_token")
-    static let kRefreshToken = DefaultsKey<String>("refresh_token")
     static let kMachineId = DefaultsKey<Int>("machineId")
+    static let kMachineName = DefaultsKey<String>("machineName")
     static let fistLaunch = DefaultsKey<Bool>("fistLaunch")
 }
 
 class AuthorizationManager: RequestManager {
     
     // MARK: Constants
-    fileprivate static let grantType = "password"
+    private static let grantType = "password"
+    static var keychain = Keychain(service: "com.softjourn.SJCoinsVendingMachine")
+
     typealias complited = (_ error: Error?) -> ()
-    typealias refreshComplited = (_ model: AuthModel?, _ error: Error?) -> ()
-        
+    
     // MARK: Authorization
     class func authRequest(login: String, password: String, complition: @escaping complited) {
         
-        //Parameters
         let URL = "\(networking.baseURL)auth/oauth/token"
         let headers = [ "Authorization": "Basic \(networking.basicKey)",
                         "Content-Type": networking.authContentType ]
-        let credentialData = "username=\(login)&password=\(password)&grant_type=\(grantType)"
+        let parameters: Parameters = ["username": login, "password" : password, "grant_type" : "password"]
         
         firstly {
-            sendCustom(request: .post, urlString: URL, parameters: [:], encoding: credentialData, headers: headers)
+            sendCustom(request: .post, urlString: URL, parameters: parameters, encoding: URLEncoding.httpBody, headers: headers)
         }.then { data -> Void in
             let model = AuthModel.init(json: JSON(data))
             save(authInfo: model)
@@ -52,10 +52,10 @@ class AuthorizationManager: RequestManager {
         let urlString = "\(networking.baseURL)auth/oauth/token"
         let headers = [ "Authorization": "Basic \(networking.basicKey)",
                         "Content-Type": networking.authContentType ]
-        let refreshData = "refresh_token=\(Defaults[.kRefreshToken])&grant_type=refresh_token"
-        
+        let parameters: Parameters = ["refresh_token": getRefreshToken(), "grant_type" : "refresh_token"]
+
         firstly {
-            sendCustom(request: .post, urlString: urlString, parameters: [:], encoding: refreshData, headers: headers)
+            sendCustom(request: .post, urlString: urlString, parameters: parameters, encoding: URLEncoding.httpBody, headers: headers)
         }.then { data -> Void in
             let model = AuthModel.init(json: JSON(data))
             save(authInfo: model)
@@ -68,31 +68,40 @@ class AuthorizationManager: RequestManager {
     class func save(authInfo object: AuthModel) {
         
         guard let token = object.accessToken, let refresh = object.refreshToken else { return }
-        Defaults[.kAccessToken] = token
-        Defaults[.kRefreshToken] = refresh
-        print("Token saved")
-        //print("REFRESH: \(Defaults[.kRefreshToken])")
-        //print("ACCESS: \(Defaults[.kAccessToken])")
+        do {
+            try keychain.set(token, key: "token")
+            try keychain.set(refresh, key: "refresh")
+            print("Token saved")
+        } catch let error {
+            print(error)
+        }
     }
     
     class func removeAccessToken() {
         
-        Defaults.remove(.kAccessToken)
-        print("Token removed")
+        do {
+            try keychain.remove("token")
+            print("Token removed")
+        } catch let error {
+            print("error: \(error)")
+        }
     }
     
     class func accessTokenExist() -> Bool {
         
-        return Defaults.hasKey(.kAccessToken)
+        guard let _ = keychain["token"] else { return false }
+        return true
     }
     
     class func getToken() -> String {
         
-        return Defaults[.kAccessToken]
+        guard let token = keychain["token"] else { return "" }
+        return token
     }
     
     class func getRefreshToken() -> String {
         
-        return Defaults[.kRefreshToken]
+        guard let refresh = keychain["refresh"] else { return "" }
+        return refresh
     }
 }

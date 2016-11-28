@@ -13,29 +13,28 @@ import PromiseKit
 class FavoritesViewController: BaseViewController {
     
     // MARK: Properties
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet fileprivate weak var tableView: UITableView!
+    @IBOutlet fileprivate weak var noItemsLabel: UILabel!
     
     fileprivate var favorites: [Products]? {
-        
         return SortingManager().sortBy(name: DataManager.shared.favorites, state: nil)
     }
-    
     fileprivate var unavailable: [Int]? {
-
         return DataManager.shared.unavailable
     }
-    
+
     // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
         tableView.addSubview(refreshControl)
+        noItemsLabel.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        reloadTableView()
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -45,36 +44,33 @@ class FavoritesViewController: BaseViewController {
         connectionVerification { }
     }
     
-    deinit {
-        
-        print("FavoritesViewController deinited")
-    }
-    
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
+        //PullToRefresh
         firstly {
             fetchFavorites().asVoid()
         }.then {
-            self.reloadTableView()
-        }
-    }
-    
-    private func reloadTableView() {
-        
-        DispatchQueue.main.async { [unowned self] in
             self.tableView.reloadData()
-            //SVProgressHUD.dismiss(withDelay: 0.5)
+        }.catch { _ in
+            self.present(alert: .downloading)
         }
     }
 }
 
-extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
+extension FavoritesViewController: UITableViewDataSource {
     
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return favorites == nil ? 0 : favorites!.count
+        if favorites == nil || (favorites?.isEmpty)! {
+            noItemsLabel.isHidden = false
+            noItemsLabel.text = labels.noItems
+            return 0
+        } else {
+            noItemsLabel.isHidden = true
+            return favorites!.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -88,26 +84,18 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.availability = false
             }
         }
-        
         return cell.configure(with: item)
     }
-    
-    
-    // MARK: UITableViewDelegate
-
 }
 
 extension FavoritesViewController: CellDelegate {
     
-    func add(favorite cell: BaseTableViewCell) {
-        
-        //From Favorite tab user can only delete product.
-    }
-    
+    // MARK: CellDelegate
     func remove(favorite cell: BaseTableViewCell) {
         
         guard let indexPath = tableView?.indexPath(for: cell) else { return }
         remove(favorite: cell.item) { [unowned self] in
+            cell.favorite = false
             self.tableView?.deleteRows(at: [indexPath], with: .fade)
         }
     }

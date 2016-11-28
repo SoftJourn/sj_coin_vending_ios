@@ -8,9 +8,30 @@
 
 import Foundation
 
+enum validationStatus {
+    
+    case success
+    case isEmpty
+    case notAllowed
+}
+
 class ValidationManager {
     
-    class func validate(login: String, password: String) -> Bool {
-        return login.isEmpty || password.isEmpty
+    class func validate(login: String) -> validationStatus {
+        
+        return login.isEmpty ? .isEmpty : stringValidation(login)
+    }
+    
+    class func validate(password: String) -> validationStatus {
+        
+        return password.isEmpty ? .isEmpty : .success
+    }
+    
+    private class func stringValidation(_ string: String) -> validationStatus {
+        
+        let regex = "[a-z^]*"
+        let loginTest = NSPredicate.init(format: "SELF MATCHES %@", regex)
+    
+        return loginTest.evaluate(with: string) ? .success : .notAllowed
     }
 }

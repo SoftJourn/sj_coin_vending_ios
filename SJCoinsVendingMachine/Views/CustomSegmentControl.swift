@@ -10,19 +10,19 @@ import UIKit
 
 class CustomSegmentControl: UISegmentedControl {
 
-    var oldValue: Int!
+    private var oldValue: Int!
     
     //Capture existing selected segment on touchBegan
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        self.oldValue = self.selectedSegmentIndex
+        oldValue = selectedSegmentIndex
         super.touchesBegan(touches, with: event)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         super.touchesEnded(touches, with: event)
-        if self.oldValue == self.selectedSegmentIndex {
+        if oldValue == selectedSegmentIndex {
             sendActions(for: .touchUpInside)
         }
     }

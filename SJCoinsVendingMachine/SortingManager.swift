@@ -14,7 +14,7 @@ class SortingManager {
     private var priceSegmentCounter = Int()
     private var sortedData = [Products]()
     
-    enum counter {
+    private enum counter {
         
         case name
         case price

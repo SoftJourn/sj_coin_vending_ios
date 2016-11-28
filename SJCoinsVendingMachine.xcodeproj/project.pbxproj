@@ -13,7 +13,6 @@
 		35089F551DAB7D9000DC3BAF /* BaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F541DAB7D9000DC3BAF /* BaseManager.swift */; };
 		35089F581DAB7EC200DC3BAF /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F571DAB7EC200DC3BAF /* RequestManager.swift */; };
 		35089F5A1DAB813D00DC3BAF /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F591DAB813D00DC3BAF /* APIManager.swift */; };
-		35089F5E1DAB901900DC3BAF /* StringDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F5D1DAB901900DC3BAF /* StringDecorator.swift */; };
 		35089F681DAB9E4900DC3BAF /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F621DAB9E4900DC3BAF /* AccountViewController.swift */; };
 		35089F691DAB9E4900DC3BAF /* AllItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F631DAB9E4900DC3BAF /* AllItemsViewController.swift */; };
 		35089F6A1DAB9E4900DC3BAF /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F641DAB9E4900DC3BAF /* BaseViewController.swift */; };
@@ -45,6 +44,7 @@
 		359441731DAFC3B600B8B693 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359441721DAFC3B600B8B693 /* SettingsViewController.swift */; };
 		35B5A6371DB43316005E25C9 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B5A6361DB43316005E25C9 /* Reachability.swift */; };
 		35B80FF91DBB8A8200540659 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B80FF81DBB8A8200540659 /* BaseTableViewCell.swift */; };
+		35D2E7A81DDB4A94006C4EC3 /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2E7A71DDB4A94006C4EC3 /* AnimationHelper.swift */; };
 		35E29C0D1DACD8D9002B7045 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C0C1DACD8D9002B7045 /* AlertManager.swift */; };
 		35E29C0F1DACDCDD002B7045 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E29C0E1DACDCDD002B7045 /* InitialViewController.swift */; };
 		35E504E91DAD360C00131567 /* FeaturesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504E51DAD360C00131567 /* FeaturesModel.swift */; };
@@ -53,6 +53,8 @@
 		35E504EC1DAD360C00131567 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504E81DAD360C00131567 /* Category.swift */; };
 		35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504F31DAE569B00131567 /* MachinesModel.swift */; };
 		35E504F61DAE569B00131567 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E504F41DAE569B00131567 /* Size.swift */; };
+		35EA51251DE5E00A00AC8CA3 /* ArrayDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EA51241DE5E00A00AC8CA3 /* ArrayDecorator.swift */; };
+		35FAA1FD1DD469CF007D3680 /* coin.cer in Resources */ = {isa = PBXBuildFile; fileRef = 35FAA1FC1DD469BD007D3680 /* coin.cer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,7 +65,6 @@
 		35089F541DAB7D9000DC3BAF /* BaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseManager.swift; path = Networking/BaseManager.swift; sourceTree = "<group>"; };
 		35089F571DAB7EC200DC3BAF /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestManager.swift; path = Networking/RequestManager.swift; sourceTree = "<group>"; };
 		35089F591DAB813D00DC3BAF /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIManager.swift; path = Networking/APIManager.swift; sourceTree = "<group>"; };
-		35089F5D1DAB901900DC3BAF /* StringDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringDecorator.swift; sourceTree = "<group>"; };
 		35089F621DAB9E4900DC3BAF /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = Controllers/AccountViewController.swift; sourceTree = "<group>"; };
 		35089F631DAB9E4900DC3BAF /* AllItemsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AllItemsViewController.swift; path = Controllers/AllItemsViewController.swift; sourceTree = "<group>"; };
 		35089F641DAB9E4900DC3BAF /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseViewController.swift; path = Controllers/BaseViewController.swift; sourceTree = "<group>"; };
@@ -93,8 +94,10 @@
 		35617D801DA82728000582F6 /* NavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		3580AD731DBA95AC0062DC68 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		359441721DAFC3B600B8B693 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Controllers/SettingsViewController.swift; sourceTree = "<group>"; };
+		35AD444C1DCA91EF00554EE3 /* SJCoinsVendingMachine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SJCoinsVendingMachine.entitlements; sourceTree = "<group>"; };
 		35B5A6361DB43316005E25C9 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		35B80FF81DBB8A8200540659 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		35D2E7A71DDB4A94006C4EC3 /* AnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
 		35E29C0C1DACD8D9002B7045 /* AlertManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		35E29C0E1DACDCDD002B7045 /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitialViewController.swift; path = Controllers/InitialViewController.swift; sourceTree = "<group>"; };
 		35E504E51DAD360C00131567 /* FeaturesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturesModel.swift; sourceTree = "<group>"; };
@@ -103,6 +106,8 @@
 		35E504E81DAD360C00131567 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		35E504F31DAE569B00131567 /* MachinesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachinesModel.swift; sourceTree = "<group>"; };
 		35E504F41DAE569B00131567 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
+		35EA51241DE5E00A00AC8CA3 /* ArrayDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDecorator.swift; sourceTree = "<group>"; };
+		35FAA1FC1DD469BD007D3680 /* coin.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = coin.cer; sourceTree = "<group>"; };
 		6F5FAFC8CD94B442E353D50F /* Pods-SJCoinsVendingMachine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.release.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.release.xcconfig"; sourceTree = "<group>"; };
 		CFFCE6A93FAD050282DD61EF /* Pods-SJCoinsVendingMachine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.debug.xcconfig"; sourceTree = "<group>"; };
 		E4A8354A24EE6A6C35DDA347 /* Pods_SJCoinsVendingMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SJCoinsVendingMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,16 +146,17 @@
 		07854FB81D4B8C5300F31AB3 /* SJCoinsVendingMachine */ = {
 			isa = PBXGroup;
 			children = (
+				35AD444C1DCA91EF00554EE3 /* SJCoinsVendingMachine.entitlements */,
 				07854FB91D4B8C5300F31AB3 /* AppDelegate.swift */,
-				35B5A6361DB43316005E25C9 /* Reachability.swift */,
-				35617D781DA818A1000582F6 /* Const.swift */,
 				3580AD731DBA95AC0062DC68 /* Protocols.swift */,
 				07854FCB1D4B8C8A00F31AB3 /* Models */,
 				07854FCC1D4B8DD300F31AB3 /* Managers */,
 				07854FD21D4B922800F31AB3 /* Views */,
 				07854FD11D4B900300F31AB3 /* ViewControllers */,
+				35D2E7A91DDB4A9A006C4EC3 /* Helpers */,
 				35089F611DAB902B00DC3BAF /* Extensions */,
 				07854FCE1D4B8DF900F31AB3 /* Interface */,
+				35FFBE991DD2675900A078A9 /* Resources */,
 				07854FCF1D4B8E1A00F31AB3 /* Supporting Files */,
 			);
 			path = SJCoinsVendingMachine;
@@ -254,9 +260,19 @@
 			isa = PBXGroup;
 			children = (
 				3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */,
-				35089F5D1DAB901900DC3BAF /* StringDecorator.swift */,
+				35EA51241DE5E00A00AC8CA3 /* ArrayDecorator.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		35D2E7A91DDB4A9A006C4EC3 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				35D2E7A71DDB4A94006C4EC3 /* AnimationHelper.swift */,
+				35B5A6361DB43316005E25C9 /* Reachability.swift */,
+				35617D781DA818A1000582F6 /* Const.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		35E504EF1DAE566B00131567 /* Auth */ = {
@@ -294,6 +310,14 @@
 				35E504F41DAE569B00131567 /* Size.swift */,
 			);
 			name = Machines;
+			sourceTree = "<group>";
+		};
+		35FFBE991DD2675900A078A9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				35FAA1FC1DD469BD007D3680 /* coin.cer */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		9205D78390ABBC527EAB62AB /* Frameworks */ = {
@@ -334,13 +358,19 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Softjourn;
 				TargetAttributes = {
 					07854FB51D4B8C5300F31AB3 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = A2PX8YZMXY;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -367,6 +397,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35FAA1FD1DD469CF007D3680 /* coin.cer in Resources */,
 				35617D751DA814E3000582F6 /* Main.storyboard in Resources */,
 				35617D721DA814A6000582F6 /* Launch Screen.storyboard in Resources */,
 				07854FC11D4B8C5300F31AB3 /* Assets.xcassets in Resources */,
@@ -433,10 +464,10 @@
 				35089F581DAB7EC200DC3BAF /* RequestManager.swift in Sources */,
 				35089F681DAB9E4900DC3BAF /* AccountViewController.swift in Sources */,
 				35089F781DABB45F00DC3BAF /* CustomSegmentControl.swift in Sources */,
-				35089F5E1DAB901900DC3BAF /* StringDecorator.swift in Sources */,
 				35089F6A1DAB9E4900DC3BAF /* BaseViewController.swift in Sources */,
 				35B80FF91DBB8A8200540659 /* BaseTableViewCell.swift in Sources */,
 				35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */,
+				35D2E7A81DDB4A94006C4EC3 /* AnimationHelper.swift in Sources */,
 				3580AD741DBA95AC0062DC68 /* Protocols.swift in Sources */,
 				35E504E91DAD360C00131567 /* FeaturesModel.swift in Sources */,
 				359441731DAFC3B600B8B693 /* SettingsViewController.swift in Sources */,
@@ -446,6 +477,7 @@
 				35E504EC1DAD360C00131567 /* Category.swift in Sources */,
 				35617D7D1DA822E8000582F6 /* ValidationManager.swift in Sources */,
 				35E504EB1DAD360C00131567 /* Products.swift in Sources */,
+				35EA51251DE5E00A00AC8CA3 /* ArrayDecorator.swift in Sources */,
 				35617D811DA82728000582F6 /* NavigationManager.swift in Sources */,
 				35089F7C1DABB45F00DC3BAF /* LoginPageDecorator.swift in Sources */,
 				3560E1A01DB8C49E00DF42C7 /* PurchaseHistoryModel.swift in Sources */,
@@ -563,7 +595,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -591,11 +623,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SJCoinsVendingMachine/SJCoinsVendingMachine.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Oleg Pankiv (46DXTZDYAY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Oleg Pankiv (46DXTZDYAY)";
 				DEVELOPMENT_TEAM = A2PX8YZMXY;
 				INFOPLIST_FILE = SJCoinsVendingMachine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.softjourn.SJCoinsVendingMachine;
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.softjourn.sjcoins;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "a9d3bac5-9f5b-47f0-968a-83f52e42468a";
+				PROVISIONING_PROFILE_SPECIFIER = "SJCoins Development";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -606,11 +644,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SJCoinsVendingMachine/SJCoinsVendingMachine.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Softjourn, Inc. (A2PX8YZMXY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Softjourn, Inc. (A2PX8YZMXY)";
 				DEVELOPMENT_TEAM = A2PX8YZMXY;
 				INFOPLIST_FILE = SJCoinsVendingMachine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.softjourn.SJCoinsVendingMachine;
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.softjourn.sjcoins;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4c160d3e-2a6c-4f3a-b639-d33fe45e720e";
+				PROVISIONING_PROFILE_SPECIFIER = "SJCoins Ad-Hoc Distribution";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

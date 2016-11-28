@@ -16,7 +16,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     // MARK: Properties
     @IBOutlet fileprivate weak var collectionView: UICollectionView!
     @IBOutlet fileprivate weak var categoryNameLabel: UILabel!
-    @IBOutlet weak var showAllButton: UIButton!
+    @IBOutlet private weak var showAllButton: UIButton!
     
     fileprivate var categoryNames: String? {
         didSet {
@@ -33,9 +33,11 @@ class HomeCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         
         super.prepareForReuse()
+        categoryItems = nil
         categoryNameLabel.text = ""
         collectionView.scrollsToTop = true
         showAllButton.isHidden = false
+        collectionView.reloadData()
     }
     
     @IBAction private func seeAllButtonPressed(_ sender: UIButton) {
@@ -55,15 +57,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
         }
         categoryNames = item.name
         categoryItems = item.products
-        reloadDataInside()
+        collectionView.reloadData()
         return self
-    }
-
-    fileprivate func reloadDataInside() {
-        
-        DispatchQueue.main.async { [unowned self] in
-            self.collectionView.reloadData()
-        }
     }
 }
 
@@ -80,7 +75,7 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewInternalCell.identifier, for: indexPath) as! HomeCollectionViewInternalCell
         
         guard let item = categoryItems?[indexPath.item] else { return cell }
-        cell.availability = true
+        cell.availability = true        
         if categoryNames == categoryName.favorites {
             guard let unavailable = unavailableFavorites, let identifier = item.internalIdentifier else {
                 return cell.configure(with: item)
@@ -91,7 +86,7 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         }
         return cell.configure(with: item)
     }
-        
+    
     //UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -108,13 +103,13 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
             availability = true
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                AlertManager().present(alert: myError.title.reachability, message: myError.message.reachability)
+                AlertManager().present(alert: errorMessage.reachability)
             }
         }
     }
     
     private func presenError() {
         
-        AlertManager().present(alert: myError.title.available, message: myError.message.available)
+        AlertManager().present(alert: errorMessage.available)
     }
 }

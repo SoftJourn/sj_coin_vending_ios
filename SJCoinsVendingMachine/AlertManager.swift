@@ -10,38 +10,53 @@ import UIKit
 
 class AlertManager {
     
-    func present(alert title: String, message: String) {
+    func present(alert message: String) {
         
-        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let controller = UIAlertController(title: "", message: message, preferredStyle: .alert)
         controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
     
-    func present(retryAlert title: String, message: String, actions: [UIAlertAction]) {
+    func present(retryAlert message: String, actions: [UIAlertAction]) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
         for action in actions {
             alertController.addAction(action)
         }
         NavigationManager.shared.visibleViewController?.present(alertController, animated: true) { }
     }
     
-    func present(actionSheet actions: [UIAlertAction]) {
+    func present(actionSheet actions: [UIAlertAction], sender: UIButton) {
         
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        for action in actions {
+            controller.addAction(action)
+        }
+        if let popoverController = controller.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+        }
+        NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
+    }
+    
+    //Confirmation message.
+    func present(confirmation name: String, price: Int, actions: [UIAlertAction]) {
+        
+        let controller = UIAlertController(title: "Confirm Purchase", message: "Buy \(name) for the \(price) coins?", preferredStyle: .alert)
         for action in actions {
             controller.addAction(action)
         }
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
     }
     
-    //Confirmation message
-    func present(confirmation name: String, price: Int, actions: [UIAlertAction]) {
+    //Retry download actions.
+    func alertActions(cancel: Bool, retry: @escaping ()->()) -> [UIAlertAction] {
         
-        let controller = UIAlertController(title: "Confirmation", message: "Buy \(name) for the \(price) coins?", preferredStyle: .alert)
-        for action in actions {
-            controller.addAction(action)
+        let retryButton = UIAlertAction(title: buttonTitle.retry, style: .destructive) { _ in
+            retry()
         }
-        NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }
+        let cancelButton = UIAlertAction(title: buttonTitle.cancel, style: .default, handler: nil)
+        return cancel ? [cancelButton, retryButton] : [retryButton]
     }
+
 }

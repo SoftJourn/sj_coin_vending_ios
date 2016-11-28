@@ -20,7 +20,6 @@ struct storyboards {
 
 struct networking {
     
-    //static let baseURL = "http://192.168.102.251:8111/"   // Testing Vasyl.
     static let baseURL = "https://sjcoins-testing.softjourn.if.ua/"
     //Auth
     static let pathAuth = "auth/oauth/token"
@@ -35,23 +34,13 @@ struct networking {
     static let pathAccount = "coins/api/v1/account"
 }
 
-struct myError {
-    struct title {
-        static let validation = "Validation Error"
-        static let auth = "Authorization Error"
-        static let download = "Downloading Error"
-        static let reachability = "Internet Error"
-        static let favorite = "Favorite Error"
-        static let available = "Availability Error"
-    }
-    struct message {
-        static let validation = "Login and password should not be empty."
-        static let auth = "Login failed."
-        static let reachability = "Please verify your Internet connection."
-        static let retryDownload = "Error held while fetching list of machines. Please try again."
-        static let favorite = "Error held while adding to favorite. Please try again."
-        static let available = "Chosen product is not available in current vending machine."
-    }
+struct errorMessage {
+    
+    static let auth = "The credentials are not correct."
+    static let download = "Information could not be downloaded. Please try again later."
+    static let reachability = "There is no internet connection."
+    static let favorite = "Error held while adding to favorite. Please try again."
+    static let available = "Chosen product is not available in current vending machine."
 }
 
 struct categoryName {
@@ -76,9 +65,7 @@ struct spinerMessage {
     static let loading = "Loading"
 }
 
-struct picture {
+struct labels {
     
-    static let placeholder = #imageLiteral(resourceName: "Placeholder")
-    static let checked = #imageLiteral(resourceName: "checked")
-    static let unchecked = #imageLiteral(resourceName: "unchecked")
+    static let noItems = "Currently there are no products in this category."
 }

@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import SVProgressHUD
-import SwiftyUserDefaults
 import PromiseKit
 
 class InitialViewController: BaseViewController {
@@ -23,37 +21,26 @@ class InitialViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        connectionVerification {
-            launch()
+        launchingProcess()
+    }
+    
+    // MARK: Launching.
+    func launchingProcess() {
+        //Verify internet connection.
+        let actions = AlertManager().alertActions(cancel: false) {
+            self.launchingProcess()
         }
+        Reachability.connectedToNetwork() ? tokenVerification() : present(alert: .retryLaunchNoInternet(actions))
     }
     
-    deinit {
-        
-        print("InitialViewController deinited")
-    }
-    
-    private func launch() {
-        
+    func tokenVerification() {
+        //Verify token and ascertain if its a first launch.
         if AuthorizationManager.accessTokenExist() {
+            DataManager.shared.fistLaunch = false
             regularLaunching()
         } else {
             DataManager.shared.fistLaunch = true
             NavigationManager.shared.presentLoginViewController()
-        }
-    }
-    
-    private func regularLaunching() {
-        
-        DataManager.shared.fistLaunch = false
-        firstly {
-            self.fetchFavorites().asVoid()
-        }.then {
-            self.fetchProducts().asVoid()
-        }.then {
-            self.fetchAccount().asVoid()
-        }.then {
-            NavigationManager.shared.presentTabBarController()
         }
     }
 }

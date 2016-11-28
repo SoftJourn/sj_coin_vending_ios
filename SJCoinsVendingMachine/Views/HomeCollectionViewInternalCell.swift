@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SVProgressHUD
+import AlamofireImage
 
 class HomeCollectionViewInternalCell: UICollectionViewCell {
    
@@ -40,42 +41,30 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
             availability ? available() : unvailable()
         }
     }
-    
+
+    // MARK: Methods
     override func prepareForReuse() {
         
         super.prepareForReuse()
         nameLabel.text = ""
         priceLabel.text = ""
-        resetImage()
+        logo.af_cancelImageRequest()
+        logo.layer.removeAllAnimations()
+        logo.image = nil
     }
     
     func configure(with item: Products) -> HomeCollectionViewInternalCell {
         
         name = item.name
         price = item.price
-        load(image: item.imageUrl)
+        
+        guard let imageUrl = item.imageUrl else { return self }
+        logo.af_setImage(withURL: URL(string: "\(networking.baseURL)vending/v1/\(imageUrl)")!,
+                         placeholderImage: #imageLiteral(resourceName: "Placeholder"),
+                         imageTransition: .crossDissolve(0.5))
         return self
     }
     
-    private func resetImage() {
-        
-        request?.cancel()
-        logo.image = picture.placeholder
-    }
-    
-    private func load(image endpoint: String?) {
-        guard let endpoint = endpoint else { return logo.image = picture.placeholder }
-        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
-            //SVProgressHUD.show()
-            APIManager.fetch(image: endpoint) { [unowned self] image in
-                //SVProgressHUD.dismiss(withDelay: 3.0)
-                self.logo.image = image
-            }
-            return
-        }
-        return logo.image = cashedImage
-    }
-
     private func available() {
         
         logo.alpha = 1

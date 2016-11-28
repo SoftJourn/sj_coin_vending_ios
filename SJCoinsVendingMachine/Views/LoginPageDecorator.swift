@@ -14,34 +14,17 @@ class LoginPage: NSObject {
 
         configureUITextField(viewController.loginTextField)
         configureUITextField(viewController.passwordTexField)
-        //configureLogo(viewController.imageLogo)
         configureLoginButton(viewController.loginButton)
     }
     
-//    fileprivate class func configureUITextField(_ texfield: UITextField) {
-//        
-//        let bottomLine = CALayer()
-//        bottomLine.frame = CGRect(x: 0.0, y: texfield.frame.height - 1.0, width: texfield.frame.width, height: 0.5)
-//        bottomLine.backgroundColor = UIColor.black.cgColor
-//        texfield.borderStyle = UITextBorderStyle.none
-//        texfield.layer.addSublayer(bottomLine)
-//    }
-    
-    fileprivate class func configureUITextField(_ texfield: UITextField) {
+    private class func configureUITextField(_ texfield: UITextField) {
         
-        //texfield.backgroundColor = UIColor.clear
         texfield.layer.cornerRadius = 5
         texfield.layer.borderWidth = 0.5
         texfield.layer.borderColor = UIColor.darkGray.cgColor
     }
-
-//    fileprivate class func configureLogo(_ image: UIImageView) {
-//        
-//        image.layer.cornerRadius = image.frame.size.height/2
-//        image.clipsToBounds = true
-//    }
     
-    fileprivate class func configureLoginButton(_ button: UIButton) {
+    private class func configureLoginButton(_ button: UIButton) {
     
         button.backgroundColor = UIColor.clear
         button.layer.cornerRadius = 5

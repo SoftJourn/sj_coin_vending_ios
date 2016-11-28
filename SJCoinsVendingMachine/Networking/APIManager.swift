@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import AlamofireImage
 import SwiftyJSON
 import PromiseKit
 
@@ -42,7 +41,7 @@ class APIManager: RequestManager {
     class func fetchProducts(machineID: Int)  -> Promise<AnyObject> {
         
         let promise = Promise<AnyObject> { fulfill, reject in
-            print("fetchProducts")
+            
             let url = "\(networking.baseURL)vending/v1/machines/\(machineID)/features"
         
             firstly {
@@ -58,7 +57,7 @@ class APIManager: RequestManager {
     }
     
     class func fetchFavorites() -> Promise<AnyObject> {
-        print("fetchFavorites")
+
         let promise = Promise<AnyObject> { fulfill, reject in
 
             let url = "\(networking.baseURL)vending/v1/favorites"
@@ -83,7 +82,7 @@ class APIManager: RequestManager {
     }
     
     class func fetchAccount() -> Promise<AnyObject> {
-        print("fetchAccount")
+
         let promise = Promise<AnyObject> { fulfill, reject in
 
             let url = "\(networking.baseURL)coins/api/v1/account"
@@ -123,23 +122,6 @@ class APIManager: RequestManager {
             }
         }
         return promise
-    }
-    
-    typealias withImage = (_ image: UIImage) -> ()
-    
-    class func fetch(image urlString : String, complition: @escaping withImage) {
-        
-        customManager.request("\(networking.baseURL)vending/v1/\(urlString)")
-            .responseImage { response in
-                switch response.result {
-                case .success(let image):
-                    DataManager.imageCache.add(image, withIdentifier: urlString)
-                    complition(image)
-                case .failure(let error):
-                    print(error)
-                    complition(picture.placeholder)
-                }
-        }
     }
     
     class func buy(product identifier: Int, machineID: Int) -> Promise<AnyObject> {

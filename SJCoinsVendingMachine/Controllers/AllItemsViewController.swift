@@ -11,21 +11,23 @@ import SVProgressHUD
 import AlamofireImage
 import PromiseKit
 
-enum Filter {
-    case lastAdded
-    case bestSellers
-    case allItems
-}
-
 class AllItemsViewController: BaseViewController {
     
+    private enum Filter {
+        
+        case lastAdded
+        case bestSellers
+        case allItems
+    }
+
     // MARK: Constants
     static let identifier = "\(AllItemsViewController.self)"
     
     // MARK: Properties
     @IBOutlet fileprivate weak var tableView: UITableView!
-    @IBOutlet private weak var segmentControl: UISegmentedControl!
+    @IBOutlet fileprivate weak var segmentControl: UISegmentedControl!
     @IBOutlet private weak var titleButton: UIButton!
+    @IBOutlet fileprivate weak var noItems: UILabel!
     
     private lazy var sortingByName = SortingManager()
     private lazy var sortingByPrice = SortingManager()
@@ -39,24 +41,19 @@ class AllItemsViewController: BaseViewController {
         return searchController
     }()
     
-    private var allItems: [Products]? {
-        
+    fileprivate var allItems: [Products]? {
         return DataManager.shared.allItems
     }
     private var lastAdded: [Products]? {
-        
         return DataManager.shared.lastAdded
     }
     private var bestSellers: [Products]? {
-        
         return DataManager.shared.bestSellers
     }
     private var categories: [Categories]? {
-        
         return DataManager.shared.features?.categories
     }
     fileprivate var favorite: [Products]? {
-        
         return DataManager.shared.favorites
     }
     
@@ -67,6 +64,7 @@ class AllItemsViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        noItems.isHidden = true
         usedSeeAll ? viewDidLoadUsingSeeAll() : viewDidLoadNotUsingSeeAll()
     }
     
@@ -78,6 +76,7 @@ class AllItemsViewController: BaseViewController {
     private func viewDidLoadNotUsingSeeAll() {
         
         filterItems = SortingManager().sortBy(name: allItems, state: nil)
+        DataManager.shared.delegate = self
         tableView.addSubview(refreshControl)
         self.definesPresentationContext = true
     }
@@ -94,11 +93,6 @@ class AllItemsViewController: BaseViewController {
         NavigationManager.shared.visibleViewController = self
     }
     
-    deinit {
-        
-        print("AllItemsViewController deinited")
-    }
-    
     // MARK: Actions
     @IBAction private func sameSegmentButtonPressed(_ sender: UISegmentedControl) {
         
@@ -112,29 +106,34 @@ class AllItemsViewController: BaseViewController {
     
     @IBAction private func searchButtonPressed(_ sender: UIBarButtonItem) {
         
+        tableView.reloadData()
         present(resultSearchController, animated: true) { }
     }
     
     @IBAction private func titleButtonPressed(_ sender: UIButton) {
         
         //Present ActionSheet.
-        AlertManager().present(actionSheet: predefinedActions())
+        AlertManager().present(actionSheet: predefinedActions(), sender: sender)
     }
     
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
+        //PullToRefresh
         firstly {
             fetchProducts().asVoid()
         }.then {
             self.changeAndReload()
+        }.catch { error in
+            print(error)
+            self.present(alert: .downloading)
         }
     }
     
     private func changeAndReload() {
         
         if self.filterItems != nil {
-            self.change(filter: self.prepared(name: categoryName.allItems), items: self.allItems)
+            change(filter: self.prepared(name: categoryName.allItems), items: self.allItems)
         }
         reloadTableView()
     }
@@ -185,7 +184,7 @@ class AllItemsViewController: BaseViewController {
         return actions
     }
     
-    private func change(filter name: String?, items: [Products]?) {
+    fileprivate func change(filter name: String?, items: [Products]?) {
         
         let sortedItems = SortingManager().sortBy(name: items, state: nil)
         filterItems = sortedItems
@@ -199,7 +198,7 @@ class AllItemsViewController: BaseViewController {
         }
     }
     
-    private func prepared(name: String) -> String {
+    fileprivate func prepared(name: String) -> String {
         
         return "\(name) ▾"
     }
@@ -213,47 +212,63 @@ class AllItemsViewController: BaseViewController {
     
     fileprivate func reloadTableView() {
         
-        DispatchQueue.main.async { [unowned self] in
-            self.tableView.reloadData()
-            SVProgressHUD.dismiss(withDelay: 0.5)
-        }
+        tableView.reloadData()
+        SVProgressHUD.dismiss(withDelay: 0.5)
     }
 }
 
-extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
+extension AllItemsViewController: UITableViewDataSource {
     
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if self.resultSearchController.isActive {
+        if resultSearchController.isActive && resultSearchController.searchBar.text! != "" {
             return searchData.count
         } else {
-            return filterItems == nil ? 0 : filterItems!.count
+            return numberOfRows()
+        }
+    }
+    
+    private func numberOfRows() -> Int {
+        
+        if filterItems == nil || (filterItems?.isEmpty)! {
+            segmentControl.isHidden = true
+            noItems.isHidden = false
+            noItems.text = labels.noItems
+            return 0
+        } else {
+            segmentControl.isHidden = false
+            noItems.isHidden = true
+            return filterItems!.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: AllItemsTableViewCell.identifier, for: indexPath) as! AllItemsTableViewCell
-        if self.resultSearchController.isActive {
-            return searchData.isEmpty ? cell : cell.configure(with: searchData[indexPath.item])
+        if resultSearchController.isActive && resultSearchController.searchBar.text! != "" {
+            return searchData.isEmpty ? cell : configure(cell, with: searchData[indexPath.row])
         } else {
-            guard let item = filterItems?[indexPath.row] else { return cell }
-            cell.delegate = self
-            cell.favorite = false
-            if let favorites = favorite {
-                for object in favorites {
-                    if item == object {
-                        cell.favorite = true
-                    }
-                }
-            }
-            return cell.configure(with: item)
+            return configure(cell, with: filterItems?[indexPath.row])
         }
     }
     
-    // MARK: UITableViewDelegate
-    
+    private func configure(_ cell: AllItemsTableViewCell, with item: Products?) -> AllItemsTableViewCell {
+        
+        guard let item = item else { return cell }
+        if cell.delegate == nil {
+            cell.delegate = self
+        }
+        cell.favorite = false
+        if let favorites = favorite {
+            for object in favorites {
+                if item == object {
+                    cell.favorite = true
+                }
+            }
+        }
+        return cell.configure(with: item)
+    }
 }
 
 extension AllItemsViewController: UISearchResultsUpdating {
@@ -298,5 +313,14 @@ extension AllItemsViewController: CellDelegate {
     func buy(product item: Products) {
         
         present(confirmation: item)
+    }
+}
+
+extension AllItemsViewController: DataManagerDelegate {
+    
+    // MARK: DataManagerDelegate
+    func productsDidChange() {
+        
+        change(filter: self.prepared(name: categoryName.allItems), items: self.allItems)
     }
 }

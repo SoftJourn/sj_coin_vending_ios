@@ -9,9 +9,6 @@
 import Foundation
 import Alamofire
 import PromiseKit
-import SVProgressHUD
-
-
 
 class RequestManager: BaseManager {
     
@@ -40,7 +37,7 @@ class RequestManager: BaseManager {
     
     class func sendCustom(request method: Alamofire.HTTPMethod,
                           urlString: URLConvertible,
-                          parameters: [String: AnyObject]?,
+                          parameters: Parameters?,
                           encoding: ParameterEncoding,
                           headers: Dictionary<String, String>) -> Promise<AnyObject> {
         
@@ -59,9 +56,9 @@ class RequestManager: BaseManager {
     private class func handle401StatusCode(method: Alamofire.HTTPMethod, url: URLConvertible, success: @escaping (AnyObject) -> Swift.Void, failed: @escaping (Error) -> Swift.Void) {
         
         AuthorizationManager.refreshRequest { error in
-            
+
             if error != nil {
-                print(error)
+                print(error!)
                 AuthorizationManager.removeAccessToken()
                 NavigationManager.shared.presentLoginViewController()
             }

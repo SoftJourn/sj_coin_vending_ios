@@ -14,13 +14,19 @@ class LoginViewController: BaseViewController {
     
     // MARK: Constants
     static let identifier = "\(LoginViewController.self)"
-    
+    private let isEmptyString = "This field is required."
+    private let notAllowedString = "These symbols are not allowed."
+
     // MARK: Properties
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTexField: UITextField!
     @IBOutlet weak private var imageLogo: UIImageView!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak private var scrollView: UIScrollView!
+    @IBOutlet weak private var versionLabel: UILabel!
+    
+    @IBOutlet weak private var loginErrorLabel: UILabel!
+    @IBOutlet weak private var passwordErrorLabel: UILabel!
     
     fileprivate var login: String {
         return self.loginTextField.text!
@@ -28,34 +34,105 @@ class LoginViewController: BaseViewController {
     fileprivate var password: String {
         return self.passwordTexField.text!
     }
+    private var loginValidation: validationStatus {
+        return ValidationManager.validate(login: loginTextField.text!)
+    }
+    private var passwordValidation: validationStatus {
+        return ValidationManager.validate(password: passwordTexField.text!)
+    }
     
     // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        loginTextField.delegate = self
+        passwordTexField.delegate = self
+        passwordTexField.returnKeyType = .done
         registerForKeyboardNotifications()
         hideKeyboardWhenTappedAround()
         LoginPage.decorateLoginViewController(self)
+        AnimationHelper().applyMotionEffect(toView: imageLogo, magnitude: 15)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         NavigationManager.shared.visibleViewController = self
-        SVProgressHUD.dismiss(withDelay: 0.5)
+        loginErrorLabel.isHidden = true
+        passwordErrorLabel.isHidden = true
+        SVProgressHUD.dismiss(withDelay: 0.2)
+        prepareAnimation()
     }
     
-    deinit {
+    override func viewDidAppear(_ animated: Bool) {
         
-        print("LoginViewController deinited")
+        showElementsAnimated()
     }
     
     // MARK: Actions
     @IBAction private func signInButtonPressed(_ sender: UIButton) {
         
-        let validation = ValidationManager.validate(login: login, password: password)
-        validation ? present(alert: .validation) : authorization()
+        loginValidation == .success && passwordValidation == .success ? authorization() : showError()
     }
     
+    @IBAction private func loginTextFieldDidChange(_ sender: UITextField) {
+        
+        handle(validationResult: loginValidation, viaLabel: loginErrorLabel)
+    }
+    
+    @IBAction private func passwordTextFieldDidChange(_ sender: UITextField) {
+        
+        handle(validationResult: passwordValidation, viaLabel: passwordErrorLabel)
+    }
+    
+    //MARK: Animation methods.
+    private func prepareAnimation() {
+        
+        loginTextField.alpha = 0
+        passwordTexField.alpha = 0
+        loginButton.alpha = 0
+        versionLabel.alpha = 0
+    }
+    
+    private func showElementsAnimated() {
+        
+        let animator = AnimationHelper()
+        animator.showScaled(imageLogo)
+        animator.showHidden(loginTextField, delay: 0.2)
+        animator.showHidden(passwordTexField, delay: 0.4)
+        animator.showHidden(loginButton, delay: 0.8)
+        animator.showHidden(versionLabel, delay: 1)
+    }
+    
+    //MARK: Validation methods.
+    private func showError() {
+        
+        if loginTextField.text?.isEmpty == true {
+            handle(validationResult: .isEmpty, viaLabel: loginErrorLabel)
+        }
+        if passwordTexField.text?.isEmpty == true {
+            handle(validationResult: .isEmpty, viaLabel: passwordErrorLabel)
+        }
+    }
+    
+    private func handle(validationResult result: validationStatus, viaLabel label: UILabel) {
+        
+        func config(_ label: UILabel, text: String, isHidden: Bool) {
+            
+            label.text = text
+            label.isHidden = isHidden
+        }
+        
+        switch result {
+        case .isEmpty:
+            config(label, text: isEmptyString, isHidden: false)
+        case .notAllowed:
+            config(label, text: notAllowedString, isHidden: false)
+        case .success:
+            config(label, text: "", isHidden: true)
+        }
+    }
+    
+    // MARK: Authorization methods.
     private func authorization() {
        
         connectionVerification {
@@ -68,37 +145,29 @@ class LoginViewController: BaseViewController {
     
     private func authSuccess() {
   
-        if DataManager.shared.fistLaunch {
-            
-            DataManager.shared.fistLaunch = false
-            firstly {
-                self.fetchDefaultMachine().asVoid()
-            }.then {
-                self.regularLaunching()
-            }
-        } else {
-            regularLaunching()
-        }
-    }
-    
-    private func regularLaunching() {
-        
-        firstly {
-            self.fetchFavorites().asVoid()
-        }.then {
-            self.fetchProducts().asVoid()
-        }.then {
-            self.fetchAccount().asVoid()
-        }.then {
-            NavigationManager.shared.presentTabBarController()
-        }
+        DataManager.shared.fistLaunch ? firstLaunching() : regularLaunching()
     }
     
     private func authFailed() {
         
+        SVProgressHUD.dismiss()
         present(alert: .authorization)
     }
     
+    private func firstLaunching() {
+        
+        firstly {
+            fetchDefaultMachine()
+        }.then { _ in
+            self.regularLaunching()
+        }.catch { _ in
+            let actions = AlertManager().alertActions(cancel: true) {
+                self.firstLaunching()
+            }
+            self.present(alert: .retryLaunch(actions))
+        }
+    }
+
     // MARK: ScrollView contentOffset
     private func registerForKeyboardNotifications() {
         
@@ -122,10 +191,8 @@ class LoginViewController: BaseViewController {
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
     }
-}
-
-extension LoginViewController {
     
+    // MARK: UITapGestureRecognizer
     func hideKeyboardWhenTappedAround() {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -136,5 +203,24 @@ extension LoginViewController {
     func dismissKeyboard() {
         
         view.endEditing(true)
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        return string == " " ? false : true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == loginTextField {
+            passwordTexField.becomeFirstResponder()
+        }
+        if textField == passwordTexField {
+            passwordTexField.resignFirstResponder()
+        }
+        return true
     }
 }

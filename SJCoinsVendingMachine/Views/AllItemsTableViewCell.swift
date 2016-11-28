@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import SVProgressHUD
 
 class AllItemsTableViewCell: BaseTableViewCell {
@@ -27,8 +26,7 @@ class AllItemsTableViewCell: BaseTableViewCell {
         
         verifyConnection {
             SVProgressHUD.show(withStatus: spinerMessage.loading)
-            favorite = !favorite
-            favorite ? delegate?.add(favorite: self) : delegate?.remove(favorite: self)
+            favorite ? delegate?.remove(favorite: self) : delegate?.add(favorite: self)
         }
     }
     
@@ -41,7 +39,10 @@ class AllItemsTableViewCell: BaseTableViewCell {
             nameLabel.text = name
             priceLabel.text = "\(price) Coins"
         }
-        load(image: product.imageUrl)
+        guard let imageUrl = item.imageUrl else { return self }
+        logo.af_setImage(withURL: URL(string: "\(networking.baseURL)vending/v1/\(imageUrl)")!,
+                         placeholderImage: #imageLiteral(resourceName: "Placeholder"),
+                         imageTransition: .crossDissolve(0.5))
         return self
     }
 }

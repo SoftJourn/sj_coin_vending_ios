@@ -7,13 +7,10 @@
 //
 
 import UIKit
-import SwiftyUserDefaults
 import SVProgressHUD
 import PromiseKit
 
 class AccountViewController: BaseViewController {
-    
-    // MARK: Constants
     
     // MARK: Properties
     @IBOutlet fileprivate var nameLabel: UILabel!
@@ -21,11 +18,9 @@ class AccountViewController: BaseViewController {
     @IBOutlet fileprivate var tableView: UITableView!
     
     fileprivate var accountInformation: AccountModel? {
-        
         return DataManager.shared.account
     }
     fileprivate var purchases: [PurchaseHistoryModel]? {
-        
         return DataManager.shared.purchases
     }
     
@@ -51,11 +46,6 @@ class AccountViewController: BaseViewController {
         NavigationManager.shared.visibleViewController = self
     }
     
-    deinit {
-        
-        print("AccountViewController deinited")
-    }
-    
     // MARK: Actions
     @IBAction private func logOutButton(_ sender: UIBarButtonItem) {
         
@@ -67,6 +57,7 @@ class AccountViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
+        //PullToRefresh
         firstly {
             fetchPurchaseHistory().asVoid()
         }.then {
@@ -75,15 +66,16 @@ class AccountViewController: BaseViewController {
             self.fetchAccount().asVoid()
         }.then {
             self.updateViewWithAccountContent()
+        }.catch { _ in
+            SVProgressHUD.dismiss()
+            self.present(alert: .downloading)
         }
     }
     
     private func updateTableView() {
         
-        SVProgressHUD.dismiss(withDelay: 1)
-        DispatchQueue.main.async { [unowned self] in
-            self.tableView.reloadData()
-        }
+        SVProgressHUD.dismiss(withDelay: 0.2)
+        tableView.reloadData()
     }
     
     private func updateViewWithAccountContent() {
@@ -95,7 +87,7 @@ class AccountViewController: BaseViewController {
     }
 }
 
-extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
+extension AccountViewController: UITableViewDataSource {
     
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -108,13 +100,11 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: PurchaseHistoryTableViewCell.identifier, for: indexPath) as! PurchaseHistoryTableViewCell
         
-        guard let item = purchases?[indexPath.item], let price = item.price, let name = item.name else  { return cell }
-        let date = DateManager().convertData(from: item.time!)
+        guard let item = purchases?[indexPath.item], let price = item.price, let name = item.name, let time = item.time else { return cell }
+        let date = DateManager().convertData(from: time)
         cell.transactionDate.text = date
         cell.transactionItem.text = name
         cell.transactionPrice.text = "\(price) Coins"
         return cell        
     }
-    
-    // MARK: UITableViewDelegate
 }

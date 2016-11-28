@@ -9,23 +9,20 @@
 import UIKit
 import SVProgressHUD
 import PromiseKit
-import SwiftyUserDefaults
 
 class HomeViewController: BaseViewController {
     
     // MARK: Constants
-    let cellHeight: CGFloat = 180
+    fileprivate let cellHeight: CGFloat = 180
     
     // MARK: Properties
-    @IBOutlet weak fileprivate var collectionView: UICollectionView!
-    @IBOutlet weak var balanceLabel: UILabel!
+    @IBOutlet fileprivate weak var collectionView: UICollectionView!
+    @IBOutlet private weak var balanceLabel: UILabel!
     
     fileprivate var categories: [Categories]? {
-
         return DataManager.shared.categories
     }
     fileprivate var unavailable: [Int]? {
-        
         return DataManager.shared.unavailable
     }
     
@@ -34,12 +31,14 @@ class HomeViewController: BaseViewController {
         
         super.viewDidLoad()
         collectionView.addSubview(refreshControl)
+        collectionView.alwaysBounceVertical = true
         addObserver(self, forKeyPath: #keyPath(dataManager.favorites), options: [.new], context: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
+        navigationItem.title = DataManager.shared.machineName
         updateBalance()
     }
     
@@ -53,7 +52,6 @@ class HomeViewController: BaseViewController {
     deinit {
         
         removeObserver(self, forKeyPath: #keyPath(dataManager.favorites))
-        print("HomeViewController deinited")
     }
     
     // MARK: Actions
@@ -65,28 +63,26 @@ class HomeViewController: BaseViewController {
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
         
+        //PullToRefresh
         firstly {
-            self.fetchProducts().asVoid()
+            fetchProducts().asVoid()
         }.then {
             self.updateCollectionView()
+        }.catch { _ in
+            self.present(alert: .downloading)
         }
     }
     
     fileprivate func updateCollectionView() {
         
-        DispatchQueue.main.async { [unowned self] in
-            self.collectionView.reloadData()
-            SVProgressHUD.dismiss(withDelay: 0.5)
-        }
+        self.collectionView.reloadData()
+        SVProgressHUD.dismiss(withDelay: 0.2)
     }
     
     private func updateBalance() {
         
-        guard let balance = DataManager.shared.account?.amount else { return /* show */ }
-        
-        DispatchQueue.main.async { [unowned self] in
-            self.balanceLabel.text = "Your balance is \(balance) coins"
-        }
+        guard let balance = DataManager.shared.account?.amount else { return }
+        balanceLabel.text = "Your balance is \(balance) coins"
     }
     
     override func updateUIafterBuying() {
@@ -96,6 +92,7 @@ class HomeViewController: BaseViewController {
     
     // MARK: - Key-Value Observing
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
         guard let keyPath = keyPath else { return }
         switch keyPath {
         case #keyPath(dataManager.favorites):
@@ -105,7 +102,7 @@ class HomeViewController: BaseViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension HomeViewController: UICollectionViewDataSource {
     
     // MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -116,7 +113,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
-        guard let categories = categories?[indexPath.item], let products = categories.products else { return cell }
+        guard let categories = categories?[safe: indexPath.item], let products = categories.products else { return cell }
         if !products.isEmpty {
             cell.delegate = self
             if categories.name == categoryName.favorites {
@@ -127,9 +124,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         return cell
     }
-    
-    // MARK: UICollectionViewDelegate
-    
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
@@ -144,16 +138,17 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 extension HomeViewController: CellDelegate {
     
     // MARK: CellDelegate
-    func add(favorite cell: BaseTableViewCell) {
-        
-    }
-    
-    func remove(favorite cell: BaseTableViewCell) {
-        
-    }
-    
     func buy(product item: Products) {
         
         present(confirmation: item)
+    }
+}
+
+extension HomeViewController: SettingsViewControllerDelegate {
+    
+    // MARK: SettingsViewControllerDelegate
+    func machineDidChange() {
+        
+        updateCollectionView()
     }
 }

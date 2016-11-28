@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import AlamofireImage
 
 class BaseTableViewCell: UITableViewCell {
 
@@ -32,42 +33,23 @@ class BaseTableViewCell: UITableViewCell {
         super.prepareForReuse()
         nameLabel.text = ""
         priceLabel.text = ""
-        resetImage()
+        logo.af_cancelImageRequest()
+        logo.layer.removeAllAnimations()
+        logo.image = nil
     }
 
     private func checked() {
         
-        favoriteButton.setImage(picture.checked, for: UIControlState())
+        favoriteButton.setImage(#imageLiteral(resourceName: "checked"), for: UIControlState())
     }
     
     private func unchecked() {
         
-        favoriteButton.setImage(picture.unchecked, for: UIControlState())
-    }
-    
-    func resetImage() {
-        
-        request?.cancel()
-        logo.image = picture.placeholder
-    }
-    
-    func load(image endpoint: String?) {
-        
-        guard let endpoint = endpoint else { return logo.image = picture.placeholder }
-        guard let cashedImage = DataManager.imageCache.image(withIdentifier: endpoint) else {
-            return APIManager.fetch(image: endpoint) { [unowned self] image in
-                self.logo.image = image
-            }
-        }
-        logo.image = cashedImage
+        favoriteButton.setImage(#imageLiteral(resourceName: "unchecked"), for: UIControlState())
     }
     
     func verifyConnection(execute: ()->()) {
         
-        if !Reachability.connectedToNetwork() {
-            AlertManager().present(alert: myError.title.reachability, message: myError.message.reachability)
-        } else {
-            execute()
-        }
+        !Reachability.connectedToNetwork() ? AlertManager().present(alert: errorMessage.reachability) : execute()
     }
 }

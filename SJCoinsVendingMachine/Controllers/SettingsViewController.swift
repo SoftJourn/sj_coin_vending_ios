@@ -14,16 +14,27 @@ import SwiftyUserDefaults
 class SettingsViewController: BaseViewController {
     
     // MARK: Constants
-    let settingsCellIdentifier = "settingsCellIdentifier"
+    fileprivate let settingsCellIdentifier = "settingsCellIdentifier"
     
     // MARK: Property
     @IBOutlet weak var tableView: UITableView!
     
     fileprivate var machines: [MachinesModel]? {
-        
         return DataManager.shared.machines
     }
     fileprivate var oldMachineId: Int!
+    fileprivate var chosenMachineID = DataManager.shared.machineId
+    fileprivate var chosenMachineName = DataManager.shared.machineName
+    fileprivate var headerView: UIView {
+        let view = UIView()
+        let label = UILabel(frame: CGRect(x: 30, y: 16, width: 300, height: 20))
+        label.textAlignment = .left
+        Reachability.connectedToNetwork() ? success(label) : failed(label)
+        view.addSubview(label)
+        return view
+    }
+
+    weak var delegate: SettingsViewControllerDelegate?
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -41,34 +52,17 @@ class SettingsViewController: BaseViewController {
         fetchData()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-        super.viewDidAppear(true)
-    }
-    
-    deinit {
-        
-        print("SettingsTableViewController deinited")
-    }
-    
     // MARK: Actions
     @IBAction private func doneButtonPressed(_ sender: UIBarButtonItem) {
         
-        if DataManager.shared.machineId == oldMachineId {
+        if DataManager.shared.machineId == chosenMachineID {
             self.dismiss(animated: true) { }
         } else {
             SVProgressHUD.show(withStatus: spinerMessage.loading)
-            firstly {
-                self.fetchFavorites().asVoid()
-            }.then {
-                self.fetchProducts().asVoid()
-            }.then {
-                self.fetchAccount().asVoid()
-            }.then {
-                SVProgressHUD.dismiss()
-            }.then {
-                self.dismiss(animated: true) { }
-            }
+            DataManager.shared.machineId = self.chosenMachineID
+            DataManager.shared.machineName = self.chosenMachineName
+            //Fetch content to chosen vending machine
+            newContent()
         }
     }
     
@@ -76,8 +70,10 @@ class SettingsViewController: BaseViewController {
     override func fetchData() {
         
         if Reachability.connectedToNetwork() {
+            //Fetch and display machines list.
             fetchContent()
         } else {
+            //Change table header and show alert.
             reloadTableView()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [unowned self] in
                 self.present(alert: .connection)
@@ -88,19 +84,57 @@ class SettingsViewController: BaseViewController {
     
     override func fetchContent() {
         
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
         firstly {
-            self.fetchMachinesList().asVoid()
+            fetchMachinesList().asVoid()
         }.then {
             self.reloadTableView()
+        }.catch { _ in
+            SVProgressHUD.dismiss()
+            let actions = AlertManager().alertActions(cancel: true) { [unowned self] in
+                self.fetchContent()
+            }
+            self.present(alert: .retryLaunch(actions))
         }
     }
 
     private func reloadTableView() {
         
-        DispatchQueue.main.async { [unowned self] in
-            self.tableView.reloadData()
+        SVProgressHUD.dismiss()
+        tableView.reloadData()
+    }
+    
+    private func newContent() {
+        
+        let favorites = fetchFavorites()
+        let products = fetchProducts()
+        let account = fetchAccount()
+        
+        when(fulfilled: favorites, products, account).then { [unowned self] _ -> Void in
             SVProgressHUD.dismiss()
+            //Reload table view in home controller.
+            self.delegate?.machineDidChange()
+            self.dismiss(animated: true) { }
+        }.catch { _ in
+            SVProgressHUD.dismiss()
+            let actions = AlertManager().alertActions(cancel: true) {
+                self.fetchContent()
+            }
+            self.present(alert: .retryLaunch(actions))
         }
+    }
+    
+    // MARK: Label decorations.
+    private func success(_ label: UILabel) {
+        
+        label.text = "Vending machines"
+        label.textColor = UIColor.gray
+    }
+    
+    private func failed(_ label: UILabel) {
+        
+        label.text = "No Internet connection"
+        label.textColor = UIColor.red
     }
 }
 
@@ -116,19 +150,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         
         switch section {
         case 0:
-            let customView = UIView()
-            let label = UILabel(frame: CGRect(x: 25, y: 16, width: 300, height: 20))
-            label.textAlignment = .left
-
-            if Reachability.connectedToNetwork() {
-                label.text = "Vending machines"
-                label.textColor = UIColor.gray
-            } else {
-                label.text = "No Internet connection"
-                label.textColor = UIColor.red
-            }
-            customView.addSubview(label)
-            return customView
+            return headerView
         default:
             return nil
         }
@@ -151,9 +173,8 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             guard let machine = machines else { return cell }
-            let machineId = DataManager.shared.machineId
             cell.textLabel?.text = machine[indexPath.item].name
-            if machine[indexPath.item].internalIdentifier == machineId {
+            if machine[indexPath.item].internalIdentifier == chosenMachineID {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
@@ -172,13 +193,9 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let machine = machines?[indexPath.item] else { return }
-        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        if let identifier = machine.internalIdentifier {
-            if !Bool(identifier == DataManager.shared.machineId) {
-                DataManager.shared.machineId = identifier
-            }
-        }
+        guard let machine = machines?[indexPath.item], let identifier = machine.internalIdentifier, let name = machine.name else { return }
+        chosenMachineID = identifier
+        chosenMachineName = name
         tableView.reloadData()
     }
 }
