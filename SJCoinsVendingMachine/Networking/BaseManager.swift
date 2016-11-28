@@ -58,7 +58,6 @@ class BaseManager {
                            headers: Dictionary<String, String>) -> Promise<AnyObject> {
         
         let promise = Promise<AnyObject> { fulfill, reject in
-            
             customManager.request(urlString, method: method, parameters: parameters, encoding: encoding, headers: headers)
                 .validate()
                 .responseJSON { response in

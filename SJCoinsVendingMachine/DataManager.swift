@@ -16,7 +16,7 @@ class DataManager: NSObject {
 
     weak var delegate: DataManagerDelegate?
 
-    dynamic var machineId: Int {
+    dynamic var machineId: Int { // оперувати обєктом а не параметром ІД
         get { return Defaults[.kMachineId] }
         set { Defaults[.kMachineId] = newValue }
     }

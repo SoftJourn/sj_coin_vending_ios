@@ -22,10 +22,10 @@ enum serverError: Error {
 class ResponseHandler {
     
     //Error messages.
-    static let unownedMessage = "Unowned error has occurred. Please try again." //unhandled error has occurred.
-    static let notEnoughCoinsMessage = "Not enough coins to buy item."
-    static let unavailableProductMessage = "Chosen product is not available. Please refresh the page."
-    static let machineLockedMessage = "Machine is locked by queue. Try again later."
+    private static let unownedMessage = "Unowned error has occurred. Please try again."
+    private static let notEnoughCoinsMessage = "Not enough coins to buy item."
+    private static let unavailableProductMessage = "Chosen product is not available. Please refresh the page."
+    private static let machineLockedMessage = "Machine is locked by queue. Try again later."
     
     //Methods.
     class func handle(_ response: Alamofire.DataResponse<Any>) -> Error {

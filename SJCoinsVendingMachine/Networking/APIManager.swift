@@ -13,8 +13,6 @@ import PromiseKit
 
 class APIManager: RequestManager {
     
-    typealias dataHandler = (_ object: AnyObject?, _ errorDescription: String?) -> ()
-
     // MARK: Fetching
     class func fetchMachines() -> Promise<AnyObject> {
         
