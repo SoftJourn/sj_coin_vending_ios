@@ -217,7 +217,7 @@ class AllItemsViewController: BaseViewController {
     }
 }
 
-extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
+extension AllItemsViewController: UITableViewDataSource {
     
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -247,22 +247,28 @@ extension AllItemsViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: AllItemsTableViewCell.identifier, for: indexPath) as! AllItemsTableViewCell
         if resultSearchController.isActive && resultSearchController.searchBar.text! != "" {
-            return searchData.isEmpty ? cell : cell.configure(with: searchData[indexPath.item])
+            return searchData.isEmpty ? cell : configure(cell, with: searchData[indexPath.row])
         } else {
-            guard let item = filterItems?[indexPath.row] else { return cell }
-            cell.delegate = self
-            cell.favorite = false
-            if let favorites = favorite {
-                for object in favorites {
-                    if item == object {
-                        cell.favorite = true
-                    }
-                }
-            }
-            return cell.configure(with: item)
+            return configure(cell, with: filterItems?[indexPath.row])
         }
     }
     
+    private func configure(_ cell: AllItemsTableViewCell, with item: Products?) -> AllItemsTableViewCell {
+        
+        guard let item = item else { return cell }
+        if cell.delegate == nil {
+            cell.delegate = self
+        }
+        cell.favorite = false
+        if let favorites = favorite {
+            for object in favorites {
+                if item == object {
+                    cell.favorite = true
+                }
+            }
+        }
+        return cell.configure(with: item)
+    }
 }
 
 extension AllItemsViewController: UISearchResultsUpdating {
@@ -292,7 +298,6 @@ extension AllItemsViewController: CellDelegate {
         
         guard let indexPath = tableView?.indexPath(for: cell) else { return }
         add(favorite: cell.item) { [unowned self] in
-            cell.favorite = true
             self.tableView?.reloadRows(at: [indexPath], with: .fade)
         }
     }
@@ -301,7 +306,6 @@ extension AllItemsViewController: CellDelegate {
         
         guard let indexPath = tableView?.indexPath(for: cell) else { return }
         remove(favorite: cell.item) { [unowned self] in
-            cell.favorite = false
             self.tableView?.reloadRows(at: [indexPath], with: .fade)
         }
     }
