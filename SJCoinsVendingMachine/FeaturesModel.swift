@@ -10,7 +10,7 @@ import SwiftyJSON
 
 class FeaturesModel {
     
-    // MARK: String constants
+    // MARK: Constants
     let kFeaturesModelBestSellersKey: String = "bestSellers"
     let kFeaturesModelCategoriesKey: String = "categories"
     let kFeaturesModelLastAddedKey: String = "lastAdded"

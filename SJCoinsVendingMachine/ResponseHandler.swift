@@ -23,9 +23,6 @@ class ResponseHandler {
     
     //Error messages.
     private static let unownedMessage = "Unowned error has occurred. Please try again."
-    private static let notEnoughCoinsMessage = "Not enough coins to buy item."
-    private static let unavailableProductMessage = "Chosen product is not available. Please refresh the page."
-    private static let machineLockedMessage = "Machine is locked by queue. Try again later."
     
     //Methods.
     class func handle(_ response: Alamofire.DataResponse<Any>) -> Error {
@@ -49,13 +46,13 @@ class ResponseHandler {
         switch jsonMessage {
         
         case 40901:
-            return serverError.notEnoughCoins(notEnoughCoinsMessage)
+            return serverError.notEnoughCoins("Not enough coins to buy item.")
             
         case 40404:
-            return serverError.unavailableProduct(unavailableProductMessage)
+            return serverError.unavailableProduct("Chosen product is not available. Please refresh the page.")
             
         case 50901:
-            return serverError.machineLocked(machineLockedMessage)
+            return serverError.machineLocked("Machine is locked by queue. Try again later.")
         
         default:
             return serverError.unowned(unownedMessage)

@@ -13,12 +13,15 @@ import PromiseKit
 
 class APIManager: RequestManager {
     
+    // MARK: Constants
+    static let pathVending = "vending/v1/machines"
+
     // MARK: Fetching
     class func fetchMachines() -> Promise<AnyObject> {
         
         let promise = Promise<AnyObject> { fulfill, reject in
         
-            let url = "\(networking.baseURL)vending/v1/machines"
+            let url = "\(networking.baseURL)\(pathVending)"
 
             firstly {
                 sendDefault(request: .get, urlString: url)
@@ -40,13 +43,12 @@ class APIManager: RequestManager {
         
         let promise = Promise<AnyObject> { fulfill, reject in
             
-            let url = "\(networking.baseURL)vending/v1/machines/\(machineID)/features"
+            let url = "\(networking.baseURL)\(pathVending)/\(machineID)/features"
         
             firstly {
                 sendDefault(request: .get, urlString: url)
             }.then { data -> Void in
-                let featureModel = FeaturesModel.init(json: JSON(data))
-                fulfill(featureModel)
+                fulfill(FeaturesModel(json: JSON(data)))
             }.catch { error in
                 reject(error)
             }
@@ -66,10 +68,8 @@ class APIManager: RequestManager {
                 let data = JSON(data)
                 var favorites = [Products]()
                 for (_, subJson):(String, JSON) in data {
-                    //Create model object.
-                    let object = Products.init(json: subJson)
-                    //Add it to array.
-                    favorites.append(object)
+                    //Add to array created model object.
+                    favorites.append(Products(json: subJson))
                 }
                 fulfill(favorites as AnyObject)
             }.catch { error in
@@ -88,8 +88,7 @@ class APIManager: RequestManager {
             firstly {
                 sendDefault(request: .get, urlString: url)
             }.then { data -> Void in
-                let account = AccountModel.init(json: JSON(data))
-                fulfill(account)
+                fulfill(AccountModel(json: JSON(data)))
             }.catch { error in
                 reject(error)
             }
@@ -101,7 +100,7 @@ class APIManager: RequestManager {
         
         let promise = Promise<AnyObject> { fulfill, reject in
             
-            let url = "\(networking.baseURL)vending/v1/machines/last"
+            let url = "\(networking.baseURL)\(pathVending)/last"
             
             firstly {
                 sendDefault(request: .get, urlString: url)
@@ -109,10 +108,8 @@ class APIManager: RequestManager {
                 let data = JSON(data)
                 var purchases = [PurchaseHistoryModel]()
                 for (_, subJson):(String, JSON) in data {
-                    //Create model object.
-                    let object = PurchaseHistoryModel.init(json: subJson)
-                    //Add it to array.
-                    purchases.append(object)
+                    //Add to array created model object.
+                    purchases.append(PurchaseHistoryModel(json: subJson))
                 }
                 fulfill(purchases as AnyObject)
             }.catch { error in
@@ -126,14 +123,12 @@ class APIManager: RequestManager {
         
         let promise = Promise<AnyObject> { fulfill, reject in
 
-            let url = "\(networking.baseURL)vending/v1/machines/\(machineID)/products/\(identifier)"
+            let url = "\(networking.baseURL)\(pathVending)/\(machineID)/products/\(identifier)"
             
             firstly {
                 sendDefault(request: .post, urlString: url)
             }.then { data -> Void in
-                let json = JSON(data)
-                let amount = json["amount"].intValue
-                fulfill(amount as AnyObject)
+                fulfill(JSON(data)["amount"].intValue as AnyObject)
             }.catch { error in
                 reject(error)
             }
@@ -150,8 +145,7 @@ class APIManager: RequestManager {
             firstly {
                 sendDefault(request: method, urlString: url)
             }.then { data -> Void in
-                let model = Products.init(json: JSON(data))
-                fulfill(model as AnyObject)
+                fulfill(Products(json: JSON(data)) as AnyObject)
             }.catch { error in
                 reject(error)
             }

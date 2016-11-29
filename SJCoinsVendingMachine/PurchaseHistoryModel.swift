@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class PurchaseHistoryModel {
     
-    // MARK: String constants
+    // MARK: Constants
     let kPurchaseHistoryModelNameKey = "name"
     let kPurchaseHistoryModelPriceKey = "price"
     let kPurchaseHistoryModelTimeKey = "time"

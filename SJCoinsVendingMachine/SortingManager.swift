@@ -6,6 +6,10 @@
 //  Copyright © 2016 Softjourn. All rights reserved.
 //
 
+
+//Прокоментувати 
+
+
 import Foundation
 
 class SortingManager {

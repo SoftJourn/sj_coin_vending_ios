@@ -30,6 +30,5 @@ class Category {
         
 		internalIdentifier = json[kCategoryInternalIdentifierKey].int
 		name = json[kCategoryNameKey].string
-
     }
 }

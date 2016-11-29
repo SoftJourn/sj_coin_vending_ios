@@ -13,7 +13,6 @@ struct storyboards {
     
     static let tabBarControllerIdentifier = "TabBarController"
     static let settingsNavigationController = "settingsNavigationController"
-    static let settingsControllerIdentifier = "settingsControllerIdentifier"
     static let allItemsViewController = "AllItemsViewController"
     static let favoritesViewController = "FavoritesViewController"
 }
@@ -21,17 +20,6 @@ struct storyboards {
 struct networking {
     
     static let baseURL = "https://sjcoins-testing.softjourn.if.ua/"
-    //Auth
-    static let pathAuth = "auth/oauth/token"
-    static let authContentType = "application/x-www-form-urlencoded"
-    static let basicKey = "dXNlcl9jcmVkOnN1cGVyc2VjcmV0"
-    //Vending
-    static let pathFavourites = "vending/v1/favorites/"
-    static let pathProductsBeforeID = "vending/v1/machines/"
-    static let pathFeatures = "/features"
-    static let pathProducts = "/products"
-    //Coin
-    static let pathAccount = "coins/api/v1/account"
 }
 
 struct errorMessage {
@@ -68,4 +56,9 @@ struct spinerMessage {
 struct labels {
     
     static let noItems = "Currently there are no products in this category."
+}
+
+struct key {
+    
+    static let refresh = "refresh_token"
 }

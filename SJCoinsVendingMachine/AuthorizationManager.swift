@@ -13,6 +13,10 @@ import PromiseKit
 import SwiftyUserDefaults
 import KeychainAccess
 
+
+//execute via promise not via closures !
+
+
 extension DefaultsKeys {
     
     static let kMachineId = DefaultsKey<Int>("machineId")
@@ -23,16 +27,11 @@ extension DefaultsKeys {
 class AuthorizationManager: RequestManager {
     
     // MARK: Constants
-    private static let authorizationKey = "Authorization"
-    private static let contentTypeKey = "Content-Type"
-    private static let usernameKey = "username"
-    private static let passwordKey = "password"
-    private static let grantTypeKey = "grant_type"
-    private static let grantTypePassword = "password"
-    private static let grantTypeRefresh = "refresh_token"
     private static let tokenKey = "token"
     private static let refreshKey = "refresh"
-
+    private static let grantTypeKey = "grant_type"
+    private static let emptyString = ""
+    
     static var keychain = Keychain(service: "com.softjourn.SJCoinsVendingMachine")
 
     typealias complited = (_ error: Error?) -> ()
@@ -40,13 +39,12 @@ class AuthorizationManager: RequestManager {
     // MARK: Authorization
     class func authRequest(login: String, password: String, complition: @escaping complited) {
         
-        let parameters: Parameters = [ usernameKey : login, passwordKey : password, grantTypeKey : grantTypePassword ]
-        
+        let parameters: Parameters = [ "username" : login, "password" : password, grantTypeKey : "password" ]
+
         firstly {
             sendCustom(request: .post, urlString: urlString(), parameters: parameters, encoding: URLEncoding.httpBody, headers: headers())
         }.then { data -> Void in
-            let model = AuthModel.init(json: JSON(data))
-            save(authInfo: model)
+            save(authInfo: AuthModel(json: JSON(data)))
             complition(nil)
         }.catch { error in
             complition(error)
@@ -55,30 +53,18 @@ class AuthorizationManager: RequestManager {
     
     class func refreshRequest(complition: @escaping complited) {
         
-        let parameters: Parameters = [ grantTypeRefresh : getRefreshToken(), grantTypeKey : grantTypeRefresh ]
+        let parameters: Parameters = [ key.refresh : getRefreshToken(), grantTypeKey : key.refresh ]
 
         firstly {
             sendCustom(request: .post, urlString: urlString(), parameters: parameters, encoding: URLEncoding.httpBody, headers: headers())
         }.then { data -> Void in
-            let model = AuthModel.init(json: JSON(data))
-            save(authInfo: model)
+            save(authInfo: AuthModel(json: JSON(data)))
             complition(nil)
         }.catch { error in
             complition(error)
         }
     }
     
-    private class func urlString() -> String {
-        
-        return "\(networking.baseURL)auth/oauth/token"
-    }
-    
-    private class func headers() -> [String : String] {
-        
-        return [ authorizationKey : "Basic \(networking.basicKey)",
-                   contentTypeKey : networking.authContentType ]
-    }
-
     class func save(authInfo object: AuthModel) {
         
         guard let token = object.accessToken, let refresh = object.refreshToken else { return }
@@ -93,7 +79,7 @@ class AuthorizationManager: RequestManager {
     class func removeAccessToken() {
         
         do {
-            try keychain.remove("token")
+            try keychain.remove(tokenKey)
         } catch let error {
             print("error: \(error)")
         }
@@ -101,17 +87,29 @@ class AuthorizationManager: RequestManager {
     
     class func accessTokenExist() -> Bool {
         
-        guard let _ = keychain["token"] else { return false }
+        guard let _ = keychain[tokenKey] else { return false }
         return true
     }
     
     class func getToken() -> String {
         
-        return keychain["token"] != nil ? keychain["token"]! : ""
+        return keychain[tokenKey] != nil ? keychain[tokenKey]! : emptyString
     }
     
     class func getRefreshToken() -> String {
         
-        return keychain["refresh"] != nil ? keychain["refresh"]! : ""
+        return keychain[refreshKey] != nil ? keychain[refreshKey]! : emptyString
+    }
+    
+    // MARK: Helper methods.
+    private class func urlString() -> String {              //Authorization URL
+
+        return "\(networking.baseURL)auth/oauth/token"
+    }
+    
+    private class func headers() -> [String : String] {     //Authorization headers
+        
+        return [ "Authorization" : "Basic dXNlcl9jcmVkOnN1cGVyc2VjcmV0",
+                  "Content-Type" : "application/x-www-form-urlencoded" ]
     }
 }

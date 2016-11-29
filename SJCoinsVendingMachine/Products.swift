@@ -10,7 +10,7 @@ import SwiftyJSON
 
 class Products: NSObject {
     
-    // MARK: String constants
+    // MARK: Constants
     let kProductsPriceKey: String = "price"
     let kProductsDescriptionValueKey: String = "description"
     let kProductsImageUrlKey: String = "imageUrl"

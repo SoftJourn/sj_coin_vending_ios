@@ -12,9 +12,6 @@ import PromiseKit
 
 class BaseManager {
     
-    // MARK: Constants
-    static let coinServer = "sjcoins-testing.softjourn.if.ua"
-
     // MARK: Properties
     static let customManager: Alamofire.SessionManager = {
         
@@ -24,7 +21,11 @@ class BaseManager {
     class func securityConfiguration() -> ServerTrustPolicyManager {
         
         //Security configuration the Alamofire manager.
-        guard let pathToCert = Bundle.main.path(forResource: "coin", ofType: "cer"), let certificateData = NSData(contentsOfFile: pathToCert), let certificate = SecCertificateCreateWithData(nil, certificateData) else {
+        let coinServer = "sjcoins-testing.softjourn.if.ua"
+        let resource = "coin"
+        let type = "cer"
+        
+        guard let pathToCert = Bundle.main.path(forResource: resource, ofType: type), let certificateData = NSData(contentsOfFile: pathToCert), let certificate = SecCertificateCreateWithData(nil, certificateData) else {
             //Use DefaultEvaluation.
             return ServerTrustPolicyManager(policies: [ coinServer: .performDefaultEvaluation(validateHost: true) ])
         }
@@ -51,6 +52,7 @@ class BaseManager {
         return configuration
     }
     
+    //Abstract method for network calls.
     class func sendRequest(_ urlString: URLConvertible,
                            method: Alamofire.HTTPMethod,
                            parameters: Parameters?,

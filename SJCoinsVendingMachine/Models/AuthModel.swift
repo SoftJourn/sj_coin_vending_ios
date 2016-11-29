@@ -10,9 +10,8 @@ import SwiftyJSON
 
 class AuthModel {
 
-    // MARK: String constants
-	let kAuthModelRefreshTokenKey = "refresh_token"
-	let kAuthModelAccessTokenKey = "access_token"
+    // MARK: Constants
+	let keyAccessToken = "access_token"
 
 
     // MARK: Properties
@@ -28,7 +27,7 @@ class AuthModel {
 
     init(json: JSON) {
         
-		refreshToken = json[kAuthModelRefreshTokenKey].string
-		accessToken = json[kAuthModelAccessTokenKey].string
+		refreshToken = json[key.refresh].string
+		accessToken = json[keyAccessToken].string
     }
 }

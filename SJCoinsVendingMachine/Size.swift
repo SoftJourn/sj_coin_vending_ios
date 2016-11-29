@@ -10,7 +10,7 @@ import SwiftyJSON
 
 class Size {
 
-    // MARK: String constants
+    // MARK: Constants
 	let kSizeColumnsKey: String = "columns"
 	let kSizeRowsKey: String = "rows"
 

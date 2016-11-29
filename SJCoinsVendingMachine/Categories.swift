@@ -10,7 +10,7 @@ import SwiftyJSON
 
 class Categories {
 
-    // MARK:String constants
+    // MARK: Constants
 	let kCategoriesProductsKey: String = "products"
 	let kCategoriesNameKey: String = "name"
 

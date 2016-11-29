@@ -49,6 +49,7 @@ class AccountViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func logOutButton(_ sender: UIBarButtonItem) {
         
+        //Написати кол який віконує ЛОгаут !!!
         //ExecuteLogOut
         AuthorizationManager.removeAccessToken()
         NavigationManager.shared.presentLoginViewController()
@@ -101,7 +102,7 @@ extension AccountViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: PurchaseHistoryTableViewCell.identifier, for: indexPath) as! PurchaseHistoryTableViewCell
         
         guard let item = purchases?[indexPath.item], let price = item.price, let name = item.name, let time = item.time else { return cell }
-        let date = DateManager().convertData(from: time)
+        let date = DateHelper().convertData(from: time)
         cell.transactionDate.text = date
         cell.transactionItem.text = name
         cell.transactionPrice.text = "\(price) Coins"

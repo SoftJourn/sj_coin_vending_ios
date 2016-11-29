@@ -10,7 +10,7 @@ import SwiftyJSON
 
 class AccountModel {
 
-    // MARK: String constants
+    // MARK: Constants
     let kAccountModelAmountKey = "amount"
     let kAccountModelNameKey = "name"
     let kAccountModelSurnameKey = "surname"

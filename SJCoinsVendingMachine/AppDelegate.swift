@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func verifyFirstLaunch() {
         
-        if DataManager.shared.machineId == 0 {
+        if DataManager.shared.machineId == 0 { //оперувати моделю і робити перевірку на ніл
             do {
                 try AuthorizationManager.keychain.remove("token")
                 try AuthorizationManager.keychain.remove("refresh")
@@ -41,3 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 }
+
+//фейворіти старі і історія покупок попереднього користувача !
+
+//клінити всі дані після логаута

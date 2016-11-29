@@ -16,7 +16,8 @@ class LoginViewController: BaseViewController {
     static let identifier = "\(LoginViewController.self)"
     private let isEmptyString = "This field is required."
     private let notAllowedString = "These symbols are not allowed."
-
+    private let emptyString = ""
+    
     // MARK: Properties
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTexField: UITextField!
@@ -128,7 +129,7 @@ class LoginViewController: BaseViewController {
         case .notAllowed:
             config(label, text: notAllowedString, isHidden: false)
         case .success:
-            config(label, text: "", isHidden: true)
+            config(label, text: emptyString, isHidden: true)
         }
     }
     
@@ -157,8 +158,8 @@ class LoginViewController: BaseViewController {
     private func firstLaunching() {
         
         firstly {
-            fetchDefaultMachine()
-        }.then { _ in
+            fetchDefaultMachine().asVoid()
+        }.then {
             self.regularLaunching()
         }.catch { _ in
             let actions = AlertManager().alertActions(cancel: true) {

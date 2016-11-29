@@ -10,14 +10,18 @@ import UIKit
 
 class AnimationHelper {
     
+    // MARK: Constants
+    private let xKeyPath = "center.x"
+    private let yKeyPath = "center.y"
+
     // MARK: Motion effect.
     func applyMotionEffect(toView view: UIView, magnitude: Float) {
         
-        let xMotion = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+        let xMotion = UIInterpolatingMotionEffect(keyPath: xKeyPath, type: .tiltAlongHorizontalAxis)
         xMotion.minimumRelativeValue = -magnitude
         xMotion.maximumRelativeValue = magnitude
         
-        let yMotion = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
+        let yMotion = UIInterpolatingMotionEffect(keyPath: yKeyPath, type: .tiltAlongVerticalAxis)
         yMotion.minimumRelativeValue = -magnitude
         yMotion.maximumRelativeValue = magnitude
         
@@ -38,7 +42,7 @@ class AnimationHelper {
     //MARK: Scaling effect.
     func showScaled(_ logo: UIImageView) {
         
-        UIView.animate(withDuration: 0.6 ,
+        UIView.animate(withDuration: 0.6 , // 0.6 винести в константи
                        animations: { logo.transform = CGAffineTransform(scaleX: 0.6, y: 0.6) }) { finish in
                         UIView.animate(withDuration: 0.6) { logo.transform = CGAffineTransform.identity }
         }

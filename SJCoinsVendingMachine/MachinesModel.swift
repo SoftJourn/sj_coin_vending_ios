@@ -10,8 +10,8 @@ import SwiftyJSON
 
 class MachinesModel {
 
-    // MARK: String constants
-	let kMachinesModelInternalIdentifierKey: String = "id"
+    // MARK: Constants
+	let kMachinesModelInternalIdentifierKey: String = "id" //винести одинакові ключі в константи
 	let kMachinesModelSizeKey: String = "size"
 	let kMachinesModelNameKey: String = "name"
 
