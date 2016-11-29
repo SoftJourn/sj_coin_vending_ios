@@ -9,19 +9,15 @@
 import UIKit
 
 class AnimationHelper {
-    
-    // MARK: Constants
-    private let xKeyPath = "center.x"
-    private let yKeyPath = "center.y"
 
     // MARK: Motion effect.
     func applyMotionEffect(toView view: UIView, magnitude: Float) {
         
-        let xMotion = UIInterpolatingMotionEffect(keyPath: xKeyPath, type: .tiltAlongHorizontalAxis)
+        let xMotion = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
         xMotion.minimumRelativeValue = -magnitude
         xMotion.maximumRelativeValue = magnitude
         
-        let yMotion = UIInterpolatingMotionEffect(keyPath: yKeyPath, type: .tiltAlongVerticalAxis)
+        let yMotion = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
         yMotion.minimumRelativeValue = -magnitude
         yMotion.maximumRelativeValue = magnitude
         

@@ -14,14 +14,15 @@ import PromiseKit
 class APIManager: RequestManager {
     
     // MARK: Constants
-    static let pathVending = "vending/v1/machines"
+    static let pathMachines = "vending/v1/machines"
+    static let pathFavorites = "vending/v1/favorites"
 
     // MARK: Fetching
     class func fetchMachines() -> Promise<AnyObject> {
         
         let promise = Promise<AnyObject> { fulfill, reject in
         
-            let url = "\(networking.baseURL)\(pathVending)"
+            let url = "\(networking.baseURL)\(pathMachines)"
 
             firstly {
                 sendDefault(request: .get, urlString: url)
@@ -43,7 +44,7 @@ class APIManager: RequestManager {
         
         let promise = Promise<AnyObject> { fulfill, reject in
             
-            let url = "\(networking.baseURL)\(pathVending)/\(machineID)/features"
+            let url = "\(networking.baseURL)\(pathMachines)/\(machineID)/features"
         
             firstly {
                 sendDefault(request: .get, urlString: url)
@@ -60,7 +61,7 @@ class APIManager: RequestManager {
 
         let promise = Promise<AnyObject> { fulfill, reject in
 
-            let url = "\(networking.baseURL)vending/v1/favorites"
+            let url = "\(networking.baseURL)\(pathFavorites)"
         
             firstly {
                 sendDefault(request: .get, urlString: url)
@@ -100,7 +101,7 @@ class APIManager: RequestManager {
         
         let promise = Promise<AnyObject> { fulfill, reject in
             
-            let url = "\(networking.baseURL)\(pathVending)/last"
+            let url = "\(networking.baseURL)\(pathMachines)/last"
             
             firstly {
                 sendDefault(request: .get, urlString: url)
@@ -123,7 +124,7 @@ class APIManager: RequestManager {
         
         let promise = Promise<AnyObject> { fulfill, reject in
 
-            let url = "\(networking.baseURL)\(pathVending)/\(machineID)/products/\(identifier)"
+            let url = "\(networking.baseURL)\(pathMachines)/\(machineID)/products/\(identifier)"
             
             firstly {
                 sendDefault(request: .post, urlString: url)
@@ -140,7 +141,7 @@ class APIManager: RequestManager {
         
         let promise = Promise<AnyObject> { fulfill, reject in
 
-            let url = "\(networking.baseURL)vending/v1/favorites/\(identifier)"
+            let url = "\(networking.baseURL)\(pathFavorites)/\(identifier)"
             
             firstly {
                 sendDefault(request: method, urlString: url)
