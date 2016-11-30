@@ -34,7 +34,6 @@
 		3512EA9B1DB2BE70008B47FA /* NotificationDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */; };
 		355CAEBB1DC9F41E00DBA64F /* ResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355CAEBA1DC9F41E00DBA64F /* ResponseHandler.swift */; };
 		3560E1A01DB8C49E00DF42C7 /* PurchaseHistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3560E19F1DB8C49E00DF42C7 /* PurchaseHistoryModel.swift */; };
-		35617D721DA814A6000582F6 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35617D701DA814A6000582F6 /* Launch Screen.storyboard */; };
 		35617D751DA814E3000582F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35617D731DA814E3000582F6 /* Main.storyboard */; };
 		35617D791DA818A1000582F6 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D781DA818A1000582F6 /* Const.swift */; };
 		35617D7D1DA822E8000582F6 /* ValidationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D7C1DA822E8000582F6 /* ValidationManager.swift */; };
@@ -56,6 +55,7 @@
 		35EA51251DE5E00A00AC8CA3 /* ArrayDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EA51241DE5E00A00AC8CA3 /* ArrayDecorator.swift */; };
 		35EA512A1DEF1E2800AC8CA3 /* CustomLoginUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EA51291DEF1E2800AC8CA3 /* CustomLoginUIButton.swift */; };
 		35EA512C1DEF227E00AC8CA3 /* UIColorDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EA512B1DEF227E00AC8CA3 /* UIColorDecorator.swift */; };
+		35EA512E1DEF2FA500AC8CA3 /* Launch Screen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35EA512D1DEF2FA500AC8CA3 /* Launch Screen2.storyboard */; };
 		35FAA1FD1DD469CF007D3680 /* coin.cer in Resources */ = {isa = PBXBuildFile; fileRef = 35FAA1FC1DD469BD007D3680 /* coin.cer */; };
 /* End PBXBuildFile section */
 
@@ -88,7 +88,6 @@
 		3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDecorator.swift; sourceTree = "<group>"; };
 		355CAEBA1DC9F41E00DBA64F /* ResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseHandler.swift; sourceTree = "<group>"; };
 		3560E19F1DB8C49E00DF42C7 /* PurchaseHistoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryModel.swift; sourceTree = "<group>"; };
-		35617D711DA814A6000582F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		35617D741DA814E3000582F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		35617D781DA818A1000582F6 /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		35617D7C1DA822E8000582F6 /* ValidationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationManager.swift; sourceTree = "<group>"; };
@@ -111,6 +110,7 @@
 		35EA51241DE5E00A00AC8CA3 /* ArrayDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDecorator.swift; sourceTree = "<group>"; };
 		35EA51291DEF1E2800AC8CA3 /* CustomLoginUIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLoginUIButton.swift; sourceTree = "<group>"; };
 		35EA512B1DEF227E00AC8CA3 /* UIColorDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorDecorator.swift; sourceTree = "<group>"; };
+		35EA512D1DEF2FA500AC8CA3 /* Launch Screen2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen2.storyboard"; sourceTree = "<group>"; };
 		35FAA1FC1DD469BD007D3680 /* coin.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = coin.cer; sourceTree = "<group>"; };
 		6F5FAFC8CD94B442E353D50F /* Pods-SJCoinsVendingMachine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.release.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.release.xcconfig"; sourceTree = "<group>"; };
 		CFFCE6A93FAD050282DD61EF /* Pods-SJCoinsVendingMachine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.debug.xcconfig"; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				35617D731DA814E3000582F6 /* Main.storyboard */,
-				35617D701DA814A6000582F6 /* Launch Screen.storyboard */,
+				35EA512D1DEF2FA500AC8CA3 /* Launch Screen2.storyboard */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -405,8 +405,8 @@
 			files = (
 				35FAA1FD1DD469CF007D3680 /* coin.cer in Resources */,
 				35617D751DA814E3000582F6 /* Main.storyboard in Resources */,
-				35617D721DA814A6000582F6 /* Launch Screen.storyboard in Resources */,
 				07854FC11D4B8C5300F31AB3 /* Assets.xcassets in Resources */,
+				35EA512E1DEF2FA500AC8CA3 /* Launch Screen2.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,14 +516,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		35617D701DA814A6000582F6 /* Launch Screen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				35617D711DA814A6000582F6 /* Base */,
-			);
-			name = "Launch Screen.storyboard";
-			sourceTree = "<group>";
-		};
 		35617D731DA814E3000582F6 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
