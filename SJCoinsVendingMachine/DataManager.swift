@@ -64,6 +64,21 @@ class DataManager: NSObject {
         }
     }
     
+    func cleanAllData() {
+        
+        delegate = nil
+        features = nil
+        account = nil
+        favorites = nil
+        purchases = nil
+        
+        categories = nil
+        allItems = nil
+        lastAdded = nil
+        bestSellers = nil
+        unavailable = nil
+    }
+    
     func add(favorite item: Products) {
         
         if favorites == nil {
