@@ -62,7 +62,7 @@ struct buttonTitle {
 
 struct spinerMessage {
     
-    static let loading = "Loading"
+    static let loading = "Loading..."
 }
 
 struct labels {
