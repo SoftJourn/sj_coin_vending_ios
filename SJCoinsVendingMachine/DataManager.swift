@@ -56,8 +56,6 @@ class DataManager: NSObject {
             createCategories()
             unavailableFavorites()
             delegate?.productsDidChange()
-        case let object as [Products]:
-            favorites = object
         case let object as AccountModel:
             account = object
         case let object as [PurchaseHistoryModel]:
