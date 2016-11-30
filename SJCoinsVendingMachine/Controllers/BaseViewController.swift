@@ -72,7 +72,7 @@ class BaseViewController: UIViewController {
             firstly {
                 APIManager.fetchFavorites()
             }.then { object -> Void in
-                DataManager.shared.save(object)
+                DataManager.shared.favorites = object as? [Products]
                 fulfill(object)
             }.catch { error in
                 reject(error)
