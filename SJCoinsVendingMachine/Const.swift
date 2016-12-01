@@ -21,7 +21,7 @@ struct storyboards {
 struct networking {
     
     //static let baseURL = "https://sjcoins-testing.softjourn.if.ua/"   //Test env
-    static let baseURL = "https://vending.softjourn.if.ua/api"          //Production env
+    static let baseURL = "https://vending.softjourn.if.ua/api/"          //Production env
     //Auth
     static let pathAuth = "auth/oauth/token"
     static let authContentType = "application/x-www-form-urlencoded"
