@@ -72,7 +72,7 @@ class BaseViewController: UIViewController {
             firstly {
                 APIManager.fetchFavorites()
             }.then { object -> Void in
-                DataManager.shared.save(object)
+                DataManager.shared.favorites = object as? [Products]
                 fulfill(object)
             }.catch { error in
                 reject(error)
@@ -115,9 +115,11 @@ class BaseViewController: UIViewController {
                 APIManager.fetchMachines()
             }.then { object -> Void in
                 let machines = object as! [MachinesModel]
-                guard let identifier = machines[0].internalIdentifier, let name = machines[0].name else { return }
-                DataManager.shared.machineId = identifier
-                DataManager.shared.machineName = name
+                if !machines.isEmpty {
+                    guard let identifier = machines[0].internalIdentifier, let name = machines[0].name else { return }
+                    DataManager.shared.machineId = identifier
+                    DataManager.shared.machineName = name
+                }
                 fulfill(object)
             }.catch { error in
                 reject(error)
