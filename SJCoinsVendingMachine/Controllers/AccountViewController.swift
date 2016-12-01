@@ -53,6 +53,8 @@ class AccountViewController: BaseViewController {
         //ExecuteLogOut
         AuthorizationManager.removeAccessToken()
         NavigationManager.shared.presentLoginViewController()
+        //Clean data in DataManager
+        DataManager.shared.cleanAllData()
     }
     
     // MARK: Downloading, Handling and Refreshing data.

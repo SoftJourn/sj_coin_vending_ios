@@ -56,14 +56,27 @@ class DataManager: NSObject {
             createCategories()
             unavailableFavorites()
             delegate?.productsDidChange()
-        case let object as [Products]:
-            favorites = object
         case let object as AccountModel:
             account = object
         case let object as [PurchaseHistoryModel]:
             purchases = object
         default: break
         }
+    }
+    
+    func cleanAllData() {
+        
+        delegate = nil
+        features = nil
+        account = nil
+        favorites = nil
+        purchases = nil
+        
+        categories = nil
+        allItems = nil
+        lastAdded = nil
+        bestSellers = nil
+        unavailable = nil
     }
     
     func add(favorite item: Products) {
