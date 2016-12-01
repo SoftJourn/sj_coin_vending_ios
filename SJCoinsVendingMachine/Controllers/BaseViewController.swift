@@ -116,6 +116,9 @@ class BaseViewController: UIViewController {
             }.then { object -> Void in
                 let machines = object as! [MachinesModel]
                 guard let identifier = machines[0].internalIdentifier, let name = machines[0].name else { return }
+                
+                //FIXME: If no machine returned from server ????????
+                
                 DataManager.shared.machineId = identifier
                 DataManager.shared.machineName = name
                 fulfill(object)
