@@ -49,8 +49,18 @@ class AccountViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func logOutButton(_ sender: UIBarButtonItem) {
         
-        //Написати кол який віконує ЛОгаут !!!
         //ExecuteLogOut
+        firstly {
+            AuthorizationManager.revokeRequest().asVoid()
+        }.then {
+            self.logOut()
+        }.catch { error in
+            print(error)
+        }
+    }
+    
+    private func logOut() {
+        
         AuthorizationManager.removeAccessToken()
         NavigationManager.shared.presentLoginViewController()
         //Clean data in DataManager

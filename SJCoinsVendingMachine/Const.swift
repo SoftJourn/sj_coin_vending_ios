@@ -19,7 +19,8 @@ struct storyboards {
 
 struct networking {
     
-    static let baseURL = "https://sjcoins-testing.softjourn.if.ua/"
+    static let baseURL = "https://sjcoins-testing.softjourn.if.ua/"   //Test env
+    //static let baseURL = "https://vending.softjourn.if.ua/api/"          //Production env
 }
 
 struct errorMessage {

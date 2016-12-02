@@ -65,6 +65,23 @@ class AuthorizationManager: RequestManager {
         }
     }
     
+    class func revokeRequest() -> Promise<AnyObject> {
+        
+        let urlString = "\(networking.baseURL)auth/oauth/token/revoke"
+        let parameters: Parameters = [ "token_value" : getRefreshToken() ]
+        
+        let promise = Promise<AnyObject> { fulfill, reject in
+            firstly {
+                sendCustom(request: .post, urlString: urlString, parameters: parameters, encoding: URLEncoding.httpBody, headers: headers())
+            }.then { data in
+                fulfill(data)
+            }.catch { error in
+                reject(error)
+            }
+        }
+        return promise
+    }
+    
     class func save(authInfo object: AuthModel) {
         
         guard let token = object.accessToken, let refresh = object.refreshToken else { return }
