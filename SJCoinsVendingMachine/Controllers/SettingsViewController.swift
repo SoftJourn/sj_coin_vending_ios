@@ -23,8 +23,7 @@ class SettingsViewController: BaseViewController {
         return DataManager.shared.machines
     }
     fileprivate var oldMachineId: Int!
-    fileprivate var chosenMachineID = DataManager.shared.machineId
-    fileprivate var chosenMachineName = DataManager.shared.machineName
+    fileprivate var chosenMachine = DataManager.shared.chosenMachine
     fileprivate var headerView: UIView {
         let view = UIView()
         let label = UILabel(frame: CGRect(x: 30, y: 16, width: 300, height: 20))
@@ -41,7 +40,7 @@ class SettingsViewController: BaseViewController {
         
         super.viewDidLoad()
         tableView.addSubview(refreshControl)
-        oldMachineId = DataManager.shared.machineId
+        oldMachineId = DataManager.shared.chosenMachine?.identifier
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,12 +54,11 @@ class SettingsViewController: BaseViewController {
     // MARK: Actions
     @IBAction private func doneButtonPressed(_ sender: UIBarButtonItem) {
         
-        if DataManager.shared.machineId == chosenMachineID {
+        if DataManager.shared.chosenMachine?.identifier == chosenMachine?.identifier {
             self.dismiss(animated: true) { }
         } else {
             SVProgressHUD.show(withStatus: spinerMessage.loading)
-            DataManager.shared.machineId = self.chosenMachineID
-            DataManager.shared.machineName = self.chosenMachineName
+            DataManager.shared.chosenMachine = chosenMachine
             //Fetch content to chosen vending machine
             newContent()
         }
@@ -174,7 +172,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             guard let machine = machines else { return cell }
             cell.textLabel?.text = machine[indexPath.item].name
-            if machine[indexPath.item].internalIdentifier == chosenMachineID {
+            if machine[indexPath.item].identifier == chosenMachine?.identifier {
                 cell.accessoryType = .checkmark
             } else {
                 cell.accessoryType = .none
@@ -193,9 +191,8 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let machine = machines?[indexPath.item], let identifier = machine.internalIdentifier, let name = machine.name else { return }
-        chosenMachineID = identifier
-        chosenMachineName = name
+        guard let machine = machines?[indexPath.item] else { return }
+        chosenMachine = machine
         tableView.reloadData()
     }
 }

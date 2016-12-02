@@ -13,16 +13,7 @@ import PromiseKit
 import SwiftyUserDefaults
 import KeychainAccess
 
-
 //execute via promise not via closures !
-
-
-extension DefaultsKeys {
-    
-    static let kMachineId = DefaultsKey<Int>("machineId")
-    static let kMachineName = DefaultsKey<String>("machineName")
-    static let fistLaunch = DefaultsKey<Bool>("fistLaunch")
-}
 
 class AuthorizationManager: RequestManager {
     

@@ -55,8 +55,9 @@ class BaseViewController: UIViewController {
     func fetchProducts() -> Promise<AnyObject> {
         
         return Promise<AnyObject> { fulfill, reject in
+            
             firstly {
-                APIManager.fetchProducts(machineID: DataManager.shared.machineId)
+                APIManager.fetchProducts(machineID: DataManager.shared.chosenMachine?.identifier ?? 0)
             }.then { object -> Void in
                 DataManager.shared.save(object)
                 fulfill(object)
@@ -114,11 +115,9 @@ class BaseViewController: UIViewController {
             firstly {
                 APIManager.fetchMachines()
             }.then { object -> Void in
-                let machines = object as! [MachinesModel]
-                if !machines.isEmpty {
-                    guard let identifier = machines[0].internalIdentifier, let name = machines[0].name else { return }
-                    DataManager.shared.machineId = identifier
-                    DataManager.shared.machineName = name
+                let machines = object as? [MachinesModel]
+                if !(machines?.isEmpty)! {
+                    DataManager.shared.chosenMachine = machines?[0]
                 }
                 fulfill(object)
             }.catch { error in
@@ -186,7 +185,7 @@ class BaseViewController: UIViewController {
         guard let identifier = identifier else { return }
         SVProgressHUD.show(withStatus: spinerMessage.loading)
         firstly {
-            APIManager.buy(product: identifier, machineID: DataManager.shared.machineId)
+            APIManager.buy(product: identifier, machineID: DataManager.shared.chosenMachine?.identifier ?? 0)
         }.then { amount -> Void in
             SVProgressHUD.dismiss()
             DataManager.shared.save(balance: amount as! Int)

@@ -16,31 +16,26 @@ class DataManager: NSObject {
 
     weak var delegate: DataManagerDelegate?
 
-    dynamic var machineId: Int { // оперувати обєктом а не параметром ІД
-        get { return Defaults[.kMachineId] }
-        set { Defaults[.kMachineId] = newValue }
-    }
-    var machineName: String {
-        get { return Defaults[.kMachineName] }
-        set { Defaults[.kMachineName] = newValue }
+    var chosenMachine: MachinesModel? {
+        get { return Defaults[.keyMachine] ?? nil }
+        set { Defaults[.keyMachine] = newValue }
     }
     var fistLaunch: Bool {
         get { return Defaults[.fistLaunch] }
         set { Defaults[.fistLaunch] = newValue }
     }
-    private(set) var machines: [MachinesModel]?
-    private(set) var features: FeaturesModel?
-    private(set) var account: AccountModel?
     dynamic var favorites: [Products]? {
         didSet { createCategories() }
     }
+    private(set) var machines: [MachinesModel]?
+    private(set) var features: FeaturesModel?
+    private(set) var account: AccountModel?
     private(set) var purchases: [PurchaseHistoryModel]?
     private(set) var categories: [Categories]!
     private(set) var allItems: [Products]?
     private(set) var lastAdded: [Products]?
     private(set) var bestSellers: [Products]?
     private(set) var unavailable: [Int]?
-    
     
     // MARK: Setters
     func save(_ object: AnyObject) {

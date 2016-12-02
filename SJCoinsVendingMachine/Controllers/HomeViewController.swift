@@ -38,7 +38,7 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        navigationItem.title = DataManager.shared.machineName
+        navigationItem.title = DataManager.shared.chosenMachine?.name
         updateBalance()
     }
     

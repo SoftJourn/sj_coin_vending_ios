@@ -55,6 +55,7 @@
 		35EA512C1DEF227E00AC8CA3 /* UIColorDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EA512B1DEF227E00AC8CA3 /* UIColorDecorator.swift */; };
 		35EA512E1DEF2FA500AC8CA3 /* Launch Screen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35EA512D1DEF2FA500AC8CA3 /* Launch Screen2.storyboard */; };
 		35F196551DF1A8D500D1DE49 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F196541DF1A8D500D1DE49 /* Helper.swift */; };
+		35F196571DF1CBDC00D1DE49 /* UserDefaultsDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F196561DF1CBDC00D1DE49 /* UserDefaultsDecorator.swift */; };
 		35FAA1FD1DD469CF007D3680 /* coin.cer in Resources */ = {isa = PBXBuildFile; fileRef = 35FAA1FC1DD469BD007D3680 /* coin.cer */; };
 /* End PBXBuildFile section */
 
@@ -109,6 +110,7 @@
 		35EA512B1DEF227E00AC8CA3 /* UIColorDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorDecorator.swift; sourceTree = "<group>"; };
 		35EA512D1DEF2FA500AC8CA3 /* Launch Screen2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen2.storyboard"; sourceTree = "<group>"; };
 		35F196541DF1A8D500D1DE49 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		35F196561DF1CBDC00D1DE49 /* UserDefaultsDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsDecorator.swift; sourceTree = "<group>"; };
 		35FAA1FC1DD469BD007D3680 /* coin.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = coin.cer; sourceTree = "<group>"; };
 		6F5FAFC8CD94B442E353D50F /* Pods-SJCoinsVendingMachine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.release.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.release.xcconfig"; sourceTree = "<group>"; };
 		CFFCE6A93FAD050282DD61EF /* Pods-SJCoinsVendingMachine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SJCoinsVendingMachine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SJCoinsVendingMachine/Pods-SJCoinsVendingMachine.debug.xcconfig"; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */,
+				35F196561DF1CBDC00D1DE49 /* UserDefaultsDecorator.swift */,
 				35EA51241DE5E00A00AC8CA3 /* ArrayDecorator.swift */,
 				35EA512B1DEF227E00AC8CA3 /* UIColorDecorator.swift */,
 			);
@@ -493,6 +496,7 @@
 				35EA512C1DEF227E00AC8CA3 /* UIColorDecorator.swift in Sources */,
 				35EA512A1DEF1E2800AC8CA3 /* CustomLoginUIButton.swift in Sources */,
 				35089F811DABB91900DC3BAF /* AuthModel.swift in Sources */,
+				35F196571DF1CBDC00D1DE49 /* UserDefaultsDecorator.swift in Sources */,
 				35E29C0D1DACD8D9002B7045 /* AlertManager.swift in Sources */,
 				35089F771DABB45F00DC3BAF /* AllItemsTableViewCell.swift in Sources */,
 				35089F6C1DAB9E4900DC3BAF /* HomeViewController.swift in Sources */,
