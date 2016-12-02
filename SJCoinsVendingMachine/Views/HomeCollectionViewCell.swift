@@ -98,7 +98,7 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
             }
         }
         
-        if Reachability.connectedToNetwork() {
+        if Helper.connectedToNetwork() {
             availability ? delegate?.buy(product: item) : presenError()
             availability = true
         } else {

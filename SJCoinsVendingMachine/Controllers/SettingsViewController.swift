@@ -29,7 +29,7 @@ class SettingsViewController: BaseViewController {
         let view = UIView()
         let label = UILabel(frame: CGRect(x: 30, y: 16, width: 300, height: 20))
         label.textAlignment = .left
-        Reachability.connectedToNetwork() ? success(label) : failed(label)
+        Helper.connectedToNetwork() ? success(label) : failed(label)
         view.addSubview(label)
         return view
     }
@@ -69,7 +69,7 @@ class SettingsViewController: BaseViewController {
     // MARK: Methods
     override func fetchData() {
         
-        if Reachability.connectedToNetwork() {
+        if Helper.connectedToNetwork() {
             //Fetch and display machines list.
             fetchContent()
         } else {

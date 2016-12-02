@@ -30,7 +30,7 @@ class InitialViewController: BaseViewController {
         let actions = AlertManager().alertActions(cancel: false) {
             self.launchingProcess()
         }
-        Reachability.connectedToNetwork() ? tokenVerification() : present(alert: .retryLaunchNoInternet(actions))
+        Helper.connectedToNetwork() ? tokenVerification() : present(alert: .retryLaunchNoInternet(actions))
     }
     
     func tokenVerification() {

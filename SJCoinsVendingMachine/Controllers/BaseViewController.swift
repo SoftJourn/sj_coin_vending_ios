@@ -28,7 +28,7 @@ class BaseViewController: UIViewController {
     // MARK: Methods
     func connectionVerification(execute: ()->()) {
         
-        if Reachability.connectedToNetwork() {
+        if Helper.connectedToNetwork() {
             execute()
         } else {
             refreshControl.endRefreshing()

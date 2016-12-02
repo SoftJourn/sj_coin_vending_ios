@@ -50,6 +50,6 @@ class BaseTableViewCell: UITableViewCell {
     
     func verifyConnection(execute: ()->()) {
         
-        !Reachability.connectedToNetwork() ? AlertManager().present(alert: errorMessage.reachability) : execute()
+        !Helper.connectedToNetwork() ? AlertManager().present(alert: errorMessage.reachability) : execute()
     }
 }

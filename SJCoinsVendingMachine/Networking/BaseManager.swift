@@ -68,8 +68,7 @@ class BaseManager {
                     case .success(let json):
                         fulfill(json as AnyObject)
                     case .failure:
-                        let error = ResponseHandler.handle(response)
-                        reject(error)
+                        reject(ResponseHandler.handle(response))
                     }
             }
         }
