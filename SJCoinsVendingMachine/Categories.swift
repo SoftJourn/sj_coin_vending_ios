@@ -17,7 +17,7 @@ class Categories {
 	var products: [Products]?
 	var name: String?
 
-    // MARK: SwiftyJSON Initalizers
+    // MARK: Initalizers
     init(_ categoryName: String, items: [Products]) {
         
         name = categoryName

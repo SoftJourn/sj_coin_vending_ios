@@ -20,13 +20,8 @@ class FeaturesModel {
     var categories: [Categories]?
     var lastAdded: [Int]?
     
-    // MARK: SwiftyJSON Initalizers
-    convenience init(using object: AnyObject) {
-        
-        self.init(json: JSON(object))
-    }
-    
-    private init(json: JSON) {
+    // MARK: Initalizers
+    init(json: JSON) {
         //FIXME: Need refactoring
         bestSellers = []
         if let items = json[keyBestSellers].array {

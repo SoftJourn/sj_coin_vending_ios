@@ -19,7 +19,7 @@ class PurchaseHistoryModel {
     var price: Int?
     var time: String?
     
-    // MARK: SwiftyJSON Initalizer
+    // MARK: Initalizers
     init(json: JSON) {
         
         name = json[key.name].string

@@ -18,8 +18,7 @@ class Size {
 	var columns: Int?
 	var rows: Int?
 
-    // MARK: SwiftyJSON Initalizers
-
+    // MARK: Initalizers
     init(json: JSON) {
         
 		columns = json[keySizeColumns].int

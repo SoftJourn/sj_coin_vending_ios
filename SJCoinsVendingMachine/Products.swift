@@ -23,7 +23,7 @@ class Products: NSObject {
     var category: Category?
     var name: String?
     
-    // MARK: Initalizer
+    // MARK: Initalizers
     init(json: JSON) {
         
         price = json[key.price].int

@@ -49,7 +49,7 @@ class APIManager: RequestManager {
             firstly {
                 sendDefault(request: .get, urlString: url)
             }.then { data -> Void in
-                fulfill(FeaturesModel(using: data))
+                fulfill(FeaturesModel(json: JSON(data)))
             }.catch { error in
                 reject(error)
             }
@@ -89,7 +89,7 @@ class APIManager: RequestManager {
             firstly {
                 sendDefault(request: .get, urlString: url)
             }.then { data -> Void in
-                fulfill(AccountModel(using: data))
+                fulfill(AccountModel(json: JSON(data)))
             }.catch { error in
                 reject(error)
             }

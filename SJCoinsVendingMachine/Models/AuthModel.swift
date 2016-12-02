@@ -17,13 +17,8 @@ class AuthModel {
 	var refreshToken: String?
 	var accessToken: String?
 
-    // MARK: SwiftyJSON Initalizers
-    convenience init(using object: AnyObject) {
-        
-        self.init(json: JSON(object))
-    }
-
-    private init(json: JSON) {
+    // MARK: Initalizers
+    init(json: JSON) {
         
 		refreshToken = json[key.refresh].string
 		accessToken = json[keyAccessToken].string

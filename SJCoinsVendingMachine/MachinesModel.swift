@@ -18,12 +18,7 @@ class MachinesModel {
 	var size: Size?
 	var name: String?
 
-    // MARK: SwiftyJSON Initalizers
-    convenience init(using object: AnyObject) {
-        
-        self.init(json: JSON(object))
-    }
-
+    // MARK: Initalizers
     init(json: JSON) {
         
 		internalIdentifier = json[key.identifier].int

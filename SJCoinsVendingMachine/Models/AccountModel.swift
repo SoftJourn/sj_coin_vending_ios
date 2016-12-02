@@ -18,13 +18,8 @@ class AccountModel {
     var name: String?
     var surname: String?
 
-    // MARK: SwiftyJSON Initalizers
-    convenience init(using object: AnyObject) {
-        
-        self.init(json: JSON(object))
-    }
-
-    private init(json: JSON) {
+    // MARK: Initalizers
+    init(json: JSON) {
         
 		amount = json[key.amount].int
         name = json[key.name].string

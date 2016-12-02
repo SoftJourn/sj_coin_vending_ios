@@ -17,7 +17,7 @@ class Category {
 	var internalIdentifier: Int?
 	var name: String?
 
-    // MARK: Initalizer
+    // MARK: Initalizers
     init(json: JSON) {
         
 		internalIdentifier = json[key.identifier].int
