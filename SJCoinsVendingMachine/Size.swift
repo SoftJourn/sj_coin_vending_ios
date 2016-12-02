@@ -11,24 +11,18 @@ import SwiftyJSON
 class Size {
 
     // MARK: Constants
-	let kSizeColumnsKey: String = "columns"
-	let kSizeRowsKey: String = "rows"
-
+	private let keySizeColumns = "columns"
+	private let keySizeRows = "rows"
 
     // MARK: Properties
 	var columns: Int?
 	var rows: Int?
 
-
     // MARK: SwiftyJSON Initalizers
-    convenience  init(object: AnyObject) {
-        
-        self.init(json: JSON(object))
-    }
 
     init(json: JSON) {
         
-		columns = json[kSizeColumnsKey].int
-		rows = json[kSizeRowsKey].int
+		columns = json[keySizeColumns].int
+		rows = json[keySizeRows].int
     }
 }

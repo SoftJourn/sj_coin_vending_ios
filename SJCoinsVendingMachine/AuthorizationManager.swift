@@ -44,7 +44,7 @@ class AuthorizationManager: RequestManager {
         firstly {
             sendCustom(request: .post, urlString: urlString(), parameters: parameters, encoding: URLEncoding.httpBody, headers: headers())
         }.then { data -> Void in
-            save(authInfo: AuthModel(json: JSON(data)))
+            save(authInfo: AuthModel(using: data))
             complition(nil)
         }.catch { error in
             complition(error)
@@ -58,7 +58,7 @@ class AuthorizationManager: RequestManager {
         firstly {
             sendCustom(request: .post, urlString: urlString(), parameters: parameters, encoding: URLEncoding.httpBody, headers: headers())
         }.then { data -> Void in
-            save(authInfo: AuthModel(json: JSON(data)))
+            save(authInfo: AuthModel(using: data))
             complition(nil)
         }.catch { error in
             complition(error)

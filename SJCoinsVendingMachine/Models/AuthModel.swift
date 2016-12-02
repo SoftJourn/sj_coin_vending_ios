@@ -11,21 +11,19 @@ import SwiftyJSON
 class AuthModel {
 
     // MARK: Constants
-	let keyAccessToken = "access_token"
-
+	private let keyAccessToken = "access_token"
 
     // MARK: Properties
 	var refreshToken: String?
 	var accessToken: String?
 
-
     // MARK: SwiftyJSON Initalizers
-    convenience init(object: AnyObject) {
+    convenience init(using object: AnyObject) {
         
         self.init(json: JSON(object))
     }
 
-    init(json: JSON) {
+    private init(json: JSON) {
         
 		refreshToken = json[key.refresh].string
 		accessToken = json[keyAccessToken].string

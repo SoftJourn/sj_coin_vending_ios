@@ -11,27 +11,25 @@ import SwiftyJSON
 class FeaturesModel {
     
     // MARK: Constants
-    let kFeaturesModelBestSellersKey: String = "bestSellers"
-    let kFeaturesModelCategoriesKey: String = "categories"
-    let kFeaturesModelLastAddedKey: String = "lastAdded"
-    
+    private let keyBestSellers = "bestSellers"
+    private let keyCategories = "categories"
+    private let keyLastAdded = "lastAdded"
     
     // MARK: Properties
     var bestSellers: [Int]?
     var categories: [Categories]?
     var lastAdded: [Int]?
     
-    
     // MARK: SwiftyJSON Initalizers
-    convenience init(object: AnyObject) {
+    convenience init(using object: AnyObject) {
         
         self.init(json: JSON(object))
     }
     
-    init(json: JSON) {
-        
+    private init(json: JSON) {
+        //FIXME: Need refactoring
         bestSellers = []
-        if let items = json[kFeaturesModelBestSellersKey].array {
+        if let items = json[keyBestSellers].array {
             for item in items {
                 if let tempValue = item.int {
                     bestSellers?.append(tempValue)
@@ -41,7 +39,7 @@ class FeaturesModel {
             bestSellers = nil
         }
         categories = []
-        if let items = json[kFeaturesModelCategoriesKey].array {
+        if let items = json[keyCategories].array {
             for item in items {
                 categories?.append(Categories(json: item))
             }
@@ -49,7 +47,7 @@ class FeaturesModel {
             categories = nil
         }
         lastAdded = []
-        if let items = json[kFeaturesModelLastAddedKey].array {
+        if let items = json[keyLastAdded].array {
             for item in items {
                 if let tempValue = item.int {
                     lastAdded?.append(tempValue)
@@ -58,6 +56,5 @@ class FeaturesModel {
         } else {
             lastAdded = nil
         }
-        
     }
 }

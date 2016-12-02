@@ -62,4 +62,8 @@ struct labels {
 struct key {
     
     static let refresh = "refresh_token"
+    static let name = "name"
+    static let identifier = "id"
+    static let amount = "amount"
+    static let price = "price"
 }

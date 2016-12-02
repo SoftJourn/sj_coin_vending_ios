@@ -11,10 +11,7 @@ import SwiftyJSON
 class MachinesModel {
 
     // MARK: Constants
-	let kMachinesModelInternalIdentifierKey: String = "id" //винести одинакові ключі в константи
-	let kMachinesModelSizeKey: String = "size"
-	let kMachinesModelNameKey: String = "name"
-
+	private let keySize = "size"
 
     // MARK: Properties
 	var internalIdentifier: Int?
@@ -22,15 +19,15 @@ class MachinesModel {
 	var name: String?
 
     // MARK: SwiftyJSON Initalizers
-    convenience init(object: AnyObject) {
+    convenience init(using object: AnyObject) {
         
         self.init(json: JSON(object))
     }
 
     init(json: JSON) {
         
-		internalIdentifier = json[kMachinesModelInternalIdentifierKey].int
-		size = Size(json: json[kMachinesModelSizeKey])
-		name = json[kMachinesModelNameKey].string
+		internalIdentifier = json[key.identifier].int
+		size = Size(json: json[keySize])
+		name = json[key.name].string
     }
 }
