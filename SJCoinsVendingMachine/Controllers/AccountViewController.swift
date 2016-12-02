@@ -50,21 +50,26 @@ class AccountViewController: BaseViewController {
     @IBAction private func logOutButton(_ sender: UIBarButtonItem) {
         
         //ExecuteLogOut
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
         firstly {
             AuthorizationManager.revokeRequest().asVoid()
         }.then {
             self.logOut()
-        }.catch { error in
-            print(error)
+        }.catch { _ in
+            self.logOut()
         }
     }
     
     private func logOut() {
         
+        //Clean accessToken locally
         AuthorizationManager.removeAccessToken()
-        NavigationManager.shared.presentLoginViewController()
-        //Clean data in DataManager
+        
+        //Clean data locally
         DataManager.shared.cleanAllData()
+
+        SVProgressHUD.dismiss()
+        NavigationManager.shared.presentLoginViewController()
     }
     
     // MARK: Downloading, Handling and Refreshing data.
