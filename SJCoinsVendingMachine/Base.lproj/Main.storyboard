@@ -89,8 +89,8 @@
                                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ft1-Yn-S12">
-                                                <rect key="frame" x="157" y="635" width="62" height="12"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 1.1.0 Development" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ft1-Yn-S12">
+                                                <rect key="frame" x="124" y="635" width="127" height="12"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -179,9 +179,9 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Scw-jg-Q4o" customClass="CustomSegmentControl" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                            <rect key="frame" x="18" y="10" width="340" height="21"/>
+                                            <rect key="frame" x="18" y="7.5" width="340" height="26"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="20" id="z4w-Xn-gBS"/>
+                                                <constraint firstAttribute="height" constant="25" id="z4w-Xn-gBS"/>
                                             </constraints>
                                             <segments>
                                                 <segment title="First"/>

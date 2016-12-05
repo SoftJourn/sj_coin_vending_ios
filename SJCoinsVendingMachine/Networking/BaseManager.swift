@@ -22,10 +22,8 @@ class BaseManager {
         
         //Security configuration the Alamofire manager.
         let coinServer = "sjcoins-testing.softjourn.if.ua"
-        let resource = "coin"
-        let type = "cer"
-        
-        guard let pathToCert = Bundle.main.path(forResource: resource, ofType: type), let certificateData = NSData(contentsOfFile: pathToCert), let certificate = SecCertificateCreateWithData(nil, certificateData) else {
+    
+        guard let pathToCert = Bundle.main.path(forResource: "coin", ofType: "cer"), let certificateData = NSData(contentsOfFile: pathToCert), let certificate = SecCertificateCreateWithData(nil, certificateData) else {
             //Use DefaultEvaluation.
             return ServerTrustPolicyManager(policies: [ coinServer: .performDefaultEvaluation(validateHost: true) ])
         }
