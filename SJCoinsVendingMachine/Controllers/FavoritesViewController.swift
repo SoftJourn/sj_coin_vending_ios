@@ -17,7 +17,7 @@ class FavoritesViewController: BaseViewController {
     @IBOutlet fileprivate weak var noItemsLabel: UILabel!
     
     fileprivate var favorites: [Products]? {
-        return SortingManager().sortBy(name: DataManager.shared.favorites, state: nil)
+        return SortingHelper().sortBy(name: DataManager.shared.favorites, state: nil)
     }
     fileprivate var unavailable: [Int]? {
         return DataManager.shared.unavailable

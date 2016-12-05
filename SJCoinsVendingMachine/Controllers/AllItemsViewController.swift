@@ -29,8 +29,8 @@ class AllItemsViewController: BaseViewController {
     @IBOutlet private weak var titleButton: UIButton!
     @IBOutlet fileprivate weak var noItems: UILabel!
     
-    private lazy var sortingByName = SortingManager()
-    private lazy var sortingByPrice = SortingManager()
+    private lazy var sortingHelper = SortingHelper()
+
     fileprivate lazy var searchData = [Products]()
     fileprivate lazy var resultSearchController: UISearchController = {
         
@@ -75,7 +75,7 @@ class AllItemsViewController: BaseViewController {
     
     private func viewDidLoadNotUsingSeeAll() {
         
-        filterItems = SortingManager().sortBy(name: allItems, state: nil)
+        filterItems = SortingHelper().sortBy(name: allItems, state: nil)
         DataManager.shared.delegate = self
         tableView.addSubview(refreshControl)
         self.definesPresentationContext = true
@@ -143,9 +143,9 @@ class AllItemsViewController: BaseViewController {
         
         switch segmentControl.selectedSegmentIndex {
         case 0:
-            setAndReload(data: sortingByName.sortBy(name: filterItems, state: bySameButton))
+            setAndReload(data: sortingHelper.sortBy(name: filterItems, state: bySameButton))
         case 1:
-            setAndReload(data: sortingByPrice.sortBy(price: filterItems, state: bySameButton))
+            setAndReload(data: sortingHelper.sortBy(price: filterItems, state: bySameButton))
         default: break
         }
     }
@@ -186,7 +186,7 @@ class AllItemsViewController: BaseViewController {
     
     fileprivate func change(filter name: String?, items: [Products]?) {
         
-        let sortedItems = SortingManager().sortBy(name: items, state: nil)
+        let sortedItems = SortingHelper().sortBy(name: items, state: nil)
         filterItems = sortedItems
         titleButton(name)
         reloadTableView()

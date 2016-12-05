@@ -17,7 +17,6 @@ class BaseTableViewCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var buyButton: UIButton!
-    
 
     weak var delegate: CellDelegate?
     var request: Request?

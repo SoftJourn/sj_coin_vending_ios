@@ -27,7 +27,7 @@
 		35089F7B1DABB45F00DC3BAF /* HomeCollectionViewInternalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F741DABB45F00DC3BAF /* HomeCollectionViewInternalCell.swift */; };
 		35089F7C1DABB45F00DC3BAF /* LoginPageDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F751DABB45F00DC3BAF /* LoginPageDecorator.swift */; };
 		35089F7D1DABB45F00DC3BAF /* PurchaseHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F761DABB45F00DC3BAF /* PurchaseHistoryTableViewCell.swift */; };
-		35089F7F1DABB7DF00DC3BAF /* SortingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F7E1DABB7DF00DC3BAF /* SortingManager.swift */; };
+		35089F7F1DABB7DF00DC3BAF /* SortingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F7E1DABB7DF00DC3BAF /* SortingHelper.swift */; };
 		35089F811DABB91900DC3BAF /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F801DABB91900DC3BAF /* AuthModel.swift */; };
 		35089F831DABBA4900DC3BAF /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35089F821DABBA4900DC3BAF /* AccountModel.swift */; };
 		3512EA9B1DB2BE70008B47FA /* NotificationDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */; };
@@ -81,7 +81,7 @@
 		35089F741DABB45F00DC3BAF /* HomeCollectionViewInternalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeCollectionViewInternalCell.swift; path = Views/HomeCollectionViewInternalCell.swift; sourceTree = "<group>"; };
 		35089F751DABB45F00DC3BAF /* LoginPageDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginPageDecorator.swift; path = Views/LoginPageDecorator.swift; sourceTree = "<group>"; };
 		35089F761DABB45F00DC3BAF /* PurchaseHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseHistoryTableViewCell.swift; path = Views/PurchaseHistoryTableViewCell.swift; sourceTree = "<group>"; };
-		35089F7E1DABB7DF00DC3BAF /* SortingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingManager.swift; sourceTree = "<group>"; };
+		35089F7E1DABB7DF00DC3BAF /* SortingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingHelper.swift; sourceTree = "<group>"; };
 		35089F801DABB91900DC3BAF /* AuthModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthModel.swift; path = Models/AuthModel.swift; sourceTree = "<group>"; };
 		35089F821DABBA4900DC3BAF /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountModel.swift; path = Models/AccountModel.swift; sourceTree = "<group>"; };
 		3512EA9A1DB2BE70008B47FA /* NotificationDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDecorator.swift; sourceTree = "<group>"; };
@@ -184,7 +184,6 @@
 				35617D801DA82728000582F6 /* NavigationManager.swift */,
 				35617D7C1DA822E8000582F6 /* ValidationManager.swift */,
 				35089F6E1DABAB4A00DC3BAF /* DataManager.swift */,
-				35089F7E1DABB7DF00DC3BAF /* SortingManager.swift */,
 				35E29C0C1DACD8D9002B7045 /* AlertManager.swift */,
 			);
 			name = Managers;
@@ -276,6 +275,7 @@
 			children = (
 				35D2E7A71DDB4A94006C4EC3 /* AnimationHelper.swift */,
 				35F196541DF1A8D500D1DE49 /* Helper.swift */,
+				35089F7E1DABB7DF00DC3BAF /* SortingHelper.swift */,
 				35617D781DA818A1000582F6 /* Const.swift */,
 			);
 			name = Helpers;
@@ -487,7 +487,7 @@
 				35617D811DA82728000582F6 /* NavigationManager.swift in Sources */,
 				35089F7C1DABB45F00DC3BAF /* LoginPageDecorator.swift in Sources */,
 				3560E1A01DB8C49E00DF42C7 /* PurchaseHistoryModel.swift in Sources */,
-				35089F7F1DABB7DF00DC3BAF /* SortingManager.swift in Sources */,
+				35089F7F1DABB7DF00DC3BAF /* SortingHelper.swift in Sources */,
 				35E29C0F1DACDCDD002B7045 /* InitialViewController.swift in Sources */,
 				07854FBA1D4B8C5300F31AB3 /* AppDelegate.swift in Sources */,
 				35E504F61DAE569B00131567 /* Size.swift in Sources */,
