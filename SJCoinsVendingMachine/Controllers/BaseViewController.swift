@@ -259,7 +259,7 @@ class BaseViewController: UIViewController {
     
     func present(alert type: alertType) {
         
-        SVProgressHUD.dismiss(withDelay: 0.5)
+        SVProgressHUD.dismiss(withDelay: time.halfSecond)
         switch type {
             
         case .authorization:

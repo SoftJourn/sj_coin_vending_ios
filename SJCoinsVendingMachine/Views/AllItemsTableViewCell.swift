@@ -42,7 +42,7 @@ class AllItemsTableViewCell: BaseTableViewCell {
         guard let imageUrl = item.imageUrl else { return self }
         logo.af_setImage(withURL: URL(string: "\(networking.baseURL)vending/v1/\(imageUrl)")!,
                          placeholderImage: #imageLiteral(resourceName: "Placeholder"),
-                         imageTransition: .crossDissolve(0.5))
+                         imageTransition: .crossDissolve(time.halfSecond))
         return self
     }
 }

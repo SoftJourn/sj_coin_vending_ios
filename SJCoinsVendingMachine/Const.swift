@@ -67,3 +67,8 @@ struct key {
     static let amount = "amount"
     static let price = "price"
 }
+
+struct time {
+    
+    static let halfSecond = 0.5
+}

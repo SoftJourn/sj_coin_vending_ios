@@ -30,7 +30,7 @@ class AnimationHelper {
     //MARK: Transparency effect.
     func showHidden(_ element: UIView, delay: TimeInterval) {
         
-        UIView.animate(withDuration: 0.5, delay: delay, options: .showHideTransitionViews, animations: { () -> Void in
+        UIView.animate(withDuration: time.halfSecond, delay: delay, options: .showHideTransitionViews, animations: { () -> Void in
             element.alpha = 1
         }, completion: nil)
     }
