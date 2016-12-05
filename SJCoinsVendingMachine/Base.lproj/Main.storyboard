@@ -174,17 +174,43 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Awg-qy-TsH">
                                 <rect key="frame" x="-1.5" y="0.0" width="376" height="666"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="NbS-w4-X6P" userLabel="HeaderView">
+                                    <rect key="frame" x="0.0" y="64" width="376" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Scw-jg-Q4o">
+                                            <rect key="frame" x="18" y="10" width="340" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="z4w-Xn-gBS"/>
+                                            </constraints>
+                                            <segments>
+                                                <segment title="First"/>
+                                                <segment title="Second"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="anothedSegmentButtonPressed:" destination="xW5-rt-L3t" eventType="valueChanged" id="0Wd-qB-jKF"/>
+                                                <action selector="sameSegmentButtonPressed:" destination="xW5-rt-L3t" eventType="touchUpInside" id="r8Y-Xi-equ"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Scw-jg-Q4o" firstAttribute="centerX" secondItem="NbS-w4-X6P" secondAttribute="centerX" id="1Sg-Px-Tam"/>
+                                        <constraint firstItem="Scw-jg-Q4o" firstAttribute="centerY" secondItem="NbS-w4-X6P" secondAttribute="centerY" id="IN7-nW-KpC"/>
+                                        <constraint firstItem="Scw-jg-Q4o" firstAttribute="leading" secondItem="NbS-w4-X6P" secondAttribute="leadingMargin" constant="10" id="Ugv-2e-i1G"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Scw-jg-Q4o" secondAttribute="trailing" constant="10" id="eUD-er-TGp"/>
+                                    </constraints>
+                                </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="AZ4-rB-Pjg" userLabel="FooterView">
-                                    <rect key="frame" x="0.0" y="154" width="376" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="194" width="376" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AllItemsTableViewCell" rowHeight="62" id="E2l-Ms-ODl" customClass="AllItemsTableViewCell" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="376" height="62"/>
+                                        <rect key="frame" x="0.0" y="68" width="376" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E2l-Ms-ODl" id="BRI-dD-bUt">
-                                            <rect key="frame" x="0.0" y="0.0" width="376" height="62"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucn-1K-30q">
@@ -259,35 +285,11 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="rect" keyPath="contentInset">
-                                        <rect key="value" x="45" y="0.0" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="xW5-rt-L3t" id="sjh-P1-KMP"/>
                                     <outlet property="delegate" destination="xW5-rt-L3t" id="KVO-qN-Fpi"/>
                                 </connections>
                             </tableView>
-                            <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NbS-w4-X6P">
-                                <rect key="frame" x="0.0" y="64" width="375" height="50"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="R3m-jc-T3m"/>
-                                </constraints>
-                            </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FBZ-Ao-mEc" customClass="CustomSegmentControl" customModule="SJCoinsVendingMachine" customModuleProvider="target">
-                                <rect key="frame" x="26" y="75" width="323" height="29"/>
-                                <segments>
-                                    <segment title="Name"/>
-                                    <segment title="Price"/>
-                                </segments>
-                                <connections>
-                                    <action selector="anothedSegmentButtonPressed:" destination="xW5-rt-L3t" eventType="valueChanged" id="HgE-5A-swI"/>
-                                    <action selector="sameSegmentButtonPressed:" destination="xW5-rt-L3t" eventType="touchUpInside" id="R2I-AF-j7A"/>
-                                </connections>
-                            </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jok-9I-iOA">
                                 <rect key="frame" x="20" y="303.5" width="335" height="60"/>
                                 <constraints>
@@ -302,18 +304,11 @@
                         <constraints>
                             <constraint firstItem="Awg-qy-TsH" firstAttribute="centerX" secondItem="vuw-BD-y7k" secondAttribute="centerX" constant="-1" id="7E4-C1-E5s"/>
                             <constraint firstItem="Awg-qy-TsH" firstAttribute="width" secondItem="vuw-BD-y7k" secondAttribute="width" constant="1" id="9BE-13-GEa"/>
-                            <constraint firstItem="FBZ-Ao-mEc" firstAttribute="leading" secondItem="vuw-BD-y7k" secondAttribute="leadingMargin" constant="10" id="CSu-8u-GEh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="FBZ-Ao-mEc" secondAttribute="trailing" constant="10" id="DtI-FI-84s"/>
-                            <constraint firstItem="NbS-w4-X6P" firstAttribute="top" secondItem="vQF-ov-qy4" secondAttribute="bottom" id="Ej4-BJ-xGO"/>
-                            <constraint firstItem="FBZ-Ao-mEc" firstAttribute="centerX" secondItem="vuw-BD-y7k" secondAttribute="centerX" id="JrC-GE-idE"/>
-                            <constraint firstItem="NbS-w4-X6P" firstAttribute="width" secondItem="vuw-BD-y7k" secondAttribute="width" id="WYR-oM-NVy"/>
                             <constraint firstItem="Awg-qy-TsH" firstAttribute="centerY" secondItem="vuw-BD-y7k" secondAttribute="centerY" constant="-0.5" id="e0x-y8-2WO"/>
                             <constraint firstItem="jok-9I-iOA" firstAttribute="leading" secondItem="vuw-BD-y7k" secondAttribute="leadingMargin" constant="4" id="lLd-j6-0xv"/>
                             <constraint firstItem="jok-9I-iOA" firstAttribute="centerY" secondItem="vuw-BD-y7k" secondAttribute="centerY" id="o4Z-4P-L5s"/>
                             <constraint firstItem="jok-9I-iOA" firstAttribute="centerX" secondItem="vuw-BD-y7k" secondAttribute="centerX" id="qAC-y0-u5a"/>
                             <constraint firstItem="Awg-qy-TsH" firstAttribute="height" secondItem="vuw-BD-y7k" secondAttribute="height" constant="-1" id="rCh-Yg-uPa"/>
-                            <constraint firstItem="FBZ-Ao-mEc" firstAttribute="top" secondItem="vQF-ov-qy4" secondAttribute="bottom" constant="11" id="taJ-PC-KMO"/>
-                            <constraint firstItem="NbS-w4-X6P" firstAttribute="centerX" secondItem="vuw-BD-y7k" secondAttribute="centerX" id="we2-6d-99Q"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dQF-Eq-Q3r">
@@ -336,7 +331,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="noItems" destination="jok-9I-iOA" id="UYe-Iw-cig"/>
-                        <outlet property="segmentControl" destination="FBZ-Ao-mEc" id="wcA-jc-NJI"/>
+                        <outlet property="segmentControl" destination="Scw-jg-Q4o" id="IfB-Qm-kvc"/>
                         <outlet property="tableView" destination="Awg-qy-TsH" id="9uM-HX-msN"/>
                         <outlet property="titleButton" destination="SNQ-gm-D9i" id="Zlu-sT-bXE"/>
                     </connections>
@@ -961,11 +956,11 @@
                                         <rect key="frame" x="0.0" y="56" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" tableViewCell="g55-PO-ocW" id="4hi-fp-fwm">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ujP-Zl-dEZ">
-                                                    <rect key="frame" x="25" y="0.0" width="335" height="43.5"/>
+                                                    <rect key="frame" x="25" y="0.0" width="335" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                                     <nil key="textColor"/>
