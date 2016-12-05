@@ -162,7 +162,7 @@ class BaseViewController: UIViewController {
     // MARK: Confirmation and Buying.
     func present(confirmation product: Products) {
         
-        guard let identifier = product.internalIdentifier, let name = product.name, let price = product.price else {
+        guard let identifier = product.identifier, let name = product.name, let price = product.price else {
             return present(alert: .beforeBuying)
         }
         present(alert: .confirmation(name, price, buyingActions(with: identifier)))
@@ -214,7 +214,7 @@ class BaseViewController: UIViewController {
     // MARK: Add/Delete favorites.
     func add(favorite product: Products, complition: @escaping ()->()) {
         
-        guard let identifier = product.internalIdentifier else { return }
+        guard let identifier = product.identifier else { return }
         firstly {
             APIManager.favorite(.post, identifier: identifier)
         }.then { object -> Void in
@@ -229,7 +229,7 @@ class BaseViewController: UIViewController {
     
     func remove(favorite product: Products, complition: @escaping ()->()) {
         
-        guard let identifier = product.internalIdentifier else { return }
+        guard let identifier = product.identifier else { return }
         firstly {
             APIManager.favorite(.delete, identifier: identifier)
         }.then { object -> Void in

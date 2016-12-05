@@ -77,7 +77,7 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         guard let item = categoryItems?[indexPath.item] else { return cell }
         cell.availability = true        
         if categoryNames == categoryName.favorites {
-            guard let unavailable = unavailableFavorites, let identifier = item.internalIdentifier else {
+            guard let unavailable = unavailableFavorites, let identifier = item.identifier else {
                 return cell.configure(with: item)
             }
             if unavailable.contains(identifier) {
@@ -92,7 +92,7 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         
         guard let item = categoryItems?[indexPath.item] else { return }
         if categoryNames == categoryName.favorites {
-            guard let unavailable = unavailableFavorites, let identifier = item.internalIdentifier else { return }
+            guard let unavailable = unavailableFavorites, let identifier = item.identifier else { return }
             if unavailable.contains(identifier) {
                 availability = false
             }

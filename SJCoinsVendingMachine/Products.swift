@@ -19,7 +19,7 @@ class Products: NSObject {
     var price: Int?
     var descriptionValue: String?
     var imageUrl: String?
-    var internalIdentifier: Int?
+    var identifier: Int?
     var category: Category?
     var name: String?
     
@@ -29,7 +29,7 @@ class Products: NSObject {
         price = json[key.price].int
         descriptionValue = json[keyDescription].string
         imageUrl = json[keyImageUrl].string
-        internalIdentifier = json[key.identifier].int
+        identifier = json[key.identifier].int
         category = Category(json: json[keyCategory])
         name = json[key.name].string
     }

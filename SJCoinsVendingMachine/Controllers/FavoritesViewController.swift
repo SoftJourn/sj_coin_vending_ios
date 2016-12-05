@@ -79,8 +79,8 @@ extension FavoritesViewController: UITableViewDataSource {
         guard let item = favorites?[indexPath.item] else { return cell }
         cell.delegate = self
         cell.availability = true
-        if unavailable != nil && item.internalIdentifier != nil {
-            if (unavailable?.contains(item.internalIdentifier!))! {
+        if unavailable != nil && item.identifier != nil {
+            if (unavailable?.contains(item.identifier!))! {
                 cell.availability = false
             }
         }

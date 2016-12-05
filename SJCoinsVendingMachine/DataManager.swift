@@ -84,7 +84,7 @@ class DataManager: NSObject {
     
     func remove(favorite item: Products) {
         
-        favorites = favorites?.filter { $0.internalIdentifier != item.internalIdentifier }
+        favorites = favorites?.filter { $0.identifier != item.identifier }
     }
     
     func save(balance amount: Int) {
@@ -147,7 +147,7 @@ class DataManager: NSObject {
         for category in categories {
             guard let products = category.products else { return }
             for product in products {
-                guard let id = product.internalIdentifier else { return }
+                guard let id = product.identifier else { return }
                 if items.contains(id) {
                     lastAdded!.append(product)
                 }
@@ -163,7 +163,7 @@ class DataManager: NSObject {
         for category in categories {
             guard let products = category.products else { return }
             for product in products {
-                guard let id = product.internalIdentifier else { return }
+                guard let id = product.identifier else { return }
                 if items.contains(id) {
                     bestSellers!.append(product)
                 }
@@ -182,7 +182,7 @@ class DataManager: NSObject {
             for category in dynamicCategories {
                 guard let products = category.products else { return }
                 for product in products {
-                    guard let identifier = product.internalIdentifier else { return }
+                    guard let identifier = product.identifier else { return }
                     allProducts.insert(identifier)
                 }
             }
@@ -190,7 +190,7 @@ class DataManager: NSObject {
         var favoriteProducts = Set<Int>()
         guard let favorites = favorites else { return }
         for product in favorites {
-            guard let identifier = product.internalIdentifier else { return }
+            guard let identifier = product.identifier else { return }
             favoriteProducts.insert(identifier)
         }
         for product in favoriteProducts {

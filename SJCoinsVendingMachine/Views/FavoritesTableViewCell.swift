@@ -40,7 +40,7 @@ class FavoritesTableViewCell: BaseTableViewCell {
     // MARK: Methods
     func configure(with product: Products) -> FavoritesTableViewCell {
        
-        print("Product id \(product.name!, product.internalIdentifier!)")
+        print("Product id \(product.name!, product.identifier!)")
         item = product
         favorite = true
         if let name = product.name, let price = product.price {

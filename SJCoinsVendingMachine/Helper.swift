@@ -50,9 +50,4 @@ class Helper {
         let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
         return (isReachable && !needsConnection)
     }
-
-    // MARK: Сomparison.
-//    final class func ==(lhs: Products, rhs: Products) -> Bool {
-//        return lhs.internalIdentifier == rhs.internalIdentifier
-//    }
 }

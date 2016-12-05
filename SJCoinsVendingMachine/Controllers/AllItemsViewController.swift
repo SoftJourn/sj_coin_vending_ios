@@ -262,7 +262,7 @@ extension AllItemsViewController: UITableViewDataSource {
         cell.favorite = false
         if let favorites = favorite {
             for object in favorites {
-                if item == object {
+                if item.identifier == object.identifier {
                     cell.favorite = true
                 }
             }
