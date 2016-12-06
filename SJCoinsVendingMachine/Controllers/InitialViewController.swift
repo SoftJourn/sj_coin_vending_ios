@@ -40,7 +40,7 @@ class InitialViewController: BaseViewController {
             regularLaunching()
         } else {
             DataManager.shared.fistLaunch = true
-            NavigationManager.shared.presentLoginViewController()
+            NavigationManager.shared.presentInformativePageViewController(firstTime: true)
         }
     }
 }

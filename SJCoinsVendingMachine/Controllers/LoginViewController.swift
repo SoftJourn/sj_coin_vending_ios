@@ -69,6 +69,11 @@ class LoginViewController: BaseViewController {
         showElementsAnimated()
     }
     
+    deinit {
+        
+        print("LoginViewController DELETED.")
+    }
+    
     // MARK: Actions
     @IBAction private func signInButtonPressed(_ sender: UIButton) {
         

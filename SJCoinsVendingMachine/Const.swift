@@ -7,15 +7,6 @@
 //
 
 import Foundation
-import SwiftyUserDefaults
-
-struct storyboards {
-    
-    static let tabBarControllerIdentifier = "TabBarController"
-    static let settingsNavigationController = "settingsNavigationController"
-    static let allItemsViewController = "AllItemsViewController"
-    static let favoritesViewController = "FavoritesViewController"
-}
 
 struct networking {
     
@@ -47,7 +38,6 @@ struct buttonTitle {
     static let confirm = "Confirm"
     static let cancel = "Cancel"
 }
-
 
 struct spinerMessage {
     

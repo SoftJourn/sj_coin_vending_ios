@@ -59,7 +59,7 @@ class RequestManager: BaseManager {
             if error != nil {
                 print(error!)
                 AuthorizationManager.removeAccessToken()
-                NavigationManager.shared.presentLoginViewController()
+                NavigationManager.shared.presentInformativePageViewController(firstTime: false)
             }
             
             _ = Promise<AnyObject> { fulfill, reject in

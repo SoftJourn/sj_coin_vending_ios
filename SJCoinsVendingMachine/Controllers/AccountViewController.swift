@@ -69,7 +69,7 @@ class AccountViewController: BaseViewController {
         DataManager.shared.cleanAllData()
 
         SVProgressHUD.dismiss()
-        NavigationManager.shared.presentLoginViewController()
+        NavigationManager.shared.presentInformativePageViewController(firstTime: false)
     }
     
     // MARK: Downloading, Handling and Refreshing data.
