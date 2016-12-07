@@ -12,7 +12,7 @@ import SwiftyUserDefaults
 extension DefaultsKeys {
     
     static let keyMachine = DefaultsKey<MachinesModel?>("chosenMachine")
-    static let fistLaunch = DefaultsKey<Bool>("fistLaunch")
+    static let launchedBefore = DefaultsKey<Bool>("launchedBefore")
 }
 
 extension UserDefaults {

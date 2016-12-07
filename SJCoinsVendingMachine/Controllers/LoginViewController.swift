@@ -151,7 +151,7 @@ class LoginViewController: BaseViewController {
     
     private func authSuccess() {
   
-        DataManager.shared.fistLaunch ? firstLaunching() : regularLaunching()
+        DataManager.shared.launchedBefore && DataManager.shared.chosenMachine != nil ? regularLaunching() : firstLaunching()
     }
     
     private func authFailed() {

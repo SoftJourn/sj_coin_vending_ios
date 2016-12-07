@@ -20,10 +20,11 @@ class DataManager: NSObject {
         get { return Defaults[.keyMachine] ?? nil }
         set { Defaults[.keyMachine] = newValue }
     }
-    var fistLaunch: Bool {
-        get { return Defaults[.fistLaunch] }
-        set { Defaults[.fistLaunch] = newValue }
+    var launchedBefore: Bool {
+        get { return Defaults[.launchedBefore] }
+        set { Defaults[.launchedBefore] = newValue }
     }
+    
     dynamic var favorites: [Products]? {
         didSet { createCategories() }
     }
@@ -37,7 +38,21 @@ class DataManager: NSObject {
     private(set) var bestSellers: [Products]?
     private(set) var unavailable: [Int]?
     
-    // MARK: Setters
+    // MARK: Methods
+    override init() {
+        
+        super.init()
+        // If application launched firts time.
+        if chosenMachine == nil {
+            do {
+                try AuthorizationManager.keychain.remove("token")
+                try AuthorizationManager.keychain.remove("refresh")
+            } catch let error {
+                print("error: \(error)")
+            }
+        }
+    }
+    
     func save(_ object: AnyObject) {
         
         switch object {
@@ -61,6 +76,7 @@ class DataManager: NSObject {
     
     func cleanAllData() {
         
+        //Cleaning information after logout.
         delegate = nil
         features = nil
         account = nil

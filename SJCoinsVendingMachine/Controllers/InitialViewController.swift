@@ -35,12 +35,13 @@ class InitialViewController: BaseViewController {
     
     func tokenVerification() {
         //Verify token and ascertain if its a first launch.
-        if AuthorizationManager.accessTokenExist() {
-            DataManager.shared.fistLaunch = false
+        if !DataManager.shared.launchedBefore && !AuthorizationManager.accessTokenExist() {
+            DataManager.shared.launchedBefore = true
+            NavigationManager.shared.presentInformativePageViewController(firstTime: true)
+        } else if DataManager.shared.launchedBefore && AuthorizationManager.accessTokenExist() { // ?????
             regularLaunching()
         } else {
-            DataManager.shared.fistLaunch = true
-            NavigationManager.shared.presentInformativePageViewController(firstTime: true)
+            NavigationManager.shared.presentInformativePageViewController(firstTime: false)
         }
     }
 }
