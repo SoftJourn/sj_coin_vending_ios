@@ -55,7 +55,7 @@ class SettingsViewController: BaseViewController {
     @IBAction private func doneButtonPressed(_ sender: UIBarButtonItem) {
         
         if DataManager.shared.chosenMachine?.identifier == chosenMachine?.identifier {
-            self.dismiss(animated: true) { }
+            dismiss(animated: true) { }
         } else {
             SVProgressHUD.show(withStatus: spinerMessage.loading)
             DataManager.shared.chosenMachine = chosenMachine
@@ -167,7 +167,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: settingsCellIdentifier, for: indexPath)
-        
+        //FIXME:
         switch indexPath.section {
         case 0:
             guard let machine = machines else { return cell }

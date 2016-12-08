@@ -47,6 +47,11 @@ class AccountViewController: BaseViewController {
     }
     
     // MARK: Actions
+    @IBAction func qrCodeButtonPressed(_ sender: UIBarButtonItem) {
+        
+        AlertManager().present(actionSheet: qrCodeActions(), sender: sender)
+    }
+    
     @IBAction private func logOutButton(_ sender: UIBarButtonItem) {
         
         //ExecuteLogOut
@@ -71,6 +76,21 @@ class AccountViewController: BaseViewController {
         SVProgressHUD.dismiss()
         NavigationManager.shared.presentInformativePageViewController(firstTime: false)
     }
+    
+    fileprivate func qrCodeActions() -> [UIAlertAction] {
+        
+        //Creating actions for ActionSheet and handle closures.
+        let qrGenerator = UIAlertAction(title: "Generator", style: .default) { action in
+            NavigationManager.shared.presentQRGeneratorViewController()
+        }
+        let qrReader = UIAlertAction(title: "Reader", style: .default) { action in
+        
+        }
+        let cancel = UIAlertAction(title: categoryName.cancel, style: .cancel) { action in }
+
+        return [qrGenerator, qrReader, cancel]
+    }
+
     
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {

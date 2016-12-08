@@ -15,7 +15,9 @@ class NavigationManager: NSObject {
     let tabBarControllerIdentifier = "TabBarController"
     let settingsControllerIdentifier = "SettingsNavigationController"
     let allItemsControllerIdentifier = "AllItemsViewController"
+    let QRGeneratorControllerIdentifier = "QRCodeGeneratorViewController"
     let favoritesControllerIdentifier = "FavoritesViewController"
+
     let vc1Identifier = "VC1"
     let vc2Identifier = "VC2"
     
@@ -50,6 +52,11 @@ class NavigationManager: NSObject {
         visibleViewController?.present(settingsController, animated: true) { }
     }
     
+    func presentQRGeneratorViewController() {
+        
+        let qrGeneratorController = instantiate(with: QRGeneratorControllerIdentifier) as! UINavigationController
+        visibleViewController?.present(qrGeneratorController, animated: true) { }
+    }
     
     func presentFavoritesViewController(items: [Products]?) {
         

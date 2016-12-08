@@ -39,6 +39,8 @@
 		35617D7D1DA822E8000582F6 /* ValidationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D7C1DA822E8000582F6 /* ValidationManager.swift */; };
 		35617D7F1DA82484000582F6 /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D7E1DA82484000582F6 /* AuthorizationManager.swift */; };
 		35617D811DA82728000582F6 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D801DA82728000582F6 /* NavigationManager.swift */; };
+		35643D701DF8749D00BC0FAD /* QRCodeGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35643D6F1DF8749D00BC0FAD /* QRCodeGeneratorViewController.swift */; };
+		35643D721DF957C100BC0FAD /* QRCodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35643D711DF957C100BC0FAD /* QRCodeReaderViewController.swift */; };
 		3580AD741DBA95AC0062DC68 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3580AD731DBA95AC0062DC68 /* Protocols.swift */; };
 		359441731DAFC3B600B8B693 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359441721DAFC3B600B8B693 /* SettingsViewController.swift */; };
 		35B80FF91DBB8A8200540659 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B80FF81DBB8A8200540659 /* BaseTableViewCell.swift */; };
@@ -94,6 +96,8 @@
 		35617D7C1DA822E8000582F6 /* ValidationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationManager.swift; sourceTree = "<group>"; };
 		35617D7E1DA82484000582F6 /* AuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
 		35617D801DA82728000582F6 /* NavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
+		35643D6F1DF8749D00BC0FAD /* QRCodeGeneratorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QRCodeGeneratorViewController.swift; path = Controllers/QRCodeGeneratorViewController.swift; sourceTree = "<group>"; };
+		35643D711DF957C100BC0FAD /* QRCodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QRCodeReaderViewController.swift; path = Controllers/QRCodeReaderViewController.swift; sourceTree = "<group>"; };
 		3580AD731DBA95AC0062DC68 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		359441721DAFC3B600B8B693 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Controllers/SettingsViewController.swift; sourceTree = "<group>"; };
 		35AD444C1DCA91EF00554EE3 /* SJCoinsVendingMachine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SJCoinsVendingMachine.entitlements; sourceTree = "<group>"; };
@@ -217,10 +221,8 @@
 				3511C8DC1DF6F36400D958DA /* InformativePageViewController.swift */,
 				35089F671DAB9E4900DC3BAF /* LoginViewController.swift */,
 				359441721DAFC3B600B8B693 /* SettingsViewController.swift */,
-				35089F661DAB9E4900DC3BAF /* HomeViewController.swift */,
-				35089F651DAB9E4900DC3BAF /* FavoritesViewController.swift */,
-				35089F631DAB9E4900DC3BAF /* AllItemsViewController.swift */,
-				35089F621DAB9E4900DC3BAF /* AccountViewController.swift */,
+				35643D731DF9715300BC0FAD /* Tabs */,
+				35643D741DF9717100BC0FAD /* QR Code */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -271,6 +273,26 @@
 				35EA512B1DEF227E00AC8CA3 /* UIColorDecorator.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		35643D731DF9715300BC0FAD /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				35089F661DAB9E4900DC3BAF /* HomeViewController.swift */,
+				35089F651DAB9E4900DC3BAF /* FavoritesViewController.swift */,
+				35089F631DAB9E4900DC3BAF /* AllItemsViewController.swift */,
+				35089F621DAB9E4900DC3BAF /* AccountViewController.swift */,
+			);
+			name = Tabs;
+			sourceTree = "<group>";
+		};
+		35643D741DF9717100BC0FAD /* QR Code */ = {
+			isa = PBXGroup;
+			children = (
+				35643D6F1DF8749D00BC0FAD /* QRCodeGeneratorViewController.swift */,
+				35643D711DF957C100BC0FAD /* QRCodeReaderViewController.swift */,
+			);
+			name = "QR Code";
 			sourceTree = "<group>";
 		};
 		35D2E7A91DDB4A9A006C4EC3 /* Helpers */ = {
@@ -474,6 +496,7 @@
 				35089F681DAB9E4900DC3BAF /* AccountViewController.swift in Sources */,
 				35089F781DABB45F00DC3BAF /* CustomSegmentControl.swift in Sources */,
 				35089F6A1DAB9E4900DC3BAF /* BaseViewController.swift in Sources */,
+				35643D721DF957C100BC0FAD /* QRCodeReaderViewController.swift in Sources */,
 				35B80FF91DBB8A8200540659 /* BaseTableViewCell.swift in Sources */,
 				35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */,
 				35D2E7A81DDB4A94006C4EC3 /* AnimationHelper.swift in Sources */,
@@ -505,6 +528,7 @@
 				35089F771DABB45F00DC3BAF /* AllItemsTableViewCell.swift in Sources */,
 				35089F6C1DAB9E4900DC3BAF /* HomeViewController.swift in Sources */,
 				35089F551DAB7D9000DC3BAF /* BaseManager.swift in Sources */,
+				35643D701DF8749D00BC0FAD /* QRCodeGeneratorViewController.swift in Sources */,
 				35089F7B1DABB45F00DC3BAF /* HomeCollectionViewInternalCell.swift in Sources */,
 				35089F7A1DABB45F00DC3BAF /* HomeCollectionViewCell.swift in Sources */,
 				35089F831DABBA4900DC3BAF /* AccountModel.swift in Sources */,
