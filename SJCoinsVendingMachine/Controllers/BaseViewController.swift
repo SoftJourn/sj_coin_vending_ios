@@ -170,7 +170,7 @@ class BaseViewController: UIViewController {
     
     private func buyingActions(with identifier: Int?) -> [UIAlertAction] {
         
-        let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .destructive) { [unowned self] action in
+        let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .default) { [unowned self] action in
             
             self.connectionVerification { [unowned self] in
                 self.buy(using: identifier)
