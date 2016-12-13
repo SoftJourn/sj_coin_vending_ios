@@ -16,6 +16,18 @@ class InformativePageViewController: UIPageViewController {
         return NavigationManager.shared.pageViewControllers
     }()
     var pageControl: UIPageControl?
+    let skipButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Skip", for: .normal)
+        button.setTitleColor(UIColor(red: 255/255, green: 122/255, blue: 0/255, alpha: 1), for: .normal)
+        return button
+    }()
+    let nextButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Next", for: .normal)
+        button.setTitleColor(UIColor(red: 247/255, green: 154/255, blue: 27/255, alpha: 1), for: .normal)
+        return button
+    }()
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -23,16 +35,11 @@ class InformativePageViewController: UIPageViewController {
         super.viewDidLoad()
         self.dataSource = self
         self.delegate = self
-    }
-    
-    override func viewDidLayoutSubviews() {
+        view.addSubview(skipButton)
+        view.addSubview(nextButton)
         
-        super.viewDidLayoutSubviews()
-        pageControl {
-            pageControl?.backgroundColor = .clear
-            pageControl?.pageIndicatorTintColor = .darkGray
-            pageControl?.currentPageIndicatorTintColor = .black
-        }
+        configureButtons()
+        configurePageControl()
         launching()
     }
     
@@ -42,19 +49,28 @@ class InformativePageViewController: UIPageViewController {
     }
     
     // MARK: Methods
-    func pageControl(configure: ()->()) {
+    private func configureButtons() {
+        
+        _ = skipButton.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 16, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 60, heightConstant: 50)
+        
+        _ = nextButton.anchor(view.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: 16, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 60, heightConstant: 50)
+    }
+
+    private func configurePageControl() {
         
         for view in self.view.subviews {
             if view is UIScrollView {
                 view.frame = UIScreen.main.bounds
             } else if view is UIPageControl {
                 pageControl = view as? UIPageControl
-                configure()
+                pageControl?.backgroundColor = .clear
+                pageControl?.pageIndicatorTintColor = .darkGray
+                pageControl?.currentPageIndicatorTintColor = .black
             }
         }
     }
     
-    func launching() {
+    private func launching() {
         
         guard let info = pageViewControllers.first, let login = pageViewControllers.last else { return }
         firstTime ? show(controller: info, hidePages: false) : show(controller: login, hidePages: true)
@@ -65,7 +81,8 @@ class InformativePageViewController: UIPageViewController {
         pageControl?.isHidden = hidePages
         return setViewControllers([controller], direction: .forward, animated: true) { _ in }
     }
-}
+    
+    }
 
 extension InformativePageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     

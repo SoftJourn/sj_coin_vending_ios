@@ -40,6 +40,7 @@
 		35617D7F1DA82484000582F6 /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D7E1DA82484000582F6 /* AuthorizationManager.swift */; };
 		35617D811DA82728000582F6 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35617D801DA82728000582F6 /* NavigationManager.swift */; };
 		3580AD741DBA95AC0062DC68 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3580AD731DBA95AC0062DC68 /* Protocols.swift */; };
+		358F32D61DFF033A00ED36BC /* UIViewDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358F32D51DFF033A00ED36BC /* UIViewDecorator.swift */; };
 		359441731DAFC3B600B8B693 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359441721DAFC3B600B8B693 /* SettingsViewController.swift */; };
 		35B80FF91DBB8A8200540659 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B80FF81DBB8A8200540659 /* BaseTableViewCell.swift */; };
 		35D2E7A81DDB4A94006C4EC3 /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2E7A71DDB4A94006C4EC3 /* AnimationHelper.swift */; };
@@ -95,6 +96,7 @@
 		35617D7E1DA82484000582F6 /* AuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
 		35617D801DA82728000582F6 /* NavigationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		3580AD731DBA95AC0062DC68 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		358F32D51DFF033A00ED36BC /* UIViewDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewDecorator.swift; sourceTree = "<group>"; };
 		359441721DAFC3B600B8B693 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = Controllers/SettingsViewController.swift; sourceTree = "<group>"; };
 		35AD444C1DCA91EF00554EE3 /* SJCoinsVendingMachine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SJCoinsVendingMachine.entitlements; sourceTree = "<group>"; };
 		35B80FF81DBB8A8200540659 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 				35F196561DF1CBDC00D1DE49 /* UserDefaultsDecorator.swift */,
 				35EA51241DE5E00A00AC8CA3 /* ArrayDecorator.swift */,
 				35EA512B1DEF227E00AC8CA3 /* UIColorDecorator.swift */,
+				358F32D51DFF033A00ED36BC /* UIViewDecorator.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				35089F6A1DAB9E4900DC3BAF /* BaseViewController.swift in Sources */,
 				35B80FF91DBB8A8200540659 /* BaseTableViewCell.swift in Sources */,
 				35E504F51DAE569B00131567 /* MachinesModel.swift in Sources */,
+				358F32D61DFF033A00ED36BC /* UIViewDecorator.swift in Sources */,
 				35D2E7A81DDB4A94006C4EC3 /* AnimationHelper.swift in Sources */,
 				3580AD741DBA95AC0062DC68 /* Protocols.swift in Sources */,
 				35E504E91DAD360C00131567 /* FeaturesModel.swift in Sources */,

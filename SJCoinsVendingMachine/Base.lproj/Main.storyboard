@@ -1006,7 +1006,7 @@
         <!--Informative Page View Controller-->
         <scene sceneID="1KQ-Dl-JrP">
             <objects>
-                <pageViewController storyboardIdentifier="InformativePageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="nuP-dR-1Vk" customClass="InformativePageViewController" customModule="SJCoinsVendingMachine" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="InformativePageViewController" autoresizesArchivedViewToFullSize="NO" modalTransitionStyle="flipHorizontal" modalPresentationStyle="pageSheet" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="nuP-dR-1Vk" customClass="InformativePageViewController" customModule="SJCoinsVendingMachine" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yZa-iB-ig6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2857" y="339"/>
