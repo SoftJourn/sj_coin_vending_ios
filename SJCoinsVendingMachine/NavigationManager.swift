@@ -34,7 +34,7 @@ class NavigationManager: NSObject {
     // MARK: Methods
     func presentInformativePageViewController(firstTime: Bool) {
     
-        let informative = instantiate(with: informativeControllerIdentifier) as! InformativePageViewController
+        let informative = instantiate(with: informativeControllerIdentifier) as! InformativeViewController
         informative.firstTime = firstTime
         present(viewControllerAsRoot: informative)
     }
