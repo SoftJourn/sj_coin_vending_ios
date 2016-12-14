@@ -28,7 +28,7 @@ class InformativeViewController: UIViewController {
     fileprivate var pendingIndex: Int?
     
     var nextPageIndex: Int {
-        return currentIndex! + 1 ?? 0
+        return currentIndex != nil ? currentIndex! + 1 : 0
     }
     
     // MARK: Lifecycle
