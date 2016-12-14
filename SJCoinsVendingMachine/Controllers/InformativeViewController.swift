@@ -27,6 +27,10 @@ class InformativeViewController: UIViewController {
     fileprivate var currentIndex: Int?
     fileprivate var pendingIndex: Int?
     
+    var nextPageIndex: Int {
+        return currentIndex! + 1 ?? 0
+    }
+    
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,15 +65,14 @@ class InformativeViewController: UIViewController {
         guard let index = currentIndex else { return }
         
         if index == 0 {
-            show(controller: pages[index + 1], hideElements: false)
-            currentIndex! += 1
-            //change dot
-        } else if index == pages.count - 1 {
-            show(controller: pages[index + 1], hideElements: true)
-            currentIndex! += 1
+            show(controller: pages[nextPageIndex], hideElements: false)
+            nextPage()
+        } else if index == pages.count - 2 {
+            show(controller: pages[nextPageIndex], hideElements: true)
+            nextPage()
         } else {
-            show(controller: pages[index + 1], hideElements: false)
-            currentIndex! += 1
+            show(controller: pages[nextPageIndex], hideElements: false)
+            nextPage()
         }
     }
 
@@ -91,6 +94,12 @@ class InformativeViewController: UIViewController {
         pageControl.isHidden = elements
         skipButton.isHidden = elements
         nextButton.isHidden = elements
+    }
+    
+    private func nextPage() {
+        
+        pageControl.currentPage = nextPageIndex
+        currentIndex! += 1
     }
 }
 
