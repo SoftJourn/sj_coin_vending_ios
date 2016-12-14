@@ -18,14 +18,16 @@ class NavigationManager: NSObject {
     let QRGeneratorControllerIdentifier = "QRCodeGeneratorViewController"
     let favoritesControllerIdentifier = "FavoritesViewController"
 
-    let vc1Identifier = "VC1"
-    let vc2Identifier = "VC2"
+    let howToLogInIdentifier = "HowToLogIn"
+    let buyProductsIdentifier = "BuyProducts"
+    let wantsMoreCoinsIdentifier = "WantMoreCoins"
+    let addFavoriteIdentifier = "AddFavorites"
     
     // MARK: Properties
     static let shared = NavigationManager()
     var visibleViewController: UIViewController?
-    var pageViewControllers: [UIViewController] {
-        return [instantiate(with: vc1Identifier), instantiate(with: vc2Identifier), instantiate(with: LoginViewController.identifier)]
+    var informativePages: [UIViewController] {
+        return [instantiate(with: howToLogInIdentifier), instantiate(with: buyProductsIdentifier), instantiate(with: wantsMoreCoinsIdentifier), instantiate(with: addFavoriteIdentifier), instantiate(with: LoginViewController.identifier)]
     }
     private var mainStoryboard: UIStoryboard {
         return UIStoryboard(name: "Main", bundle: nil)

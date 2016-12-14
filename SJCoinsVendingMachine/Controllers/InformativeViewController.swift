@@ -13,7 +13,7 @@ class InformativeViewController: UIViewController {
     // MARK: Properties
     var firstTime = false
     fileprivate lazy var pages: [UIViewController] = {
-        return NavigationManager.shared.pageViewControllers
+        return NavigationManager.shared.informativePages
     }()
     
     @IBOutlet fileprivate weak var pageControl: UIPageControl!
@@ -58,17 +58,18 @@ class InformativeViewController: UIViewController {
     
     @IBAction func nextButtonPressed(_ sender: UIButton) {
    
-        print(currentIndex!)
-        guard let current = currentIndex else { return }
+        guard let index = currentIndex else { return }
         
-        if current == 0 {
-            show(controller: pages[current + 1], hideElements: false)
+        if index == 0 {
+            show(controller: pages[index + 1], hideElements: false)
             currentIndex! += 1
-        } else if currentIndex == 1 {
-            show(controller: pages[current + 1], hideElements: true)
+            //change dot
+        } else if index == pages.count - 1 {
+            show(controller: pages[index + 1], hideElements: true)
             currentIndex! += 1
         } else {
-            return
+            show(controller: pages[index + 1], hideElements: false)
+            currentIndex! += 1
         }
     }
 
@@ -109,7 +110,7 @@ extension InformativeViewController: UIPageViewControllerDataSource, UIPageViewC
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
         let currentIndex = pages.index(of: viewController)!
-        if currentIndex == pages.count-1 {
+        if currentIndex == pages.count - 1 {
             return nil
         }
         let nextIndex = abs((currentIndex + 1) % pages.count)

@@ -1065,12 +1065,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E1U-go-MKO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2878" y="339"/>
+            <point key="canvasLocation" x="-3252" y="339"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="mPM-nH-gDc">
             <objects>
-                <viewController storyboardIdentifier="VC1" id="DYz-en-pV9" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HowToLogIn" id="DYz-en-pV9" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="928-bj-7Uo"/>
                         <viewControllerLayoutGuide type="bottom" id="ztY-78-Qck"/>
@@ -1079,53 +1079,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VC1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmh-ei-HYj">
-                                <rect key="frame" x="166" y="323" width="30" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use your LDAP credentials to log in. In case you cann't find them in your mail you can ask a sysadmin to help you with that!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmh-ei-HYj">
+                                <rect key="frame" x="16" y="273.5" width="343" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="Rqy-vD-gFd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How to Log in?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t61-9d-LTm">
+                                <rect key="frame" x="87.5" y="243.5" width="200" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Yy0-nN-EBw"/>
+                                    <constraint firstAttribute="width" constant="200" id="wuV-c9-E4h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="qmh-ei-HYj" firstAttribute="centerX" secondItem="lIq-C8-wXp" secondAttribute="centerX" constant="-6.5" id="PFf-HX-7iS"/>
+                            <constraint firstItem="qmh-ei-HYj" firstAttribute="leading" secondItem="lIq-C8-wXp" secondAttribute="leadingMargin" id="EZ3-z7-Lx4"/>
+                            <constraint firstItem="qmh-ei-HYj" firstAttribute="centerX" secondItem="lIq-C8-wXp" secondAttribute="centerX" id="PFf-HX-7iS"/>
+                            <constraint firstItem="qmh-ei-HYj" firstAttribute="trailing" secondItem="lIq-C8-wXp" secondAttribute="trailingMargin" id="QQN-pN-N7S"/>
+                            <constraint firstItem="t61-9d-LTm" firstAttribute="centerX" secondItem="lIq-C8-wXp" secondAttribute="centerX" id="ahW-n7-3NT"/>
+                            <constraint firstItem="qmh-ei-HYj" firstAttribute="top" secondItem="t61-9d-LTm" secondAttribute="bottom" constant="10" id="f86-Pc-2Ru"/>
                             <constraint firstItem="qmh-ei-HYj" firstAttribute="centerY" secondItem="lIq-C8-wXp" secondAttribute="centerY" id="lhb-GS-PzF"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="egQ-CO-Mfj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2177" y="339"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="mvl-wY-vWw">
-            <objects>
-                <viewController storyboardIdentifier="VC2" id="Gsh-W7-gvg" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="33R-iA-k7x"/>
-                        <viewControllerLayoutGuide type="bottom" id="sdT-kK-szx"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="tuo-Rv-3Eh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VC2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gBM-Ma-ZZb">
-                                <rect key="frame" x="171" y="323" width="33" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="gBM-Ma-ZZb" firstAttribute="centerY" secondItem="tuo-Rv-3Eh" secondAttribute="centerY" id="B0c-Ou-Kqe"/>
-                            <constraint firstItem="gBM-Ma-ZZb" firstAttribute="centerX" secondItem="tuo-Rv-3Eh" secondAttribute="centerX" id="ghN-9M-urZ"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YvS-m9-Kah" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1494" y="339"/>
+            <point key="canvasLocation" x="-2572" y="339"/>
         </scene>
         <!--Initial View Controller-->
         <scene sceneID="fcp-DX-yhO">
@@ -1175,6 +1162,153 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cbM-CU-Www" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1145" y="-364"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="o0o-aR-Ubc">
+            <objects>
+                <viewController storyboardIdentifier="BuyProducts" id="bKj-ce-f7R" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BVU-Jj-eln"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vy9-2G-LJA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0wn-1M-ZFn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Jt-zh-d2T">
+                                <rect key="frame" x="16" y="274" width="343" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="1Bd-md-a6E"/>
+                                </constraints>
+                                <string key="text">You can buy any product as long as it is available and you have enough money! In case of any issues, e.g. the product has got stuck just ask the person responsible and you will get your product as soon as possible.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHn-EI-1Kf">
+                                <rect key="frame" x="88" y="244" width="200" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="K8H-d0-ZmE"/>
+                                    <constraint firstAttribute="height" constant="20" id="qXU-hP-961"/>
+                                </constraints>
+                                <string key="text">Buy Products
+</string>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9Jt-zh-d2T" firstAttribute="top" secondItem="bHn-EI-1Kf" secondAttribute="bottom" constant="10" id="BbO-re-pjg"/>
+                            <constraint firstItem="9Jt-zh-d2T" firstAttribute="centerY" secondItem="0wn-1M-ZFn" secondAttribute="centerY" id="F2h-wV-46S"/>
+                            <constraint firstItem="9Jt-zh-d2T" firstAttribute="centerX" secondItem="0wn-1M-ZFn" secondAttribute="centerX" id="NPS-Rr-NcK"/>
+                            <constraint firstItem="9Jt-zh-d2T" firstAttribute="trailing" secondItem="0wn-1M-ZFn" secondAttribute="trailingMargin" id="TCY-2o-SSZ"/>
+                            <constraint firstItem="bHn-EI-1Kf" firstAttribute="centerX" secondItem="0wn-1M-ZFn" secondAttribute="centerX" id="hkc-SX-en0"/>
+                            <constraint firstItem="9Jt-zh-d2T" firstAttribute="leading" secondItem="0wn-1M-ZFn" secondAttribute="leadingMargin" id="hsW-8d-sxz"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iQs-uR-FPZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1900" y="339"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="nv3-jZ-H8s">
+            <objects>
+                <viewController storyboardIdentifier="WantMoreCoins" id="zgV-2Z-kJc" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ck3-KA-8CR"/>
+                        <viewControllerLayoutGuide type="bottom" id="8KS-h0-lAP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="at8-xt-rjA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Problem! Ask our coins administrator to buy some coins for cash. The current exchange rate: 100 coins = 1 UAH" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h4M-tw-sFc">
+                                <rect key="frame" x="16" y="274" width="343" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="lhv-YY-tIS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Want More Coins?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAB-uq-8Z0">
+                                <rect key="frame" x="88" y="244" width="200" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="c5b-74-TQV"/>
+                                    <constraint firstAttribute="width" constant="200" id="gXZ-5r-uRO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="iAB-uq-8Z0" firstAttribute="centerX" secondItem="at8-xt-rjA" secondAttribute="centerX" id="4Y2-sQ-Uyb"/>
+                            <constraint firstItem="h4M-tw-sFc" firstAttribute="leading" secondItem="at8-xt-rjA" secondAttribute="leadingMargin" id="Anc-od-xsr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="h4M-tw-sFc" secondAttribute="trailing" id="Ccp-kG-RQo"/>
+                            <constraint firstItem="h4M-tw-sFc" firstAttribute="top" secondItem="iAB-uq-8Z0" secondAttribute="bottom" constant="10" id="Ve9-q8-HeL"/>
+                            <constraint firstItem="h4M-tw-sFc" firstAttribute="centerY" secondItem="at8-xt-rjA" secondAttribute="centerY" id="hir-wS-O63"/>
+                            <constraint firstItem="h4M-tw-sFc" firstAttribute="centerX" secondItem="at8-xt-rjA" secondAttribute="centerX" id="jZM-Rn-w60"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3VE-Fd-9Jt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1218" y="339"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="SvI-f3-PA1">
+            <objects>
+                <viewController storyboardIdentifier="AddFavorites" id="b0V-Qr-9yE" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JEI-fh-m1r"/>
+                        <viewControllerLayoutGuide type="bottom" id="t2V-5c-CzU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6yi-Dk-SOF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQN-UV-GgF">
+                                <rect key="frame" x="16" y="274" width="343" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="axq-XM-g4x"/>
+                                </constraints>
+                                <string key="text">You can add products to favorite so they are always on the top of the screen. Don't forget to refresh your Product List to always keep in touch with the server!</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2oj-h8-Yh6">
+                                <rect key="frame" x="88" y="244" width="200" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="2IX-yj-3qI"/>
+                                    <constraint firstAttribute="height" constant="20" id="md7-3d-dxE"/>
+                                </constraints>
+                                <string key="text">Add Favorites
+</string>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QQN-UV-GgF" firstAttribute="top" secondItem="2oj-h8-Yh6" secondAttribute="bottom" constant="10" id="66i-On-OQ6"/>
+                            <constraint firstItem="QQN-UV-GgF" firstAttribute="leading" secondItem="6yi-Dk-SOF" secondAttribute="leadingMargin" id="SpA-W7-HEJ"/>
+                            <constraint firstItem="QQN-UV-GgF" firstAttribute="centerY" secondItem="6yi-Dk-SOF" secondAttribute="centerY" id="YXt-Iw-FLf"/>
+                            <constraint firstItem="2oj-h8-Yh6" firstAttribute="centerX" secondItem="6yi-Dk-SOF" secondAttribute="centerX" id="jfA-NN-xYZ"/>
+                            <constraint firstItem="QQN-UV-GgF" firstAttribute="centerX" secondItem="6yi-Dk-SOF" secondAttribute="centerX" id="klx-EM-hST"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QQN-UV-GgF" secondAttribute="trailing" id="qFG-JR-AEQ"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yox-Qn-ctk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-538" y="339"/>
         </scene>
     </scenes>
     <resources>
