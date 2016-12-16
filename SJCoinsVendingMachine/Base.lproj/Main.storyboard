@@ -184,8 +184,8 @@
                                                 <constraint firstAttribute="height" constant="25" id="z4w-Xn-gBS"/>
                                             </constraints>
                                             <segments>
-                                                <segment title="First"/>
-                                                <segment title="Second"/>
+                                                <segment title="Name"/>
+                                                <segment title="Price"/>
                                             </segments>
                                             <connections>
                                                 <action selector="anothedSegmentButtonPressed:" destination="xW5-rt-L3t" eventType="valueChanged" id="0Wd-qB-jKF"/>
@@ -313,7 +313,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="dQF-Eq-Q3r">
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SNQ-gm-D9i">
-                            <rect key="frame" x="124" y="7" width="128" height="30"/>
+                            <rect key="frame" x="123.5" y="7" width="128" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                             <state key="normal" title="All Items ▾">
