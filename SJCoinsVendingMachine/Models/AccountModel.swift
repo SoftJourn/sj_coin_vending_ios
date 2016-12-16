@@ -10,28 +10,19 @@ import SwiftyJSON
 
 class AccountModel {
 
-    // MARK: String constants
-    let kAccountModelAmountKey = "amount"
-    let kAccountModelNameKey = "name"
-    let kAccountModelSurnameKey = "surname"
-
+    // MARK: Constants
+    private let keySurname = "surname"
     
     // MARK: Properties
 	var amount: Int?
     var name: String?
     var surname: String?
 
-
-    // MARK: SwiftyJSON Initalizers
-    convenience init(object: AnyObject) {
-        
-        self.init(json: JSON(object))
-    }
-
+    // MARK: Initalizers
     init(json: JSON) {
         
-		amount = json[kAccountModelAmountKey].int
-        name = json[kAccountModelNameKey].string
-        surname = json[kAccountModelSurnameKey].string
+		amount = json[key.amount].int
+        name = json[key.name].string
+        surname = json[keySurname].string
     }
 }

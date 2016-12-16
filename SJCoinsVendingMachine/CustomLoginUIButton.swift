@@ -13,9 +13,9 @@ import UIKit
 class CustomLoginUIButton: UIButton {
     
     // MARK: Constants
-    let r = 33
-    let g = 150
-    let b = 243
+    private let r = 33
+    private let g = 150
+    private let b = 243
     
     // MARK: Properties
     override var isHighlighted: Bool {

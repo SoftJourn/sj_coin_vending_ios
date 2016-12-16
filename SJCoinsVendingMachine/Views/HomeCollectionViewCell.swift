@@ -37,20 +37,18 @@ class HomeCollectionViewCell: UICollectionViewCell {
         categoryNameLabel.text = ""
         collectionView.scrollsToTop = true
         showAllButton.isHidden = false
-        collectionView.reloadData()
+        //collectionView.reloadData()
     }
     
     @IBAction private func seeAllButtonPressed(_ sender: UIButton) {
         
         guard let items = categoryItems else { return }
-        if categoryNames == categoryName.favorites {
-            NavigationManager.shared.presentFavoritesViewController(items: items)
-        } else {
-            NavigationManager.shared.presentAllItemsViewController(name: categoryNames, items: items)
-        }
+        categoryNames == categoryName.favorites
+            ? NavigationManager.shared.presentFavoritesViewController(items: items)
+            : NavigationManager.shared.presentAllItemsViewController(name: categoryNames, items: items)
     }
     
-    func configure(with item: Categories, unavailable: [Int]?) -> HomeCollectionViewCell {
+    func configure(with item: Categories, unavailable: [Int]?) {
        
         if unavailable != nil {
             unavailableFavorites = unavailable
@@ -58,7 +56,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
         categoryNames = item.name
         categoryItems = item.products
         collectionView.reloadData()
-        return self
     }
 }
 
@@ -72,37 +69,38 @@ extension HomeCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewInternalCell.identifier, for: indexPath) as! HomeCollectionViewInternalCell
-        
-        guard let item = categoryItems?[indexPath.item] else { return cell }
-        cell.availability = true        
-        if categoryNames == categoryName.favorites {
-            guard let unavailable = unavailableFavorites, let identifier = item.internalIdentifier else {
-                return cell.configure(with: item)
-            }
-            if unavailable.contains(identifier) {
-                cell.availability = false
-            }
-        }
-        return cell.configure(with: item)
+        return collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewInternalCell.identifier, for: indexPath)
     }
     
     //UICollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? HomeCollectionViewInternalCell, let item = categoryItems?[indexPath.item] else { return }
+        cell.availability = true
+        cell.configure(with: item)
+        checkFavorite(item) { cell.availability = false }
+    }
+    
+    private func checkFavorite(_ item: Products, with action: ()->()) {
+        
+        if categoryNames == categoryName.favorites {
+            guard let unavailable = unavailableFavorites, let identifier = item.identifier else { return }
+            if unavailable.contains(identifier) {
+                action()
+            }
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard let item = categoryItems?[indexPath.item] else { return }
-        if categoryNames == categoryName.favorites {
-            guard let unavailable = unavailableFavorites, let identifier = item.internalIdentifier else { return }
-            if unavailable.contains(identifier) {
-                availability = false
-            }
-        }
+        checkFavorite(item) { availability = false }
         
-        if Reachability.connectedToNetwork() {
+        if Helper.connectedToNetwork() {
             availability ? delegate?.buy(product: item) : presenError()
             availability = true
         } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + time.halfSecond) {
                 AlertManager().present(alert: errorMessage.reachability)
             }
         }

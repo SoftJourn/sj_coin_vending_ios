@@ -17,7 +17,6 @@ class BaseTableViewCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var buyButton: UIButton!
-    
 
     weak var delegate: CellDelegate?
     var request: Request?
@@ -50,6 +49,6 @@ class BaseTableViewCell: UITableViewCell {
     
     func verifyConnection(execute: ()->()) {
         
-        !Reachability.connectedToNetwork() ? AlertManager().present(alert: errorMessage.reachability) : execute()
+        !Helper.connectedToNetwork() ? AlertManager().present(alert: errorMessage.reachability) : execute()
     }
 }

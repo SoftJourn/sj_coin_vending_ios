@@ -26,14 +26,14 @@ class AlertManager {
         NavigationManager.shared.visibleViewController?.present(alertController, animated: true) { }
     }
     
-    func present(actionSheet actions: [UIAlertAction], sender: UIButton) {
+    func present(actionSheet actions: [UIAlertAction], sender: AnyObject) {
         
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         for action in actions {
             controller.addAction(action)
         }
         if let popoverController = controller.popoverPresentationController {
-            popoverController.sourceView = sender
+            popoverController.sourceView = sender as? UIView
             popoverController.sourceRect = sender.bounds
         }
         NavigationManager.shared.visibleViewController?.present(controller, animated: true) { }

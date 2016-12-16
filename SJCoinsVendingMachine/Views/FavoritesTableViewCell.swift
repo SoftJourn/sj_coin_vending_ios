@@ -40,7 +40,7 @@ class FavoritesTableViewCell: BaseTableViewCell {
     // MARK: Methods
     func configure(with product: Products) -> FavoritesTableViewCell {
        
-        print("Product id \(product.name!, product.internalIdentifier!)")
+        print("Product id \(product.name!, product.identifier!)")
         item = product
         favorite = true
         if let name = product.name, let price = product.price {
@@ -51,7 +51,7 @@ class FavoritesTableViewCell: BaseTableViewCell {
         guard let imageUrl = item.imageUrl else { return self }
         logo.af_setImage(withURL: URL(string: "\(networking.baseURL)vending/v1/\(imageUrl)")!,
                          placeholderImage: #imageLiteral(resourceName: "Placeholder"),
-                         imageTransition: .crossDissolve(0.5))
+                         imageTransition: .crossDissolve(time.halfSecond))
         return self
     }
     

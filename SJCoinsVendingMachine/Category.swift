@@ -11,25 +11,16 @@ import SwiftyJSON
 class Category {
 
     // MARK: String constants
-	let kCategoryInternalIdentifierKey: String = "id"
-	let kCategoryNameKey: String = "name"
-
+	let keyName = "name"
     
     // MARK: Properties
 	var internalIdentifier: Int?
 	var name: String?
 
-
-    // MARK: SwiftyJSON Initalizers
-    convenience init(object: AnyObject) {
-        
-        self.init(json: JSON(object))
-    }
-
+    // MARK: Initalizers
     init(json: JSON) {
         
-		internalIdentifier = json[kCategoryInternalIdentifierKey].int
-		name = json[kCategoryNameKey].string
-
+		internalIdentifier = json[key.identifier].int
+		name = json[keyName].string
     }
 }

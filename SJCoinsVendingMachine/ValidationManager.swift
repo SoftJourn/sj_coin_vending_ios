@@ -17,6 +17,7 @@ enum validationStatus {
 
 class ValidationManager {
     
+    // MARK: Methods
     class func validate(login: String) -> validationStatus {
         
         return login.isEmpty ? .isEmpty : stringValidation(login)

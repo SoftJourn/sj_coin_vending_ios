@@ -9,7 +9,7 @@
 import UIKit
 
 class AnimationHelper {
-    
+
     // MARK: Motion effect.
     func applyMotionEffect(toView view: UIView, magnitude: Float) {
         
@@ -30,7 +30,7 @@ class AnimationHelper {
     //MARK: Transparency effect.
     func showHidden(_ element: UIView, delay: TimeInterval) {
         
-        UIView.animate(withDuration: 0.5, delay: delay, options: .showHideTransitionViews, animations: { () -> Void in
+        UIView.animate(withDuration: time.halfSecond, delay: delay, options: .showHideTransitionViews, animations: { () -> Void in
             element.alpha = 1
         }, completion: nil)
     }
@@ -38,7 +38,7 @@ class AnimationHelper {
     //MARK: Scaling effect.
     func showScaled(_ logo: UIImageView) {
         
-        UIView.animate(withDuration: 0.6 ,
+        UIView.animate(withDuration: 0.6 , // 0.6 винести в константи
                        animations: { logo.transform = CGAffineTransform(scaleX: 0.6, y: 0.6) }) { finish in
                         UIView.animate(withDuration: 0.6) { logo.transform = CGAffineTransform.identity }
         }

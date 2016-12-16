@@ -28,12 +28,11 @@ class BaseViewController: UIViewController {
     // MARK: Methods
     func connectionVerification(execute: ()->()) {
         
-        if Reachability.connectedToNetwork() {
+        refreshControl.endRefreshing()
+        if Helper.connectedToNetwork() {
             execute()
-        } else {
-            refreshControl.endRefreshing()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [unowned self] in
+        } else {            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [unowned self] in
                 self.present(alert: .connection)
             }
         }
@@ -42,8 +41,8 @@ class BaseViewController: UIViewController {
     // MARK: Downloading, Handling and Refreshing data.
     func fetchData() {
         connectionVerification {
-            fetchContent()
             refreshControl.endRefreshing()
+            fetchContent()
         }
     }
     
@@ -55,8 +54,9 @@ class BaseViewController: UIViewController {
     func fetchProducts() -> Promise<AnyObject> {
         
         return Promise<AnyObject> { fulfill, reject in
+            
             firstly {
-                APIManager.fetchProducts(machineID: DataManager.shared.machineId)
+                APIManager.fetchProducts(machineID: DataManager.shared.chosenMachine?.identifier ?? 0)
             }.then { object -> Void in
                 DataManager.shared.save(object)
                 fulfill(object)
@@ -114,11 +114,9 @@ class BaseViewController: UIViewController {
             firstly {
                 APIManager.fetchMachines()
             }.then { object -> Void in
-                let machines = object as! [MachinesModel]
-                if !machines.isEmpty {
-                    guard let identifier = machines[0].internalIdentifier, let name = machines[0].name else { return }
-                    DataManager.shared.machineId = identifier
-                    DataManager.shared.machineName = name
+                let machines = object as? [MachinesModel]
+                if !(machines?.isEmpty)! {
+                    DataManager.shared.chosenMachine = machines?[0]
                 }
                 fulfill(object)
             }.catch { error in
@@ -163,7 +161,7 @@ class BaseViewController: UIViewController {
     // MARK: Confirmation and Buying.
     func present(confirmation product: Products) {
         
-        guard let identifier = product.internalIdentifier, let name = product.name, let price = product.price else {
+        guard let identifier = product.identifier, let name = product.name, let price = product.price else {
             return present(alert: .beforeBuying)
         }
         present(alert: .confirmation(name, price, buyingActions(with: identifier)))
@@ -171,7 +169,7 @@ class BaseViewController: UIViewController {
     
     private func buyingActions(with identifier: Int?) -> [UIAlertAction] {
         
-        let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .destructive) { [unowned self] action in
+        let confirmButton = UIAlertAction(title: buttonTitle.confirm, style: .default) { [unowned self] action in
             
             self.connectionVerification { [unowned self] in
                 self.buy(using: identifier)
@@ -186,7 +184,7 @@ class BaseViewController: UIViewController {
         guard let identifier = identifier else { return }
         SVProgressHUD.show(withStatus: spinerMessage.loading)
         firstly {
-            APIManager.buy(product: identifier, machineID: DataManager.shared.machineId)
+            APIManager.buy(product: identifier, machineID: DataManager.shared.chosenMachine?.identifier ?? 0)
         }.then { amount -> Void in
             SVProgressHUD.dismiss()
             DataManager.shared.save(balance: amount as! Int)
@@ -215,7 +213,7 @@ class BaseViewController: UIViewController {
     // MARK: Add/Delete favorites.
     func add(favorite product: Products, complition: @escaping ()->()) {
         
-        guard let identifier = product.internalIdentifier else { return }
+        guard let identifier = product.identifier else { return }
         firstly {
             APIManager.favorite(.post, identifier: identifier)
         }.then { object -> Void in
@@ -230,7 +228,7 @@ class BaseViewController: UIViewController {
     
     func remove(favorite product: Products, complition: @escaping ()->()) {
         
-        guard let identifier = product.internalIdentifier else { return }
+        guard let identifier = product.identifier else { return }
         firstly {
             APIManager.favorite(.delete, identifier: identifier)
         }.then { object -> Void in
@@ -260,7 +258,7 @@ class BaseViewController: UIViewController {
     
     func present(alert type: alertType) {
         
-        SVProgressHUD.dismiss(withDelay: 0.5)
+        SVProgressHUD.dismiss(withDelay: time.halfSecond)
         switch type {
             
         case .authorization:

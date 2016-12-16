@@ -8,27 +8,32 @@
 import Foundation
 import SwiftyJSON
 
-class Size {
+class Size: NSObject, NSCoding {
 
-    // MARK: String constants
-	let kSizeColumnsKey: String = "columns"
-	let kSizeRowsKey: String = "rows"
-
+    // MARK: Constants
+	private let keyColumns = "columns"
+	private let keyRows = "rows"
 
     // MARK: Properties
 	var columns: Int?
 	var rows: Int?
 
-
-    // MARK: SwiftyJSON Initalizers
-    convenience  init(object: AnyObject) {
-        
-        self.init(json: JSON(object))
-    }
-
+    // MARK: Initalizers
     init(json: JSON) {
         
-		columns = json[kSizeColumnsKey].int
-		rows = json[kSizeRowsKey].int
+		columns = json[keyColumns].int
+		rows = json[keyRows].int
+    }
+    
+    required init(coder decoder: NSCoder) {
+        
+        columns = decoder.decodeObject(forKey: keyColumns) as? Int
+        rows = decoder.decodeObject(forKey: keyRows) as? Int
+    }
+    
+    func encode(with coder: NSCoder) {
+        
+        coder.encode(columns, forKey: keyColumns)
+        coder.encode(rows, forKey: keyRows)
     }
 }

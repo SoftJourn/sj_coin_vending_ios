@@ -17,7 +17,7 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
     static let identifier = "\(HomeCollectionViewInternalCell.self)"
 
     // MARK: Properties
-    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet fileprivate weak var logo: UIImageView!
     @IBOutlet fileprivate weak var nameLabel: UILabel!
     @IBOutlet fileprivate weak var priceLabel: UILabel!
     
@@ -53,16 +53,15 @@ class HomeCollectionViewInternalCell: UICollectionViewCell {
         logo.image = nil
     }
     
-    func configure(with item: Products) -> HomeCollectionViewInternalCell {
+    func configure(with item: Products) {
         
         name = item.name
         price = item.price
         
-        guard let imageUrl = item.imageUrl else { return self }
+        guard let imageUrl = item.imageUrl else { return }
         logo.af_setImage(withURL: URL(string: "\(networking.baseURL)vending/v1/\(imageUrl)")!,
                          placeholderImage: #imageLiteral(resourceName: "Placeholder"),
-                         imageTransition: .crossDissolve(0.5))
-        return self
+                         imageTransition: .crossDissolve(time.halfSecond))
     }
     
     private func available() {

@@ -12,29 +12,7 @@ import PromiseKit
 
 class RequestManager: BaseManager {
     
-    class func sendDefault(request method: Alamofire.HTTPMethod,
-                           urlString: URLConvertible) -> Promise<AnyObject> {
-        
-        let headers = [ "Authorization" : "Bearer \(AuthorizationManager.getToken())"]
-        let encoding = JSONEncoding.default
-        
-        let promise = Promise<AnyObject> { fulfill, reject in
-            firstly {
-                sendCustom(request: method, urlString: urlString, parameters: nil, encoding: encoding, headers: headers)
-            }.then { data -> Void in
-                fulfill(data)
-            }.catch { error in
-                switch error {
-                case serverError.unauthorized:
-                    handle401StatusCode(method: method, url: urlString, success: fulfill, failed: reject)
-                default:
-                    reject(error)
-                }
-            }
-        }
-        return promise
-    }
-    
+    //Wrapped abstract network method. Used by AuthorizationManager.
     class func sendCustom(request method: Alamofire.HTTPMethod,
                           urlString: URLConvertible,
                           parameters: Parameters?,
@@ -52,6 +30,27 @@ class RequestManager: BaseManager {
         }
         return promise
     }
+
+    //Wrapped sendCustom method. Used by APIManager.
+    class func sendDefault(request method: Alamofire.HTTPMethod,
+                           urlString: URLConvertible) -> Promise<AnyObject> {
+        
+        let promise = Promise<AnyObject> { fulfill, reject in
+            firstly {
+                sendCustom(request: method, urlString: urlString, parameters: nil, encoding: JSONEncoding.default, headers: headers())
+            }.then { data -> Void in
+                fulfill(data)
+            }.catch { error in
+                switch error {
+                case serverError.unauthorized:
+                    handle401StatusCode(method: method, url: urlString, success: fulfill, failed: reject)
+                default:
+                    reject(error)
+                }
+            }
+        }
+        return promise
+    }
     
     private class func handle401StatusCode(method: Alamofire.HTTPMethod, url: URLConvertible, success: @escaping (AnyObject) -> Swift.Void, failed: @escaping (Error) -> Swift.Void) {
         
@@ -60,15 +59,12 @@ class RequestManager: BaseManager {
             if error != nil {
                 print(error!)
                 AuthorizationManager.removeAccessToken()
-                NavigationManager.shared.presentLoginViewController()
+                NavigationManager.shared.presentInformativePageViewController(firstTime: false)
             }
-            
-            let headers = [ "Authorization" : "Bearer \(AuthorizationManager.getToken())"]
-            let encoding = JSONEncoding.default
             
             _ = Promise<AnyObject> { fulfill, reject in
                 firstly {
-                    sendCustom(request: method, urlString: url, parameters: nil, encoding: encoding, headers: headers)
+                    sendCustom(request: method, urlString: url, parameters: nil, encoding: JSONEncoding.default, headers: headers())
                 }.then { data -> Void in
                     success(data)
                 }.catch { error in
@@ -76,5 +72,11 @@ class RequestManager: BaseManager {
                 }
             }
         }
+    }
+    
+    // MARK: Helper methods.
+    private class func headers() -> [String : String] {
+        
+        return [ "Authorization" : "Bearer \(AuthorizationManager.getToken())" ]
     }
 }

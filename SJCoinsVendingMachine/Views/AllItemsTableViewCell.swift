@@ -33,7 +33,7 @@ class AllItemsTableViewCell: BaseTableViewCell {
     // MARK: Methods
     func configure(with product: Products) -> AllItemsTableViewCell {
         
-        print("Product id \(product.name!, product.internalIdentifier!)")
+        print("Product id \(product.name!, product.identifier!)")
         item = product
         if let name = product.name, let price = product.price {
             nameLabel.text = name
@@ -42,7 +42,7 @@ class AllItemsTableViewCell: BaseTableViewCell {
         guard let imageUrl = item.imageUrl else { return self }
         logo.af_setImage(withURL: URL(string: "\(networking.baseURL)vending/v1/\(imageUrl)")!,
                          placeholderImage: #imageLiteral(resourceName: "Placeholder"),
-                         imageTransition: .crossDissolve(0.5))
+                         imageTransition: .crossDissolve(time.halfSecond))
         return self
     }
 }
