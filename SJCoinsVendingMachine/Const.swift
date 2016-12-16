@@ -10,8 +10,8 @@ import Foundation
 
 struct networking {
     
-    static let baseURL = "https://sjcoins-testing.softjourn.if.ua/"   //Test env
-    //static let baseURL = "https://vending.softjourn.if.ua/api/"          //Production env
+    //static let baseURL = "https://sjcoins-testing.softjourn.if.ua/"   //Test env
+    static let baseURL = "https://vending.softjourn.if.ua/api/"          //Production env
 }
 
 struct errorMessage {
