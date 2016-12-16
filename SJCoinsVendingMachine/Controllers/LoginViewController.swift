@@ -163,12 +163,46 @@ class LoginViewController: BaseViewController {
     private func firstLaunching() {
         
         firstly {
-            fetchDefaultMachine().asVoid()
-        }.then {
-            self.regularLaunching()
+            fetchDefaultMachine()
+        }.then { _ in
+            DataManager.shared.chosenMachine != nil ? self.fetchWithProducts() : self.fetchWithOutProducts()
         }.catch { _ in
             let actions = AlertManager().alertActions(cancel: true) {
                 self.firstLaunching()
+            }
+            self.present(alert: .retryLaunch(actions))
+        }
+    }
+    
+    private func fetchWithOutProducts() {
+        
+        firstly {
+            fetchFavorites()
+        }.then { _ in
+            self.fetchAccount()
+        }.then { _ in
+            NavigationManager.shared.presentTabBarController()
+        }.catch { _ in
+            let actions = AlertManager().alertActions(cancel: true) {
+                self.fetchWithOutProducts()
+            }
+            self.present(alert: .retryLaunch(actions))
+        }
+    }
+    
+    private func fetchWithProducts() {
+        
+        firstly {
+            fetchFavorites()
+        }.then { _ in
+            self.fetchProducts()
+        }.then { _ in
+            self.fetchAccount()
+        }.then { _ in
+            NavigationManager.shared.presentTabBarController()
+        }.catch { _ in
+            let actions = AlertManager().alertActions(cancel: true) {
+                self.fetchWithProducts()
             }
             self.present(alert: .retryLaunch(actions))
         }

@@ -24,11 +24,11 @@ class InformativeViewController: UIViewController {
     fileprivate var pageContainer: UIPageViewController!
     
     // Track the current index
-    fileprivate var currentIndex: Int?
+    fileprivate var currentIndex: Int = 0
     fileprivate var pendingIndex: Int?
     
     var nextPageIndex: Int {
-        return currentIndex != nil ? currentIndex! + 1 : 0
+        return currentIndex + 1
     }
     
     // MARK: Lifecycle
@@ -61,13 +61,11 @@ class InformativeViewController: UIViewController {
     }
     
     @IBAction func nextButtonPressed(_ sender: UIButton) {
-   
-        guard let index = currentIndex else { return }
         
-        if index == 0 {
+        if currentIndex == 0 {
             show(controller: pages[nextPageIndex], hideElements: false)
             nextPage()
-        } else if index == pages.count - 2 {
+        } else if currentIndex == pages.count - 2 {
             show(controller: pages[nextPageIndex], hideElements: true)
             nextPage()
         } else {
@@ -86,7 +84,7 @@ class InformativeViewController: UIViewController {
     private func show(controller: UIViewController, hideElements: Bool) {
         
         hide(elements: hideElements)
-        return pageContainer.setViewControllers([controller], direction: .forward, animated: true) { _ in }
+        return pageContainer.setViewControllers([controller], direction: .forward, animated: false) { _ in }
     }
     
     fileprivate func hide(elements: Bool) {
@@ -99,7 +97,7 @@ class InformativeViewController: UIViewController {
     private func nextPage() {
         
         pageControl.currentPage = nextPageIndex
-        currentIndex! += 1
+        currentIndex = nextPageIndex
     }
 }
 
@@ -135,9 +133,9 @@ extension InformativeViewController: UIPageViewControllerDataSource, UIPageViewC
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
         if completed {
-            currentIndex = pendingIndex
-            if let index = currentIndex {
-                pageControl.currentPage = index
+            if let pendingIndex = pendingIndex {
+                currentIndex = pendingIndex
+                pageControl.currentPage = currentIndex
             }
         }
         

@@ -28,12 +28,11 @@ class BaseViewController: UIViewController {
     // MARK: Methods
     func connectionVerification(execute: ()->()) {
         
+        refreshControl.endRefreshing()
         if Helper.connectedToNetwork() {
             execute()
-        } else {
-            refreshControl.endRefreshing()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [unowned self] in
+        } else {            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [unowned self] in
                 self.present(alert: .connection)
             }
         }
@@ -42,8 +41,8 @@ class BaseViewController: UIViewController {
     // MARK: Downloading, Handling and Refreshing data.
     func fetchData() {
         connectionVerification {
-            fetchContent()
             refreshControl.endRefreshing()
+            fetchContent()
         }
     }
     
