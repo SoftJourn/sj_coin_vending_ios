@@ -47,14 +47,50 @@ class AccountViewController: BaseViewController {
     }
     
     // MARK: Actions
+    @IBAction func qrCodeButtonPressed(_ sender: UIBarButtonItem) {
+        
+        AlertManager().present(actionSheet: qrCodeActions(), sender: sender)
+    }
+    
     @IBAction private func logOutButton(_ sender: UIBarButtonItem) {
         
         //ExecuteLogOut
-        AuthorizationManager.removeAccessToken()
-        NavigationManager.shared.presentLoginViewController()
-        //Clean data in DataManager
-        DataManager.shared.cleanAllData()
+        SVProgressHUD.show(withStatus: spinerMessage.loading)
+        firstly {
+            AuthorizationManager.revokeRequest().asVoid()
+        }.then {
+            self.logOut()
+        }.catch { _ in
+            self.logOut()
+        }
     }
+    
+    private func logOut() {
+        
+        //Clean accessToken locally
+        AuthorizationManager.removeAccessToken()
+        
+        //Clean data locally
+        DataManager.shared.cleanAllData()
+
+        SVProgressHUD.dismiss()
+        NavigationManager.shared.presentInformativePageViewController(firstTime: false)
+    }
+    
+    fileprivate func qrCodeActions() -> [UIAlertAction] {
+        
+        //Creating actions for ActionSheet and handle closures.
+        let qrGenerator = UIAlertAction(title: "Generator", style: .default) { action in
+            NavigationManager.shared.presentQRGeneratorViewController()
+        }
+        let qrReader = UIAlertAction(title: "Reader", style: .default) { action in
+        
+        }
+        let cancel = UIAlertAction(title: categoryName.cancel, style: .cancel) { action in }
+
+        return [qrGenerator, qrReader, cancel]
+    }
+
     
     // MARK: Downloading, Handling and Refreshing data.
     override func fetchContent() {
@@ -103,7 +139,7 @@ extension AccountViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: PurchaseHistoryTableViewCell.identifier, for: indexPath) as! PurchaseHistoryTableViewCell
         
         guard let item = purchases?[indexPath.item], let price = item.price, let name = item.name, let time = item.time else { return cell }
-        let date = DateManager().convertData(from: time)
+        let date = Helper.convertDate(string: time)
         cell.transactionDate.text = date
         cell.transactionItem.text = name
         cell.transactionPrice.text = "\(price) Coins"

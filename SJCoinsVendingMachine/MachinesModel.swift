@@ -8,29 +8,35 @@
 import Foundation
 import SwiftyJSON
 
-class MachinesModel {
+class MachinesModel: NSObject, NSCoding {
 
-    // MARK: String constants
-	let kMachinesModelInternalIdentifierKey: String = "id"
-	let kMachinesModelSizeKey: String = "size"
-	let kMachinesModelNameKey: String = "name"
-
+    // MARK: Constants
+	private let keySize = "size"
 
     // MARK: Properties
-	var internalIdentifier: Int?
+	var identifier: Int?
 	var size: Size?
 	var name: String?
 
-    // MARK: SwiftyJSON Initalizers
-    convenience init(object: AnyObject) {
-        
-        self.init(json: JSON(object))
-    }
-
+    // MARK: Initalizers
     init(json: JSON) {
         
-		internalIdentifier = json[kMachinesModelInternalIdentifierKey].int
-		size = Size(json: json[kMachinesModelSizeKey])
-		name = json[kMachinesModelNameKey].string
+		identifier = json[key.identifier].int
+		size = Size(json: json[keySize])
+		name = json[key.name].string
+    }
+    
+    required init(coder decoder: NSCoder) {
+        
+        identifier = decoder.decodeObject(forKey: key.identifier) as? Int
+        size = decoder.decodeObject(forKey: keySize) as? Size
+        name = decoder.decodeObject(forKey: key.name) as? String
+    }
+    
+    func encode(with coder: NSCoder) {
+        
+        coder.encode(identifier, forKey: key.identifier)
+        coder.encode(size, forKey: keySize)
+        coder.encode(name, forKey: key.name)
     }
 }

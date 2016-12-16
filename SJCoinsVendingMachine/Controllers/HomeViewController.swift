@@ -38,7 +38,7 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        navigationItem.title = DataManager.shared.machineName
+        navigationItem.title = DataManager.shared.chosenMachine?.name
         updateBalance()
     }
     
@@ -102,7 +102,7 @@ class HomeViewController: BaseViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     // MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -112,17 +112,19 @@ extension HomeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
-        guard let categories = categories?[safe: indexPath.item], let products = categories.products else { return cell }
+        return collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath)
+    }
+    
+    // MARK: UICollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? HomeCollectionViewCell, let categories = categories?[safe: indexPath.item], let products = categories.products else { return }
         if !products.isEmpty {
             cell.delegate = self
-            if categories.name == categoryName.favorites {
-                return cell.configure(with: categories, unavailable: unavailable)
-            } else {
-                return cell.configure(with: categories, unavailable: nil)
-            }
+            categories.name == categoryName.favorites
+                ? cell.configure(with: categories, unavailable: unavailable)
+                : cell.configure(with: categories, unavailable: nil)
         }
-        return cell
     }
 }
 

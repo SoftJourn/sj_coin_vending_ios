@@ -16,24 +16,21 @@ class DataManager: NSObject {
 
     weak var delegate: DataManagerDelegate?
 
-    dynamic var machineId: Int {
-        get { return Defaults[.kMachineId] }
-        set { Defaults[.kMachineId] = newValue }
+    var chosenMachine: MachinesModel? {
+        get { return Defaults[.keyMachine] ?? nil }
+        set { Defaults[.keyMachine] = newValue }
     }
-    var machineName: String {
-        get { return Defaults[.kMachineName] }
-        set { Defaults[.kMachineName] = newValue }
+    var launchedBefore: Bool {
+        get { return Defaults[.launchedBefore] }
+        set { Defaults[.launchedBefore] = newValue }
     }
-    var fistLaunch: Bool {
-        get { return Defaults[.fistLaunch] }
-        set { Defaults[.fistLaunch] = newValue }
+    
+    dynamic var favorites: [Products]? {
+        didSet { createCategories() }
     }
     private(set) var machines: [MachinesModel]?
     private(set) var features: FeaturesModel?
     private(set) var account: AccountModel?
-    dynamic var favorites: [Products]? {
-        didSet { createCategories() }
-    }
     private(set) var purchases: [PurchaseHistoryModel]?
     private(set) var categories: [Categories]!
     private(set) var allItems: [Products]?
@@ -41,8 +38,21 @@ class DataManager: NSObject {
     private(set) var bestSellers: [Products]?
     private(set) var unavailable: [Int]?
     
+    // MARK: Methods
+    override init() {
+        
+        super.init()
+        // If application launched firts time.
+        if chosenMachine == nil {
+            do {
+                try AuthorizationManager.keychain.remove("token")
+                try AuthorizationManager.keychain.remove("refresh")
+            } catch let error {
+                print("error: \(error)")
+            }
+        }
+    }
     
-    // MARK: Setters
     func save(_ object: AnyObject) {
         
         switch object {
@@ -66,6 +76,7 @@ class DataManager: NSObject {
     
     func cleanAllData() {
         
+        //Cleaning information after logout.
         delegate = nil
         features = nil
         account = nil
@@ -89,7 +100,7 @@ class DataManager: NSObject {
     
     func remove(favorite item: Products) {
         
-        favorites = favorites?.filter { $0.internalIdentifier != item.internalIdentifier }
+        favorites = favorites?.filter { $0.identifier != item.identifier }
     }
     
     func save(balance amount: Int) {
@@ -104,19 +115,19 @@ class DataManager: NSObject {
         
         if let favorites = favorites {
             if !favorites.isEmpty {
-                let category = Categories(name: categoryName.favorites, items: favorites)
+                let category = Categories(categoryName.favorites, items: favorites)
                 categories.append(category)
             }
         }
         
         guard let features = features, let lastAdded = lastAdded else { return }
         if !lastAdded.isEmpty {
-            let category = Categories(name: categoryName.lastAdded, items: lastAdded)
+            let category = Categories(categoryName.lastAdded, items: lastAdded)
             categories.append(category)
         }
         guard let bestSellers = bestSellers else { return }
         if !bestSellers.isEmpty {
-            let category = Categories(name: categoryName.bestSellers, items: bestSellers)
+            let category = Categories(categoryName.bestSellers, items: bestSellers)
             categories.append(category)
         }
         
@@ -125,7 +136,7 @@ class DataManager: NSObject {
             for item in items {
                 guard let name = item.name, let products = item.products else { return }
                 if !products.isEmpty {
-                    let category = Categories(name: name, items: products)
+                    let category = Categories(name, items: products)
                     categories.append(category)
                 }
             }
@@ -152,7 +163,7 @@ class DataManager: NSObject {
         for category in categories {
             guard let products = category.products else { return }
             for product in products {
-                guard let id = product.internalIdentifier else { return }
+                guard let id = product.identifier else { return }
                 if items.contains(id) {
                     lastAdded!.append(product)
                 }
@@ -168,7 +179,7 @@ class DataManager: NSObject {
         for category in categories {
             guard let products = category.products else { return }
             for product in products {
-                guard let id = product.internalIdentifier else { return }
+                guard let id = product.identifier else { return }
                 if items.contains(id) {
                     bestSellers!.append(product)
                 }
@@ -187,7 +198,7 @@ class DataManager: NSObject {
             for category in dynamicCategories {
                 guard let products = category.products else { return }
                 for product in products {
-                    guard let identifier = product.internalIdentifier else { return }
+                    guard let identifier = product.identifier else { return }
                     allProducts.insert(identifier)
                 }
             }
@@ -195,7 +206,7 @@ class DataManager: NSObject {
         var favoriteProducts = Set<Int>()
         guard let favorites = favorites else { return }
         for product in favorites {
-            guard let identifier = product.internalIdentifier else { return }
+            guard let identifier = product.identifier else { return }
             favoriteProducts.insert(identifier)
         }
         for product in favoriteProducts {

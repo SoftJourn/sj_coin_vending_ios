@@ -16,7 +16,8 @@ class LoginViewController: BaseViewController {
     static let identifier = "\(LoginViewController.self)"
     private let isEmptyString = "This field is required."
     private let notAllowedString = "These symbols are not allowed."
-
+    private let emptyString = ""
+    
     // MARK: Properties
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTexField: UITextField!
@@ -66,6 +67,11 @@ class LoginViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         
         showElementsAnimated()
+    }
+    
+    deinit {
+        
+        print("LoginViewController DELETED.")
     }
     
     // MARK: Actions
@@ -128,7 +134,7 @@ class LoginViewController: BaseViewController {
         case .notAllowed:
             config(label, text: notAllowedString, isHidden: false)
         case .success:
-            config(label, text: "", isHidden: true)
+            config(label, text: emptyString, isHidden: true)
         }
     }
     
@@ -145,7 +151,7 @@ class LoginViewController: BaseViewController {
     
     private func authSuccess() {
   
-        DataManager.shared.fistLaunch ? firstLaunching() : regularLaunching()
+        DataManager.shared.launchedBefore && DataManager.shared.chosenMachine != nil ? regularLaunching() : firstLaunching()
     }
     
     private func authFailed() {
@@ -159,10 +165,44 @@ class LoginViewController: BaseViewController {
         firstly {
             fetchDefaultMachine()
         }.then { _ in
-            self.regularLaunching()
+            DataManager.shared.chosenMachine != nil ? self.fetchWithProducts() : self.fetchWithOutProducts()
         }.catch { _ in
             let actions = AlertManager().alertActions(cancel: true) {
                 self.firstLaunching()
+            }
+            self.present(alert: .retryLaunch(actions))
+        }
+    }
+    
+    private func fetchWithOutProducts() {
+        
+        firstly {
+            fetchFavorites()
+        }.then { _ in
+            self.fetchAccount()
+        }.then { _ in
+            NavigationManager.shared.presentTabBarController()
+        }.catch { _ in
+            let actions = AlertManager().alertActions(cancel: true) {
+                self.fetchWithOutProducts()
+            }
+            self.present(alert: .retryLaunch(actions))
+        }
+    }
+    
+    private func fetchWithProducts() {
+        
+        firstly {
+            fetchFavorites()
+        }.then { _ in
+            self.fetchProducts()
+        }.then { _ in
+            self.fetchAccount()
+        }.then { _ in
+            NavigationManager.shared.presentTabBarController()
+        }.catch { _ in
+            let actions = AlertManager().alertActions(cancel: true) {
+                self.fetchWithProducts()
             }
             self.present(alert: .retryLaunch(actions))
         }

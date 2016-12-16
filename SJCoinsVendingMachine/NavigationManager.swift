@@ -10,50 +10,72 @@ import UIKit
 
 class NavigationManager: NSObject {
     
+    // MARK: Constants
+    let informativeControllerIdentifier = "InformativePageViewController"
+    let tabBarControllerIdentifier = "TabBarController"
+    let settingsControllerIdentifier = "SettingsNavigationController"
+    let allItemsControllerIdentifier = "AllItemsViewController"
+    let QRGeneratorControllerIdentifier = "QRCodeGeneratorViewController"
+    let favoritesControllerIdentifier = "FavoritesViewController"
+
+    let howToLogInIdentifier = "HowToLogIn"
+    let buyProductsIdentifier = "BuyProducts"
+    let wantsMoreCoinsIdentifier = "WantMoreCoins"
+    let addFavoriteIdentifier = "AddFavorites"
+    
     // MARK: Properties
     static let shared = NavigationManager()
     var visibleViewController: UIViewController?
+    var informativePages: [UIViewController] {
+        return [instantiate(with: howToLogInIdentifier), instantiate(with: buyProductsIdentifier), instantiate(with: wantsMoreCoinsIdentifier), instantiate(with: addFavoriteIdentifier), instantiate(with: LoginViewController.identifier)]
+    }
     private var mainStoryboard: UIStoryboard {
         return UIStoryboard(name: "Main", bundle: nil)
     }
     
     // MARK: Methods
+    func presentInformativePageViewController(firstTime: Bool) {
+    
+        let informative = instantiate(with: informativeControllerIdentifier) as! InformativeViewController
+        informative.firstTime = firstTime
+        present(viewControllerAsRoot: informative)
+    }
+    
     func presentTabBarController() {
         
-        let tabBarController = create(viewController: storyboards.tabBarControllerIdentifier) as! UITabBarController
-        present(viewControllerAsRoot: tabBarController)
+        present(viewControllerAsRoot: instantiate(with: tabBarControllerIdentifier) as! UITabBarController)
     }
     
     func presentSettingsViewController() {
         
-        let settingsController = create(viewController: storyboards.settingsNavigationController) as! UINavigationController
+        let settingsController = instantiate(with: settingsControllerIdentifier) as! UINavigationController
         let controller = settingsController.viewControllers[0] as! SettingsViewController
-        controller.delegate = visibleViewController as! HomeViewController
+        controller.delegate = visibleViewController as? HomeViewController
         visibleViewController?.present(settingsController, animated: true) { }
     }
     
-    func presentLoginViewController() {
+    func presentQRGeneratorViewController() {
         
-        let loginController = create(viewController: LoginViewController.identifier)
-        present(viewControllerAsRoot: loginController)
+        let qrGeneratorController = instantiate(with: QRGeneratorControllerIdentifier) as! UINavigationController
+        visibleViewController?.present(qrGeneratorController, animated: true) { }
     }
     
     func presentFavoritesViewController(items: [Products]?) {
         
-        let favoritesViewController = create(viewController: storyboards.favoritesViewController) as! FavoritesViewController
+        let favoritesViewController = instantiate(with: favoritesControllerIdentifier) as! FavoritesViewController
         visibleViewController?.navigationController?.pushViewController(favoritesViewController, animated: true)
     }
 
     func presentAllItemsViewController(name: String?, items: [Products]?) {
         
-        let allItemsViewController = create(viewController: storyboards.allItemsViewController) as! AllItemsViewController
-        allItemsViewController.usedSeeAll = true
-        allItemsViewController.titleButton(name)
-        allItemsViewController.filterItems = SortingManager().sortBy(name: items, state: nil)
-        visibleViewController?.navigationController?.pushViewController(allItemsViewController, animated: true)
+        let allItems = instantiate(with: allItemsControllerIdentifier) as! AllItemsViewController
+        allItems.usedSeeAll = true
+        allItems.titleButton(name)
+        allItems.filterItems = SortingHelper().sortBy(name: items, state: nil)
+        visibleViewController?.navigationController?.pushViewController(allItems, animated: true)
     }
     
-    private func create(viewController identifier: String) -> UIViewController {
+    private func instantiate(with identifier: String) -> UIViewController {
         
         return mainStoryboard.instantiateViewController(withIdentifier: identifier)
     }

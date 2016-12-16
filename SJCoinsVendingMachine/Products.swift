@@ -10,41 +10,27 @@ import SwiftyJSON
 
 class Products: NSObject {
     
-    // MARK: String constants
-    let kProductsPriceKey: String = "price"
-    let kProductsDescriptionValueKey: String = "description"
-    let kProductsImageUrlKey: String = "imageUrl"
-    let kProductsInternalIdentifierKey: String = "id"
-    let kProductsCategoryKey: String = "category"
-    let kProductsNameKey: String = "name"
-    
+    // MARK: Constants
+    private let keyDescription = "description"
+    private let keyImageUrl = "imageUrl"
+    private let keyCategory = "category"
     
     // MARK: Properties
     var price: Int?
     var descriptionValue: String?
     var imageUrl: String?
-    var internalIdentifier: Int?
+    var identifier: Int?
     var category: Category?
     var name: String?
     
-    
-    // MARK: SwiftyJSON Initalizers
-    convenience public init(object: AnyObject) {
+    // MARK: Initalizers
+    init(json: JSON) {
         
-        self.init(json: JSON(object))
-    }
-    
-    public init(json: JSON) {
-        
-        price = json[kProductsPriceKey].int
-        descriptionValue = json[kProductsDescriptionValueKey].string
-        imageUrl = json[kProductsImageUrlKey].string
-        internalIdentifier = json[kProductsInternalIdentifierKey].int
-        category = Category(json: json[kProductsCategoryKey])
-        name = json[kProductsNameKey].string
-    }
-    
-    static func ==(lhs: Products, rhs: Products) -> Bool {
-        return lhs.internalIdentifier == rhs.internalIdentifier
+        price = json[key.price].int
+        descriptionValue = json[keyDescription].string
+        imageUrl = json[keyImageUrl].string
+        identifier = json[key.identifier].int
+        category = Category(json: json[keyCategory])
+        name = json[key.name].string
     }
 }
