@@ -30,7 +30,7 @@ class ValidationManager {
     
     private class func stringValidation(_ string: String) -> validationStatus {
         
-        let regex = "[a-z^]*"
+        let regex = "^[a-z]*[_-]?[a-z]*$"
         let loginTest = NSPredicate.init(format: "SELF MATCHES %@", regex)
     
         return loginTest.evaluate(with: string) ? .success : .notAllowed
