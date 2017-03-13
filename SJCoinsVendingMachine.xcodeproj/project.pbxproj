@@ -380,7 +380,7 @@
 				TargetAttributes = {
 					07854FB51D4B8C5300F31AB3 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = A2PX8YZMXY;
+						DevelopmentTeam = 7FLBNAD4UN;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -640,7 +640,7 @@
 				CODE_SIGN_ENTITLEMENTS = SJCoinsVendingMachine/SJCoinsVendingMachine.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = A2PX8YZMXY;
+				DEVELOPMENT_TEAM = 7FLBNAD4UN;
 				INFOPLIST_FILE = SJCoinsVendingMachine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
@@ -659,9 +659,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SJCoinsVendingMachine/SJCoinsVendingMachine.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: SOFTDZHORN-UKRAINA, TOV";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = A2PX8YZMXY;
+				DEVELOPMENT_TEAM = 7FLBNAD4UN;
 				INFOPLIST_FILE = SJCoinsVendingMachine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
