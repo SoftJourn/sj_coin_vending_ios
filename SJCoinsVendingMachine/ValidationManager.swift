@@ -12,27 +12,13 @@ enum validationStatus {
     
     case success
     case isEmpty
-    case notAllowed
 }
 
 class ValidationManager {
     
     // MARK: Methods
-    class func validate(login: String) -> validationStatus {
+    class func validate(string: String) -> validationStatus {
         
-        return login.isEmpty ? .isEmpty : stringValidation(login)
-    }
-    
-    class func validate(password: String) -> validationStatus {
-        
-        return password.isEmpty ? .isEmpty : .success
-    }
-    
-    private class func stringValidation(_ string: String) -> validationStatus {
-        
-        let regex = "^[a-z]*[_-]?[a-z]*$"
-        let loginTest = NSPredicate.init(format: "SELF MATCHES %@", regex)
-    
-        return loginTest.evaluate(with: string) ? .success : .notAllowed
+        return string.isEmpty ? .isEmpty : .success
     }
 }
