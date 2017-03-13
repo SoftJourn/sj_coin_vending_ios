@@ -126,6 +126,8 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
                 : cell.configure(with: categories, unavailable: nil)
         }
     }
+    
+    
 }
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {

@@ -15,7 +15,6 @@ class LoginViewController: BaseViewController {
     // MARK: Constants
     static let identifier = "\(LoginViewController.self)"
     private let isEmptyString = "This field is required."
-    private let notAllowedString = "These symbols are not allowed."
     private let emptyString = ""
     
     // MARK: Properties
@@ -36,10 +35,10 @@ class LoginViewController: BaseViewController {
         return self.passwordTexField.text!
     }
     private var loginValidation: validationStatus {
-        return ValidationManager.validate(login: loginTextField.text!)
+        return ValidationManager.validate(string: loginTextField.text!)
     }
     private var passwordValidation: validationStatus {
-        return ValidationManager.validate(password: passwordTexField.text!)
+        return ValidationManager.validate(string: passwordTexField.text!)
     }
     
     // MARK: Lifecycle
@@ -131,8 +130,6 @@ class LoginViewController: BaseViewController {
         switch result {
         case .isEmpty:
             config(label, text: isEmptyString, isHidden: false)
-        case .notAllowed:
-            config(label, text: notAllowedString, isHidden: false)
         case .success:
             config(label, text: emptyString, isHidden: true)
         }
