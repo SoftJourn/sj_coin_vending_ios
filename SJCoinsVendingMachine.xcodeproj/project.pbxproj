@@ -644,7 +644,7 @@
 				INFOPLIST_FILE = SJCoinsVendingMachine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.softjourn.sjcoins;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.softdzhorn-urkaina.sjcoins";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -665,7 +665,7 @@
 				INFOPLIST_FILE = SJCoinsVendingMachine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.softjourn.sjcoins;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.softdzhorn-urkaina.sjcoins";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
